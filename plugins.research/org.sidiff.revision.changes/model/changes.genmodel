@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel"
-    modelDirectory="/org.sidiff.revision.changes/src-gen" creationIcons="false"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/org.sidiff.revision.changes/src-gen" creationIcons="false"
     editDirectory="/org.sidiff.revision.changes.edit/src-gen" editorDirectory="/org.sidiff.revision.changes.editor/src-gen"
     modelPluginID="org.sidiff.revision.changes" modelName="Changes" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
     codeFormatting="true" importerID="org.eclipse.emf.importer.ecore" complianceLevel="8.0"
@@ -10,148 +9,85 @@
   <testsDirectory xsi:nil="true"/>
   <genPackages prefix="Changes" basePackage="org.sidiff.revision" disposableProviderFactory="true"
       ecorePackage="changes.ecore#/">
-    <genEnums typeSafeEnumCompatible="false" ecoreEnum="changes.ecore#//ActionType">
-      <genEnumLiterals ecoreEnumLiteral="changes.ecore#//ActionType/CREATE"/>
-      <genEnumLiterals ecoreEnumLiteral="changes.ecore#//ActionType/DELETE"/>
-      <genEnumLiterals ecoreEnumLiteral="changes.ecore#//ActionType/MODIFY"/>
-    </genEnums>
-    <genDataTypes ecoreDataType="changes.ecore#//ChangeIterator"/>
-    <genClasses image="false" ecoreClass="changes.ecore#//ChangeSet">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference changes.ecore#//ChangeSet/edgeSet"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference changes.ecore#//ChangeSet/attributeSet"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference changes.ecore#//ChangeSet/nodeSet"/>
-      <genOperations ecoreOperation="changes.ecore#//ChangeSet/getChanges"/>
-    </genClasses>
-    <genClasses image="false" ecoreClass="changes.ecore#//NodeChangeContext">
-      <genOperations ecoreOperation="changes.ecore#//NodeChangeContext/getNode">
-        <genParameters ecoreParameter="changes.ecore#//NodeChangeContext/getNode/nodeChange"/>
-      </genOperations>
-    </genClasses>
-    <genClasses image="false" ecoreClass="changes.ecore#//AttributeChangeContext">
-      <genOperations ecoreOperation="changes.ecore#//AttributeChangeContext/getType">
-        <genParameters ecoreParameter="changes.ecore#//AttributeChangeContext/getType/attributeChange"/>
-      </genOperations>
-      <genOperations ecoreOperation="changes.ecore#//AttributeChangeContext/getNodeType">
-        <genParameters ecoreParameter="changes.ecore#//AttributeChangeContext/getNodeType/attributeChange"/>
-      </genOperations>
-      <genOperations ecoreOperation="changes.ecore#//AttributeChangeContext/getValueType">
-        <genParameters ecoreParameter="changes.ecore#//AttributeChangeContext/getValueType/attributeChange"/>
-      </genOperations>
-    </genClasses>
-    <genClasses image="false" ecoreClass="changes.ecore#//EdgeChangeContext">
-      <genOperations ecoreOperation="changes.ecore#//EdgeChangeContext/getType">
-        <genParameters ecoreParameter="changes.ecore#//EdgeChangeContext/getType/edgeChange"/>
-      </genOperations>
-      <genOperations ecoreOperation="changes.ecore#//EdgeChangeContext/getSourceType">
-        <genParameters ecoreParameter="changes.ecore#//EdgeChangeContext/getSourceType/edgeChange"/>
-      </genOperations>
-      <genOperations ecoreOperation="changes.ecore#//EdgeChangeContext/getTargetType">
-        <genParameters ecoreParameter="changes.ecore#//EdgeChangeContext/getTargetType/edgeChange"/>
-      </genOperations>
-      <genOperations ecoreOperation="changes.ecore#//EdgeChangeContext/adaptChangeContext"/>
-    </genClasses>
     <genClasses image="false" ecoreClass="changes.ecore#//Change">
       <genOperations ecoreOperation="changes.ecore#//Change/getAction"/>
     </genClasses>
     <genClasses image="false" ecoreClass="changes.ecore#//NodeChange">
       <genOperations ecoreOperation="changes.ecore#//NodeChange/getType"/>
     </genClasses>
+    <genClasses ecoreClass="changes.ecore#//NodeDomain"/>
+    <genClasses ecoreClass="changes.ecore#//NodeBinding">
+      <genOperations ecoreOperation="changes.ecore#//NodeBinding/getNode"/>
+    </genClasses>
+    <genClasses ecoreClass="changes.ecore#//AttributeDomain"/>
     <genClasses image="false" ecoreClass="changes.ecore#//AttributeChange">
       <genOperations ecoreOperation="changes.ecore#//AttributeChange/getType"/>
       <genOperations ecoreOperation="changes.ecore#//AttributeChange/getNodeType"/>
       <genOperations ecoreOperation="changes.ecore#//AttributeChange/getValueType"/>
     </genClasses>
+    <genClasses ecoreClass="changes.ecore#//AttributeBinding"/>
     <genClasses image="false" ecoreClass="changes.ecore#//EdgeChange">
       <genOperations ecoreOperation="changes.ecore#//EdgeChange/getType"/>
       <genOperations ecoreOperation="changes.ecore#//EdgeChange/geSourceType"/>
       <genOperations ecoreOperation="changes.ecore#//EdgeChange/getTargetType"/>
-      <genOperations ecoreOperation="changes.ecore#//EdgeChange/getContext"/>
-      <genOperations ecoreOperation="changes.ecore#//EdgeChange/adaptChange">
-        <genParameters ecoreParameter="changes.ecore#//EdgeChange/adaptChange/for"/>
+    </genClasses>
+    <genClasses ecoreClass="changes.ecore#//EdgeDomain"/>
+    <genClasses ecoreClass="changes.ecore#//EdgeBinding"/>
+    <genClasses image="false" ecoreClass="changes.ecore#//AttributeInstantiation"/>
+    <genClasses image="false" ecoreClass="changes.ecore#//ChangeInstantiation"/>
+    <genClasses image="false" ecoreClass="changes.ecore#//NodeInstantiation"/>
+    <genClasses image="false" ecoreClass="changes.ecore#//EdgeInstantiation"/>
+    <genClasses image="false" ecoreClass="changes.ecore#//AttributeNodeDomainDefinition">
+      <genOperations ecoreOperation="changes.ecore#//AttributeNodeDomainDefinition/nodeDomainContains">
+        <genParameters ecoreParameter="changes.ecore#//AttributeNodeDomainDefinition/nodeDomainContains/node"/>
       </genOperations>
     </genClasses>
-    <genClasses ecoreClass="changes.ecore#//ChangeContext">
-      <genOperations ecoreOperation="changes.ecore#//ChangeContext/getAction">
-        <genParameters ecoreParameter="changes.ecore#//ChangeContext/getAction/change"/>
+    <genClasses image="false" ecoreClass="changes.ecore#//AttributeValueDomainDefinition">
+      <genOperations ecoreOperation="changes.ecore#//AttributeValueDomainDefinition/valueDomainContains">
+        <genParameters ecoreParameter="changes.ecore#//AttributeValueDomainDefinition/valueDomainContains/value"/>
       </genOperations>
     </genClasses>
-    <genClasses ecoreClass="changes.ecore#//UnboundNodeChange">
-      <genOperations ecoreOperation="changes.ecore#//UnboundNodeChange/getNodeDomains"/>
+    <genClasses image="false" ecoreClass="changes.ecore#//AttributeNodeDomain">
+      <genOperations ecoreOperation="changes.ecore#//AttributeNodeDomain/getNodeDomain"/>
     </genClasses>
-    <genClasses ecoreClass="changes.ecore#//BoundNodeChange">
-      <genOperations ecoreOperation="changes.ecore#//BoundNodeChange/getNode"/>
+    <genClasses image="false" ecoreClass="changes.ecore#//AttributeValueDomain">
+      <genOperations ecoreOperation="changes.ecore#//AttributeValueDomain/getValueDomain"/>
     </genClasses>
-    <genClasses ecoreClass="changes.ecore#//UnboundAttributeChange">
-      <genOperations ecoreOperation="changes.ecore#//UnboundAttributeChange/getNodeDomain"/>
-      <genOperations ecoreOperation="changes.ecore#//UnboundAttributeChange/getValueDomain"/>
+    <genClasses image="false" ecoreClass="changes.ecore#//AttributeNodeBinding">
+      <genOperations ecoreOperation="changes.ecore#//AttributeNodeBinding/getNode"/>
     </genClasses>
-    <genClasses ecoreClass="changes.ecore#//BoundAttributeChange">
-      <genOperations ecoreOperation="changes.ecore#//BoundAttributeChange/getNode"/>
-      <genOperations ecoreOperation="changes.ecore#//BoundAttributeChange/getValue"/>
+    <genClasses image="false" ecoreClass="changes.ecore#//AttributeValueBinding">
+      <genOperations ecoreOperation="changes.ecore#//AttributeValueBinding/getValue"/>
     </genClasses>
-    <genClasses ecoreClass="changes.ecore#//UnboundEdgeChange">
-      <genOperations ecoreOperation="changes.ecore#//UnboundEdgeChange/getSourceDomain"/>
-      <genOperations ecoreOperation="changes.ecore#//UnboundEdgeChange/getTargetDomain"/>
-      <genOperations ecoreOperation="changes.ecore#//UnboundEdgeChange/getContext"/>
-    </genClasses>
-    <genClasses ecoreClass="changes.ecore#//BoundEdgeChange">
-      <genOperations ecoreOperation="changes.ecore#//BoundEdgeChange/getSource"/>
-      <genOperations ecoreOperation="changes.ecore#//BoundEdgeChange/getTarget"/>
-      <genOperations ecoreOperation="changes.ecore#//BoundEdgeChange/getContext"/>
-    </genClasses>
-    <genClasses ecoreClass="changes.ecore#//UnboundEdgeChangeContext">
-      <genOperations ecoreOperation="changes.ecore#//UnboundEdgeChangeContext/getSourceDomain">
-        <genParameters ecoreParameter="changes.ecore#//UnboundEdgeChangeContext/getSourceDomain/edgeChange"/>
-      </genOperations>
-      <genOperations ecoreOperation="changes.ecore#//UnboundEdgeChangeContext/getTargetDomain">
-        <genParameters ecoreParameter="changes.ecore#//UnboundEdgeChangeContext/getTargetDomain/edgeChange"/>
+    <genClasses image="false" ecoreClass="changes.ecore#//EdgeSourceDomainDefinition">
+      <genOperations ecoreOperation="changes.ecore#//EdgeSourceDomainDefinition/sourceDomainContains">
+        <genParameters ecoreParameter="changes.ecore#//EdgeSourceDomainDefinition/sourceDomainContains/sourceNode"/>
       </genOperations>
     </genClasses>
-    <genClasses ecoreClass="changes.ecore#//BoundEdgeChangeContext">
-      <genOperations ecoreOperation="changes.ecore#//BoundEdgeChangeContext/getTarget">
-        <genParameters ecoreParameter="changes.ecore#//BoundEdgeChangeContext/getTarget/edgeChange"/>
-      </genOperations>
-      <genOperations ecoreOperation="changes.ecore#//BoundEdgeChangeContext/getSource">
-        <genParameters ecoreParameter="changes.ecore#//BoundEdgeChangeContext/getSource/edgeChange"/>
+    <genClasses image="false" ecoreClass="changes.ecore#//EdgeTargetDomainDefinition">
+      <genOperations ecoreOperation="changes.ecore#//EdgeTargetDomainDefinition/targetDomainContains">
+        <genParameters ecoreParameter="changes.ecore#//EdgeTargetDomainDefinition/targetDomainContains/targetNode"/>
       </genOperations>
     </genClasses>
-    <genClasses ecoreClass="changes.ecore#//EdgeChangeSet">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference changes.ecore#//EdgeChangeSet/changes"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference changes.ecore#//EdgeChangeSet/context"/>
+    <genClasses image="false" ecoreClass="changes.ecore#//EdgeSourceDomain">
+      <genOperations ecoreOperation="changes.ecore#//EdgeSourceDomain/getSourceDomain"/>
     </genClasses>
-    <genClasses ecoreClass="changes.ecore#//UnboundAttributeChangeContext">
-      <genOperations ecoreOperation="changes.ecore#//UnboundAttributeChangeContext/getNodeDomain">
-        <genParameters ecoreParameter="changes.ecore#//UnboundAttributeChangeContext/getNodeDomain/attributeChange"/>
-      </genOperations>
-      <genOperations ecoreOperation="changes.ecore#//UnboundAttributeChangeContext/getValueDomain">
-        <genParameters ecoreParameter="changes.ecore#//UnboundAttributeChangeContext/getValueDomain/attributeChange"/>
-      </genOperations>
+    <genClasses image="false" ecoreClass="changes.ecore#//EdgeTargetDomain">
+      <genOperations ecoreOperation="changes.ecore#//EdgeTargetDomain/getTargetDomain"/>
     </genClasses>
-    <genClasses ecoreClass="changes.ecore#//BoundAttributeChangeContext">
-      <genOperations ecoreOperation="changes.ecore#//BoundAttributeChangeContext/getNode">
-        <genParameters ecoreParameter="changes.ecore#//BoundAttributeChangeContext/getNode/attributeChange"/>
-      </genOperations>
-      <genOperations ecoreOperation="changes.ecore#//BoundAttributeChangeContext/getValue">
-        <genParameters ecoreParameter="changes.ecore#//BoundAttributeChangeContext/getValue/attributeChange"/>
+    <genClasses image="false" ecoreClass="changes.ecore#//EdgeSourceBinding">
+      <genOperations ecoreOperation="changes.ecore#//EdgeSourceBinding/getSource"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="changes.ecore#//EdgeTargetBinding">
+      <genOperations ecoreOperation="changes.ecore#//EdgeTargetBinding/getTarget"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="changes.ecore#//NodeChangeDomainDefinition">
+      <genOperations ecoreOperation="changes.ecore#//NodeChangeDomainDefinition/nodeDomainContains">
+        <genParameters ecoreParameter="changes.ecore#//NodeChangeDomainDefinition/nodeDomainContains/node"/>
       </genOperations>
     </genClasses>
-    <genClasses ecoreClass="changes.ecore#//AttributeChangeSet">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference changes.ecore#//AttributeChangeSet/context"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference changes.ecore#//AttributeChangeSet/changes"/>
-    </genClasses>
-    <genClasses ecoreClass="changes.ecore#//NodeChangeSet">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference changes.ecore#//NodeChangeSet/changes"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference changes.ecore#//NodeChangeSet/context"/>
-    </genClasses>
-    <genClasses ecoreClass="changes.ecore#//UnboundNodeChangeContext">
-      <genOperations ecoreOperation="changes.ecore#//UnboundNodeChangeContext/getNodeDomains">
-        <genParameters ecoreParameter="changes.ecore#//UnboundNodeChangeContext/getNodeDomains/nodeChange"/>
-      </genOperations>
-    </genClasses>
-    <genClasses ecoreClass="changes.ecore#//BoundNodeChangeContext">
-      <genOperations ecoreOperation="changes.ecore#//BoundNodeChangeContext/getType">
-        <genParameters ecoreParameter="changes.ecore#//BoundNodeChangeContext/getType/nodeChange"/>
-      </genOperations>
+    <genClasses image="false" ecoreClass="changes.ecore#//NodeChangeDomain">
+      <genOperations ecoreOperation="changes.ecore#//NodeChangeDomain/getNodeDomains"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

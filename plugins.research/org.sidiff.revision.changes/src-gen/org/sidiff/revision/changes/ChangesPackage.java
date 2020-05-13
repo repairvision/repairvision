@@ -3,11 +3,8 @@
 package org.sidiff.revision.changes;
 
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EDataType;
-import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
-import org.eclipse.emf.ecore.EReference;
 
 /**
  * <!-- begin-user-doc -->
@@ -59,721 +56,14 @@ public interface ChangesPackage extends EPackage {
 	ChangesPackage eINSTANCE = org.sidiff.revision.changes.impl.ChangesPackageImpl.init();
 
 	/**
-	 * The meta object id for the '{@link org.sidiff.revision.changes.NodeChangeContext <em>Node Change Context</em>}' class.
+	 * The meta object id for the '{@link org.sidiff.revision.changes.Change <em>Change</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see org.sidiff.revision.changes.NodeChangeContext
-	 * @see org.sidiff.revision.changes.impl.ChangesPackageImpl#getNodeChangeContext()
-	 * @generated
-	 */
-	int NODE_CHANGE_CONTEXT = 1;
-
-	/**
-	 * The feature id for the '<em><b>Nodes</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int NODE_CHANGE_CONTEXT__NODES = 0;
-
-	/**
-	 * The number of structural features of the '<em>Node Change Context</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int NODE_CHANGE_CONTEXT_FEATURE_COUNT = 1;
-
-	/**
-	 * The operation id for the '<em>Get Node</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int NODE_CHANGE_CONTEXT___GET_NODE__NODECHANGE = 0;
-
-	/**
-	 * The operation id for the '<em>Get Node Domains</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int NODE_CHANGE_CONTEXT___GET_NODE_DOMAINS__NODECHANGE = 1;
-
-	/**
-	 * The operation id for the '<em>Get Type</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int NODE_CHANGE_CONTEXT___GET_TYPE__NODECHANGE = 2;
-
-	/**
-	 * The number of operations of the '<em>Node Change Context</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int NODE_CHANGE_CONTEXT_OPERATION_COUNT = 3;
-
-	/**
-	 * The meta object id for the '{@link org.sidiff.revision.changes.ChangeContext <em>Change Context</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.sidiff.revision.changes.ChangeContext
-	 * @see org.sidiff.revision.changes.impl.ChangesPackageImpl#getChangeContext()
-	 * @generated
-	 */
-	int CHANGE_CONTEXT = 8;
-
-	/**
-	 * The feature id for the '<em><b>Nodes</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CHANGE_CONTEXT__NODES = NODE_CHANGE_CONTEXT__NODES;
-
-	/**
-	 * The feature id for the '<em><b>Edges</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CHANGE_CONTEXT__EDGES = NODE_CHANGE_CONTEXT_FEATURE_COUNT + 0;
-
-	/**
-	 * The feature id for the '<em><b>Attributes</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CHANGE_CONTEXT__ATTRIBUTES = NODE_CHANGE_CONTEXT_FEATURE_COUNT + 1;
-
-	/**
-	 * The number of structural features of the '<em>Change Context</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CHANGE_CONTEXT_FEATURE_COUNT = NODE_CHANGE_CONTEXT_FEATURE_COUNT + 2;
-
-	/**
-	 * The operation id for the '<em>Get Node</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CHANGE_CONTEXT___GET_NODE__NODECHANGE = NODE_CHANGE_CONTEXT___GET_NODE__NODECHANGE;
-
-	/**
-	 * The operation id for the '<em>Get Node Domains</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CHANGE_CONTEXT___GET_NODE_DOMAINS__NODECHANGE = NODE_CHANGE_CONTEXT___GET_NODE_DOMAINS__NODECHANGE;
-
-	/**
-	 * The operation id for the '<em>Get Type</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CHANGE_CONTEXT___GET_TYPE__NODECHANGE = NODE_CHANGE_CONTEXT___GET_TYPE__NODECHANGE;
-
-	/**
-	 * The operation id for the '<em>Get Type</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CHANGE_CONTEXT___GET_TYPE__EDGECHANGE = NODE_CHANGE_CONTEXT_OPERATION_COUNT + 0;
-
-	/**
-	 * The operation id for the '<em>Get Source Type</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CHANGE_CONTEXT___GET_SOURCE_TYPE__EDGECHANGE = NODE_CHANGE_CONTEXT_OPERATION_COUNT + 1;
-
-	/**
-	 * The operation id for the '<em>Get Source Domain</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CHANGE_CONTEXT___GET_SOURCE_DOMAIN__EDGECHANGE = NODE_CHANGE_CONTEXT_OPERATION_COUNT + 2;
-
-	/**
-	 * The operation id for the '<em>Get Source</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CHANGE_CONTEXT___GET_SOURCE__EDGECHANGE = NODE_CHANGE_CONTEXT_OPERATION_COUNT + 3;
-
-	/**
-	 * The operation id for the '<em>Get Target Type</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CHANGE_CONTEXT___GET_TARGET_TYPE__EDGECHANGE = NODE_CHANGE_CONTEXT_OPERATION_COUNT + 4;
-
-	/**
-	 * The operation id for the '<em>Get Target Domain</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CHANGE_CONTEXT___GET_TARGET_DOMAIN__EDGECHANGE = NODE_CHANGE_CONTEXT_OPERATION_COUNT + 5;
-
-	/**
-	 * The operation id for the '<em>Get Target</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CHANGE_CONTEXT___GET_TARGET__EDGECHANGE = NODE_CHANGE_CONTEXT_OPERATION_COUNT + 6;
-
-	/**
-	 * The operation id for the '<em>Get Type</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CHANGE_CONTEXT___GET_TYPE__ATTRIBUTECHANGE = NODE_CHANGE_CONTEXT_OPERATION_COUNT + 7;
-
-	/**
-	 * The operation id for the '<em>Get Node</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CHANGE_CONTEXT___GET_NODE__ATTRIBUTECHANGE = NODE_CHANGE_CONTEXT_OPERATION_COUNT + 8;
-
-	/**
-	 * The operation id for the '<em>Get Node Type</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CHANGE_CONTEXT___GET_NODE_TYPE__ATTRIBUTECHANGE = NODE_CHANGE_CONTEXT_OPERATION_COUNT + 9;
-
-	/**
-	 * The operation id for the '<em>Get Node Domain</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CHANGE_CONTEXT___GET_NODE_DOMAIN__ATTRIBUTECHANGE = NODE_CHANGE_CONTEXT_OPERATION_COUNT + 10;
-
-	/**
-	 * The operation id for the '<em>Get Value Type</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CHANGE_CONTEXT___GET_VALUE_TYPE__ATTRIBUTECHANGE = NODE_CHANGE_CONTEXT_OPERATION_COUNT + 11;
-
-	/**
-	 * The operation id for the '<em>Get Value Domain</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CHANGE_CONTEXT___GET_VALUE_DOMAIN__ATTRIBUTECHANGE = NODE_CHANGE_CONTEXT_OPERATION_COUNT + 12;
-
-	/**
-	 * The operation id for the '<em>Get Value</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CHANGE_CONTEXT___GET_VALUE__ATTRIBUTECHANGE = NODE_CHANGE_CONTEXT_OPERATION_COUNT + 13;
-
-	/**
-	 * The operation id for the '<em>Get Action</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CHANGE_CONTEXT___GET_ACTION__CHANGE = NODE_CHANGE_CONTEXT_OPERATION_COUNT + 14;
-
-	/**
-	 * The number of operations of the '<em>Change Context</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CHANGE_CONTEXT_OPERATION_COUNT = NODE_CHANGE_CONTEXT_OPERATION_COUNT + 15;
-
-	/**
-	 * The meta object id for the '{@link org.sidiff.revision.changes.impl.ChangeSetImpl <em>Change Set</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.sidiff.revision.changes.impl.ChangeSetImpl
-	 * @see org.sidiff.revision.changes.impl.ChangesPackageImpl#getChangeSet()
-	 * @generated
-	 */
-	int CHANGE_SET = 0;
-
-	/**
-	 * The feature id for the '<em><b>Nodes</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CHANGE_SET__NODES = CHANGE_CONTEXT__NODES;
-
-	/**
-	 * The feature id for the '<em><b>Edges</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CHANGE_SET__EDGES = CHANGE_CONTEXT__EDGES;
-
-	/**
-	 * The feature id for the '<em><b>Attributes</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CHANGE_SET__ATTRIBUTES = CHANGE_CONTEXT__ATTRIBUTES;
-
-	/**
-	 * The number of structural features of the '<em>Change Set</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CHANGE_SET_FEATURE_COUNT = CHANGE_CONTEXT_FEATURE_COUNT + 0;
-
-	/**
-	 * The operation id for the '<em>Get Node</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CHANGE_SET___GET_NODE__NODECHANGE = CHANGE_CONTEXT___GET_NODE__NODECHANGE;
-
-	/**
-	 * The operation id for the '<em>Get Node Domains</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CHANGE_SET___GET_NODE_DOMAINS__NODECHANGE = CHANGE_CONTEXT___GET_NODE_DOMAINS__NODECHANGE;
-
-	/**
-	 * The operation id for the '<em>Get Type</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CHANGE_SET___GET_TYPE__NODECHANGE = CHANGE_CONTEXT___GET_TYPE__NODECHANGE;
-
-	/**
-	 * The operation id for the '<em>Get Type</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CHANGE_SET___GET_TYPE__EDGECHANGE = CHANGE_CONTEXT___GET_TYPE__EDGECHANGE;
-
-	/**
-	 * The operation id for the '<em>Get Source Type</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CHANGE_SET___GET_SOURCE_TYPE__EDGECHANGE = CHANGE_CONTEXT___GET_SOURCE_TYPE__EDGECHANGE;
-
-	/**
-	 * The operation id for the '<em>Get Source Domain</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CHANGE_SET___GET_SOURCE_DOMAIN__EDGECHANGE = CHANGE_CONTEXT___GET_SOURCE_DOMAIN__EDGECHANGE;
-
-	/**
-	 * The operation id for the '<em>Get Source</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CHANGE_SET___GET_SOURCE__EDGECHANGE = CHANGE_CONTEXT___GET_SOURCE__EDGECHANGE;
-
-	/**
-	 * The operation id for the '<em>Get Target Type</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CHANGE_SET___GET_TARGET_TYPE__EDGECHANGE = CHANGE_CONTEXT___GET_TARGET_TYPE__EDGECHANGE;
-
-	/**
-	 * The operation id for the '<em>Get Target Domain</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CHANGE_SET___GET_TARGET_DOMAIN__EDGECHANGE = CHANGE_CONTEXT___GET_TARGET_DOMAIN__EDGECHANGE;
-
-	/**
-	 * The operation id for the '<em>Get Target</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CHANGE_SET___GET_TARGET__EDGECHANGE = CHANGE_CONTEXT___GET_TARGET__EDGECHANGE;
-
-	/**
-	 * The operation id for the '<em>Get Type</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CHANGE_SET___GET_TYPE__ATTRIBUTECHANGE = CHANGE_CONTEXT___GET_TYPE__ATTRIBUTECHANGE;
-
-	/**
-	 * The operation id for the '<em>Get Node</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CHANGE_SET___GET_NODE__ATTRIBUTECHANGE = CHANGE_CONTEXT___GET_NODE__ATTRIBUTECHANGE;
-
-	/**
-	 * The operation id for the '<em>Get Node Type</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CHANGE_SET___GET_NODE_TYPE__ATTRIBUTECHANGE = CHANGE_CONTEXT___GET_NODE_TYPE__ATTRIBUTECHANGE;
-
-	/**
-	 * The operation id for the '<em>Get Node Domain</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CHANGE_SET___GET_NODE_DOMAIN__ATTRIBUTECHANGE = CHANGE_CONTEXT___GET_NODE_DOMAIN__ATTRIBUTECHANGE;
-
-	/**
-	 * The operation id for the '<em>Get Value Type</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CHANGE_SET___GET_VALUE_TYPE__ATTRIBUTECHANGE = CHANGE_CONTEXT___GET_VALUE_TYPE__ATTRIBUTECHANGE;
-
-	/**
-	 * The operation id for the '<em>Get Value Domain</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CHANGE_SET___GET_VALUE_DOMAIN__ATTRIBUTECHANGE = CHANGE_CONTEXT___GET_VALUE_DOMAIN__ATTRIBUTECHANGE;
-
-	/**
-	 * The operation id for the '<em>Get Value</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CHANGE_SET___GET_VALUE__ATTRIBUTECHANGE = CHANGE_CONTEXT___GET_VALUE__ATTRIBUTECHANGE;
-
-	/**
-	 * The operation id for the '<em>Get Action</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CHANGE_SET___GET_ACTION__CHANGE = CHANGE_CONTEXT___GET_ACTION__CHANGE;
-
-	/**
-	 * The operation id for the '<em>Get Changes</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CHANGE_SET___GET_CHANGES = CHANGE_CONTEXT_OPERATION_COUNT + 0;
-
-	/**
-	 * The number of operations of the '<em>Change Set</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CHANGE_SET_OPERATION_COUNT = CHANGE_CONTEXT_OPERATION_COUNT + 1;
-
-	/**
-	 * The meta object id for the '{@link org.sidiff.revision.changes.AttributeChangeContext <em>Attribute Change Context</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.sidiff.revision.changes.AttributeChangeContext
-	 * @see org.sidiff.revision.changes.impl.ChangesPackageImpl#getAttributeChangeContext()
-	 * @generated
-	 */
-	int ATTRIBUTE_CHANGE_CONTEXT = 2;
-
-	/**
-	 * The feature id for the '<em><b>Attributes</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ATTRIBUTE_CHANGE_CONTEXT__ATTRIBUTES = 0;
-
-	/**
-	 * The number of structural features of the '<em>Attribute Change Context</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ATTRIBUTE_CHANGE_CONTEXT_FEATURE_COUNT = 1;
-
-	/**
-	 * The operation id for the '<em>Get Type</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ATTRIBUTE_CHANGE_CONTEXT___GET_TYPE__ATTRIBUTECHANGE = 0;
-
-	/**
-	 * The operation id for the '<em>Get Node</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ATTRIBUTE_CHANGE_CONTEXT___GET_NODE__ATTRIBUTECHANGE = 1;
-
-	/**
-	 * The operation id for the '<em>Get Node Type</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ATTRIBUTE_CHANGE_CONTEXT___GET_NODE_TYPE__ATTRIBUTECHANGE = 2;
-
-	/**
-	 * The operation id for the '<em>Get Node Domain</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ATTRIBUTE_CHANGE_CONTEXT___GET_NODE_DOMAIN__ATTRIBUTECHANGE = 3;
-
-	/**
-	 * The operation id for the '<em>Get Value Type</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ATTRIBUTE_CHANGE_CONTEXT___GET_VALUE_TYPE__ATTRIBUTECHANGE = 4;
-
-	/**
-	 * The operation id for the '<em>Get Value Domain</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ATTRIBUTE_CHANGE_CONTEXT___GET_VALUE_DOMAIN__ATTRIBUTECHANGE = 5;
-
-	/**
-	 * The operation id for the '<em>Get Value</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ATTRIBUTE_CHANGE_CONTEXT___GET_VALUE__ATTRIBUTECHANGE = 6;
-
-	/**
-	 * The number of operations of the '<em>Attribute Change Context</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ATTRIBUTE_CHANGE_CONTEXT_OPERATION_COUNT = 7;
-
-	/**
-	 * The meta object id for the '{@link org.sidiff.revision.changes.EdgeChangeContext <em>Edge Change Context</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.sidiff.revision.changes.EdgeChangeContext
-	 * @see org.sidiff.revision.changes.impl.ChangesPackageImpl#getEdgeChangeContext()
-	 * @generated
-	 */
-	int EDGE_CHANGE_CONTEXT = 3;
-
-	/**
-	 * The feature id for the '<em><b>Edges</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int EDGE_CHANGE_CONTEXT__EDGES = 0;
-
-	/**
-	 * The number of structural features of the '<em>Edge Change Context</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int EDGE_CHANGE_CONTEXT_FEATURE_COUNT = 1;
-
-	/**
-	 * The operation id for the '<em>Get Type</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int EDGE_CHANGE_CONTEXT___GET_TYPE__EDGECHANGE = 0;
-
-	/**
-	 * The operation id for the '<em>Get Source Type</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int EDGE_CHANGE_CONTEXT___GET_SOURCE_TYPE__EDGECHANGE = 1;
-
-	/**
-	 * The operation id for the '<em>Get Source Domain</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int EDGE_CHANGE_CONTEXT___GET_SOURCE_DOMAIN__EDGECHANGE = 2;
-
-	/**
-	 * The operation id for the '<em>Get Source</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int EDGE_CHANGE_CONTEXT___GET_SOURCE__EDGECHANGE = 3;
-
-	/**
-	 * The operation id for the '<em>Get Target Type</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int EDGE_CHANGE_CONTEXT___GET_TARGET_TYPE__EDGECHANGE = 4;
-
-	/**
-	 * The operation id for the '<em>Get Target Domain</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int EDGE_CHANGE_CONTEXT___GET_TARGET_DOMAIN__EDGECHANGE = 5;
-
-	/**
-	 * The operation id for the '<em>Get Target</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int EDGE_CHANGE_CONTEXT___GET_TARGET__EDGECHANGE = 6;
-
-	/**
-	 * The number of operations of the '<em>Edge Change Context</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int EDGE_CHANGE_CONTEXT_OPERATION_COUNT = 7;
-
-	/**
-	 * The meta object id for the '{@link org.sidiff.revision.changes.impl.ChangeImpl <em>Change</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.sidiff.revision.changes.impl.ChangeImpl
+	 * @see org.sidiff.revision.changes.Change
 	 * @see org.sidiff.revision.changes.impl.ChangesPackageImpl#getChange()
 	 * @generated
 	 */
-	int CHANGE = 4;
+	int CHANGE = 0;
 
 	/**
 	 * The number of structural features of the '<em>Change</em>' class.
@@ -803,23 +93,14 @@ public interface ChangesPackage extends EPackage {
 	int CHANGE_OPERATION_COUNT = 1;
 
 	/**
-	 * The meta object id for the '{@link org.sidiff.revision.changes.impl.NodeChangeImpl <em>Node Change</em>}' class.
+	 * The meta object id for the '{@link org.sidiff.revision.changes.NodeChange <em>Node Change</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see org.sidiff.revision.changes.impl.NodeChangeImpl
+	 * @see org.sidiff.revision.changes.NodeChange
 	 * @see org.sidiff.revision.changes.impl.ChangesPackageImpl#getNodeChange()
 	 * @generated
 	 */
-	int NODE_CHANGE = 5;
-
-	/**
-	 * The feature id for the '<em><b>Context</b></em>' container reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int NODE_CHANGE__CONTEXT = CHANGE_FEATURE_COUNT + 0;
+	int NODE_CHANGE = 1;
 
 	/**
 	 * The number of structural features of the '<em>Node Change</em>' class.
@@ -828,7 +109,7 @@ public interface ChangesPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int NODE_CHANGE_FEATURE_COUNT = CHANGE_FEATURE_COUNT + 1;
+	int NODE_CHANGE_FEATURE_COUNT = CHANGE_FEATURE_COUNT + 0;
 
 	/**
 	 * The operation id for the '<em>Get Action</em>' operation.
@@ -849,13 +130,116 @@ public interface ChangesPackage extends EPackage {
 	int NODE_CHANGE___GET_TYPE = CHANGE_OPERATION_COUNT + 0;
 
 	/**
-	 * The operation id for the '<em>Get Node Domains</em>' operation.
+	 * The number of operations of the '<em>Node Change</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int NODE_CHANGE___GET_NODE_DOMAINS = CHANGE_OPERATION_COUNT + 1;
+	int NODE_CHANGE_OPERATION_COUNT = CHANGE_OPERATION_COUNT + 1;
+
+	/**
+	 * The meta object id for the '{@link org.sidiff.revision.changes.ChangeInstantiation <em>Change Instantiation</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.sidiff.revision.changes.ChangeInstantiation
+	 * @see org.sidiff.revision.changes.impl.ChangesPackageImpl#getChangeInstantiation()
+	 * @generated
+	 */
+	int CHANGE_INSTANTIATION = 11;
+
+	/**
+	 * The number of structural features of the '<em>Change Instantiation</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CHANGE_INSTANTIATION_FEATURE_COUNT = 0;
+
+	/**
+	 * The number of operations of the '<em>Change Instantiation</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CHANGE_INSTANTIATION_OPERATION_COUNT = 0;
+
+	/**
+	 * The meta object id for the '{@link org.sidiff.revision.changes.NodeInstantiation <em>Node Instantiation</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.sidiff.revision.changes.NodeInstantiation
+	 * @see org.sidiff.revision.changes.impl.ChangesPackageImpl#getNodeInstantiation()
+	 * @generated
+	 */
+	int NODE_INSTANTIATION = 12;
+
+	/**
+	 * The number of structural features of the '<em>Node Instantiation</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NODE_INSTANTIATION_FEATURE_COUNT = CHANGE_INSTANTIATION_FEATURE_COUNT + 0;
+
+	/**
+	 * The number of operations of the '<em>Node Instantiation</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NODE_INSTANTIATION_OPERATION_COUNT = CHANGE_INSTANTIATION_OPERATION_COUNT + 0;
+
+	/**
+	 * The meta object id for the '{@link org.sidiff.revision.changes.NodeDomain <em>Node Domain</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.sidiff.revision.changes.NodeDomain
+	 * @see org.sidiff.revision.changes.impl.ChangesPackageImpl#getNodeDomain()
+	 * @generated
+	 */
+	int NODE_DOMAIN = 2;
+
+	/**
+	 * The number of structural features of the '<em>Node Domain</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NODE_DOMAIN_FEATURE_COUNT = NODE_INSTANTIATION_FEATURE_COUNT + 0;
+
+	/**
+	 * The number of operations of the '<em>Node Domain</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NODE_DOMAIN_OPERATION_COUNT = NODE_INSTANTIATION_OPERATION_COUNT + 0;
+
+	/**
+	 * The meta object id for the '{@link org.sidiff.revision.changes.NodeBinding <em>Node Binding</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.sidiff.revision.changes.NodeBinding
+	 * @see org.sidiff.revision.changes.impl.ChangesPackageImpl#getNodeBinding()
+	 * @generated
+	 */
+	int NODE_BINDING = 3;
+
+	/**
+	 * The number of structural features of the '<em>Node Binding</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NODE_BINDING_FEATURE_COUNT = NODE_INSTANTIATION_FEATURE_COUNT + 0;
 
 	/**
 	 * The operation id for the '<em>Get Node</em>' operation.
@@ -864,35 +248,82 @@ public interface ChangesPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int NODE_CHANGE___GET_NODE = CHANGE_OPERATION_COUNT + 2;
+	int NODE_BINDING___GET_NODE = NODE_INSTANTIATION_OPERATION_COUNT + 0;
 
 	/**
-	 * The number of operations of the '<em>Node Change</em>' class.
+	 * The number of operations of the '<em>Node Binding</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int NODE_CHANGE_OPERATION_COUNT = CHANGE_OPERATION_COUNT + 3;
+	int NODE_BINDING_OPERATION_COUNT = NODE_INSTANTIATION_OPERATION_COUNT + 1;
 
 	/**
-	 * The meta object id for the '{@link org.sidiff.revision.changes.impl.AttributeChangeImpl <em>Attribute Change</em>}' class.
+	 * The meta object id for the '{@link org.sidiff.revision.changes.AttributeInstantiation <em>Attribute Instantiation</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see org.sidiff.revision.changes.impl.AttributeChangeImpl
+	 * @see org.sidiff.revision.changes.AttributeInstantiation
+	 * @see org.sidiff.revision.changes.impl.ChangesPackageImpl#getAttributeInstantiation()
+	 * @generated
+	 */
+	int ATTRIBUTE_INSTANTIATION = 10;
+
+	/**
+	 * The number of structural features of the '<em>Attribute Instantiation</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ATTRIBUTE_INSTANTIATION_FEATURE_COUNT = CHANGE_INSTANTIATION_FEATURE_COUNT + 0;
+
+	/**
+	 * The number of operations of the '<em>Attribute Instantiation</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ATTRIBUTE_INSTANTIATION_OPERATION_COUNT = CHANGE_INSTANTIATION_OPERATION_COUNT + 0;
+
+	/**
+	 * The meta object id for the '{@link org.sidiff.revision.changes.AttributeDomain <em>Attribute Domain</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.sidiff.revision.changes.AttributeDomain
+	 * @see org.sidiff.revision.changes.impl.ChangesPackageImpl#getAttributeDomain()
+	 * @generated
+	 */
+	int ATTRIBUTE_DOMAIN = 4;
+
+	/**
+	 * The number of structural features of the '<em>Attribute Domain</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ATTRIBUTE_DOMAIN_FEATURE_COUNT = ATTRIBUTE_INSTANTIATION_FEATURE_COUNT + 0;
+
+	/**
+	 * The number of operations of the '<em>Attribute Domain</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ATTRIBUTE_DOMAIN_OPERATION_COUNT = ATTRIBUTE_INSTANTIATION_OPERATION_COUNT + 0;
+
+	/**
+	 * The meta object id for the '{@link org.sidiff.revision.changes.AttributeChange <em>Attribute Change</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.sidiff.revision.changes.AttributeChange
 	 * @see org.sidiff.revision.changes.impl.ChangesPackageImpl#getAttributeChange()
 	 * @generated
 	 */
-	int ATTRIBUTE_CHANGE = 6;
-
-	/**
-	 * The feature id for the '<em><b>Context</b></em>' container reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ATTRIBUTE_CHANGE__CONTEXT = CHANGE_FEATURE_COUNT + 0;
+	int ATTRIBUTE_CHANGE = 5;
 
 	/**
 	 * The number of structural features of the '<em>Attribute Change</em>' class.
@@ -901,7 +332,7 @@ public interface ChangesPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ATTRIBUTE_CHANGE_FEATURE_COUNT = CHANGE_FEATURE_COUNT + 1;
+	int ATTRIBUTE_CHANGE_FEATURE_COUNT = CHANGE_FEATURE_COUNT + 0;
 
 	/**
 	 * The operation id for the '<em>Get Action</em>' operation.
@@ -931,49 +362,13 @@ public interface ChangesPackage extends EPackage {
 	int ATTRIBUTE_CHANGE___GET_NODE_TYPE = CHANGE_OPERATION_COUNT + 1;
 
 	/**
-	 * The operation id for the '<em>Get Node Domain</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ATTRIBUTE_CHANGE___GET_NODE_DOMAIN = CHANGE_OPERATION_COUNT + 2;
-
-	/**
-	 * The operation id for the '<em>Get Node</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ATTRIBUTE_CHANGE___GET_NODE = CHANGE_OPERATION_COUNT + 3;
-
-	/**
 	 * The operation id for the '<em>Get Value Type</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int ATTRIBUTE_CHANGE___GET_VALUE_TYPE = CHANGE_OPERATION_COUNT + 4;
-
-	/**
-	 * The operation id for the '<em>Get Value Domain</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ATTRIBUTE_CHANGE___GET_VALUE_DOMAIN = CHANGE_OPERATION_COUNT + 5;
-
-	/**
-	 * The operation id for the '<em>Get Value</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ATTRIBUTE_CHANGE___GET_VALUE = CHANGE_OPERATION_COUNT + 6;
+	int ATTRIBUTE_CHANGE___GET_VALUE_TYPE = CHANGE_OPERATION_COUNT + 2;
 
 	/**
 	 * The number of operations of the '<em>Attribute Change</em>' class.
@@ -982,26 +377,45 @@ public interface ChangesPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ATTRIBUTE_CHANGE_OPERATION_COUNT = CHANGE_OPERATION_COUNT + 7;
+	int ATTRIBUTE_CHANGE_OPERATION_COUNT = CHANGE_OPERATION_COUNT + 3;
 
 	/**
-	 * The meta object id for the '{@link org.sidiff.revision.changes.impl.EdgeChangeImpl <em>Edge Change</em>}' class.
+	 * The meta object id for the '{@link org.sidiff.revision.changes.AttributeBinding <em>Attribute Binding</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see org.sidiff.revision.changes.impl.EdgeChangeImpl
-	 * @see org.sidiff.revision.changes.impl.ChangesPackageImpl#getEdgeChange()
+	 * @see org.sidiff.revision.changes.AttributeBinding
+	 * @see org.sidiff.revision.changes.impl.ChangesPackageImpl#getAttributeBinding()
 	 * @generated
 	 */
-	int EDGE_CHANGE = 7;
+	int ATTRIBUTE_BINDING = 6;
 
 	/**
-	 * The feature id for the '<em><b>Context</b></em>' container reference.
+	 * The number of structural features of the '<em>Attribute Binding</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int EDGE_CHANGE__CONTEXT = CHANGE_FEATURE_COUNT + 0;
+	int ATTRIBUTE_BINDING_FEATURE_COUNT = ATTRIBUTE_INSTANTIATION_FEATURE_COUNT + 0;
+
+	/**
+	 * The number of operations of the '<em>Attribute Binding</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ATTRIBUTE_BINDING_OPERATION_COUNT = ATTRIBUTE_INSTANTIATION_OPERATION_COUNT + 0;
+
+	/**
+	 * The meta object id for the '{@link org.sidiff.revision.changes.EdgeChange <em>Edge Change</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.sidiff.revision.changes.EdgeChange
+	 * @see org.sidiff.revision.changes.impl.ChangesPackageImpl#getEdgeChange()
+	 * @generated
+	 */
+	int EDGE_CHANGE = 7;
 
 	/**
 	 * The number of structural features of the '<em>Edge Change</em>' class.
@@ -1010,7 +424,7 @@ public interface ChangesPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int EDGE_CHANGE_FEATURE_COUNT = CHANGE_FEATURE_COUNT + 1;
+	int EDGE_CHANGE_FEATURE_COUNT = CHANGE_FEATURE_COUNT + 0;
 
 	/**
 	 * The operation id for the '<em>Get Action</em>' operation.
@@ -1040,49 +454,13 @@ public interface ChangesPackage extends EPackage {
 	int EDGE_CHANGE___GE_SOURCE_TYPE = CHANGE_OPERATION_COUNT + 1;
 
 	/**
-	 * The operation id for the '<em>Get Source Domain</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int EDGE_CHANGE___GET_SOURCE_DOMAIN = CHANGE_OPERATION_COUNT + 2;
-
-	/**
-	 * The operation id for the '<em>Get Source</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int EDGE_CHANGE___GET_SOURCE = CHANGE_OPERATION_COUNT + 3;
-
-	/**
 	 * The operation id for the '<em>Get Target Type</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int EDGE_CHANGE___GET_TARGET_TYPE = CHANGE_OPERATION_COUNT + 4;
-
-	/**
-	 * The operation id for the '<em>Get Target Domain</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int EDGE_CHANGE___GET_TARGET_DOMAIN = CHANGE_OPERATION_COUNT + 5;
-
-	/**
-	 * The operation id for the '<em>Get Target</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int EDGE_CHANGE___GET_TARGET = CHANGE_OPERATION_COUNT + 6;
+	int EDGE_CHANGE___GET_TARGET_TYPE = CHANGE_OPERATION_COUNT + 2;
 
 	/**
 	 * The number of operations of the '<em>Edge Change</em>' class.
@@ -1091,280 +469,654 @@ public interface ChangesPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int EDGE_CHANGE_OPERATION_COUNT = CHANGE_OPERATION_COUNT + 7;
+	int EDGE_CHANGE_OPERATION_COUNT = CHANGE_OPERATION_COUNT + 3;
 
 	/**
-	 * The meta object id for the '{@link org.sidiff.revision.changes.ActionType <em>Action Type</em>}' enum.
+	 * The meta object id for the '{@link org.sidiff.revision.changes.EdgeInstantiation <em>Edge Instantiation</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see org.sidiff.revision.changes.ActionType
-	 * @see org.sidiff.revision.changes.impl.ChangesPackageImpl#getActionType()
+	 * @see org.sidiff.revision.changes.EdgeInstantiation
+	 * @see org.sidiff.revision.changes.impl.ChangesPackageImpl#getEdgeInstantiation()
 	 * @generated
 	 */
-	int ACTION_TYPE = 9;
+	int EDGE_INSTANTIATION = 13;
 
 	/**
-	 * The meta object id for the '<em>Change Iterator</em>' data type.
+	 * The number of structural features of the '<em>Edge Instantiation</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see java.util.Iterator
-	 * @see org.sidiff.revision.changes.impl.ChangesPackageImpl#getChangeIterator()
 	 * @generated
+	 * @ordered
 	 */
-	int CHANGE_ITERATOR = 10;
+	int EDGE_INSTANTIATION_FEATURE_COUNT = CHANGE_INSTANTIATION_FEATURE_COUNT + 0;
 
 	/**
-	 * Returns the meta object for class '{@link org.sidiff.revision.changes.ChangeSet <em>Change Set</em>}'.
+	 * The number of operations of the '<em>Edge Instantiation</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Change Set</em>'.
-	 * @see org.sidiff.revision.changes.ChangeSet
 	 * @generated
+	 * @ordered
 	 */
-	EClass getChangeSet();
+	int EDGE_INSTANTIATION_OPERATION_COUNT = CHANGE_INSTANTIATION_OPERATION_COUNT + 0;
 
 	/**
-	 * Returns the meta object for the '{@link org.sidiff.revision.changes.ChangeSet#getChanges() <em>Get Changes</em>}' operation.
+	 * The meta object id for the '{@link org.sidiff.revision.changes.EdgeDomain <em>Edge Domain</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Get Changes</em>' operation.
-	 * @see org.sidiff.revision.changes.ChangeSet#getChanges()
+	 * @see org.sidiff.revision.changes.EdgeDomain
+	 * @see org.sidiff.revision.changes.impl.ChangesPackageImpl#getEdgeDomain()
 	 * @generated
 	 */
-	EOperation getChangeSet__GetChanges();
+	int EDGE_DOMAIN = 8;
 
 	/**
-	 * Returns the meta object for class '{@link org.sidiff.revision.changes.NodeChangeContext <em>Node Change Context</em>}'.
+	 * The number of structural features of the '<em>Edge Domain</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Node Change Context</em>'.
-	 * @see org.sidiff.revision.changes.NodeChangeContext
 	 * @generated
+	 * @ordered
 	 */
-	EClass getNodeChangeContext();
+	int EDGE_DOMAIN_FEATURE_COUNT = EDGE_INSTANTIATION_FEATURE_COUNT + 0;
 
 	/**
-	 * Returns the meta object for the containment reference list '{@link org.sidiff.revision.changes.NodeChangeContext#getNodes <em>Nodes</em>}'.
+	 * The number of operations of the '<em>Edge Domain</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference list '<em>Nodes</em>'.
-	 * @see org.sidiff.revision.changes.NodeChangeContext#getNodes()
-	 * @see #getNodeChangeContext()
 	 * @generated
+	 * @ordered
 	 */
-	EReference getNodeChangeContext_Nodes();
+	int EDGE_DOMAIN_OPERATION_COUNT = EDGE_INSTANTIATION_OPERATION_COUNT + 0;
 
 	/**
-	 * Returns the meta object for the '{@link org.sidiff.revision.changes.NodeChangeContext#getNode(org.sidiff.revision.changes.NodeChange) <em>Get Node</em>}' operation.
+	 * The meta object id for the '{@link org.sidiff.revision.changes.EdgeBinding <em>Edge Binding</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Get Node</em>' operation.
-	 * @see org.sidiff.revision.changes.NodeChangeContext#getNode(org.sidiff.revision.changes.NodeChange)
+	 * @see org.sidiff.revision.changes.EdgeBinding
+	 * @see org.sidiff.revision.changes.impl.ChangesPackageImpl#getEdgeBinding()
 	 * @generated
 	 */
-	EOperation getNodeChangeContext__GetNode__NodeChange();
+	int EDGE_BINDING = 9;
 
 	/**
-	 * Returns the meta object for the '{@link org.sidiff.revision.changes.NodeChangeContext#getNodeDomains(org.sidiff.revision.changes.NodeChange) <em>Get Node Domains</em>}' operation.
+	 * The number of structural features of the '<em>Edge Binding</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Get Node Domains</em>' operation.
-	 * @see org.sidiff.revision.changes.NodeChangeContext#getNodeDomains(org.sidiff.revision.changes.NodeChange)
 	 * @generated
+	 * @ordered
 	 */
-	EOperation getNodeChangeContext__GetNodeDomains__NodeChange();
+	int EDGE_BINDING_FEATURE_COUNT = EDGE_INSTANTIATION_FEATURE_COUNT + 0;
 
 	/**
-	 * Returns the meta object for the '{@link org.sidiff.revision.changes.NodeChangeContext#getType(org.sidiff.revision.changes.NodeChange) <em>Get Type</em>}' operation.
+	 * The number of operations of the '<em>Edge Binding</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Get Type</em>' operation.
-	 * @see org.sidiff.revision.changes.NodeChangeContext#getType(org.sidiff.revision.changes.NodeChange)
 	 * @generated
+	 * @ordered
 	 */
-	EOperation getNodeChangeContext__GetType__NodeChange();
+	int EDGE_BINDING_OPERATION_COUNT = EDGE_INSTANTIATION_OPERATION_COUNT + 0;
 
 	/**
-	 * Returns the meta object for class '{@link org.sidiff.revision.changes.AttributeChangeContext <em>Attribute Change Context</em>}'.
+	 * The meta object id for the '{@link org.sidiff.revision.changes.AttributeNodeDomainDefinition <em>Attribute Node Domain Definition</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Attribute Change Context</em>'.
-	 * @see org.sidiff.revision.changes.AttributeChangeContext
+	 * @see org.sidiff.revision.changes.AttributeNodeDomainDefinition
+	 * @see org.sidiff.revision.changes.impl.ChangesPackageImpl#getAttributeNodeDomainDefinition()
 	 * @generated
 	 */
-	EClass getAttributeChangeContext();
+	int ATTRIBUTE_NODE_DOMAIN_DEFINITION = 14;
 
 	/**
-	 * Returns the meta object for the containment reference list '{@link org.sidiff.revision.changes.AttributeChangeContext#getAttributes <em>Attributes</em>}'.
+	 * The number of structural features of the '<em>Attribute Node Domain Definition</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference list '<em>Attributes</em>'.
-	 * @see org.sidiff.revision.changes.AttributeChangeContext#getAttributes()
-	 * @see #getAttributeChangeContext()
 	 * @generated
+	 * @ordered
 	 */
-	EReference getAttributeChangeContext_Attributes();
+	int ATTRIBUTE_NODE_DOMAIN_DEFINITION_FEATURE_COUNT = ATTRIBUTE_DOMAIN_FEATURE_COUNT + 0;
 
 	/**
-	 * Returns the meta object for the '{@link org.sidiff.revision.changes.AttributeChangeContext#getType(org.sidiff.revision.changes.AttributeChange) <em>Get Type</em>}' operation.
+	 * The operation id for the '<em>Node Domain Contains</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Get Type</em>' operation.
-	 * @see org.sidiff.revision.changes.AttributeChangeContext#getType(org.sidiff.revision.changes.AttributeChange)
 	 * @generated
+	 * @ordered
 	 */
-	EOperation getAttributeChangeContext__GetType__AttributeChange();
+	int ATTRIBUTE_NODE_DOMAIN_DEFINITION___NODE_DOMAIN_CONTAINS__EOBJECT = ATTRIBUTE_DOMAIN_OPERATION_COUNT + 0;
 
 	/**
-	 * Returns the meta object for the '{@link org.sidiff.revision.changes.AttributeChangeContext#getNode(org.sidiff.revision.changes.AttributeChange) <em>Get Node</em>}' operation.
+	 * The number of operations of the '<em>Attribute Node Domain Definition</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Get Node</em>' operation.
-	 * @see org.sidiff.revision.changes.AttributeChangeContext#getNode(org.sidiff.revision.changes.AttributeChange)
 	 * @generated
+	 * @ordered
 	 */
-	EOperation getAttributeChangeContext__GetNode__AttributeChange();
+	int ATTRIBUTE_NODE_DOMAIN_DEFINITION_OPERATION_COUNT = ATTRIBUTE_DOMAIN_OPERATION_COUNT + 1;
 
 	/**
-	 * Returns the meta object for the '{@link org.sidiff.revision.changes.AttributeChangeContext#getNodeType(org.sidiff.revision.changes.AttributeChange) <em>Get Node Type</em>}' operation.
+	 * The meta object id for the '{@link org.sidiff.revision.changes.AttributeValueDomainDefinition <em>Attribute Value Domain Definition</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Get Node Type</em>' operation.
-	 * @see org.sidiff.revision.changes.AttributeChangeContext#getNodeType(org.sidiff.revision.changes.AttributeChange)
+	 * @see org.sidiff.revision.changes.AttributeValueDomainDefinition
+	 * @see org.sidiff.revision.changes.impl.ChangesPackageImpl#getAttributeValueDomainDefinition()
 	 * @generated
 	 */
-	EOperation getAttributeChangeContext__GetNodeType__AttributeChange();
+	int ATTRIBUTE_VALUE_DOMAIN_DEFINITION = 15;
 
 	/**
-	 * Returns the meta object for the '{@link org.sidiff.revision.changes.AttributeChangeContext#getNodeDomain(org.sidiff.revision.changes.AttributeChange) <em>Get Node Domain</em>}' operation.
+	 * The number of structural features of the '<em>Attribute Value Domain Definition</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Get Node Domain</em>' operation.
-	 * @see org.sidiff.revision.changes.AttributeChangeContext#getNodeDomain(org.sidiff.revision.changes.AttributeChange)
 	 * @generated
+	 * @ordered
 	 */
-	EOperation getAttributeChangeContext__GetNodeDomain__AttributeChange();
+	int ATTRIBUTE_VALUE_DOMAIN_DEFINITION_FEATURE_COUNT = ATTRIBUTE_DOMAIN_FEATURE_COUNT + 0;
 
 	/**
-	 * Returns the meta object for the '{@link org.sidiff.revision.changes.AttributeChangeContext#getValueType(org.sidiff.revision.changes.AttributeChange) <em>Get Value Type</em>}' operation.
+	 * The operation id for the '<em>Value Domain Contains</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Get Value Type</em>' operation.
-	 * @see org.sidiff.revision.changes.AttributeChangeContext#getValueType(org.sidiff.revision.changes.AttributeChange)
 	 * @generated
+	 * @ordered
 	 */
-	EOperation getAttributeChangeContext__GetValueType__AttributeChange();
+	int ATTRIBUTE_VALUE_DOMAIN_DEFINITION___VALUE_DOMAIN_CONTAINS__OBJECT = ATTRIBUTE_DOMAIN_OPERATION_COUNT + 0;
 
 	/**
-	 * Returns the meta object for the '{@link org.sidiff.revision.changes.AttributeChangeContext#getValueDomain(org.sidiff.revision.changes.AttributeChange) <em>Get Value Domain</em>}' operation.
+	 * The number of operations of the '<em>Attribute Value Domain Definition</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Get Value Domain</em>' operation.
-	 * @see org.sidiff.revision.changes.AttributeChangeContext#getValueDomain(org.sidiff.revision.changes.AttributeChange)
 	 * @generated
+	 * @ordered
 	 */
-	EOperation getAttributeChangeContext__GetValueDomain__AttributeChange();
+	int ATTRIBUTE_VALUE_DOMAIN_DEFINITION_OPERATION_COUNT = ATTRIBUTE_DOMAIN_OPERATION_COUNT + 1;
 
 	/**
-	 * Returns the meta object for the '{@link org.sidiff.revision.changes.AttributeChangeContext#getValue(org.sidiff.revision.changes.AttributeChange) <em>Get Value</em>}' operation.
+	 * The meta object id for the '{@link org.sidiff.revision.changes.AttributeNodeDomain <em>Attribute Node Domain</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Get Value</em>' operation.
-	 * @see org.sidiff.revision.changes.AttributeChangeContext#getValue(org.sidiff.revision.changes.AttributeChange)
+	 * @see org.sidiff.revision.changes.AttributeNodeDomain
+	 * @see org.sidiff.revision.changes.impl.ChangesPackageImpl#getAttributeNodeDomain()
 	 * @generated
 	 */
-	EOperation getAttributeChangeContext__GetValue__AttributeChange();
+	int ATTRIBUTE_NODE_DOMAIN = 16;
 
 	/**
-	 * Returns the meta object for class '{@link org.sidiff.revision.changes.EdgeChangeContext <em>Edge Change Context</em>}'.
+	 * The number of structural features of the '<em>Attribute Node Domain</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Edge Change Context</em>'.
-	 * @see org.sidiff.revision.changes.EdgeChangeContext
 	 * @generated
+	 * @ordered
 	 */
-	EClass getEdgeChangeContext();
+	int ATTRIBUTE_NODE_DOMAIN_FEATURE_COUNT = ATTRIBUTE_NODE_DOMAIN_DEFINITION_FEATURE_COUNT + 0;
 
 	/**
-	 * Returns the meta object for the containment reference list '{@link org.sidiff.revision.changes.EdgeChangeContext#getEdges <em>Edges</em>}'.
+	 * The operation id for the '<em>Node Domain Contains</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference list '<em>Edges</em>'.
-	 * @see org.sidiff.revision.changes.EdgeChangeContext#getEdges()
-	 * @see #getEdgeChangeContext()
 	 * @generated
+	 * @ordered
 	 */
-	EReference getEdgeChangeContext_Edges();
+	int ATTRIBUTE_NODE_DOMAIN___NODE_DOMAIN_CONTAINS__EOBJECT = ATTRIBUTE_NODE_DOMAIN_DEFINITION___NODE_DOMAIN_CONTAINS__EOBJECT;
 
 	/**
-	 * Returns the meta object for the '{@link org.sidiff.revision.changes.EdgeChangeContext#getTargetType(org.sidiff.revision.changes.EdgeChange) <em>Get Target Type</em>}' operation.
+	 * The operation id for the '<em>Get Node Domain</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Get Target Type</em>' operation.
-	 * @see org.sidiff.revision.changes.EdgeChangeContext#getTargetType(org.sidiff.revision.changes.EdgeChange)
 	 * @generated
+	 * @ordered
 	 */
-	EOperation getEdgeChangeContext__GetTargetType__EdgeChange();
+	int ATTRIBUTE_NODE_DOMAIN___GET_NODE_DOMAIN = ATTRIBUTE_NODE_DOMAIN_DEFINITION_OPERATION_COUNT + 0;
 
 	/**
-	 * Returns the meta object for the '{@link org.sidiff.revision.changes.EdgeChangeContext#getType(org.sidiff.revision.changes.EdgeChange) <em>Get Type</em>}' operation.
+	 * The number of operations of the '<em>Attribute Node Domain</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Get Type</em>' operation.
-	 * @see org.sidiff.revision.changes.EdgeChangeContext#getType(org.sidiff.revision.changes.EdgeChange)
 	 * @generated
+	 * @ordered
 	 */
-	EOperation getEdgeChangeContext__GetType__EdgeChange();
+	int ATTRIBUTE_NODE_DOMAIN_OPERATION_COUNT = ATTRIBUTE_NODE_DOMAIN_DEFINITION_OPERATION_COUNT + 1;
 
 	/**
-	 * Returns the meta object for the '{@link org.sidiff.revision.changes.EdgeChangeContext#getSourceType(org.sidiff.revision.changes.EdgeChange) <em>Get Source Type</em>}' operation.
+	 * The meta object id for the '{@link org.sidiff.revision.changes.AttributeValueDomain <em>Attribute Value Domain</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Get Source Type</em>' operation.
-	 * @see org.sidiff.revision.changes.EdgeChangeContext#getSourceType(org.sidiff.revision.changes.EdgeChange)
+	 * @see org.sidiff.revision.changes.AttributeValueDomain
+	 * @see org.sidiff.revision.changes.impl.ChangesPackageImpl#getAttributeValueDomain()
 	 * @generated
 	 */
-	EOperation getEdgeChangeContext__GetSourceType__EdgeChange();
+	int ATTRIBUTE_VALUE_DOMAIN = 17;
 
 	/**
-	 * Returns the meta object for the '{@link org.sidiff.revision.changes.EdgeChangeContext#getSource(org.sidiff.revision.changes.EdgeChange) <em>Get Source</em>}' operation.
+	 * The number of structural features of the '<em>Attribute Value Domain</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Get Source</em>' operation.
-	 * @see org.sidiff.revision.changes.EdgeChangeContext#getSource(org.sidiff.revision.changes.EdgeChange)
 	 * @generated
+	 * @ordered
 	 */
-	EOperation getEdgeChangeContext__GetSource__EdgeChange();
+	int ATTRIBUTE_VALUE_DOMAIN_FEATURE_COUNT = ATTRIBUTE_VALUE_DOMAIN_DEFINITION_FEATURE_COUNT + 0;
 
 	/**
-	 * Returns the meta object for the '{@link org.sidiff.revision.changes.EdgeChangeContext#getSourceDomain(org.sidiff.revision.changes.EdgeChange) <em>Get Source Domain</em>}' operation.
+	 * The operation id for the '<em>Value Domain Contains</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Get Source Domain</em>' operation.
-	 * @see org.sidiff.revision.changes.EdgeChangeContext#getSourceDomain(org.sidiff.revision.changes.EdgeChange)
 	 * @generated
+	 * @ordered
 	 */
-	EOperation getEdgeChangeContext__GetSourceDomain__EdgeChange();
+	int ATTRIBUTE_VALUE_DOMAIN___VALUE_DOMAIN_CONTAINS__OBJECT = ATTRIBUTE_VALUE_DOMAIN_DEFINITION___VALUE_DOMAIN_CONTAINS__OBJECT;
 
 	/**
-	 * Returns the meta object for the '{@link org.sidiff.revision.changes.EdgeChangeContext#getTarget(org.sidiff.revision.changes.EdgeChange) <em>Get Target</em>}' operation.
+	 * The operation id for the '<em>Get Value Domain</em>' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Get Target</em>' operation.
-	 * @see org.sidiff.revision.changes.EdgeChangeContext#getTarget(org.sidiff.revision.changes.EdgeChange)
 	 * @generated
+	 * @ordered
 	 */
-	EOperation getEdgeChangeContext__GetTarget__EdgeChange();
+	int ATTRIBUTE_VALUE_DOMAIN___GET_VALUE_DOMAIN = ATTRIBUTE_VALUE_DOMAIN_DEFINITION_OPERATION_COUNT + 0;
 
 	/**
-	 * Returns the meta object for the '{@link org.sidiff.revision.changes.EdgeChangeContext#getTargetDomain(org.sidiff.revision.changes.EdgeChange) <em>Get Target Domain</em>}' operation.
+	 * The number of operations of the '<em>Attribute Value Domain</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Get Target Domain</em>' operation.
-	 * @see org.sidiff.revision.changes.EdgeChangeContext#getTargetDomain(org.sidiff.revision.changes.EdgeChange)
+	 * @generated
+	 * @ordered
+	 */
+	int ATTRIBUTE_VALUE_DOMAIN_OPERATION_COUNT = ATTRIBUTE_VALUE_DOMAIN_DEFINITION_OPERATION_COUNT + 1;
+
+	/**
+	 * The meta object id for the '{@link org.sidiff.revision.changes.AttributeNodeBinding <em>Attribute Node Binding</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.sidiff.revision.changes.AttributeNodeBinding
+	 * @see org.sidiff.revision.changes.impl.ChangesPackageImpl#getAttributeNodeBinding()
 	 * @generated
 	 */
-	EOperation getEdgeChangeContext__GetTargetDomain__EdgeChange();
+	int ATTRIBUTE_NODE_BINDING = 18;
+
+	/**
+	 * The number of structural features of the '<em>Attribute Node Binding</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ATTRIBUTE_NODE_BINDING_FEATURE_COUNT = ATTRIBUTE_BINDING_FEATURE_COUNT + 0;
+
+	/**
+	 * The operation id for the '<em>Get Node</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ATTRIBUTE_NODE_BINDING___GET_NODE = ATTRIBUTE_BINDING_OPERATION_COUNT + 0;
+
+	/**
+	 * The number of operations of the '<em>Attribute Node Binding</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ATTRIBUTE_NODE_BINDING_OPERATION_COUNT = ATTRIBUTE_BINDING_OPERATION_COUNT + 1;
+
+	/**
+	 * The meta object id for the '{@link org.sidiff.revision.changes.AttributeValueBinding <em>Attribute Value Binding</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.sidiff.revision.changes.AttributeValueBinding
+	 * @see org.sidiff.revision.changes.impl.ChangesPackageImpl#getAttributeValueBinding()
+	 * @generated
+	 */
+	int ATTRIBUTE_VALUE_BINDING = 19;
+
+	/**
+	 * The number of structural features of the '<em>Attribute Value Binding</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ATTRIBUTE_VALUE_BINDING_FEATURE_COUNT = ATTRIBUTE_BINDING_FEATURE_COUNT + 0;
+
+	/**
+	 * The operation id for the '<em>Get Value</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ATTRIBUTE_VALUE_BINDING___GET_VALUE = ATTRIBUTE_BINDING_OPERATION_COUNT + 0;
+
+	/**
+	 * The number of operations of the '<em>Attribute Value Binding</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ATTRIBUTE_VALUE_BINDING_OPERATION_COUNT = ATTRIBUTE_BINDING_OPERATION_COUNT + 1;
+
+	/**
+	 * The meta object id for the '{@link org.sidiff.revision.changes.EdgeSourceDomainDefinition <em>Edge Source Domain Definition</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.sidiff.revision.changes.EdgeSourceDomainDefinition
+	 * @see org.sidiff.revision.changes.impl.ChangesPackageImpl#getEdgeSourceDomainDefinition()
+	 * @generated
+	 */
+	int EDGE_SOURCE_DOMAIN_DEFINITION = 20;
+
+	/**
+	 * The number of structural features of the '<em>Edge Source Domain Definition</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EDGE_SOURCE_DOMAIN_DEFINITION_FEATURE_COUNT = EDGE_DOMAIN_FEATURE_COUNT + 0;
+
+	/**
+	 * The operation id for the '<em>Source Domain Contains</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EDGE_SOURCE_DOMAIN_DEFINITION___SOURCE_DOMAIN_CONTAINS__EOBJECT = EDGE_DOMAIN_OPERATION_COUNT + 0;
+
+	/**
+	 * The number of operations of the '<em>Edge Source Domain Definition</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EDGE_SOURCE_DOMAIN_DEFINITION_OPERATION_COUNT = EDGE_DOMAIN_OPERATION_COUNT + 1;
+
+	/**
+	 * The meta object id for the '{@link org.sidiff.revision.changes.EdgeTargetDomainDefinition <em>Edge Target Domain Definition</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.sidiff.revision.changes.EdgeTargetDomainDefinition
+	 * @see org.sidiff.revision.changes.impl.ChangesPackageImpl#getEdgeTargetDomainDefinition()
+	 * @generated
+	 */
+	int EDGE_TARGET_DOMAIN_DEFINITION = 21;
+
+	/**
+	 * The number of structural features of the '<em>Edge Target Domain Definition</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EDGE_TARGET_DOMAIN_DEFINITION_FEATURE_COUNT = EDGE_DOMAIN_FEATURE_COUNT + 0;
+
+	/**
+	 * The operation id for the '<em>Target Domain Contains</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EDGE_TARGET_DOMAIN_DEFINITION___TARGET_DOMAIN_CONTAINS__EOBJECT = EDGE_DOMAIN_OPERATION_COUNT + 0;
+
+	/**
+	 * The number of operations of the '<em>Edge Target Domain Definition</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EDGE_TARGET_DOMAIN_DEFINITION_OPERATION_COUNT = EDGE_DOMAIN_OPERATION_COUNT + 1;
+
+	/**
+	 * The meta object id for the '{@link org.sidiff.revision.changes.EdgeSourceDomain <em>Edge Source Domain</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.sidiff.revision.changes.EdgeSourceDomain
+	 * @see org.sidiff.revision.changes.impl.ChangesPackageImpl#getEdgeSourceDomain()
+	 * @generated
+	 */
+	int EDGE_SOURCE_DOMAIN = 22;
+
+	/**
+	 * The number of structural features of the '<em>Edge Source Domain</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EDGE_SOURCE_DOMAIN_FEATURE_COUNT = EDGE_SOURCE_DOMAIN_DEFINITION_FEATURE_COUNT + 0;
+
+	/**
+	 * The operation id for the '<em>Source Domain Contains</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EDGE_SOURCE_DOMAIN___SOURCE_DOMAIN_CONTAINS__EOBJECT = EDGE_SOURCE_DOMAIN_DEFINITION___SOURCE_DOMAIN_CONTAINS__EOBJECT;
+
+	/**
+	 * The operation id for the '<em>Get Source Domain</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EDGE_SOURCE_DOMAIN___GET_SOURCE_DOMAIN = EDGE_SOURCE_DOMAIN_DEFINITION_OPERATION_COUNT + 0;
+
+	/**
+	 * The number of operations of the '<em>Edge Source Domain</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EDGE_SOURCE_DOMAIN_OPERATION_COUNT = EDGE_SOURCE_DOMAIN_DEFINITION_OPERATION_COUNT + 1;
+
+	/**
+	 * The meta object id for the '{@link org.sidiff.revision.changes.EdgeTargetDomain <em>Edge Target Domain</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.sidiff.revision.changes.EdgeTargetDomain
+	 * @see org.sidiff.revision.changes.impl.ChangesPackageImpl#getEdgeTargetDomain()
+	 * @generated
+	 */
+	int EDGE_TARGET_DOMAIN = 23;
+
+	/**
+	 * The number of structural features of the '<em>Edge Target Domain</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EDGE_TARGET_DOMAIN_FEATURE_COUNT = EDGE_TARGET_DOMAIN_DEFINITION_FEATURE_COUNT + 0;
+
+	/**
+	 * The operation id for the '<em>Target Domain Contains</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EDGE_TARGET_DOMAIN___TARGET_DOMAIN_CONTAINS__EOBJECT = EDGE_TARGET_DOMAIN_DEFINITION___TARGET_DOMAIN_CONTAINS__EOBJECT;
+
+	/**
+	 * The operation id for the '<em>Get Target Domain</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EDGE_TARGET_DOMAIN___GET_TARGET_DOMAIN = EDGE_TARGET_DOMAIN_DEFINITION_OPERATION_COUNT + 0;
+
+	/**
+	 * The number of operations of the '<em>Edge Target Domain</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EDGE_TARGET_DOMAIN_OPERATION_COUNT = EDGE_TARGET_DOMAIN_DEFINITION_OPERATION_COUNT + 1;
+
+	/**
+	 * The meta object id for the '{@link org.sidiff.revision.changes.EdgeSourceBinding <em>Edge Source Binding</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.sidiff.revision.changes.EdgeSourceBinding
+	 * @see org.sidiff.revision.changes.impl.ChangesPackageImpl#getEdgeSourceBinding()
+	 * @generated
+	 */
+	int EDGE_SOURCE_BINDING = 24;
+
+	/**
+	 * The number of structural features of the '<em>Edge Source Binding</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EDGE_SOURCE_BINDING_FEATURE_COUNT = EDGE_BINDING_FEATURE_COUNT + 0;
+
+	/**
+	 * The operation id for the '<em>Get Source</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EDGE_SOURCE_BINDING___GET_SOURCE = EDGE_BINDING_OPERATION_COUNT + 0;
+
+	/**
+	 * The number of operations of the '<em>Edge Source Binding</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EDGE_SOURCE_BINDING_OPERATION_COUNT = EDGE_BINDING_OPERATION_COUNT + 1;
+
+	/**
+	 * The meta object id for the '{@link org.sidiff.revision.changes.EdgeTargetBinding <em>Edge Target Binding</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.sidiff.revision.changes.EdgeTargetBinding
+	 * @see org.sidiff.revision.changes.impl.ChangesPackageImpl#getEdgeTargetBinding()
+	 * @generated
+	 */
+	int EDGE_TARGET_BINDING = 25;
+
+	/**
+	 * The number of structural features of the '<em>Edge Target Binding</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EDGE_TARGET_BINDING_FEATURE_COUNT = EDGE_BINDING_FEATURE_COUNT + 0;
+
+	/**
+	 * The operation id for the '<em>Get Target</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EDGE_TARGET_BINDING___GET_TARGET = EDGE_BINDING_OPERATION_COUNT + 0;
+
+	/**
+	 * The number of operations of the '<em>Edge Target Binding</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EDGE_TARGET_BINDING_OPERATION_COUNT = EDGE_BINDING_OPERATION_COUNT + 1;
+
+	/**
+	 * The meta object id for the '{@link org.sidiff.revision.changes.NodeChangeDomainDefinition <em>Node Change Domain Definition</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.sidiff.revision.changes.NodeChangeDomainDefinition
+	 * @see org.sidiff.revision.changes.impl.ChangesPackageImpl#getNodeChangeDomainDefinition()
+	 * @generated
+	 */
+	int NODE_CHANGE_DOMAIN_DEFINITION = 26;
+
+	/**
+	 * The number of structural features of the '<em>Node Change Domain Definition</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NODE_CHANGE_DOMAIN_DEFINITION_FEATURE_COUNT = NODE_DOMAIN_FEATURE_COUNT + 0;
+
+	/**
+	 * The operation id for the '<em>Node Domain Contains</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NODE_CHANGE_DOMAIN_DEFINITION___NODE_DOMAIN_CONTAINS__EOBJECT = NODE_DOMAIN_OPERATION_COUNT + 0;
+
+	/**
+	 * The number of operations of the '<em>Node Change Domain Definition</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NODE_CHANGE_DOMAIN_DEFINITION_OPERATION_COUNT = NODE_DOMAIN_OPERATION_COUNT + 1;
+
+	/**
+	 * The meta object id for the '{@link org.sidiff.revision.changes.NodeChangeDomain <em>Node Change Domain</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.sidiff.revision.changes.NodeChangeDomain
+	 * @see org.sidiff.revision.changes.impl.ChangesPackageImpl#getNodeChangeDomain()
+	 * @generated
+	 */
+	int NODE_CHANGE_DOMAIN = 27;
+
+	/**
+	 * The number of structural features of the '<em>Node Change Domain</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NODE_CHANGE_DOMAIN_FEATURE_COUNT = NODE_CHANGE_DOMAIN_DEFINITION_FEATURE_COUNT + 0;
+
+	/**
+	 * The operation id for the '<em>Node Domain Contains</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NODE_CHANGE_DOMAIN___NODE_DOMAIN_CONTAINS__EOBJECT = NODE_CHANGE_DOMAIN_DEFINITION___NODE_DOMAIN_CONTAINS__EOBJECT;
+
+	/**
+	 * The operation id for the '<em>Get Node Domains</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NODE_CHANGE_DOMAIN___GET_NODE_DOMAINS = NODE_CHANGE_DOMAIN_DEFINITION_OPERATION_COUNT + 0;
+
+	/**
+	 * The number of operations of the '<em>Node Change Domain</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NODE_CHANGE_DOMAIN_OPERATION_COUNT = NODE_CHANGE_DOMAIN_DEFINITION_OPERATION_COUNT + 1;
 
 	/**
 	 * Returns the meta object for class '{@link org.sidiff.revision.changes.Change <em>Change</em>}'.
@@ -1397,17 +1149,6 @@ public interface ChangesPackage extends EPackage {
 	EClass getNodeChange();
 
 	/**
-	 * Returns the meta object for the container reference '{@link org.sidiff.revision.changes.NodeChange#getContext <em>Context</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the container reference '<em>Context</em>'.
-	 * @see org.sidiff.revision.changes.NodeChange#getContext()
-	 * @see #getNodeChange()
-	 * @generated
-	 */
-	EReference getNodeChange_Context();
-
-	/**
 	 * Returns the meta object for the '{@link org.sidiff.revision.changes.NodeChange#getType() <em>Get Type</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1418,24 +1159,44 @@ public interface ChangesPackage extends EPackage {
 	EOperation getNodeChange__GetType();
 
 	/**
-	 * Returns the meta object for the '{@link org.sidiff.revision.changes.NodeChange#getNodeDomains() <em>Get Node Domains</em>}' operation.
+	 * Returns the meta object for class '{@link org.sidiff.revision.changes.NodeDomain <em>Node Domain</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Get Node Domains</em>' operation.
-	 * @see org.sidiff.revision.changes.NodeChange#getNodeDomains()
+	 * @return the meta object for class '<em>Node Domain</em>'.
+	 * @see org.sidiff.revision.changes.NodeDomain
 	 * @generated
 	 */
-	EOperation getNodeChange__GetNodeDomains();
+	EClass getNodeDomain();
 
 	/**
-	 * Returns the meta object for the '{@link org.sidiff.revision.changes.NodeChange#getNode() <em>Get Node</em>}' operation.
+	 * Returns the meta object for class '{@link org.sidiff.revision.changes.NodeBinding <em>Node Binding</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Node Binding</em>'.
+	 * @see org.sidiff.revision.changes.NodeBinding
+	 * @generated
+	 */
+	EClass getNodeBinding();
+
+	/**
+	 * Returns the meta object for the '{@link org.sidiff.revision.changes.NodeBinding#getNode() <em>Get Node</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the '<em>Get Node</em>' operation.
-	 * @see org.sidiff.revision.changes.NodeChange#getNode()
+	 * @see org.sidiff.revision.changes.NodeBinding#getNode()
 	 * @generated
 	 */
-	EOperation getNodeChange__GetNode();
+	EOperation getNodeBinding__GetNode();
+
+	/**
+	 * Returns the meta object for class '{@link org.sidiff.revision.changes.AttributeDomain <em>Attribute Domain</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Attribute Domain</em>'.
+	 * @see org.sidiff.revision.changes.AttributeDomain
+	 * @generated
+	 */
+	EClass getAttributeDomain();
 
 	/**
 	 * Returns the meta object for class '{@link org.sidiff.revision.changes.AttributeChange <em>Attribute Change</em>}'.
@@ -1446,17 +1207,6 @@ public interface ChangesPackage extends EPackage {
 	 * @generated
 	 */
 	EClass getAttributeChange();
-
-	/**
-	 * Returns the meta object for the container reference '{@link org.sidiff.revision.changes.AttributeChange#getContext <em>Context</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the container reference '<em>Context</em>'.
-	 * @see org.sidiff.revision.changes.AttributeChange#getContext()
-	 * @see #getAttributeChange()
-	 * @generated
-	 */
-	EReference getAttributeChange_Context();
 
 	/**
 	 * Returns the meta object for the '{@link org.sidiff.revision.changes.AttributeChange#getType() <em>Get Type</em>}' operation.
@@ -1479,26 +1229,6 @@ public interface ChangesPackage extends EPackage {
 	EOperation getAttributeChange__GetNodeType();
 
 	/**
-	 * Returns the meta object for the '{@link org.sidiff.revision.changes.AttributeChange#getNodeDomain() <em>Get Node Domain</em>}' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Get Node Domain</em>' operation.
-	 * @see org.sidiff.revision.changes.AttributeChange#getNodeDomain()
-	 * @generated
-	 */
-	EOperation getAttributeChange__GetNodeDomain();
-
-	/**
-	 * Returns the meta object for the '{@link org.sidiff.revision.changes.AttributeChange#getNode() <em>Get Node</em>}' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Get Node</em>' operation.
-	 * @see org.sidiff.revision.changes.AttributeChange#getNode()
-	 * @generated
-	 */
-	EOperation getAttributeChange__GetNode();
-
-	/**
 	 * Returns the meta object for the '{@link org.sidiff.revision.changes.AttributeChange#getValueType() <em>Get Value Type</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1509,24 +1239,14 @@ public interface ChangesPackage extends EPackage {
 	EOperation getAttributeChange__GetValueType();
 
 	/**
-	 * Returns the meta object for the '{@link org.sidiff.revision.changes.AttributeChange#getValueDomain() <em>Get Value Domain</em>}' operation.
+	 * Returns the meta object for class '{@link org.sidiff.revision.changes.AttributeBinding <em>Attribute Binding</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Get Value Domain</em>' operation.
-	 * @see org.sidiff.revision.changes.AttributeChange#getValueDomain()
+	 * @return the meta object for class '<em>Attribute Binding</em>'.
+	 * @see org.sidiff.revision.changes.AttributeBinding
 	 * @generated
 	 */
-	EOperation getAttributeChange__GetValueDomain();
-
-	/**
-	 * Returns the meta object for the '{@link org.sidiff.revision.changes.AttributeChange#getValue() <em>Get Value</em>}' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Get Value</em>' operation.
-	 * @see org.sidiff.revision.changes.AttributeChange#getValue()
-	 * @generated
-	 */
-	EOperation getAttributeChange__GetValue();
+	EClass getAttributeBinding();
 
 	/**
 	 * Returns the meta object for class '{@link org.sidiff.revision.changes.EdgeChange <em>Edge Change</em>}'.
@@ -1537,17 +1257,6 @@ public interface ChangesPackage extends EPackage {
 	 * @generated
 	 */
 	EClass getEdgeChange();
-
-	/**
-	 * Returns the meta object for the container reference '{@link org.sidiff.revision.changes.EdgeChange#getContext <em>Context</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the container reference '<em>Context</em>'.
-	 * @see org.sidiff.revision.changes.EdgeChange#getContext()
-	 * @see #getEdgeChange()
-	 * @generated
-	 */
-	EReference getEdgeChange_Context();
 
 	/**
 	 * Returns the meta object for the '{@link org.sidiff.revision.changes.EdgeChange#getType() <em>Get Type</em>}' operation.
@@ -1570,26 +1279,6 @@ public interface ChangesPackage extends EPackage {
 	EOperation getEdgeChange__GeSourceType();
 
 	/**
-	 * Returns the meta object for the '{@link org.sidiff.revision.changes.EdgeChange#getSourceDomain() <em>Get Source Domain</em>}' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Get Source Domain</em>' operation.
-	 * @see org.sidiff.revision.changes.EdgeChange#getSourceDomain()
-	 * @generated
-	 */
-	EOperation getEdgeChange__GetSourceDomain();
-
-	/**
-	 * Returns the meta object for the '{@link org.sidiff.revision.changes.EdgeChange#getSource() <em>Get Source</em>}' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Get Source</em>' operation.
-	 * @see org.sidiff.revision.changes.EdgeChange#getSource()
-	 * @generated
-	 */
-	EOperation getEdgeChange__GetSource();
-
-	/**
 	 * Returns the meta object for the '{@link org.sidiff.revision.changes.EdgeChange#getTargetType() <em>Get Target Type</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1600,65 +1289,344 @@ public interface ChangesPackage extends EPackage {
 	EOperation getEdgeChange__GetTargetType();
 
 	/**
-	 * Returns the meta object for the '{@link org.sidiff.revision.changes.EdgeChange#getTargetDomain() <em>Get Target Domain</em>}' operation.
+	 * Returns the meta object for class '{@link org.sidiff.revision.changes.EdgeDomain <em>Edge Domain</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Edge Domain</em>'.
+	 * @see org.sidiff.revision.changes.EdgeDomain
+	 * @generated
+	 */
+	EClass getEdgeDomain();
+
+	/**
+	 * Returns the meta object for class '{@link org.sidiff.revision.changes.EdgeBinding <em>Edge Binding</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Edge Binding</em>'.
+	 * @see org.sidiff.revision.changes.EdgeBinding
+	 * @generated
+	 */
+	EClass getEdgeBinding();
+
+	/**
+	 * Returns the meta object for class '{@link org.sidiff.revision.changes.AttributeInstantiation <em>Attribute Instantiation</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Attribute Instantiation</em>'.
+	 * @see org.sidiff.revision.changes.AttributeInstantiation
+	 * @generated
+	 */
+	EClass getAttributeInstantiation();
+
+	/**
+	 * Returns the meta object for class '{@link org.sidiff.revision.changes.ChangeInstantiation <em>Change Instantiation</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Change Instantiation</em>'.
+	 * @see org.sidiff.revision.changes.ChangeInstantiation
+	 * @generated
+	 */
+	EClass getChangeInstantiation();
+
+	/**
+	 * Returns the meta object for class '{@link org.sidiff.revision.changes.NodeInstantiation <em>Node Instantiation</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Node Instantiation</em>'.
+	 * @see org.sidiff.revision.changes.NodeInstantiation
+	 * @generated
+	 */
+	EClass getNodeInstantiation();
+
+	/**
+	 * Returns the meta object for class '{@link org.sidiff.revision.changes.EdgeInstantiation <em>Edge Instantiation</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Edge Instantiation</em>'.
+	 * @see org.sidiff.revision.changes.EdgeInstantiation
+	 * @generated
+	 */
+	EClass getEdgeInstantiation();
+
+	/**
+	 * Returns the meta object for class '{@link org.sidiff.revision.changes.AttributeNodeDomainDefinition <em>Attribute Node Domain Definition</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Attribute Node Domain Definition</em>'.
+	 * @see org.sidiff.revision.changes.AttributeNodeDomainDefinition
+	 * @generated
+	 */
+	EClass getAttributeNodeDomainDefinition();
+
+	/**
+	 * Returns the meta object for the '{@link org.sidiff.revision.changes.AttributeNodeDomainDefinition#nodeDomainContains(org.eclipse.emf.ecore.EObject) <em>Node Domain Contains</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Node Domain Contains</em>' operation.
+	 * @see org.sidiff.revision.changes.AttributeNodeDomainDefinition#nodeDomainContains(org.eclipse.emf.ecore.EObject)
+	 * @generated
+	 */
+	EOperation getAttributeNodeDomainDefinition__NodeDomainContains__EObject();
+
+	/**
+	 * Returns the meta object for class '{@link org.sidiff.revision.changes.AttributeValueDomainDefinition <em>Attribute Value Domain Definition</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Attribute Value Domain Definition</em>'.
+	 * @see org.sidiff.revision.changes.AttributeValueDomainDefinition
+	 * @generated
+	 */
+	EClass getAttributeValueDomainDefinition();
+
+	/**
+	 * Returns the meta object for the '{@link org.sidiff.revision.changes.AttributeValueDomainDefinition#valueDomainContains(java.lang.Object) <em>Value Domain Contains</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Value Domain Contains</em>' operation.
+	 * @see org.sidiff.revision.changes.AttributeValueDomainDefinition#valueDomainContains(java.lang.Object)
+	 * @generated
+	 */
+	EOperation getAttributeValueDomainDefinition__ValueDomainContains__Object();
+
+	/**
+	 * Returns the meta object for class '{@link org.sidiff.revision.changes.AttributeNodeDomain <em>Attribute Node Domain</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Attribute Node Domain</em>'.
+	 * @see org.sidiff.revision.changes.AttributeNodeDomain
+	 * @generated
+	 */
+	EClass getAttributeNodeDomain();
+
+	/**
+	 * Returns the meta object for the '{@link org.sidiff.revision.changes.AttributeNodeDomain#getNodeDomain() <em>Get Node Domain</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Node Domain</em>' operation.
+	 * @see org.sidiff.revision.changes.AttributeNodeDomain#getNodeDomain()
+	 * @generated
+	 */
+	EOperation getAttributeNodeDomain__GetNodeDomain();
+
+	/**
+	 * Returns the meta object for class '{@link org.sidiff.revision.changes.AttributeValueDomain <em>Attribute Value Domain</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Attribute Value Domain</em>'.
+	 * @see org.sidiff.revision.changes.AttributeValueDomain
+	 * @generated
+	 */
+	EClass getAttributeValueDomain();
+
+	/**
+	 * Returns the meta object for the '{@link org.sidiff.revision.changes.AttributeValueDomain#getValueDomain() <em>Get Value Domain</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Value Domain</em>' operation.
+	 * @see org.sidiff.revision.changes.AttributeValueDomain#getValueDomain()
+	 * @generated
+	 */
+	EOperation getAttributeValueDomain__GetValueDomain();
+
+	/**
+	 * Returns the meta object for class '{@link org.sidiff.revision.changes.AttributeNodeBinding <em>Attribute Node Binding</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Attribute Node Binding</em>'.
+	 * @see org.sidiff.revision.changes.AttributeNodeBinding
+	 * @generated
+	 */
+	EClass getAttributeNodeBinding();
+
+	/**
+	 * Returns the meta object for the '{@link org.sidiff.revision.changes.AttributeNodeBinding#getNode() <em>Get Node</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Node</em>' operation.
+	 * @see org.sidiff.revision.changes.AttributeNodeBinding#getNode()
+	 * @generated
+	 */
+	EOperation getAttributeNodeBinding__GetNode();
+
+	/**
+	 * Returns the meta object for class '{@link org.sidiff.revision.changes.AttributeValueBinding <em>Attribute Value Binding</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Attribute Value Binding</em>'.
+	 * @see org.sidiff.revision.changes.AttributeValueBinding
+	 * @generated
+	 */
+	EClass getAttributeValueBinding();
+
+	/**
+	 * Returns the meta object for the '{@link org.sidiff.revision.changes.AttributeValueBinding#getValue() <em>Get Value</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Value</em>' operation.
+	 * @see org.sidiff.revision.changes.AttributeValueBinding#getValue()
+	 * @generated
+	 */
+	EOperation getAttributeValueBinding__GetValue();
+
+	/**
+	 * Returns the meta object for class '{@link org.sidiff.revision.changes.EdgeSourceDomainDefinition <em>Edge Source Domain Definition</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Edge Source Domain Definition</em>'.
+	 * @see org.sidiff.revision.changes.EdgeSourceDomainDefinition
+	 * @generated
+	 */
+	EClass getEdgeSourceDomainDefinition();
+
+	/**
+	 * Returns the meta object for the '{@link org.sidiff.revision.changes.EdgeSourceDomainDefinition#sourceDomainContains(org.eclipse.emf.ecore.EObject) <em>Source Domain Contains</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Source Domain Contains</em>' operation.
+	 * @see org.sidiff.revision.changes.EdgeSourceDomainDefinition#sourceDomainContains(org.eclipse.emf.ecore.EObject)
+	 * @generated
+	 */
+	EOperation getEdgeSourceDomainDefinition__SourceDomainContains__EObject();
+
+	/**
+	 * Returns the meta object for class '{@link org.sidiff.revision.changes.EdgeTargetDomainDefinition <em>Edge Target Domain Definition</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Edge Target Domain Definition</em>'.
+	 * @see org.sidiff.revision.changes.EdgeTargetDomainDefinition
+	 * @generated
+	 */
+	EClass getEdgeTargetDomainDefinition();
+
+	/**
+	 * Returns the meta object for the '{@link org.sidiff.revision.changes.EdgeTargetDomainDefinition#targetDomainContains(org.eclipse.emf.ecore.EObject) <em>Target Domain Contains</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Target Domain Contains</em>' operation.
+	 * @see org.sidiff.revision.changes.EdgeTargetDomainDefinition#targetDomainContains(org.eclipse.emf.ecore.EObject)
+	 * @generated
+	 */
+	EOperation getEdgeTargetDomainDefinition__TargetDomainContains__EObject();
+
+	/**
+	 * Returns the meta object for class '{@link org.sidiff.revision.changes.EdgeSourceDomain <em>Edge Source Domain</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Edge Source Domain</em>'.
+	 * @see org.sidiff.revision.changes.EdgeSourceDomain
+	 * @generated
+	 */
+	EClass getEdgeSourceDomain();
+
+	/**
+	 * Returns the meta object for the '{@link org.sidiff.revision.changes.EdgeSourceDomain#getSourceDomain() <em>Get Source Domain</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Source Domain</em>' operation.
+	 * @see org.sidiff.revision.changes.EdgeSourceDomain#getSourceDomain()
+	 * @generated
+	 */
+	EOperation getEdgeSourceDomain__GetSourceDomain();
+
+	/**
+	 * Returns the meta object for class '{@link org.sidiff.revision.changes.EdgeTargetDomain <em>Edge Target Domain</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Edge Target Domain</em>'.
+	 * @see org.sidiff.revision.changes.EdgeTargetDomain
+	 * @generated
+	 */
+	EClass getEdgeTargetDomain();
+
+	/**
+	 * Returns the meta object for the '{@link org.sidiff.revision.changes.EdgeTargetDomain#getTargetDomain() <em>Get Target Domain</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the '<em>Get Target Domain</em>' operation.
-	 * @see org.sidiff.revision.changes.EdgeChange#getTargetDomain()
+	 * @see org.sidiff.revision.changes.EdgeTargetDomain#getTargetDomain()
 	 * @generated
 	 */
-	EOperation getEdgeChange__GetTargetDomain();
+	EOperation getEdgeTargetDomain__GetTargetDomain();
 
 	/**
-	 * Returns the meta object for the '{@link org.sidiff.revision.changes.EdgeChange#getTarget() <em>Get Target</em>}' operation.
+	 * Returns the meta object for class '{@link org.sidiff.revision.changes.EdgeSourceBinding <em>Edge Source Binding</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Edge Source Binding</em>'.
+	 * @see org.sidiff.revision.changes.EdgeSourceBinding
+	 * @generated
+	 */
+	EClass getEdgeSourceBinding();
+
+	/**
+	 * Returns the meta object for the '{@link org.sidiff.revision.changes.EdgeSourceBinding#getSource() <em>Get Source</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Source</em>' operation.
+	 * @see org.sidiff.revision.changes.EdgeSourceBinding#getSource()
+	 * @generated
+	 */
+	EOperation getEdgeSourceBinding__GetSource();
+
+	/**
+	 * Returns the meta object for class '{@link org.sidiff.revision.changes.EdgeTargetBinding <em>Edge Target Binding</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Edge Target Binding</em>'.
+	 * @see org.sidiff.revision.changes.EdgeTargetBinding
+	 * @generated
+	 */
+	EClass getEdgeTargetBinding();
+
+	/**
+	 * Returns the meta object for the '{@link org.sidiff.revision.changes.EdgeTargetBinding#getTarget() <em>Get Target</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the '<em>Get Target</em>' operation.
-	 * @see org.sidiff.revision.changes.EdgeChange#getTarget()
+	 * @see org.sidiff.revision.changes.EdgeTargetBinding#getTarget()
 	 * @generated
 	 */
-	EOperation getEdgeChange__GetTarget();
+	EOperation getEdgeTargetBinding__GetTarget();
 
 	/**
-	 * Returns the meta object for class '{@link org.sidiff.revision.changes.ChangeContext <em>Change Context</em>}'.
+	 * Returns the meta object for class '{@link org.sidiff.revision.changes.NodeChangeDomainDefinition <em>Node Change Domain Definition</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Change Context</em>'.
-	 * @see org.sidiff.revision.changes.ChangeContext
+	 * @return the meta object for class '<em>Node Change Domain Definition</em>'.
+	 * @see org.sidiff.revision.changes.NodeChangeDomainDefinition
 	 * @generated
 	 */
-	EClass getChangeContext();
+	EClass getNodeChangeDomainDefinition();
 
 	/**
-	 * Returns the meta object for the '{@link org.sidiff.revision.changes.ChangeContext#getAction(org.sidiff.revision.changes.Change) <em>Get Action</em>}' operation.
+	 * Returns the meta object for the '{@link org.sidiff.revision.changes.NodeChangeDomainDefinition#nodeDomainContains(org.eclipse.emf.ecore.EObject) <em>Node Domain Contains</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Get Action</em>' operation.
-	 * @see org.sidiff.revision.changes.ChangeContext#getAction(org.sidiff.revision.changes.Change)
+	 * @return the meta object for the '<em>Node Domain Contains</em>' operation.
+	 * @see org.sidiff.revision.changes.NodeChangeDomainDefinition#nodeDomainContains(org.eclipse.emf.ecore.EObject)
 	 * @generated
 	 */
-	EOperation getChangeContext__GetAction__Change();
+	EOperation getNodeChangeDomainDefinition__NodeDomainContains__EObject();
 
 	/**
-	 * Returns the meta object for enum '{@link org.sidiff.revision.changes.ActionType <em>Action Type</em>}'.
+	 * Returns the meta object for class '{@link org.sidiff.revision.changes.NodeChangeDomain <em>Node Change Domain</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for enum '<em>Action Type</em>'.
-	 * @see org.sidiff.revision.changes.ActionType
+	 * @return the meta object for class '<em>Node Change Domain</em>'.
+	 * @see org.sidiff.revision.changes.NodeChangeDomain
 	 * @generated
 	 */
-	EEnum getActionType();
+	EClass getNodeChangeDomain();
 
 	/**
-	 * Returns the meta object for data type '{@link java.util.Iterator <em>Change Iterator</em>}'.
+	 * Returns the meta object for the '{@link org.sidiff.revision.changes.NodeChangeDomain#getNodeDomains() <em>Get Node Domains</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for data type '<em>Change Iterator</em>'.
-	 * @see java.util.Iterator
-	 * @model instanceClass="java.util.Iterator&lt;org.sidiff.revision.changes.Change&gt;" serializeable="false"
+	 * @return the meta object for the '<em>Get Node Domains</em>' operation.
+	 * @see org.sidiff.revision.changes.NodeChangeDomain#getNodeDomains()
 	 * @generated
 	 */
-	EDataType getChangeIterator();
+	EOperation getNodeChangeDomain__GetNodeDomains();
 
 	/**
 	 * Returns the factory that creates the instances of the model.
@@ -1684,232 +1652,10 @@ public interface ChangesPackage extends EPackage {
 	 */
 	interface Literals {
 		/**
-		 * The meta object literal for the '{@link org.sidiff.revision.changes.impl.ChangeSetImpl <em>Change Set</em>}' class.
+		 * The meta object literal for the '{@link org.sidiff.revision.changes.Change <em>Change</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @see org.sidiff.revision.changes.impl.ChangeSetImpl
-		 * @see org.sidiff.revision.changes.impl.ChangesPackageImpl#getChangeSet()
-		 * @generated
-		 */
-		EClass CHANGE_SET = eINSTANCE.getChangeSet();
-
-		/**
-		 * The meta object literal for the '<em><b>Get Changes</b></em>' operation.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EOperation CHANGE_SET___GET_CHANGES = eINSTANCE.getChangeSet__GetChanges();
-
-		/**
-		 * The meta object literal for the '{@link org.sidiff.revision.changes.NodeChangeContext <em>Node Change Context</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see org.sidiff.revision.changes.NodeChangeContext
-		 * @see org.sidiff.revision.changes.impl.ChangesPackageImpl#getNodeChangeContext()
-		 * @generated
-		 */
-		EClass NODE_CHANGE_CONTEXT = eINSTANCE.getNodeChangeContext();
-
-		/**
-		 * The meta object literal for the '<em><b>Nodes</b></em>' containment reference list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference NODE_CHANGE_CONTEXT__NODES = eINSTANCE.getNodeChangeContext_Nodes();
-
-		/**
-		 * The meta object literal for the '<em><b>Get Node</b></em>' operation.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EOperation NODE_CHANGE_CONTEXT___GET_NODE__NODECHANGE = eINSTANCE.getNodeChangeContext__GetNode__NodeChange();
-
-		/**
-		 * The meta object literal for the '<em><b>Get Node Domains</b></em>' operation.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EOperation NODE_CHANGE_CONTEXT___GET_NODE_DOMAINS__NODECHANGE = eINSTANCE
-				.getNodeChangeContext__GetNodeDomains__NodeChange();
-
-		/**
-		 * The meta object literal for the '<em><b>Get Type</b></em>' operation.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EOperation NODE_CHANGE_CONTEXT___GET_TYPE__NODECHANGE = eINSTANCE.getNodeChangeContext__GetType__NodeChange();
-
-		/**
-		 * The meta object literal for the '{@link org.sidiff.revision.changes.AttributeChangeContext <em>Attribute Change Context</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see org.sidiff.revision.changes.AttributeChangeContext
-		 * @see org.sidiff.revision.changes.impl.ChangesPackageImpl#getAttributeChangeContext()
-		 * @generated
-		 */
-		EClass ATTRIBUTE_CHANGE_CONTEXT = eINSTANCE.getAttributeChangeContext();
-
-		/**
-		 * The meta object literal for the '<em><b>Attributes</b></em>' containment reference list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference ATTRIBUTE_CHANGE_CONTEXT__ATTRIBUTES = eINSTANCE.getAttributeChangeContext_Attributes();
-
-		/**
-		 * The meta object literal for the '<em><b>Get Type</b></em>' operation.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EOperation ATTRIBUTE_CHANGE_CONTEXT___GET_TYPE__ATTRIBUTECHANGE = eINSTANCE
-				.getAttributeChangeContext__GetType__AttributeChange();
-
-		/**
-		 * The meta object literal for the '<em><b>Get Node</b></em>' operation.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EOperation ATTRIBUTE_CHANGE_CONTEXT___GET_NODE__ATTRIBUTECHANGE = eINSTANCE
-				.getAttributeChangeContext__GetNode__AttributeChange();
-
-		/**
-		 * The meta object literal for the '<em><b>Get Node Type</b></em>' operation.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EOperation ATTRIBUTE_CHANGE_CONTEXT___GET_NODE_TYPE__ATTRIBUTECHANGE = eINSTANCE
-				.getAttributeChangeContext__GetNodeType__AttributeChange();
-
-		/**
-		 * The meta object literal for the '<em><b>Get Node Domain</b></em>' operation.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EOperation ATTRIBUTE_CHANGE_CONTEXT___GET_NODE_DOMAIN__ATTRIBUTECHANGE = eINSTANCE
-				.getAttributeChangeContext__GetNodeDomain__AttributeChange();
-
-		/**
-		 * The meta object literal for the '<em><b>Get Value Type</b></em>' operation.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EOperation ATTRIBUTE_CHANGE_CONTEXT___GET_VALUE_TYPE__ATTRIBUTECHANGE = eINSTANCE
-				.getAttributeChangeContext__GetValueType__AttributeChange();
-
-		/**
-		 * The meta object literal for the '<em><b>Get Value Domain</b></em>' operation.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EOperation ATTRIBUTE_CHANGE_CONTEXT___GET_VALUE_DOMAIN__ATTRIBUTECHANGE = eINSTANCE
-				.getAttributeChangeContext__GetValueDomain__AttributeChange();
-
-		/**
-		 * The meta object literal for the '<em><b>Get Value</b></em>' operation.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EOperation ATTRIBUTE_CHANGE_CONTEXT___GET_VALUE__ATTRIBUTECHANGE = eINSTANCE
-				.getAttributeChangeContext__GetValue__AttributeChange();
-
-		/**
-		 * The meta object literal for the '{@link org.sidiff.revision.changes.EdgeChangeContext <em>Edge Change Context</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see org.sidiff.revision.changes.EdgeChangeContext
-		 * @see org.sidiff.revision.changes.impl.ChangesPackageImpl#getEdgeChangeContext()
-		 * @generated
-		 */
-		EClass EDGE_CHANGE_CONTEXT = eINSTANCE.getEdgeChangeContext();
-
-		/**
-		 * The meta object literal for the '<em><b>Edges</b></em>' containment reference list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference EDGE_CHANGE_CONTEXT__EDGES = eINSTANCE.getEdgeChangeContext_Edges();
-
-		/**
-		 * The meta object literal for the '<em><b>Get Target Type</b></em>' operation.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EOperation EDGE_CHANGE_CONTEXT___GET_TARGET_TYPE__EDGECHANGE = eINSTANCE
-				.getEdgeChangeContext__GetTargetType__EdgeChange();
-
-		/**
-		 * The meta object literal for the '<em><b>Get Type</b></em>' operation.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EOperation EDGE_CHANGE_CONTEXT___GET_TYPE__EDGECHANGE = eINSTANCE.getEdgeChangeContext__GetType__EdgeChange();
-
-		/**
-		 * The meta object literal for the '<em><b>Get Source Type</b></em>' operation.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EOperation EDGE_CHANGE_CONTEXT___GET_SOURCE_TYPE__EDGECHANGE = eINSTANCE
-				.getEdgeChangeContext__GetSourceType__EdgeChange();
-
-		/**
-		 * The meta object literal for the '<em><b>Get Source</b></em>' operation.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EOperation EDGE_CHANGE_CONTEXT___GET_SOURCE__EDGECHANGE = eINSTANCE
-				.getEdgeChangeContext__GetSource__EdgeChange();
-
-		/**
-		 * The meta object literal for the '<em><b>Get Source Domain</b></em>' operation.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EOperation EDGE_CHANGE_CONTEXT___GET_SOURCE_DOMAIN__EDGECHANGE = eINSTANCE
-				.getEdgeChangeContext__GetSourceDomain__EdgeChange();
-
-		/**
-		 * The meta object literal for the '<em><b>Get Target</b></em>' operation.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EOperation EDGE_CHANGE_CONTEXT___GET_TARGET__EDGECHANGE = eINSTANCE
-				.getEdgeChangeContext__GetTarget__EdgeChange();
-
-		/**
-		 * The meta object literal for the '<em><b>Get Target Domain</b></em>' operation.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EOperation EDGE_CHANGE_CONTEXT___GET_TARGET_DOMAIN__EDGECHANGE = eINSTANCE
-				.getEdgeChangeContext__GetTargetDomain__EdgeChange();
-
-		/**
-		 * The meta object literal for the '{@link org.sidiff.revision.changes.impl.ChangeImpl <em>Change</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see org.sidiff.revision.changes.impl.ChangeImpl
+		 * @see org.sidiff.revision.changes.Change
 		 * @see org.sidiff.revision.changes.impl.ChangesPackageImpl#getChange()
 		 * @generated
 		 */
@@ -1924,22 +1670,14 @@ public interface ChangesPackage extends EPackage {
 		EOperation CHANGE___GET_ACTION = eINSTANCE.getChange__GetAction();
 
 		/**
-		 * The meta object literal for the '{@link org.sidiff.revision.changes.impl.NodeChangeImpl <em>Node Change</em>}' class.
+		 * The meta object literal for the '{@link org.sidiff.revision.changes.NodeChange <em>Node Change</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @see org.sidiff.revision.changes.impl.NodeChangeImpl
+		 * @see org.sidiff.revision.changes.NodeChange
 		 * @see org.sidiff.revision.changes.impl.ChangesPackageImpl#getNodeChange()
 		 * @generated
 		 */
 		EClass NODE_CHANGE = eINSTANCE.getNodeChange();
-
-		/**
-		 * The meta object literal for the '<em><b>Context</b></em>' container reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference NODE_CHANGE__CONTEXT = eINSTANCE.getNodeChange_Context();
 
 		/**
 		 * The meta object literal for the '<em><b>Get Type</b></em>' operation.
@@ -1950,12 +1688,24 @@ public interface ChangesPackage extends EPackage {
 		EOperation NODE_CHANGE___GET_TYPE = eINSTANCE.getNodeChange__GetType();
 
 		/**
-		 * The meta object literal for the '<em><b>Get Node Domains</b></em>' operation.
+		 * The meta object literal for the '{@link org.sidiff.revision.changes.NodeDomain <em>Node Domain</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
+		 * @see org.sidiff.revision.changes.NodeDomain
+		 * @see org.sidiff.revision.changes.impl.ChangesPackageImpl#getNodeDomain()
 		 * @generated
 		 */
-		EOperation NODE_CHANGE___GET_NODE_DOMAINS = eINSTANCE.getNodeChange__GetNodeDomains();
+		EClass NODE_DOMAIN = eINSTANCE.getNodeDomain();
+
+		/**
+		 * The meta object literal for the '{@link org.sidiff.revision.changes.NodeBinding <em>Node Binding</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.sidiff.revision.changes.NodeBinding
+		 * @see org.sidiff.revision.changes.impl.ChangesPackageImpl#getNodeBinding()
+		 * @generated
+		 */
+		EClass NODE_BINDING = eINSTANCE.getNodeBinding();
 
 		/**
 		 * The meta object literal for the '<em><b>Get Node</b></em>' operation.
@@ -1963,25 +1713,27 @@ public interface ChangesPackage extends EPackage {
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EOperation NODE_CHANGE___GET_NODE = eINSTANCE.getNodeChange__GetNode();
+		EOperation NODE_BINDING___GET_NODE = eINSTANCE.getNodeBinding__GetNode();
 
 		/**
-		 * The meta object literal for the '{@link org.sidiff.revision.changes.impl.AttributeChangeImpl <em>Attribute Change</em>}' class.
+		 * The meta object literal for the '{@link org.sidiff.revision.changes.AttributeDomain <em>Attribute Domain</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @see org.sidiff.revision.changes.impl.AttributeChangeImpl
+		 * @see org.sidiff.revision.changes.AttributeDomain
+		 * @see org.sidiff.revision.changes.impl.ChangesPackageImpl#getAttributeDomain()
+		 * @generated
+		 */
+		EClass ATTRIBUTE_DOMAIN = eINSTANCE.getAttributeDomain();
+
+		/**
+		 * The meta object literal for the '{@link org.sidiff.revision.changes.AttributeChange <em>Attribute Change</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.sidiff.revision.changes.AttributeChange
 		 * @see org.sidiff.revision.changes.impl.ChangesPackageImpl#getAttributeChange()
 		 * @generated
 		 */
 		EClass ATTRIBUTE_CHANGE = eINSTANCE.getAttributeChange();
-
-		/**
-		 * The meta object literal for the '<em><b>Context</b></em>' container reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference ATTRIBUTE_CHANGE__CONTEXT = eINSTANCE.getAttributeChange_Context();
 
 		/**
 		 * The meta object literal for the '<em><b>Get Type</b></em>' operation.
@@ -2000,22 +1752,6 @@ public interface ChangesPackage extends EPackage {
 		EOperation ATTRIBUTE_CHANGE___GET_NODE_TYPE = eINSTANCE.getAttributeChange__GetNodeType();
 
 		/**
-		 * The meta object literal for the '<em><b>Get Node Domain</b></em>' operation.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EOperation ATTRIBUTE_CHANGE___GET_NODE_DOMAIN = eINSTANCE.getAttributeChange__GetNodeDomain();
-
-		/**
-		 * The meta object literal for the '<em><b>Get Node</b></em>' operation.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EOperation ATTRIBUTE_CHANGE___GET_NODE = eINSTANCE.getAttributeChange__GetNode();
-
-		/**
 		 * The meta object literal for the '<em><b>Get Value Type</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -2024,38 +1760,24 @@ public interface ChangesPackage extends EPackage {
 		EOperation ATTRIBUTE_CHANGE___GET_VALUE_TYPE = eINSTANCE.getAttributeChange__GetValueType();
 
 		/**
-		 * The meta object literal for the '<em><b>Get Value Domain</b></em>' operation.
+		 * The meta object literal for the '{@link org.sidiff.revision.changes.AttributeBinding <em>Attribute Binding</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
+		 * @see org.sidiff.revision.changes.AttributeBinding
+		 * @see org.sidiff.revision.changes.impl.ChangesPackageImpl#getAttributeBinding()
 		 * @generated
 		 */
-		EOperation ATTRIBUTE_CHANGE___GET_VALUE_DOMAIN = eINSTANCE.getAttributeChange__GetValueDomain();
+		EClass ATTRIBUTE_BINDING = eINSTANCE.getAttributeBinding();
 
 		/**
-		 * The meta object literal for the '<em><b>Get Value</b></em>' operation.
+		 * The meta object literal for the '{@link org.sidiff.revision.changes.EdgeChange <em>Edge Change</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EOperation ATTRIBUTE_CHANGE___GET_VALUE = eINSTANCE.getAttributeChange__GetValue();
-
-		/**
-		 * The meta object literal for the '{@link org.sidiff.revision.changes.impl.EdgeChangeImpl <em>Edge Change</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see org.sidiff.revision.changes.impl.EdgeChangeImpl
+		 * @see org.sidiff.revision.changes.EdgeChange
 		 * @see org.sidiff.revision.changes.impl.ChangesPackageImpl#getEdgeChange()
 		 * @generated
 		 */
 		EClass EDGE_CHANGE = eINSTANCE.getEdgeChange();
-
-		/**
-		 * The meta object literal for the '<em><b>Context</b></em>' container reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference EDGE_CHANGE__CONTEXT = eINSTANCE.getEdgeChange_Context();
 
 		/**
 		 * The meta object literal for the '<em><b>Get Type</b></em>' operation.
@@ -2074,22 +1796,6 @@ public interface ChangesPackage extends EPackage {
 		EOperation EDGE_CHANGE___GE_SOURCE_TYPE = eINSTANCE.getEdgeChange__GeSourceType();
 
 		/**
-		 * The meta object literal for the '<em><b>Get Source Domain</b></em>' operation.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EOperation EDGE_CHANGE___GET_SOURCE_DOMAIN = eINSTANCE.getEdgeChange__GetSourceDomain();
-
-		/**
-		 * The meta object literal for the '<em><b>Get Source</b></em>' operation.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EOperation EDGE_CHANGE___GET_SOURCE = eINSTANCE.getEdgeChange__GetSource();
-
-		/**
 		 * The meta object literal for the '<em><b>Get Target Type</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -2098,12 +1804,276 @@ public interface ChangesPackage extends EPackage {
 		EOperation EDGE_CHANGE___GET_TARGET_TYPE = eINSTANCE.getEdgeChange__GetTargetType();
 
 		/**
+		 * The meta object literal for the '{@link org.sidiff.revision.changes.EdgeDomain <em>Edge Domain</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.sidiff.revision.changes.EdgeDomain
+		 * @see org.sidiff.revision.changes.impl.ChangesPackageImpl#getEdgeDomain()
+		 * @generated
+		 */
+		EClass EDGE_DOMAIN = eINSTANCE.getEdgeDomain();
+
+		/**
+		 * The meta object literal for the '{@link org.sidiff.revision.changes.EdgeBinding <em>Edge Binding</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.sidiff.revision.changes.EdgeBinding
+		 * @see org.sidiff.revision.changes.impl.ChangesPackageImpl#getEdgeBinding()
+		 * @generated
+		 */
+		EClass EDGE_BINDING = eINSTANCE.getEdgeBinding();
+
+		/**
+		 * The meta object literal for the '{@link org.sidiff.revision.changes.AttributeInstantiation <em>Attribute Instantiation</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.sidiff.revision.changes.AttributeInstantiation
+		 * @see org.sidiff.revision.changes.impl.ChangesPackageImpl#getAttributeInstantiation()
+		 * @generated
+		 */
+		EClass ATTRIBUTE_INSTANTIATION = eINSTANCE.getAttributeInstantiation();
+
+		/**
+		 * The meta object literal for the '{@link org.sidiff.revision.changes.ChangeInstantiation <em>Change Instantiation</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.sidiff.revision.changes.ChangeInstantiation
+		 * @see org.sidiff.revision.changes.impl.ChangesPackageImpl#getChangeInstantiation()
+		 * @generated
+		 */
+		EClass CHANGE_INSTANTIATION = eINSTANCE.getChangeInstantiation();
+
+		/**
+		 * The meta object literal for the '{@link org.sidiff.revision.changes.NodeInstantiation <em>Node Instantiation</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.sidiff.revision.changes.NodeInstantiation
+		 * @see org.sidiff.revision.changes.impl.ChangesPackageImpl#getNodeInstantiation()
+		 * @generated
+		 */
+		EClass NODE_INSTANTIATION = eINSTANCE.getNodeInstantiation();
+
+		/**
+		 * The meta object literal for the '{@link org.sidiff.revision.changes.EdgeInstantiation <em>Edge Instantiation</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.sidiff.revision.changes.EdgeInstantiation
+		 * @see org.sidiff.revision.changes.impl.ChangesPackageImpl#getEdgeInstantiation()
+		 * @generated
+		 */
+		EClass EDGE_INSTANTIATION = eINSTANCE.getEdgeInstantiation();
+
+		/**
+		 * The meta object literal for the '{@link org.sidiff.revision.changes.AttributeNodeDomainDefinition <em>Attribute Node Domain Definition</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.sidiff.revision.changes.AttributeNodeDomainDefinition
+		 * @see org.sidiff.revision.changes.impl.ChangesPackageImpl#getAttributeNodeDomainDefinition()
+		 * @generated
+		 */
+		EClass ATTRIBUTE_NODE_DOMAIN_DEFINITION = eINSTANCE.getAttributeNodeDomainDefinition();
+
+		/**
+		 * The meta object literal for the '<em><b>Node Domain Contains</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation ATTRIBUTE_NODE_DOMAIN_DEFINITION___NODE_DOMAIN_CONTAINS__EOBJECT = eINSTANCE
+				.getAttributeNodeDomainDefinition__NodeDomainContains__EObject();
+
+		/**
+		 * The meta object literal for the '{@link org.sidiff.revision.changes.AttributeValueDomainDefinition <em>Attribute Value Domain Definition</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.sidiff.revision.changes.AttributeValueDomainDefinition
+		 * @see org.sidiff.revision.changes.impl.ChangesPackageImpl#getAttributeValueDomainDefinition()
+		 * @generated
+		 */
+		EClass ATTRIBUTE_VALUE_DOMAIN_DEFINITION = eINSTANCE.getAttributeValueDomainDefinition();
+
+		/**
+		 * The meta object literal for the '<em><b>Value Domain Contains</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation ATTRIBUTE_VALUE_DOMAIN_DEFINITION___VALUE_DOMAIN_CONTAINS__OBJECT = eINSTANCE
+				.getAttributeValueDomainDefinition__ValueDomainContains__Object();
+
+		/**
+		 * The meta object literal for the '{@link org.sidiff.revision.changes.AttributeNodeDomain <em>Attribute Node Domain</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.sidiff.revision.changes.AttributeNodeDomain
+		 * @see org.sidiff.revision.changes.impl.ChangesPackageImpl#getAttributeNodeDomain()
+		 * @generated
+		 */
+		EClass ATTRIBUTE_NODE_DOMAIN = eINSTANCE.getAttributeNodeDomain();
+
+		/**
+		 * The meta object literal for the '<em><b>Get Node Domain</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation ATTRIBUTE_NODE_DOMAIN___GET_NODE_DOMAIN = eINSTANCE.getAttributeNodeDomain__GetNodeDomain();
+
+		/**
+		 * The meta object literal for the '{@link org.sidiff.revision.changes.AttributeValueDomain <em>Attribute Value Domain</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.sidiff.revision.changes.AttributeValueDomain
+		 * @see org.sidiff.revision.changes.impl.ChangesPackageImpl#getAttributeValueDomain()
+		 * @generated
+		 */
+		EClass ATTRIBUTE_VALUE_DOMAIN = eINSTANCE.getAttributeValueDomain();
+
+		/**
+		 * The meta object literal for the '<em><b>Get Value Domain</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation ATTRIBUTE_VALUE_DOMAIN___GET_VALUE_DOMAIN = eINSTANCE.getAttributeValueDomain__GetValueDomain();
+
+		/**
+		 * The meta object literal for the '{@link org.sidiff.revision.changes.AttributeNodeBinding <em>Attribute Node Binding</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.sidiff.revision.changes.AttributeNodeBinding
+		 * @see org.sidiff.revision.changes.impl.ChangesPackageImpl#getAttributeNodeBinding()
+		 * @generated
+		 */
+		EClass ATTRIBUTE_NODE_BINDING = eINSTANCE.getAttributeNodeBinding();
+
+		/**
+		 * The meta object literal for the '<em><b>Get Node</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation ATTRIBUTE_NODE_BINDING___GET_NODE = eINSTANCE.getAttributeNodeBinding__GetNode();
+
+		/**
+		 * The meta object literal for the '{@link org.sidiff.revision.changes.AttributeValueBinding <em>Attribute Value Binding</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.sidiff.revision.changes.AttributeValueBinding
+		 * @see org.sidiff.revision.changes.impl.ChangesPackageImpl#getAttributeValueBinding()
+		 * @generated
+		 */
+		EClass ATTRIBUTE_VALUE_BINDING = eINSTANCE.getAttributeValueBinding();
+
+		/**
+		 * The meta object literal for the '<em><b>Get Value</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation ATTRIBUTE_VALUE_BINDING___GET_VALUE = eINSTANCE.getAttributeValueBinding__GetValue();
+
+		/**
+		 * The meta object literal for the '{@link org.sidiff.revision.changes.EdgeSourceDomainDefinition <em>Edge Source Domain Definition</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.sidiff.revision.changes.EdgeSourceDomainDefinition
+		 * @see org.sidiff.revision.changes.impl.ChangesPackageImpl#getEdgeSourceDomainDefinition()
+		 * @generated
+		 */
+		EClass EDGE_SOURCE_DOMAIN_DEFINITION = eINSTANCE.getEdgeSourceDomainDefinition();
+
+		/**
+		 * The meta object literal for the '<em><b>Source Domain Contains</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation EDGE_SOURCE_DOMAIN_DEFINITION___SOURCE_DOMAIN_CONTAINS__EOBJECT = eINSTANCE
+				.getEdgeSourceDomainDefinition__SourceDomainContains__EObject();
+
+		/**
+		 * The meta object literal for the '{@link org.sidiff.revision.changes.EdgeTargetDomainDefinition <em>Edge Target Domain Definition</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.sidiff.revision.changes.EdgeTargetDomainDefinition
+		 * @see org.sidiff.revision.changes.impl.ChangesPackageImpl#getEdgeTargetDomainDefinition()
+		 * @generated
+		 */
+		EClass EDGE_TARGET_DOMAIN_DEFINITION = eINSTANCE.getEdgeTargetDomainDefinition();
+
+		/**
+		 * The meta object literal for the '<em><b>Target Domain Contains</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation EDGE_TARGET_DOMAIN_DEFINITION___TARGET_DOMAIN_CONTAINS__EOBJECT = eINSTANCE
+				.getEdgeTargetDomainDefinition__TargetDomainContains__EObject();
+
+		/**
+		 * The meta object literal for the '{@link org.sidiff.revision.changes.EdgeSourceDomain <em>Edge Source Domain</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.sidiff.revision.changes.EdgeSourceDomain
+		 * @see org.sidiff.revision.changes.impl.ChangesPackageImpl#getEdgeSourceDomain()
+		 * @generated
+		 */
+		EClass EDGE_SOURCE_DOMAIN = eINSTANCE.getEdgeSourceDomain();
+
+		/**
+		 * The meta object literal for the '<em><b>Get Source Domain</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation EDGE_SOURCE_DOMAIN___GET_SOURCE_DOMAIN = eINSTANCE.getEdgeSourceDomain__GetSourceDomain();
+
+		/**
+		 * The meta object literal for the '{@link org.sidiff.revision.changes.EdgeTargetDomain <em>Edge Target Domain</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.sidiff.revision.changes.EdgeTargetDomain
+		 * @see org.sidiff.revision.changes.impl.ChangesPackageImpl#getEdgeTargetDomain()
+		 * @generated
+		 */
+		EClass EDGE_TARGET_DOMAIN = eINSTANCE.getEdgeTargetDomain();
+
+		/**
 		 * The meta object literal for the '<em><b>Get Target Domain</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EOperation EDGE_CHANGE___GET_TARGET_DOMAIN = eINSTANCE.getEdgeChange__GetTargetDomain();
+		EOperation EDGE_TARGET_DOMAIN___GET_TARGET_DOMAIN = eINSTANCE.getEdgeTargetDomain__GetTargetDomain();
+
+		/**
+		 * The meta object literal for the '{@link org.sidiff.revision.changes.EdgeSourceBinding <em>Edge Source Binding</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.sidiff.revision.changes.EdgeSourceBinding
+		 * @see org.sidiff.revision.changes.impl.ChangesPackageImpl#getEdgeSourceBinding()
+		 * @generated
+		 */
+		EClass EDGE_SOURCE_BINDING = eINSTANCE.getEdgeSourceBinding();
+
+		/**
+		 * The meta object literal for the '<em><b>Get Source</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation EDGE_SOURCE_BINDING___GET_SOURCE = eINSTANCE.getEdgeSourceBinding__GetSource();
+
+		/**
+		 * The meta object literal for the '{@link org.sidiff.revision.changes.EdgeTargetBinding <em>Edge Target Binding</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.sidiff.revision.changes.EdgeTargetBinding
+		 * @see org.sidiff.revision.changes.impl.ChangesPackageImpl#getEdgeTargetBinding()
+		 * @generated
+		 */
+		EClass EDGE_TARGET_BINDING = eINSTANCE.getEdgeTargetBinding();
 
 		/**
 		 * The meta object literal for the '<em><b>Get Target</b></em>' operation.
@@ -2111,45 +2081,44 @@ public interface ChangesPackage extends EPackage {
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EOperation EDGE_CHANGE___GET_TARGET = eINSTANCE.getEdgeChange__GetTarget();
+		EOperation EDGE_TARGET_BINDING___GET_TARGET = eINSTANCE.getEdgeTargetBinding__GetTarget();
 
 		/**
-		 * The meta object literal for the '{@link org.sidiff.revision.changes.ChangeContext <em>Change Context</em>}' class.
+		 * The meta object literal for the '{@link org.sidiff.revision.changes.NodeChangeDomainDefinition <em>Node Change Domain Definition</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @see org.sidiff.revision.changes.ChangeContext
-		 * @see org.sidiff.revision.changes.impl.ChangesPackageImpl#getChangeContext()
+		 * @see org.sidiff.revision.changes.NodeChangeDomainDefinition
+		 * @see org.sidiff.revision.changes.impl.ChangesPackageImpl#getNodeChangeDomainDefinition()
 		 * @generated
 		 */
-		EClass CHANGE_CONTEXT = eINSTANCE.getChangeContext();
+		EClass NODE_CHANGE_DOMAIN_DEFINITION = eINSTANCE.getNodeChangeDomainDefinition();
 
 		/**
-		 * The meta object literal for the '<em><b>Get Action</b></em>' operation.
+		 * The meta object literal for the '<em><b>Node Domain Contains</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EOperation CHANGE_CONTEXT___GET_ACTION__CHANGE = eINSTANCE.getChangeContext__GetAction__Change();
+		EOperation NODE_CHANGE_DOMAIN_DEFINITION___NODE_DOMAIN_CONTAINS__EOBJECT = eINSTANCE
+				.getNodeChangeDomainDefinition__NodeDomainContains__EObject();
 
 		/**
-		 * The meta object literal for the '{@link org.sidiff.revision.changes.ActionType <em>Action Type</em>}' enum.
+		 * The meta object literal for the '{@link org.sidiff.revision.changes.NodeChangeDomain <em>Node Change Domain</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @see org.sidiff.revision.changes.ActionType
-		 * @see org.sidiff.revision.changes.impl.ChangesPackageImpl#getActionType()
+		 * @see org.sidiff.revision.changes.NodeChangeDomain
+		 * @see org.sidiff.revision.changes.impl.ChangesPackageImpl#getNodeChangeDomain()
 		 * @generated
 		 */
-		EEnum ACTION_TYPE = eINSTANCE.getActionType();
+		EClass NODE_CHANGE_DOMAIN = eINSTANCE.getNodeChangeDomain();
 
 		/**
-		 * The meta object literal for the '<em>Change Iterator</em>' data type.
+		 * The meta object literal for the '<em><b>Get Node Domains</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @see java.util.Iterator
-		 * @see org.sidiff.revision.changes.impl.ChangesPackageImpl#getChangeIterator()
 		 * @generated
 		 */
-		EDataType CHANGE_ITERATOR = eINSTANCE.getChangeIterator();
+		EOperation NODE_CHANGE_DOMAIN___GET_NODE_DOMAINS = eINSTANCE.getNodeChangeDomain__GetNodeDomains();
 
 	}
 

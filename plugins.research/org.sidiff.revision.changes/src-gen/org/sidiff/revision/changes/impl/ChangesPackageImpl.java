@@ -2,28 +2,44 @@
  */
 package org.sidiff.revision.changes.impl;
 
-import java.util.Iterator;
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EDataType;
-import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
-import org.eclipse.emf.ecore.EReference;
 
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 
-import org.sidiff.revision.changes.ActionType;
+import org.eclipse.emf.ecore.xml.type.XMLTypePackage;
+
+import org.sidiff.revision.changes.AttributeBinding;
 import org.sidiff.revision.changes.AttributeChange;
-import org.sidiff.revision.changes.AttributeChangeContext;
+import org.sidiff.revision.changes.AttributeDomain;
+import org.sidiff.revision.changes.AttributeInstantiation;
+import org.sidiff.revision.changes.AttributeNodeBinding;
+import org.sidiff.revision.changes.AttributeNodeDomain;
+import org.sidiff.revision.changes.AttributeNodeDomainDefinition;
+import org.sidiff.revision.changes.AttributeValueBinding;
+import org.sidiff.revision.changes.AttributeValueDomain;
+import org.sidiff.revision.changes.AttributeValueDomainDefinition;
 import org.sidiff.revision.changes.Change;
-import org.sidiff.revision.changes.ChangeContext;
-import org.sidiff.revision.changes.ChangeSet;
+import org.sidiff.revision.changes.ChangeInstantiation;
 import org.sidiff.revision.changes.ChangesFactory;
 import org.sidiff.revision.changes.ChangesPackage;
+import org.sidiff.revision.changes.EdgeBinding;
 import org.sidiff.revision.changes.EdgeChange;
-import org.sidiff.revision.changes.EdgeChangeContext;
+import org.sidiff.revision.changes.EdgeDomain;
+import org.sidiff.revision.changes.EdgeInstantiation;
+import org.sidiff.revision.changes.EdgeSourceBinding;
+import org.sidiff.revision.changes.EdgeSourceDomain;
+import org.sidiff.revision.changes.EdgeSourceDomainDefinition;
+import org.sidiff.revision.changes.EdgeTargetBinding;
+import org.sidiff.revision.changes.EdgeTargetDomain;
+import org.sidiff.revision.changes.EdgeTargetDomainDefinition;
+import org.sidiff.revision.changes.NodeBinding;
 import org.sidiff.revision.changes.NodeChange;
-import org.sidiff.revision.changes.NodeChangeContext;
+import org.sidiff.revision.changes.NodeChangeDomain;
+import org.sidiff.revision.changes.NodeChangeDomainDefinition;
+import org.sidiff.revision.changes.NodeDomain;
+import org.sidiff.revision.changes.NodeInstantiation;
 
 /**
  * <!-- begin-user-doc -->
@@ -32,34 +48,6 @@ import org.sidiff.revision.changes.NodeChangeContext;
  * @generated
  */
 public class ChangesPackageImpl extends EPackageImpl implements ChangesPackage {
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private EClass changeSetEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private EClass nodeChangeContextEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private EClass attributeChangeContextEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private EClass edgeChangeContextEClass = null;
-
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -79,7 +67,35 @@ public class ChangesPackageImpl extends EPackageImpl implements ChangesPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	private EClass nodeDomainEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass nodeBindingEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass attributeDomainEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	private EClass attributeChangeEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass attributeBindingEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -93,21 +109,140 @@ public class ChangesPackageImpl extends EPackageImpl implements ChangesPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	private EClass changeContextEClass = null;
+	private EClass edgeDomainEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	private EEnum actionTypeEEnum = null;
+	private EClass edgeBindingEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	private EDataType changeIteratorEDataType = null;
+	private EClass attributeInstantiationEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass changeInstantiationEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass nodeInstantiationEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass edgeInstantiationEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass attributeNodeDomainDefinitionEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass attributeValueDomainDefinitionEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass attributeNodeDomainEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass attributeValueDomainEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass attributeNodeBindingEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass attributeValueBindingEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass edgeSourceDomainDefinitionEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass edgeTargetDomainDefinitionEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass edgeSourceDomainEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass edgeTargetDomainEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass edgeSourceBindingEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass edgeTargetBindingEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass nodeChangeDomainDefinitionEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass nodeChangeDomainEClass = null;
 
 	/**
 	 * Creates an instance of the model <b>Package</b>, registered with
@@ -159,6 +294,9 @@ public class ChangesPackageImpl extends EPackageImpl implements ChangesPackage {
 
 		isInited = true;
 
+		// Initialize simple dependencies
+		XMLTypePackage.eINSTANCE.eClass();
+
 		// Create package meta-data objects
 		theChangesPackage.createPackageContents();
 
@@ -171,256 +309,6 @@ public class ChangesPackageImpl extends EPackageImpl implements ChangesPackage {
 		// Update the registry and return the package
 		EPackage.Registry.INSTANCE.put(ChangesPackage.eNS_URI, theChangesPackage);
 		return theChangesPackage;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public EClass getChangeSet() {
-		return changeSetEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public EOperation getChangeSet__GetChanges() {
-		return changeSetEClass.getEOperations().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public EClass getNodeChangeContext() {
-		return nodeChangeContextEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public EReference getNodeChangeContext_Nodes() {
-		return (EReference) nodeChangeContextEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public EOperation getNodeChangeContext__GetNode__NodeChange() {
-		return nodeChangeContextEClass.getEOperations().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public EOperation getNodeChangeContext__GetNodeDomains__NodeChange() {
-		return nodeChangeContextEClass.getEOperations().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public EOperation getNodeChangeContext__GetType__NodeChange() {
-		return nodeChangeContextEClass.getEOperations().get(2);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public EClass getAttributeChangeContext() {
-		return attributeChangeContextEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public EReference getAttributeChangeContext_Attributes() {
-		return (EReference) attributeChangeContextEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public EOperation getAttributeChangeContext__GetType__AttributeChange() {
-		return attributeChangeContextEClass.getEOperations().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public EOperation getAttributeChangeContext__GetNode__AttributeChange() {
-		return attributeChangeContextEClass.getEOperations().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public EOperation getAttributeChangeContext__GetNodeType__AttributeChange() {
-		return attributeChangeContextEClass.getEOperations().get(2);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public EOperation getAttributeChangeContext__GetNodeDomain__AttributeChange() {
-		return attributeChangeContextEClass.getEOperations().get(3);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public EOperation getAttributeChangeContext__GetValueType__AttributeChange() {
-		return attributeChangeContextEClass.getEOperations().get(4);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public EOperation getAttributeChangeContext__GetValueDomain__AttributeChange() {
-		return attributeChangeContextEClass.getEOperations().get(5);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public EOperation getAttributeChangeContext__GetValue__AttributeChange() {
-		return attributeChangeContextEClass.getEOperations().get(6);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public EClass getEdgeChangeContext() {
-		return edgeChangeContextEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public EReference getEdgeChangeContext_Edges() {
-		return (EReference) edgeChangeContextEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public EOperation getEdgeChangeContext__GetTargetType__EdgeChange() {
-		return edgeChangeContextEClass.getEOperations().get(4);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public EOperation getEdgeChangeContext__GetType__EdgeChange() {
-		return edgeChangeContextEClass.getEOperations().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public EOperation getEdgeChangeContext__GetSourceType__EdgeChange() {
-		return edgeChangeContextEClass.getEOperations().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public EOperation getEdgeChangeContext__GetSource__EdgeChange() {
-		return edgeChangeContextEClass.getEOperations().get(3);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public EOperation getEdgeChangeContext__GetSourceDomain__EdgeChange() {
-		return edgeChangeContextEClass.getEOperations().get(2);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public EOperation getEdgeChangeContext__GetTarget__EdgeChange() {
-		return edgeChangeContextEClass.getEOperations().get(6);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public EOperation getEdgeChangeContext__GetTargetDomain__EdgeChange() {
-		return edgeChangeContextEClass.getEOperations().get(5);
 	}
 
 	/**
@@ -459,16 +347,6 @@ public class ChangesPackageImpl extends EPackageImpl implements ChangesPackage {
 	 * @generated
 	 */
 	@Override
-	public EReference getNodeChange_Context() {
-		return (EReference) nodeChangeEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
 	public EOperation getNodeChange__GetType() {
 		return nodeChangeEClass.getEOperations().get(0);
 	}
@@ -479,8 +357,8 @@ public class ChangesPackageImpl extends EPackageImpl implements ChangesPackage {
 	 * @generated
 	 */
 	@Override
-	public EOperation getNodeChange__GetNodeDomains() {
-		return nodeChangeEClass.getEOperations().get(1);
+	public EClass getNodeDomain() {
+		return nodeDomainEClass;
 	}
 
 	/**
@@ -489,8 +367,28 @@ public class ChangesPackageImpl extends EPackageImpl implements ChangesPackage {
 	 * @generated
 	 */
 	@Override
-	public EOperation getNodeChange__GetNode() {
-		return nodeChangeEClass.getEOperations().get(2);
+	public EClass getNodeBinding() {
+		return nodeBindingEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EOperation getNodeBinding__GetNode() {
+		return nodeBindingEClass.getEOperations().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EClass getAttributeDomain() {
+		return attributeDomainEClass;
 	}
 
 	/**
@@ -501,16 +399,6 @@ public class ChangesPackageImpl extends EPackageImpl implements ChangesPackage {
 	@Override
 	public EClass getAttributeChange() {
 		return attributeChangeEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public EReference getAttributeChange_Context() {
-		return (EReference) attributeChangeEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -539,7 +427,7 @@ public class ChangesPackageImpl extends EPackageImpl implements ChangesPackage {
 	 * @generated
 	 */
 	@Override
-	public EOperation getAttributeChange__GetNodeDomain() {
+	public EOperation getAttributeChange__GetValueType() {
 		return attributeChangeEClass.getEOperations().get(2);
 	}
 
@@ -549,38 +437,8 @@ public class ChangesPackageImpl extends EPackageImpl implements ChangesPackage {
 	 * @generated
 	 */
 	@Override
-	public EOperation getAttributeChange__GetNode() {
-		return attributeChangeEClass.getEOperations().get(3);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public EOperation getAttributeChange__GetValueType() {
-		return attributeChangeEClass.getEOperations().get(4);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public EOperation getAttributeChange__GetValueDomain() {
-		return attributeChangeEClass.getEOperations().get(5);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public EOperation getAttributeChange__GetValue() {
-		return attributeChangeEClass.getEOperations().get(6);
+	public EClass getAttributeBinding() {
+		return attributeBindingEClass;
 	}
 
 	/**
@@ -591,16 +449,6 @@ public class ChangesPackageImpl extends EPackageImpl implements ChangesPackage {
 	@Override
 	public EClass getEdgeChange() {
 		return edgeChangeEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public EReference getEdgeChange_Context() {
-		return (EReference) edgeChangeEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -629,7 +477,7 @@ public class ChangesPackageImpl extends EPackageImpl implements ChangesPackage {
 	 * @generated
 	 */
 	@Override
-	public EOperation getEdgeChange__GetSourceDomain() {
+	public EOperation getEdgeChange__GetTargetType() {
 		return edgeChangeEClass.getEOperations().get(2);
 	}
 
@@ -639,8 +487,8 @@ public class ChangesPackageImpl extends EPackageImpl implements ChangesPackage {
 	 * @generated
 	 */
 	@Override
-	public EOperation getEdgeChange__GetSource() {
-		return edgeChangeEClass.getEOperations().get(3);
+	public EClass getEdgeDomain() {
+		return edgeDomainEClass;
 	}
 
 	/**
@@ -649,8 +497,8 @@ public class ChangesPackageImpl extends EPackageImpl implements ChangesPackage {
 	 * @generated
 	 */
 	@Override
-	public EOperation getEdgeChange__GetTargetType() {
-		return edgeChangeEClass.getEOperations().get(4);
+	public EClass getEdgeBinding() {
+		return edgeBindingEClass;
 	}
 
 	/**
@@ -659,8 +507,8 @@ public class ChangesPackageImpl extends EPackageImpl implements ChangesPackage {
 	 * @generated
 	 */
 	@Override
-	public EOperation getEdgeChange__GetTargetDomain() {
-		return edgeChangeEClass.getEOperations().get(5);
+	public EClass getAttributeInstantiation() {
+		return attributeInstantiationEClass;
 	}
 
 	/**
@@ -669,8 +517,8 @@ public class ChangesPackageImpl extends EPackageImpl implements ChangesPackage {
 	 * @generated
 	 */
 	@Override
-	public EOperation getEdgeChange__GetTarget() {
-		return edgeChangeEClass.getEOperations().get(6);
+	public EClass getChangeInstantiation() {
+		return changeInstantiationEClass;
 	}
 
 	/**
@@ -679,8 +527,8 @@ public class ChangesPackageImpl extends EPackageImpl implements ChangesPackage {
 	 * @generated
 	 */
 	@Override
-	public EClass getChangeContext() {
-		return changeContextEClass;
+	public EClass getNodeInstantiation() {
+		return nodeInstantiationEClass;
 	}
 
 	/**
@@ -689,8 +537,8 @@ public class ChangesPackageImpl extends EPackageImpl implements ChangesPackage {
 	 * @generated
 	 */
 	@Override
-	public EOperation getChangeContext__GetAction__Change() {
-		return changeContextEClass.getEOperations().get(0);
+	public EClass getEdgeInstantiation() {
+		return edgeInstantiationEClass;
 	}
 
 	/**
@@ -699,8 +547,8 @@ public class ChangesPackageImpl extends EPackageImpl implements ChangesPackage {
 	 * @generated
 	 */
 	@Override
-	public EEnum getActionType() {
-		return actionTypeEEnum;
+	public EClass getAttributeNodeDomainDefinition() {
+		return attributeNodeDomainDefinitionEClass;
 	}
 
 	/**
@@ -709,8 +557,268 @@ public class ChangesPackageImpl extends EPackageImpl implements ChangesPackage {
 	 * @generated
 	 */
 	@Override
-	public EDataType getChangeIterator() {
-		return changeIteratorEDataType;
+	public EOperation getAttributeNodeDomainDefinition__NodeDomainContains__EObject() {
+		return attributeNodeDomainDefinitionEClass.getEOperations().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EClass getAttributeValueDomainDefinition() {
+		return attributeValueDomainDefinitionEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EOperation getAttributeValueDomainDefinition__ValueDomainContains__Object() {
+		return attributeValueDomainDefinitionEClass.getEOperations().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EClass getAttributeNodeDomain() {
+		return attributeNodeDomainEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EOperation getAttributeNodeDomain__GetNodeDomain() {
+		return attributeNodeDomainEClass.getEOperations().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EClass getAttributeValueDomain() {
+		return attributeValueDomainEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EOperation getAttributeValueDomain__GetValueDomain() {
+		return attributeValueDomainEClass.getEOperations().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EClass getAttributeNodeBinding() {
+		return attributeNodeBindingEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EOperation getAttributeNodeBinding__GetNode() {
+		return attributeNodeBindingEClass.getEOperations().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EClass getAttributeValueBinding() {
+		return attributeValueBindingEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EOperation getAttributeValueBinding__GetValue() {
+		return attributeValueBindingEClass.getEOperations().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EClass getEdgeSourceDomainDefinition() {
+		return edgeSourceDomainDefinitionEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EOperation getEdgeSourceDomainDefinition__SourceDomainContains__EObject() {
+		return edgeSourceDomainDefinitionEClass.getEOperations().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EClass getEdgeTargetDomainDefinition() {
+		return edgeTargetDomainDefinitionEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EOperation getEdgeTargetDomainDefinition__TargetDomainContains__EObject() {
+		return edgeTargetDomainDefinitionEClass.getEOperations().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EClass getEdgeSourceDomain() {
+		return edgeSourceDomainEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EOperation getEdgeSourceDomain__GetSourceDomain() {
+		return edgeSourceDomainEClass.getEOperations().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EClass getEdgeTargetDomain() {
+		return edgeTargetDomainEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EOperation getEdgeTargetDomain__GetTargetDomain() {
+		return edgeTargetDomainEClass.getEOperations().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EClass getEdgeSourceBinding() {
+		return edgeSourceBindingEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EOperation getEdgeSourceBinding__GetSource() {
+		return edgeSourceBindingEClass.getEOperations().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EClass getEdgeTargetBinding() {
+		return edgeTargetBindingEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EOperation getEdgeTargetBinding__GetTarget() {
+		return edgeTargetBindingEClass.getEOperations().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EClass getNodeChangeDomainDefinition() {
+		return nodeChangeDomainDefinitionEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EOperation getNodeChangeDomainDefinition__NodeDomainContains__EObject() {
+		return nodeChangeDomainDefinitionEClass.getEOperations().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EClass getNodeChangeDomain() {
+		return nodeChangeDomainEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EOperation getNodeChangeDomain__GetNodeDomains() {
+		return nodeChangeDomainEClass.getEOperations().get(0);
 	}
 
 	/**
@@ -743,72 +851,89 @@ public class ChangesPackageImpl extends EPackageImpl implements ChangesPackage {
 		isCreated = true;
 
 		// Create classes and their features
-		changeSetEClass = createEClass(CHANGE_SET);
-		createEOperation(changeSetEClass, CHANGE_SET___GET_CHANGES);
-
-		nodeChangeContextEClass = createEClass(NODE_CHANGE_CONTEXT);
-		createEReference(nodeChangeContextEClass, NODE_CHANGE_CONTEXT__NODES);
-		createEOperation(nodeChangeContextEClass, NODE_CHANGE_CONTEXT___GET_NODE__NODECHANGE);
-		createEOperation(nodeChangeContextEClass, NODE_CHANGE_CONTEXT___GET_NODE_DOMAINS__NODECHANGE);
-		createEOperation(nodeChangeContextEClass, NODE_CHANGE_CONTEXT___GET_TYPE__NODECHANGE);
-
-		attributeChangeContextEClass = createEClass(ATTRIBUTE_CHANGE_CONTEXT);
-		createEReference(attributeChangeContextEClass, ATTRIBUTE_CHANGE_CONTEXT__ATTRIBUTES);
-		createEOperation(attributeChangeContextEClass, ATTRIBUTE_CHANGE_CONTEXT___GET_TYPE__ATTRIBUTECHANGE);
-		createEOperation(attributeChangeContextEClass, ATTRIBUTE_CHANGE_CONTEXT___GET_NODE__ATTRIBUTECHANGE);
-		createEOperation(attributeChangeContextEClass, ATTRIBUTE_CHANGE_CONTEXT___GET_NODE_TYPE__ATTRIBUTECHANGE);
-		createEOperation(attributeChangeContextEClass, ATTRIBUTE_CHANGE_CONTEXT___GET_NODE_DOMAIN__ATTRIBUTECHANGE);
-		createEOperation(attributeChangeContextEClass, ATTRIBUTE_CHANGE_CONTEXT___GET_VALUE_TYPE__ATTRIBUTECHANGE);
-		createEOperation(attributeChangeContextEClass, ATTRIBUTE_CHANGE_CONTEXT___GET_VALUE_DOMAIN__ATTRIBUTECHANGE);
-		createEOperation(attributeChangeContextEClass, ATTRIBUTE_CHANGE_CONTEXT___GET_VALUE__ATTRIBUTECHANGE);
-
-		edgeChangeContextEClass = createEClass(EDGE_CHANGE_CONTEXT);
-		createEReference(edgeChangeContextEClass, EDGE_CHANGE_CONTEXT__EDGES);
-		createEOperation(edgeChangeContextEClass, EDGE_CHANGE_CONTEXT___GET_TYPE__EDGECHANGE);
-		createEOperation(edgeChangeContextEClass, EDGE_CHANGE_CONTEXT___GET_SOURCE_TYPE__EDGECHANGE);
-		createEOperation(edgeChangeContextEClass, EDGE_CHANGE_CONTEXT___GET_SOURCE_DOMAIN__EDGECHANGE);
-		createEOperation(edgeChangeContextEClass, EDGE_CHANGE_CONTEXT___GET_SOURCE__EDGECHANGE);
-		createEOperation(edgeChangeContextEClass, EDGE_CHANGE_CONTEXT___GET_TARGET_TYPE__EDGECHANGE);
-		createEOperation(edgeChangeContextEClass, EDGE_CHANGE_CONTEXT___GET_TARGET_DOMAIN__EDGECHANGE);
-		createEOperation(edgeChangeContextEClass, EDGE_CHANGE_CONTEXT___GET_TARGET__EDGECHANGE);
-
 		changeEClass = createEClass(CHANGE);
 		createEOperation(changeEClass, CHANGE___GET_ACTION);
 
 		nodeChangeEClass = createEClass(NODE_CHANGE);
-		createEReference(nodeChangeEClass, NODE_CHANGE__CONTEXT);
 		createEOperation(nodeChangeEClass, NODE_CHANGE___GET_TYPE);
-		createEOperation(nodeChangeEClass, NODE_CHANGE___GET_NODE_DOMAINS);
-		createEOperation(nodeChangeEClass, NODE_CHANGE___GET_NODE);
+
+		nodeDomainEClass = createEClass(NODE_DOMAIN);
+
+		nodeBindingEClass = createEClass(NODE_BINDING);
+		createEOperation(nodeBindingEClass, NODE_BINDING___GET_NODE);
+
+		attributeDomainEClass = createEClass(ATTRIBUTE_DOMAIN);
 
 		attributeChangeEClass = createEClass(ATTRIBUTE_CHANGE);
-		createEReference(attributeChangeEClass, ATTRIBUTE_CHANGE__CONTEXT);
 		createEOperation(attributeChangeEClass, ATTRIBUTE_CHANGE___GET_TYPE);
 		createEOperation(attributeChangeEClass, ATTRIBUTE_CHANGE___GET_NODE_TYPE);
-		createEOperation(attributeChangeEClass, ATTRIBUTE_CHANGE___GET_NODE_DOMAIN);
-		createEOperation(attributeChangeEClass, ATTRIBUTE_CHANGE___GET_NODE);
 		createEOperation(attributeChangeEClass, ATTRIBUTE_CHANGE___GET_VALUE_TYPE);
-		createEOperation(attributeChangeEClass, ATTRIBUTE_CHANGE___GET_VALUE_DOMAIN);
-		createEOperation(attributeChangeEClass, ATTRIBUTE_CHANGE___GET_VALUE);
+
+		attributeBindingEClass = createEClass(ATTRIBUTE_BINDING);
 
 		edgeChangeEClass = createEClass(EDGE_CHANGE);
-		createEReference(edgeChangeEClass, EDGE_CHANGE__CONTEXT);
 		createEOperation(edgeChangeEClass, EDGE_CHANGE___GET_TYPE);
 		createEOperation(edgeChangeEClass, EDGE_CHANGE___GE_SOURCE_TYPE);
-		createEOperation(edgeChangeEClass, EDGE_CHANGE___GET_SOURCE_DOMAIN);
-		createEOperation(edgeChangeEClass, EDGE_CHANGE___GET_SOURCE);
 		createEOperation(edgeChangeEClass, EDGE_CHANGE___GET_TARGET_TYPE);
-		createEOperation(edgeChangeEClass, EDGE_CHANGE___GET_TARGET_DOMAIN);
-		createEOperation(edgeChangeEClass, EDGE_CHANGE___GET_TARGET);
 
-		changeContextEClass = createEClass(CHANGE_CONTEXT);
-		createEOperation(changeContextEClass, CHANGE_CONTEXT___GET_ACTION__CHANGE);
+		edgeDomainEClass = createEClass(EDGE_DOMAIN);
 
-		// Create enums
-		actionTypeEEnum = createEEnum(ACTION_TYPE);
+		edgeBindingEClass = createEClass(EDGE_BINDING);
 
-		// Create data types
-		changeIteratorEDataType = createEDataType(CHANGE_ITERATOR);
+		attributeInstantiationEClass = createEClass(ATTRIBUTE_INSTANTIATION);
+
+		changeInstantiationEClass = createEClass(CHANGE_INSTANTIATION);
+
+		nodeInstantiationEClass = createEClass(NODE_INSTANTIATION);
+
+		edgeInstantiationEClass = createEClass(EDGE_INSTANTIATION);
+
+		attributeNodeDomainDefinitionEClass = createEClass(ATTRIBUTE_NODE_DOMAIN_DEFINITION);
+		createEOperation(attributeNodeDomainDefinitionEClass,
+				ATTRIBUTE_NODE_DOMAIN_DEFINITION___NODE_DOMAIN_CONTAINS__EOBJECT);
+
+		attributeValueDomainDefinitionEClass = createEClass(ATTRIBUTE_VALUE_DOMAIN_DEFINITION);
+		createEOperation(attributeValueDomainDefinitionEClass,
+				ATTRIBUTE_VALUE_DOMAIN_DEFINITION___VALUE_DOMAIN_CONTAINS__OBJECT);
+
+		attributeNodeDomainEClass = createEClass(ATTRIBUTE_NODE_DOMAIN);
+		createEOperation(attributeNodeDomainEClass, ATTRIBUTE_NODE_DOMAIN___GET_NODE_DOMAIN);
+
+		attributeValueDomainEClass = createEClass(ATTRIBUTE_VALUE_DOMAIN);
+		createEOperation(attributeValueDomainEClass, ATTRIBUTE_VALUE_DOMAIN___GET_VALUE_DOMAIN);
+
+		attributeNodeBindingEClass = createEClass(ATTRIBUTE_NODE_BINDING);
+		createEOperation(attributeNodeBindingEClass, ATTRIBUTE_NODE_BINDING___GET_NODE);
+
+		attributeValueBindingEClass = createEClass(ATTRIBUTE_VALUE_BINDING);
+		createEOperation(attributeValueBindingEClass, ATTRIBUTE_VALUE_BINDING___GET_VALUE);
+
+		edgeSourceDomainDefinitionEClass = createEClass(EDGE_SOURCE_DOMAIN_DEFINITION);
+		createEOperation(edgeSourceDomainDefinitionEClass,
+				EDGE_SOURCE_DOMAIN_DEFINITION___SOURCE_DOMAIN_CONTAINS__EOBJECT);
+
+		edgeTargetDomainDefinitionEClass = createEClass(EDGE_TARGET_DOMAIN_DEFINITION);
+		createEOperation(edgeTargetDomainDefinitionEClass,
+				EDGE_TARGET_DOMAIN_DEFINITION___TARGET_DOMAIN_CONTAINS__EOBJECT);
+
+		edgeSourceDomainEClass = createEClass(EDGE_SOURCE_DOMAIN);
+		createEOperation(edgeSourceDomainEClass, EDGE_SOURCE_DOMAIN___GET_SOURCE_DOMAIN);
+
+		edgeTargetDomainEClass = createEClass(EDGE_TARGET_DOMAIN);
+		createEOperation(edgeTargetDomainEClass, EDGE_TARGET_DOMAIN___GET_TARGET_DOMAIN);
+
+		edgeSourceBindingEClass = createEClass(EDGE_SOURCE_BINDING);
+		createEOperation(edgeSourceBindingEClass, EDGE_SOURCE_BINDING___GET_SOURCE);
+
+		edgeTargetBindingEClass = createEClass(EDGE_TARGET_BINDING);
+		createEOperation(edgeTargetBindingEClass, EDGE_TARGET_BINDING___GET_TARGET);
+
+		nodeChangeDomainDefinitionEClass = createEClass(NODE_CHANGE_DOMAIN_DEFINITION);
+		createEOperation(nodeChangeDomainDefinitionEClass,
+				NODE_CHANGE_DOMAIN_DEFINITION___NODE_DOMAIN_CONTAINS__EOBJECT);
+
+		nodeChangeDomainEClass = createEClass(NODE_CHANGE_DOMAIN);
+		createEOperation(nodeChangeDomainEClass, NODE_CHANGE_DOMAIN___GET_NODE_DOMAINS);
 	}
 
 	/**
@@ -835,135 +960,65 @@ public class ChangesPackageImpl extends EPackageImpl implements ChangesPackage {
 		setNsPrefix(eNS_PREFIX);
 		setNsURI(eNS_URI);
 
+		// Obtain other dependent packages
+		XMLTypePackage theXMLTypePackage = (XMLTypePackage) EPackage.Registry.INSTANCE
+				.getEPackage(XMLTypePackage.eNS_URI);
+
 		// Create type parameters
 
 		// Set bounds for type parameters
 
 		// Add supertypes to classes
-		changeSetEClass.getESuperTypes().add(this.getChangeContext());
 		nodeChangeEClass.getESuperTypes().add(this.getChange());
+		nodeDomainEClass.getESuperTypes().add(this.getNodeInstantiation());
+		nodeBindingEClass.getESuperTypes().add(this.getNodeInstantiation());
+		attributeDomainEClass.getESuperTypes().add(this.getAttributeInstantiation());
 		attributeChangeEClass.getESuperTypes().add(this.getChange());
+		attributeBindingEClass.getESuperTypes().add(this.getAttributeInstantiation());
 		edgeChangeEClass.getESuperTypes().add(this.getChange());
-		changeContextEClass.getESuperTypes().add(this.getNodeChangeContext());
-		changeContextEClass.getESuperTypes().add(this.getEdgeChangeContext());
-		changeContextEClass.getESuperTypes().add(this.getAttributeChangeContext());
+		edgeDomainEClass.getESuperTypes().add(this.getEdgeInstantiation());
+		edgeBindingEClass.getESuperTypes().add(this.getEdgeInstantiation());
+		attributeInstantiationEClass.getESuperTypes().add(this.getChangeInstantiation());
+		nodeInstantiationEClass.getESuperTypes().add(this.getChangeInstantiation());
+		edgeInstantiationEClass.getESuperTypes().add(this.getChangeInstantiation());
+		attributeNodeDomainDefinitionEClass.getESuperTypes().add(this.getAttributeDomain());
+		attributeValueDomainDefinitionEClass.getESuperTypes().add(this.getAttributeDomain());
+		attributeNodeDomainEClass.getESuperTypes().add(this.getAttributeNodeDomainDefinition());
+		attributeValueDomainEClass.getESuperTypes().add(this.getAttributeValueDomainDefinition());
+		attributeNodeBindingEClass.getESuperTypes().add(this.getAttributeBinding());
+		attributeValueBindingEClass.getESuperTypes().add(this.getAttributeBinding());
+		edgeSourceDomainDefinitionEClass.getESuperTypes().add(this.getEdgeDomain());
+		edgeTargetDomainDefinitionEClass.getESuperTypes().add(this.getEdgeDomain());
+		edgeSourceDomainEClass.getESuperTypes().add(this.getEdgeSourceDomainDefinition());
+		edgeTargetDomainEClass.getESuperTypes().add(this.getEdgeTargetDomainDefinition());
+		edgeSourceBindingEClass.getESuperTypes().add(this.getEdgeBinding());
+		edgeTargetBindingEClass.getESuperTypes().add(this.getEdgeBinding());
+		nodeChangeDomainDefinitionEClass.getESuperTypes().add(this.getNodeDomain());
+		nodeChangeDomainEClass.getESuperTypes().add(this.getNodeChangeDomainDefinition());
 
 		// Initialize classes, features, and operations; add parameters
-		initEClass(changeSetEClass, ChangeSet.class, "ChangeSet", IS_ABSTRACT, !IS_INTERFACE,
+		initEClass(changeEClass, Change.class, "Change", IS_ABSTRACT, IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+		initEOperation(getChange__GetAction(), null, "getAction", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+		initEClass(nodeChangeEClass, NodeChange.class, "NodeChange", IS_ABSTRACT, IS_INTERFACE,
 				IS_GENERATED_INSTANCE_CLASS);
-
-		initEOperation(getChangeSet__GetChanges(), this.getChangeIterator(), "getChanges", 0, 1, IS_UNIQUE, IS_ORDERED);
-
-		initEClass(nodeChangeContextEClass, NodeChangeContext.class, "NodeChangeContext", IS_ABSTRACT, IS_INTERFACE,
-				IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getNodeChangeContext_Nodes(), this.getNodeChange(), this.getNodeChange_Context(), "nodes", null,
-				0, -1, NodeChangeContext.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE,
-				!IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-		EOperation op = initEOperation(getNodeChangeContext__GetNode__NodeChange(), ecorePackage.getEObject(),
-				"getNode", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEParameter(op, this.getNodeChange(), "nodeChange", 0, 1, IS_UNIQUE, IS_ORDERED);
-
-		op = initEOperation(getNodeChangeContext__GetNodeDomains__NodeChange(), ecorePackage.getEObject(),
-				"getNodeDomains", 0, -1, IS_UNIQUE, IS_ORDERED);
-		addEParameter(op, this.getNodeChange(), "nodeChange", 0, 1, IS_UNIQUE, IS_ORDERED);
-
-		op = initEOperation(getNodeChangeContext__GetType__NodeChange(), ecorePackage.getEClass(), "getType", 0, 1,
-				IS_UNIQUE, IS_ORDERED);
-		addEParameter(op, this.getNodeChange(), "nodeChange", 0, 1, IS_UNIQUE, IS_ORDERED);
-
-		initEClass(attributeChangeContextEClass, AttributeChangeContext.class, "AttributeChangeContext", IS_ABSTRACT,
-				IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getAttributeChangeContext_Attributes(), this.getAttributeChange(),
-				this.getAttributeChange_Context(), "attributes", null, 0, -1, AttributeChangeContext.class,
-				!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE,
-				IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-		op = initEOperation(getAttributeChangeContext__GetType__AttributeChange(), ecorePackage.getEAttribute(),
-				"getType", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEParameter(op, this.getAttributeChange(), "attributeChange", 0, 1, IS_UNIQUE, IS_ORDERED);
-
-		op = initEOperation(getAttributeChangeContext__GetNode__AttributeChange(), ecorePackage.getEObject(), "getNode",
-				0, 1, IS_UNIQUE, IS_ORDERED);
-		addEParameter(op, this.getAttributeChange(), "attributeChange", 0, 1, IS_UNIQUE, IS_ORDERED);
-
-		op = initEOperation(getAttributeChangeContext__GetNodeType__AttributeChange(), ecorePackage.getEClass(),
-				"getNodeType", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEParameter(op, this.getAttributeChange(), "attributeChange", 0, 1, IS_UNIQUE, IS_ORDERED);
-
-		op = initEOperation(getAttributeChangeContext__GetNodeDomain__AttributeChange(), ecorePackage.getEObject(),
-				"getNodeDomain", 0, -1, IS_UNIQUE, !IS_ORDERED);
-		addEParameter(op, this.getAttributeChange(), "attributeChange", 0, 1, IS_UNIQUE, IS_ORDERED);
-
-		op = initEOperation(getAttributeChangeContext__GetValueType__AttributeChange(), ecorePackage.getEDataType(),
-				"getValueType", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEParameter(op, this.getAttributeChange(), "attributeChange", 0, 1, IS_UNIQUE, IS_ORDERED);
-
-		op = initEOperation(getAttributeChangeContext__GetValueDomain__AttributeChange(), ecorePackage.getEJavaObject(),
-				"getValueDomain", 0, -1, IS_UNIQUE, !IS_ORDERED);
-		addEParameter(op, this.getAttributeChange(), "attributeChange", 0, 1, IS_UNIQUE, IS_ORDERED);
-
-		op = initEOperation(getAttributeChangeContext__GetValue__AttributeChange(), ecorePackage.getEJavaObject(),
-				"getValue", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEParameter(op, this.getAttributeChange(), "attributeChange", 0, 1, IS_UNIQUE, IS_ORDERED);
-
-		initEClass(edgeChangeContextEClass, EdgeChangeContext.class, "EdgeChangeContext", IS_ABSTRACT, IS_INTERFACE,
-				IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getEdgeChangeContext_Edges(), this.getEdgeChange(), this.getEdgeChange_Context(), "edges", null,
-				0, -1, EdgeChangeContext.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE,
-				!IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-		op = initEOperation(getEdgeChangeContext__GetType__EdgeChange(), ecorePackage.getEReference(), "getType", 0, 1,
-				IS_UNIQUE, IS_ORDERED);
-		addEParameter(op, this.getEdgeChange(), "edgeChange", 0, 1, IS_UNIQUE, IS_ORDERED);
-
-		op = initEOperation(getEdgeChangeContext__GetSourceType__EdgeChange(), ecorePackage.getEClass(),
-				"getSourceType", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEParameter(op, this.getEdgeChange(), "edgeChange", 0, 1, IS_UNIQUE, IS_ORDERED);
-
-		op = initEOperation(getEdgeChangeContext__GetSourceDomain__EdgeChange(), ecorePackage.getEObject(),
-				"getSourceDomain", 0, -1, IS_UNIQUE, !IS_ORDERED);
-		addEParameter(op, this.getEdgeChange(), "edgeChange", 0, 1, IS_UNIQUE, IS_ORDERED);
-
-		op = initEOperation(getEdgeChangeContext__GetSource__EdgeChange(), ecorePackage.getEObject(), "getSource", 0, 1,
-				IS_UNIQUE, IS_ORDERED);
-		addEParameter(op, this.getEdgeChange(), "edgeChange", 0, 1, IS_UNIQUE, IS_ORDERED);
-
-		op = initEOperation(getEdgeChangeContext__GetTargetType__EdgeChange(), ecorePackage.getEClass(),
-				"getTargetType", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEParameter(op, this.getEdgeChange(), "edgeChange", 0, 1, IS_UNIQUE, IS_ORDERED);
-
-		op = initEOperation(getEdgeChangeContext__GetTargetDomain__EdgeChange(), ecorePackage.getEObject(),
-				"getTargetDomain", 0, -1, IS_UNIQUE, !IS_ORDERED);
-		addEParameter(op, this.getEdgeChange(), "edgeChange", 0, 1, IS_UNIQUE, IS_ORDERED);
-
-		op = initEOperation(getEdgeChangeContext__GetTarget__EdgeChange(), ecorePackage.getEObject(), "getTarget", 0, 1,
-				IS_UNIQUE, IS_ORDERED);
-		addEParameter(op, this.getEdgeChange(), "edgeChange", 0, 1, IS_UNIQUE, IS_ORDERED);
-
-		initEClass(changeEClass, Change.class, "Change", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-
-		initEOperation(getChange__GetAction(), this.getActionType(), "getAction", 0, 1, IS_UNIQUE, IS_ORDERED);
-
-		initEClass(nodeChangeEClass, NodeChange.class, "NodeChange", IS_ABSTRACT, !IS_INTERFACE,
-				IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getNodeChange_Context(), this.getNodeChangeContext(), this.getNodeChangeContext_Nodes(),
-				"context", null, 1, 1, NodeChange.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE,
-				!IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEOperation(getNodeChange__GetType(), ecorePackage.getEClass(), "getType", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		initEOperation(getNodeChange__GetNodeDomains(), ecorePackage.getEObject(), "getNodeDomains", 0, -1, IS_UNIQUE,
-				IS_ORDERED);
-
-		initEOperation(getNodeChange__GetNode(), ecorePackage.getEObject(), "getNode", 0, 1, IS_UNIQUE, IS_ORDERED);
-
-		initEClass(attributeChangeEClass, AttributeChange.class, "AttributeChange", IS_ABSTRACT, !IS_INTERFACE,
+		initEClass(nodeDomainEClass, NodeDomain.class, "NodeDomain", IS_ABSTRACT, IS_INTERFACE,
 				IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getAttributeChange_Context(), this.getAttributeChangeContext(),
-				this.getAttributeChangeContext_Attributes(), "context", null, 1, 1, AttributeChange.class,
-				!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE,
-				IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(nodeBindingEClass, NodeBinding.class, "NodeBinding", IS_ABSTRACT, IS_INTERFACE,
+				IS_GENERATED_INSTANCE_CLASS);
+
+		initEOperation(getNodeBinding__GetNode(), ecorePackage.getEObject(), "getNode", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+		initEClass(attributeDomainEClass, AttributeDomain.class, "AttributeDomain", IS_ABSTRACT, IS_INTERFACE,
+				IS_GENERATED_INSTANCE_CLASS);
+
+		initEClass(attributeChangeEClass, AttributeChange.class, "AttributeChange", IS_ABSTRACT, IS_INTERFACE,
+				IS_GENERATED_INSTANCE_CLASS);
 
 		initEOperation(getAttributeChange__GetType(), ecorePackage.getEAttribute(), "getType", 0, 1, IS_UNIQUE,
 				IS_ORDERED);
@@ -971,61 +1026,129 @@ public class ChangesPackageImpl extends EPackageImpl implements ChangesPackage {
 		initEOperation(getAttributeChange__GetNodeType(), ecorePackage.getEClass(), "getNodeType", 0, 1, IS_UNIQUE,
 				IS_ORDERED);
 
-		initEOperation(getAttributeChange__GetNodeDomain(), ecorePackage.getEObject(), "getNodeDomain", 0, -1,
-				IS_UNIQUE, !IS_ORDERED);
-
-		initEOperation(getAttributeChange__GetNode(), ecorePackage.getEObject(), "getNode", 0, 1, IS_UNIQUE,
-				IS_ORDERED);
-
 		initEOperation(getAttributeChange__GetValueType(), ecorePackage.getEDataType(), "getValueType", 0, 1, IS_UNIQUE,
 				IS_ORDERED);
 
-		initEOperation(getAttributeChange__GetValueDomain(), ecorePackage.getEJavaObject(), "getValueDomain", 0, -1,
-				IS_UNIQUE, !IS_ORDERED);
-
-		initEOperation(getAttributeChange__GetValue(), ecorePackage.getEJavaObject(), "getValue", 0, 1, IS_UNIQUE,
-				IS_ORDERED);
-
-		initEClass(edgeChangeEClass, EdgeChange.class, "EdgeChange", IS_ABSTRACT, !IS_INTERFACE,
+		initEClass(attributeBindingEClass, AttributeBinding.class, "AttributeBinding", IS_ABSTRACT, IS_INTERFACE,
 				IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getEdgeChange_Context(), this.getEdgeChangeContext(), this.getEdgeChangeContext_Edges(),
-				"context", null, 1, 1, EdgeChange.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE,
-				!IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(edgeChangeEClass, EdgeChange.class, "EdgeChange", IS_ABSTRACT, IS_INTERFACE,
+				IS_GENERATED_INSTANCE_CLASS);
 
 		initEOperation(getEdgeChange__GetType(), ecorePackage.getEReference(), "getType", 0, 1, IS_UNIQUE, IS_ORDERED);
 
 		initEOperation(getEdgeChange__GeSourceType(), ecorePackage.getEClass(), "geSourceType", 0, 1, IS_UNIQUE,
 				IS_ORDERED);
 
-		initEOperation(getEdgeChange__GetSourceDomain(), ecorePackage.getEObject(), "getSourceDomain", 0, -1, IS_UNIQUE,
-				!IS_ORDERED);
-
-		initEOperation(getEdgeChange__GetSource(), ecorePackage.getEObject(), "getSource", 0, 1, IS_UNIQUE, IS_ORDERED);
-
 		initEOperation(getEdgeChange__GetTargetType(), ecorePackage.getEClass(), "getTargetType", 0, 1, IS_UNIQUE,
 				IS_ORDERED);
 
-		initEOperation(getEdgeChange__GetTargetDomain(), ecorePackage.getEObject(), "getTargetDomain", 0, -1, IS_UNIQUE,
-				!IS_ORDERED);
-
-		initEOperation(getEdgeChange__GetTarget(), ecorePackage.getEObject(), "getTarget", 0, 1, IS_UNIQUE, IS_ORDERED);
-
-		initEClass(changeContextEClass, ChangeContext.class, "ChangeContext", IS_ABSTRACT, IS_INTERFACE,
+		initEClass(edgeDomainEClass, EdgeDomain.class, "EdgeDomain", IS_ABSTRACT, IS_INTERFACE,
 				IS_GENERATED_INSTANCE_CLASS);
 
-		op = initEOperation(getChangeContext__GetAction__Change(), this.getActionType(), "getAction", 0, 1, IS_UNIQUE,
+		initEClass(edgeBindingEClass, EdgeBinding.class, "EdgeBinding", IS_ABSTRACT, IS_INTERFACE,
+				IS_GENERATED_INSTANCE_CLASS);
+
+		initEClass(attributeInstantiationEClass, AttributeInstantiation.class, "AttributeInstantiation", IS_ABSTRACT,
+				IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+		initEClass(changeInstantiationEClass, ChangeInstantiation.class, "ChangeInstantiation", IS_ABSTRACT,
+				IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+		initEClass(nodeInstantiationEClass, NodeInstantiation.class, "NodeInstantiation", IS_ABSTRACT, IS_INTERFACE,
+				IS_GENERATED_INSTANCE_CLASS);
+
+		initEClass(edgeInstantiationEClass, EdgeInstantiation.class, "EdgeInstantiation", IS_ABSTRACT, IS_INTERFACE,
+				IS_GENERATED_INSTANCE_CLASS);
+
+		initEClass(attributeNodeDomainDefinitionEClass, AttributeNodeDomainDefinition.class,
+				"AttributeNodeDomainDefinition", IS_ABSTRACT, IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+		EOperation op = initEOperation(getAttributeNodeDomainDefinition__NodeDomainContains__EObject(),
+				ecorePackage.getEBoolean(), "nodeDomainContains", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, ecorePackage.getEObject(), "node", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+		initEClass(attributeValueDomainDefinitionEClass, AttributeValueDomainDefinition.class,
+				"AttributeValueDomainDefinition", IS_ABSTRACT, IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+		op = initEOperation(getAttributeValueDomainDefinition__ValueDomainContains__Object(),
+				ecorePackage.getEBoolean(), "valueDomainContains", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, ecorePackage.getEJavaObject(), "value", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+		initEClass(attributeNodeDomainEClass, AttributeNodeDomain.class, "AttributeNodeDomain", IS_ABSTRACT,
+				IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+		initEOperation(getAttributeNodeDomain__GetNodeDomain(), ecorePackage.getEObject(), "getNodeDomain", 0, -1,
+				IS_UNIQUE, !IS_ORDERED);
+
+		initEClass(attributeValueDomainEClass, AttributeValueDomain.class, "AttributeValueDomain", IS_ABSTRACT,
+				IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+		initEOperation(getAttributeValueDomain__GetValueDomain(), ecorePackage.getEJavaObject(), "getValueDomain", 0,
+				-1, IS_UNIQUE, !IS_ORDERED);
+
+		initEClass(attributeNodeBindingEClass, AttributeNodeBinding.class, "AttributeNodeBinding", IS_ABSTRACT,
+				IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+		initEOperation(getAttributeNodeBinding__GetNode(), ecorePackage.getEObject(), "getNode", 0, 1, IS_UNIQUE,
 				IS_ORDERED);
-		addEParameter(op, this.getChange(), "change", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		// Initialize enums and add enum literals
-		initEEnum(actionTypeEEnum, ActionType.class, "ActionType");
-		addEEnumLiteral(actionTypeEEnum, ActionType.CREATE);
-		addEEnumLiteral(actionTypeEEnum, ActionType.DELETE);
-		addEEnumLiteral(actionTypeEEnum, ActionType.MODIFY);
+		initEClass(attributeValueBindingEClass, AttributeValueBinding.class, "AttributeValueBinding", IS_ABSTRACT,
+				IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
-		// Initialize data types
-		initEDataType(changeIteratorEDataType, Iterator.class, "ChangeIterator", !IS_SERIALIZABLE,
-				!IS_GENERATED_INSTANCE_CLASS, "java.util.Iterator<org.sidiff.revision.changes.Change>");
+		initEOperation(getAttributeValueBinding__GetValue(), ecorePackage.getEJavaObject(), "getValue", 0, 1, IS_UNIQUE,
+				IS_ORDERED);
+
+		initEClass(edgeSourceDomainDefinitionEClass, EdgeSourceDomainDefinition.class, "EdgeSourceDomainDefinition",
+				IS_ABSTRACT, IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+		op = initEOperation(getEdgeSourceDomainDefinition__SourceDomainContains__EObject(),
+				theXMLTypePackage.getBoolean(), "sourceDomainContains", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, ecorePackage.getEObject(), "sourceNode", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+		initEClass(edgeTargetDomainDefinitionEClass, EdgeTargetDomainDefinition.class, "EdgeTargetDomainDefinition",
+				IS_ABSTRACT, IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+		op = initEOperation(getEdgeTargetDomainDefinition__TargetDomainContains__EObject(), ecorePackage.getEBoolean(),
+				"targetDomainContains", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, ecorePackage.getEObject(), "targetNode", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+		initEClass(edgeSourceDomainEClass, EdgeSourceDomain.class, "EdgeSourceDomain", IS_ABSTRACT, IS_INTERFACE,
+				IS_GENERATED_INSTANCE_CLASS);
+
+		initEOperation(getEdgeSourceDomain__GetSourceDomain(), ecorePackage.getEObject(), "getSourceDomain", 0, -1,
+				IS_UNIQUE, !IS_ORDERED);
+
+		initEClass(edgeTargetDomainEClass, EdgeTargetDomain.class, "EdgeTargetDomain", IS_ABSTRACT, IS_INTERFACE,
+				IS_GENERATED_INSTANCE_CLASS);
+
+		initEOperation(getEdgeTargetDomain__GetTargetDomain(), ecorePackage.getEObject(), "getTargetDomain", 0, -1,
+				IS_UNIQUE, !IS_ORDERED);
+
+		initEClass(edgeSourceBindingEClass, EdgeSourceBinding.class, "EdgeSourceBinding", IS_ABSTRACT, IS_INTERFACE,
+				IS_GENERATED_INSTANCE_CLASS);
+
+		initEOperation(getEdgeSourceBinding__GetSource(), ecorePackage.getEObject(), "getSource", 0, 1, IS_UNIQUE,
+				IS_ORDERED);
+
+		initEClass(edgeTargetBindingEClass, EdgeTargetBinding.class, "EdgeTargetBinding", IS_ABSTRACT, IS_INTERFACE,
+				IS_GENERATED_INSTANCE_CLASS);
+
+		initEOperation(getEdgeTargetBinding__GetTarget(), ecorePackage.getEObject(), "getTarget", 0, 1, IS_UNIQUE,
+				IS_ORDERED);
+
+		initEClass(nodeChangeDomainDefinitionEClass, NodeChangeDomainDefinition.class, "NodeChangeDomainDefinition",
+				IS_ABSTRACT, IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+		op = initEOperation(getNodeChangeDomainDefinition__NodeDomainContains__EObject(), ecorePackage.getEBoolean(),
+				"nodeDomainContains", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, ecorePackage.getEObject(), "node", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+		initEClass(nodeChangeDomainEClass, NodeChangeDomain.class, "NodeChangeDomain", IS_ABSTRACT, IS_INTERFACE,
+				IS_GENERATED_INSTANCE_CLASS);
+
+		initEOperation(getNodeChangeDomain__GetNodeDomains(), ecorePackage.getEObject(), "getNodeDomains", 0, -1,
+				IS_UNIQUE, IS_ORDERED);
 
 		// Create resource
 		createResource(eNS_URI);

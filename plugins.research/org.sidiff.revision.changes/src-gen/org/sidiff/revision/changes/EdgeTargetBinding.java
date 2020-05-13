@@ -6,21 +6,21 @@ import org.eclipse.emf.ecore.EObject;
 
 /**
  * <!-- begin-user-doc -->
- * A representation of the model object '<em><b>Change</b></em>'.
+ * A representation of the model object '<em><b>Edge Target Binding</b></em>'.
  * <!-- end-user-doc -->
  *
  *
- * @see org.sidiff.revision.changes.ChangesPackage#getChange()
+ * @see org.sidiff.revision.changes.ChangesPackage#getEdgeTargetBinding()
  * @model interface="true" abstract="true"
  * @generated
  */
-public interface Change extends EObject {
+public interface EdgeTargetBinding extends EdgeBinding {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @model kind="operation"
 	 * @generated
 	 */
-	void getAction();
+	EObject getTarget();
 
-} // Change
+} // EdgeTargetBinding

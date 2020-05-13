@@ -6,21 +6,21 @@ import org.eclipse.emf.ecore.EObject;
 
 /**
  * <!-- begin-user-doc -->
- * A representation of the model object '<em><b>Change</b></em>'.
+ * A representation of the model object '<em><b>Edge Source Binding</b></em>'.
  * <!-- end-user-doc -->
  *
  *
- * @see org.sidiff.revision.changes.ChangesPackage#getChange()
+ * @see org.sidiff.revision.changes.ChangesPackage#getEdgeSourceBinding()
  * @model interface="true" abstract="true"
  * @generated
  */
-public interface Change extends EObject {
+public interface EdgeSourceBinding extends EdgeBinding {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @model kind="operation"
 	 * @generated
 	 */
-	void getAction();
+	EObject getSource();
 
-} // Change
+} // EdgeSourceBinding

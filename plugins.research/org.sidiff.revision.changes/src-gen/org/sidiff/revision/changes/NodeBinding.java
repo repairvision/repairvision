@@ -2,25 +2,25 @@
  */
 package org.sidiff.revision.changes;
 
-import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
 
 /**
  * <!-- begin-user-doc -->
- * A representation of the model object '<em><b>Node Change</b></em>'.
+ * A representation of the model object '<em><b>Node Binding</b></em>'.
  * <!-- end-user-doc -->
  *
  *
- * @see org.sidiff.revision.changes.ChangesPackage#getNodeChange()
+ * @see org.sidiff.revision.changes.ChangesPackage#getNodeBinding()
  * @model interface="true" abstract="true"
  * @generated
  */
-public interface NodeChange extends Change {
+public interface NodeBinding extends NodeInstantiation {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @model kind="operation"
 	 * @generated
 	 */
-	EClass getType();
+	EObject getNode();
 
-} // NodeChange
+} // NodeBinding

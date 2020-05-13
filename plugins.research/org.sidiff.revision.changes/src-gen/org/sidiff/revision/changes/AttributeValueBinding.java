@@ -2,25 +2,23 @@
  */
 package org.sidiff.revision.changes;
 
-import org.eclipse.emf.ecore.EClass;
-
 /**
  * <!-- begin-user-doc -->
- * A representation of the model object '<em><b>Node Change</b></em>'.
+ * A representation of the model object '<em><b>Attribute Value Binding</b></em>'.
  * <!-- end-user-doc -->
  *
  *
- * @see org.sidiff.revision.changes.ChangesPackage#getNodeChange()
+ * @see org.sidiff.revision.changes.ChangesPackage#getAttributeValueBinding()
  * @model interface="true" abstract="true"
  * @generated
  */
-public interface NodeChange extends Change {
+public interface AttributeValueBinding extends AttributeBinding {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @model kind="operation"
 	 * @generated
 	 */
-	EClass getType();
+	Object getValue();
 
-} // NodeChange
+} // AttributeValueBinding
