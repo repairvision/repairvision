@@ -6,13 +6,19 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
-
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
-
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
-
 import org.eclipse.emf.ecore.resource.Resource;
-import org.sidiff.historymodel.*;
+import org.sidiff.historymodel.Annotation;
+import org.sidiff.historymodel.ChangeSet;
+import org.sidiff.historymodel.History;
+import org.sidiff.historymodel.HistoryModelFactory;
+import org.sidiff.historymodel.HistoryModelPackage;
+import org.sidiff.historymodel.ModelStatus;
+import org.sidiff.historymodel.ModificationClassification;
+import org.sidiff.historymodel.Problem;
+import org.sidiff.historymodel.ProblemSeverity;
+import org.sidiff.historymodel.Version;
 
 /**
  * <!-- begin-user-doc -->
@@ -115,6 +121,7 @@ public class HistoryModelFactoryImpl extends EFactoryImpl implements HistoryMode
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public History createHistory() {
 		HistoryImpl history = new HistoryImpl();
 		return history;
@@ -125,6 +132,7 @@ public class HistoryModelFactoryImpl extends EFactoryImpl implements HistoryMode
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public Version createVersion() {
 		VersionImpl version = new VersionImpl();
 		return version;
@@ -135,6 +143,7 @@ public class HistoryModelFactoryImpl extends EFactoryImpl implements HistoryMode
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public Problem createProblem() {
 		ProblemImpl problem = new ProblemImpl();
 		return problem;
@@ -145,6 +154,7 @@ public class HistoryModelFactoryImpl extends EFactoryImpl implements HistoryMode
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public ChangeSet createChangeSet() {
 		ChangeSetImpl changeSet = new ChangeSetImpl();
 		return changeSet;
@@ -155,6 +165,7 @@ public class HistoryModelFactoryImpl extends EFactoryImpl implements HistoryMode
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public Annotation createAnnotation() {
 		AnnotationImpl annotation = new AnnotationImpl();
 		return annotation;
@@ -243,6 +254,7 @@ public class HistoryModelFactoryImpl extends EFactoryImpl implements HistoryMode
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public HistoryModelPackage getHistoryModelPackage() {
 		return (HistoryModelPackage)getEPackage();
 	}

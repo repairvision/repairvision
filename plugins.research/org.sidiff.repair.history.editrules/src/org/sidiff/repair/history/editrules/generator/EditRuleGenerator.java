@@ -14,13 +14,13 @@ import org.sidiff.common.emf.exceptions.NoCorrespondencesException;
 import org.sidiff.common.utilities.emf.DocumentType;
 import org.sidiff.correspondences.CorrespondencesUtil;
 import org.sidiff.correspondences.matchingmodel.MatchingModelCorrespondences;
-import org.sidiff.difference.symmetric.Change;
-import org.sidiff.difference.symmetric.SymmetricDifference;
-import org.sidiff.matching.api.util.MatchingUtils;
 import org.sidiff.repair.history.editrules.learn.scope.LearnEditRule;
 import org.sidiff.repair.history.editrules.util.IterableHistory;
+import org.sidiff.revision.difference.Change;
+import org.sidiff.revision.difference.Difference;
 import org.sidiff.revision.difference.derivation.api.TechnicalDifferenceFacade;
 import org.sidiff.revision.difference.derivation.api.settings.DifferenceSettings;
+import org.sidiff.revision.difference.derivation.api.util.MatchingUtils;
 import org.sidiff.revision.difference.derivation.api.util.TechnicalDifferenceUtils;
 import org.sidiff.validation.constraint.api.ValidationFacade;
 import org.sidiff.validation.constraint.api.util.RequiredValidation;
@@ -85,7 +85,7 @@ public class EditRuleGenerator {
 				diffSettings.setCorrespondencesService(CorrespondencesUtil.getAvailableCorrespondencesService(
 						MatchingModelCorrespondences.SERVICE_ID));
 				
-				SymmetricDifference difference = TechnicalDifferenceFacade.deriveTechnicalDifference(
+				Difference difference = TechnicalDifferenceFacade.deriveTechnicalDifference(
 						vA, vB, diffSettings);
 				
 				// Validation:
@@ -119,7 +119,7 @@ public class EditRuleGenerator {
 		}
 	}
 	
-	protected List<RequiredValidation[]> findValidationPairs(SymmetricDifference difference) 
+	protected List<RequiredValidation[]> findValidationPairs(Difference difference) 
 			throws InvalidModelException, NoCorrespondencesException {
 		
 		System.out.println("================================================================================");
@@ -178,7 +178,7 @@ public class EditRuleGenerator {
 		return validations;
 	}
 	
-	protected List<EditRule> calculateEditRules(SymmetricDifference difference, RequiredValidation[] validationPair) {
+	protected List<EditRule> calculateEditRules(Difference difference, RequiredValidation[] validationPair) {
 		List<EditRule> editRules = new ArrayList<>();
 
 		// Consistency-Tree to Consistency-Fragments:

@@ -15,9 +15,9 @@ import org.sidiff.history.revision.impl.Revision;
 import org.sidiff.revision.repair.api.IRepairPlan;
 import org.sidiff.revision.repair.api.peo.configuration.PEORepairSettings;
 import org.sidiff.revision.repair.complement.peo.finder.ComplementFinderEngine;
-import org.sidiff.validation.constraint.impact.repair.RepairImpactAnalyzes;
 import org.sidiff.validation.constraint.impact.ImpactAnalyzes;
 import org.sidiff.validation.constraint.impact.repair.RepairActionIndex;
+import org.sidiff.validation.constraint.impact.repair.RepairImpactAnalyzes;
 
 public class PEORepairCalculationEngine {
 	

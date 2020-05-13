@@ -3,7 +3,7 @@ package org.sidiff.revision.editrules.recognition.match;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.sidiff.difference.symmetric.Change;
+import org.sidiff.revision.difference.Change;
 
 public class RecognitionMatching extends ArrayList<RecognitionMatch> {
 

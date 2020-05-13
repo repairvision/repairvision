@@ -19,8 +19,8 @@ import org.sidiff.graphpattern.AttributePattern;
 import org.sidiff.graphpattern.EdgePattern;
 import org.sidiff.graphpattern.GraphpatternFactory;
 import org.sidiff.graphpattern.NodePattern;
-import org.sidiff.matching.model.Correspondence;
-import org.sidiff.matching.model.MatchingModelPackage;
+import org.sidiff.revision.difference.Correspondence;
+import org.sidiff.revision.difference.DifferencePackage;
 import org.sidiff.revision.editrules.recognition.pattern.domain.Domain;
 import org.sidiff.revision.editrules.recognition.pattern.domain.Domain.SelectionType;
 import org.sidiff.revision.editrules.recognition.pattern.graph.path.MatchingPath;
@@ -90,15 +90,15 @@ public class ActionNode extends ActionGraphElement  {
 			// Correspondence node-pattern:
 			this.correspondence = GraphpatternFactory.eINSTANCE.createNodePattern();
 			this.correspondence.setName(editRuleNode.getName());
-			this.correspondence.setType(MatchingModelPackage.eINSTANCE.getCorrespondence());
+			this.correspondence.setType(DifferencePackage.eINSTANCE.getCorrespondence());
 			
 			EdgePattern matchedA = GraphpatternFactory.eINSTANCE.createEdgePattern();
-			matchedA.setType(MatchingModelPackage.eINSTANCE.getCorrespondence_MatchedA());
+			matchedA.setType(DifferencePackage.eINSTANCE.getCorrespondence_MatchedA());
 			matchedA.setSource(correspondence);
 			matchedA.setTarget(nodePatternA);
 			
 			EdgePattern matchedB = GraphpatternFactory.eINSTANCE.createEdgePattern();
-			matchedB.setType(MatchingModelPackage.eINSTANCE.getCorrespondence_MatchedB());
+			matchedB.setType(DifferencePackage.eINSTANCE.getCorrespondence_MatchedB());
 			matchedB.setSource(correspondence);
 			matchedB.setTarget(nodePatternB);
 		}

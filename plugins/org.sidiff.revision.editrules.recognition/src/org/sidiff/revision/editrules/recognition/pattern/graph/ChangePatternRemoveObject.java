@@ -3,11 +3,11 @@ package org.sidiff.revision.editrules.recognition.pattern.graph;
 import java.util.Iterator;
 
 import org.eclipse.emf.ecore.EObject;
-import org.sidiff.difference.symmetric.Change;
-import org.sidiff.difference.symmetric.RemoveObject;
-import org.sidiff.difference.symmetric.SymmetricPackage;
 import org.sidiff.graphpattern.EdgePattern;
 import org.sidiff.graphpattern.GraphpatternFactory;
+import org.sidiff.revision.difference.Change;
+import org.sidiff.revision.difference.RemoveObject;
+import org.sidiff.revision.difference.DifferencePackage;
 import org.sidiff.revision.editrules.recognition.pattern.domain.Domain;
 import org.sidiff.revision.editrules.recognition.pattern.graph.path.MatchingPath;
 
@@ -16,12 +16,12 @@ public class ChangePatternRemoveObject extends ChangePatternObject {
 	public ChangePatternRemoveObject(ActionNode node) {
 		super(node);
 		
-		this.changeNodePattern.setType(SymmetricPackage.eINSTANCE.getRemoveObject());
+		this.changeNodePattern.setType(DifferencePackage.eINSTANCE.getRemoveObject());
 		this.changeNodePattern.setName(node.getEditRuleNode().getType().getName());
 		this.changeType = changeNodePattern.getType();
 		
 		EdgePattern objEdge = GraphpatternFactory.eINSTANCE.createEdgePattern();
-		objEdge.setType(SymmetricPackage.eINSTANCE.getRemoveObject_Obj());
+		objEdge.setType(DifferencePackage.eINSTANCE.getRemoveObject_Obj());
 		objEdge.setSource(changeNodePattern);
 		objEdge.setTarget(node.getNodePatternA());
 		
@@ -66,7 +66,7 @@ public class ChangePatternRemoveObject extends ChangePatternObject {
 		
 		while (matchedA.hasNext()) {
 			Iterator<RemoveObject> changes = actionGraph.getRevision().getDifference().getLocalChanges(
-					matchedA.next(), SymmetricPackage.eINSTANCE.getRemoveObject_Obj(), RemoveObject.class);
+					matchedA.next(), DifferencePackage.eINSTANCE.getRemoveObject_Obj(), RemoveObject.class);
 			
 			changes.forEachRemaining(removeObject -> {
 				Domain.get(changeNodePattern).mark(removeObject);

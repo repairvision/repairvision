@@ -4,9 +4,13 @@ package org.sidiff.historymodel.util;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
-
 import org.eclipse.emf.ecore.util.Switch;
-import org.sidiff.historymodel.*;
+import org.sidiff.historymodel.Annotation;
+import org.sidiff.historymodel.ChangeSet;
+import org.sidiff.historymodel.History;
+import org.sidiff.historymodel.HistoryModelPackage;
+import org.sidiff.historymodel.Problem;
+import org.sidiff.historymodel.Version;
 
 /**
  * <!-- begin-user-doc -->

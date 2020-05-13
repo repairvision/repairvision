@@ -4,12 +4,12 @@ import java.util.Iterator;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
-import org.sidiff.difference.symmetric.AddReference;
-import org.sidiff.difference.symmetric.Change;
-import org.sidiff.difference.symmetric.SymmetricPackage;
 import org.sidiff.graphpattern.Association;
 import org.sidiff.graphpattern.EdgePattern;
 import org.sidiff.graphpattern.GraphpatternFactory;
+import org.sidiff.revision.difference.AddReference;
+import org.sidiff.revision.difference.Change;
+import org.sidiff.revision.difference.DifferencePackage;
 import org.sidiff.revision.editrules.recognition.pattern.domain.Domain;
 import org.sidiff.revision.editrules.recognition.pattern.graph.path.MatchingPath;
 
@@ -18,18 +18,18 @@ public class ChangePatternAddReference extends ChangePatternReference {
 	public ChangePatternAddReference(ActionEdge edge) {
 		super(edge);
 		
-		this.changeNodePattern.setType(SymmetricPackage.eINSTANCE.getAddReference());
+		this.changeNodePattern.setType(DifferencePackage.eINSTANCE.getAddReference());
 		this.changeNodePattern.setName(edge.getEditRuleEdge().getType().getName());
 		this.changeType = changeNodePattern.getType();
 		
 		// change-pattern:
 		EdgePattern srcEdge = GraphpatternFactory.eINSTANCE.createEdgePattern();
-		srcEdge.setType(SymmetricPackage.eINSTANCE.getAddReference_Src());
+		srcEdge.setType(DifferencePackage.eINSTANCE.getAddReference_Src());
 		srcEdge.setSource(changeNodePattern);
 		srcEdge.setTarget(edge.getEdgePatternB().getSource());
 		
 		EdgePattern tgtEdge = GraphpatternFactory.eINSTANCE.createEdgePattern();
-		tgtEdge.setType(SymmetricPackage.eINSTANCE.getAddReference_Tgt());
+		tgtEdge.setType(DifferencePackage.eINSTANCE.getAddReference_Tgt());
 		tgtEdge.setSource(changeNodePattern);
 		tgtEdge.setTarget(edge.getEdgePatternB().getTarget());
 		
@@ -92,8 +92,8 @@ public class ChangePatternAddReference extends ChangePatternReference {
 		
 		while (matchedB.hasNext()) {
 			EReference changeReference = (stepSource == edge.getSource()) 
-					? SymmetricPackage.eINSTANCE.getAddReference_Src()
-					: SymmetricPackage.eINSTANCE.getAddReference_Tgt();
+					? DifferencePackage.eINSTANCE.getAddReference_Src()
+					: DifferencePackage.eINSTANCE.getAddReference_Tgt();
 			
 			Iterator<AddReference> changes = actionGraph.getRevision().getDifference().getLocalChanges(
 					matchedB.next(), changeReference, AddReference.class);

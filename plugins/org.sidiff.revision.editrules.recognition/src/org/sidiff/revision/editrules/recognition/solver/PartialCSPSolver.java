@@ -16,9 +16,9 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EcoreFactory;
 import org.sidiff.common.utilities.java.JUtil;
 import org.sidiff.common.utilities.monitor.LogTime;
-import org.sidiff.difference.symmetric.SymmetricPackage;
 import org.sidiff.graphpattern.DependencyNode;
 import org.sidiff.graphpattern.NodePattern;
+import org.sidiff.revision.difference.DifferencePackage;
 import org.sidiff.revision.editrules.recognition.IMatching;
 import org.sidiff.revision.editrules.recognition.dependencies.DependencyEvaluation;
 import org.sidiff.revision.editrules.recognition.impact.ImpactScopeConstraint;
@@ -627,34 +627,34 @@ public class PartialCSPSolver {
 			print.append(", Type: " + node.getType().getName());
 
 			// TODO: Generic... incident edges...
-			if (node.getType() == SymmetricPackage.eINSTANCE.getAddObject()) {
+			if (node.getType() == DifferencePackage.eINSTANCE.getAddObject()) {
 				print.append(", Obj: "
-						+ node.getOutgoing(SymmetricPackage.eINSTANCE.getAddObject_Obj()).getTarget().getName());
+						+ node.getOutgoing(DifferencePackage.eINSTANCE.getAddObject_Obj()).getTarget().getName());
 			}
 
-			else if (node.getType() == SymmetricPackage.eINSTANCE.getRemoveObject()) {
+			else if (node.getType() == DifferencePackage.eINSTANCE.getRemoveObject()) {
 				print.append(", Obj: "
-						+ node.getOutgoing(SymmetricPackage.eINSTANCE.getRemoveObject_Obj()).getTarget().getName());
+						+ node.getOutgoing(DifferencePackage.eINSTANCE.getRemoveObject_Obj()).getTarget().getName());
 			}
 
-			else if (node.getType() == SymmetricPackage.eINSTANCE.getAddReference()) {
+			else if (node.getType() == DifferencePackage.eINSTANCE.getAddReference()) {
 				print.append(", Src: "
-						+ node.getOutgoing(SymmetricPackage.eINSTANCE.getAddReference_Src()).getTarget().getName());
+						+ node.getOutgoing(DifferencePackage.eINSTANCE.getAddReference_Src()).getTarget().getName());
 				print.append(", Tgt: "
-						+ node.getOutgoing(SymmetricPackage.eINSTANCE.getAddReference_Tgt()).getTarget().getName());
+						+ node.getOutgoing(DifferencePackage.eINSTANCE.getAddReference_Tgt()).getTarget().getName());
 			}
 
-			else if (node.getType() == SymmetricPackage.eINSTANCE.getRemoveReference()) {
+			else if (node.getType() == DifferencePackage.eINSTANCE.getRemoveReference()) {
 				print.append(", Src: "
-						+ node.getOutgoing(SymmetricPackage.eINSTANCE.getRemoveReference_Src()).getTarget().getName());
+						+ node.getOutgoing(DifferencePackage.eINSTANCE.getRemoveReference_Src()).getTarget().getName());
 				print.append(", Tgt: "
-						+ node.getOutgoing(SymmetricPackage.eINSTANCE.getRemoveReference_Tgt()).getTarget().getName());
+						+ node.getOutgoing(DifferencePackage.eINSTANCE.getRemoveReference_Tgt()).getTarget().getName());
 			}
 
-			else if (node.getType() == SymmetricPackage.eINSTANCE.getAttributeValueChange()) {
-				print.append(", ObjA: " + node.getOutgoing(SymmetricPackage.eINSTANCE.getAttributeValueChange_ObjA())
+			else if (node.getType() == DifferencePackage.eINSTANCE.getAttributeValueChange()) {
+				print.append(", ObjA: " + node.getOutgoing(DifferencePackage.eINSTANCE.getAttributeValueChange_ObjA())
 						.getTarget().getName());
-				print.append(", ObjB: " + node.getOutgoing(SymmetricPackage.eINSTANCE.getAttributeValueChange_ObjB())
+				print.append(", ObjB: " + node.getOutgoing(DifferencePackage.eINSTANCE.getAttributeValueChange_ObjB())
 						.getTarget().getName());
 			}
 
@@ -668,36 +668,36 @@ public class PartialCSPSolver {
 				print.append("\n");
 
 				if (value != null) {
-					if (node.getType() == SymmetricPackage.eINSTANCE.getAddObject()) {
-						print.append("  Obj: " + value.eGet(SymmetricPackage.eINSTANCE.getAddObject_Obj()));
+					if (node.getType() == DifferencePackage.eINSTANCE.getAddObject()) {
+						print.append("  Obj: " + value.eGet(DifferencePackage.eINSTANCE.getAddObject_Obj()));
 						print.append("\n");
 					}
 
-					else if (node.getType() == SymmetricPackage.eINSTANCE.getRemoveObject()) {
-						print.append("  Obj: " + value.eGet(SymmetricPackage.eINSTANCE.getRemoveObject_Obj()));
+					else if (node.getType() == DifferencePackage.eINSTANCE.getRemoveObject()) {
+						print.append("  Obj: " + value.eGet(DifferencePackage.eINSTANCE.getRemoveObject_Obj()));
 						print.append("\n");
 					}
 
-					else if (node.getType() == SymmetricPackage.eINSTANCE.getAddReference()) {
-						print.append("  Src: " + value.eGet(SymmetricPackage.eINSTANCE.getAddReference_Src()));
+					else if (node.getType() == DifferencePackage.eINSTANCE.getAddReference()) {
+						print.append("  Src: " + value.eGet(DifferencePackage.eINSTANCE.getAddReference_Src()));
 						print.append("\n");
-						print.append("  Tgt: " + value.eGet(SymmetricPackage.eINSTANCE.getAddReference_Tgt()));
-						print.append("\n");
-					}
-
-					else if (node.getType() == SymmetricPackage.eINSTANCE.getRemoveReference()) {
-						print.append("  Src: " + value.eGet(SymmetricPackage.eINSTANCE.getRemoveReference_Src()));
-						print.append("\n");
-						print.append("  Tgt: " + value.eGet(SymmetricPackage.eINSTANCE.getRemoveReference_Tgt()));
+						print.append("  Tgt: " + value.eGet(DifferencePackage.eINSTANCE.getAddReference_Tgt()));
 						print.append("\n");
 					}
 
-					else if (node.getType() == SymmetricPackage.eINSTANCE.getAttributeValueChange()) {
+					else if (node.getType() == DifferencePackage.eINSTANCE.getRemoveReference()) {
+						print.append("  Src: " + value.eGet(DifferencePackage.eINSTANCE.getRemoveReference_Src()));
+						print.append("\n");
+						print.append("  Tgt: " + value.eGet(DifferencePackage.eINSTANCE.getRemoveReference_Tgt()));
+						print.append("\n");
+					}
+
+					else if (node.getType() == DifferencePackage.eINSTANCE.getAttributeValueChange()) {
 						print.append(
-								"  ObjA: " + value.eGet(SymmetricPackage.eINSTANCE.getAttributeValueChange_ObjA()));
+								"  ObjA: " + value.eGet(DifferencePackage.eINSTANCE.getAttributeValueChange_ObjA()));
 						print.append("\n");
 						print.append(
-								"  ObjB: " + value.eGet(SymmetricPackage.eINSTANCE.getAttributeValueChange_ObjB()));
+								"  ObjB: " + value.eGet(DifferencePackage.eINSTANCE.getAttributeValueChange_ObjB()));
 						print.append("\n");
 					}
 				}

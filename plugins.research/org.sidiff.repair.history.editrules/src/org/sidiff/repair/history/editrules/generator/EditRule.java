@@ -8,19 +8,19 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.emf.henshin.model.Node;
-import org.sidiff.difference.symmetric.AddObject;
-import org.sidiff.difference.symmetric.Change;
-import org.sidiff.difference.symmetric.RemoveObject;
-import org.sidiff.difference.symmetric.SymmetricDifference;
 import org.sidiff.editrule.tools.recorder.DifferenceToEditRule;
 import org.sidiff.editrule.tools.recorder.TransformationSetup;
-import org.sidiff.matching.model.Correspondence;
-import org.sidiff.matching.model.MatchingModelFactory;
 import org.sidiff.repair.history.editrules.learn.scope.DifferenceSlice;
 import org.sidiff.repair.history.editrules.learn.scope.LearnEditRule;
 import org.sidiff.repair.history.editrules.learn.scope.MultiScopeReferenceFilter;
 import org.sidiff.repair.history.editrules.learn.scope.ScopeAttributeFilter;
 import org.sidiff.repair.history.editrules.learn.scope.ScopeReferenceFilter;
+import org.sidiff.revision.difference.AddObject;
+import org.sidiff.revision.difference.Change;
+import org.sidiff.revision.difference.Correspondence;
+import org.sidiff.revision.difference.RemoveObject;
+import org.sidiff.revision.difference.Difference;
+import org.sidiff.revision.difference.DifferenceFactory;
 import org.sidiff.validation.constraint.interpreter.scope.AttributeScope;
 import org.sidiff.validation.constraint.interpreter.scope.IScopeRecorder;
 
@@ -32,7 +32,7 @@ public class EditRule implements IEditRule {
 	
 	protected Module editRule;
 	
-	protected SymmetricDifference difference;
+	protected Difference difference;
 	
 	protected DifferenceSlice differenceSlice;
 	
@@ -42,7 +42,7 @@ public class EditRule implements IEditRule {
 	
 	protected EditRuleSignature signature;
 	
-	public EditRule(String name, SymmetricDifference difference,
+	public EditRule(String name, Difference difference,
 			IScopeRecorder fragmentA, IScopeRecorder fragmentB) {
 		
 		this.name = name;
@@ -88,7 +88,7 @@ public class EditRule implements IEditRule {
 		this.description = description;
 	}
 	
-	public SymmetricDifference getDifference() {
+	public Difference getDifference() {
 		return difference;
 	}
 	
@@ -169,7 +169,7 @@ public class EditRule implements IEditRule {
 		differenceSlice.getChanges().removeAll(convertToContext);
 		
 		for (Change change : convertToContext) {
-			Correspondence correspondence = MatchingModelFactory.eINSTANCE.createCorrespondence();
+			Correspondence correspondence = DifferenceFactory.eINSTANCE.createCorrespondence();
 			correspondence.setMatchedA(getChangedObject(change));
 			correspondence.setMatchedB(getChangedObject(change));
 			differenceSlice.getCorrespondences().add(correspondence);

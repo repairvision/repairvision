@@ -15,14 +15,14 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.sidiff.difference.symmetric.AddObject;
-import org.sidiff.difference.symmetric.AddReference;
-import org.sidiff.difference.symmetric.AttributeValueChange;
-import org.sidiff.difference.symmetric.Change;
-import org.sidiff.difference.symmetric.RemoveObject;
-import org.sidiff.difference.symmetric.RemoveReference;
-import org.sidiff.difference.symmetric.SymmetricDifference;
-import org.sidiff.difference.symmetric.SymmetricPackage;
+import org.sidiff.revision.difference.AddObject;
+import org.sidiff.revision.difference.AddReference;
+import org.sidiff.revision.difference.AttributeValueChange;
+import org.sidiff.revision.difference.Change;
+import org.sidiff.revision.difference.Difference;
+import org.sidiff.revision.difference.RemoveObject;
+import org.sidiff.revision.difference.RemoveReference;
+import org.sidiff.revision.difference.DifferencePackage;
 
 /**
  * <ul>
@@ -39,9 +39,9 @@ import org.sidiff.difference.symmetric.SymmetricPackage;
  */
 public class LiftingGraphDomainMap {
 
-	private static final SymmetricPackage SYMMMETRIC_PACKAGE = SymmetricPackage.eINSTANCE;
+	private static final DifferencePackage SYMMMETRIC_PACKAGE = DifferencePackage.eINSTANCE;
 	
-	private SymmetricDifference difference;
+	private Difference difference;
 
 	private IndexSet<EClass, Set<EClass>> subTypes;
 
@@ -63,7 +63,7 @@ public class LiftingGraphDomainMap {
 	 * @param difference
 	 *            The difference containing the changes.
 	 */
-	public LiftingGraphDomainMap(SymmetricDifference difference) {
+	public LiftingGraphDomainMap(Difference difference) {
 		this.difference = difference;
 
 		subTypes = new IndexSet<EClass, Set<EClass>>();
@@ -145,7 +145,7 @@ public class LiftingGraphDomainMap {
 	 * @param difference
 	 *            The difference containing the changes.
 	 */
-	private void createChangeDomainMap(SymmetricDifference difference) {
+	private void createChangeDomainMap(Difference difference) {
 
 		Set<EPackage> packages = new HashSet<EPackage>();
 
@@ -517,7 +517,7 @@ public class LiftingGraphDomainMap {
 	/**
 	 * @return The corresponding difference.
 	 */
-	public SymmetricDifference getDifference() {
+	public Difference getDifference() {
 		return difference;
 	}
 }

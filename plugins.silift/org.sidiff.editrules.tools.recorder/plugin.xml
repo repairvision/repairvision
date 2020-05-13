@@ -6,13 +6,13 @@
       <command
             categoryId="org.sidiff.difference.ui.category.silift"
             description="Creates a model difference based on two model versions."
-            id="org.sidiff.difference.symmetric.editrules.command.creatediff"
+            id="org.sidiff.revision.difference.editrules.command.creatediff"
             name="Creates Model Difference">
       </command>
       <command
             categoryId="org.sidiff.difference.ui.category.silift"
             description="Creates an edit-rule based on a model difference."
-            id="org.sidiff.difference.symmetric.editrules.command.createeditrule"
+            id="org.sidiff.revision.difference.editrules.command.createeditrule"
             name="Create Edit-Rule based on Model Difference">
       </command>
    </extension>
@@ -20,11 +20,11 @@
          point="org.eclipse.ui.handlers">
       <handler
             class="org.sidiff.editrule.tools.recorder.handlers.CreateDifferenceHandler"
-            commandId="org.sidiff.difference.symmetric.editrules.command.creatediff">
+            commandId="org.sidiff.revision.difference.editrules.command.creatediff">
       </handler>
          <handler
             class="org.sidiff.editrule.tools.recorder.handlers.CreateEditRuleHandler"
-            commandId="org.sidiff.difference.symmetric.editrules.command.createeditrule">
+            commandId="org.sidiff.revision.difference.editrules.command.createeditrule">
             <activeWhen>
                <or>
                   <with
@@ -32,14 +32,14 @@
                      <iterate
                            ifEmpty="false">
                         <reference
-                              definitionId="org.sidiff.difference.symmetric">
+                              definitionId="org.sidiff.revision.difference">
                         </reference>
                      </iterate>
                   </with>
                   <with
                         variable="activeEditorInput">
                      <reference
-                           definitionId="org.sidiff.difference.symmetric">
+                           definitionId="org.sidiff.revision.difference">
                      </reference>
                   </with>
                </or>
@@ -54,18 +54,18 @@
          <menu
                label="Example based Edit-Rule">
             <command
-                  commandId="org.sidiff.difference.symmetric.editrules.command.creatediff"
+                  commandId="org.sidiff.revision.difference.editrules.command.creatediff"
                   style="push">
             </command>
             <command
-                  commandId="org.sidiff.difference.symmetric.editrules.command.createeditrule"
+                  commandId="org.sidiff.revision.difference.editrules.command.createeditrule"
                   style="push">
             </command>
          </menu>
       </menuContribution>
    </extension>
    <extension point="org.eclipse.core.expressions.definitions">
-      <definition id="org.sidiff.difference.symmetric">
+      <definition id="org.sidiff.revision.difference">
          <adapt type="org.eclipse.core.resources.IResource">
             <or>
                <test

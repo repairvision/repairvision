@@ -4,7 +4,7 @@ import java.util.Set;
 
 import org.eclipse.emf.ecore.resource.Resource;
 import org.sidiff.common.emf.access.Scope;
-import org.sidiff.difference.symmetric.SymmetricDifference;
+import org.sidiff.revision.difference.Difference;
 
 /**
  * This interface belongs to the 'org.sidiff.revision.difference.derivation' extension
@@ -46,9 +46,9 @@ public interface ITechnicalDifferenceBuilder {
 	 * the abstract class {@link AbstractTechnicalDifferenceBuilder}
 	 * 
 	 * @param difference
-	 * @return {@link SymmetricDifference}
+	 * @return {@link Difference}
 	 */
-	public SymmetricDifference deriveTechDiff(SymmetricDifference difference, Scope scope);
+	public Difference deriveTechDiff(Difference difference, Scope scope);
 
 	/**
 	 * Returns whether this technical difference builder can handle models with

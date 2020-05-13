@@ -2,9 +2,9 @@ package org.sidiff.revision.editrules.recognition.match;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.henshin.model.Action.Type;
-import org.sidiff.common.utilities.emf.ModelingUtil;
 import org.eclipse.emf.henshin.model.Attribute;
 import org.eclipse.emf.henshin.model.GraphElement;
+import org.sidiff.common.utilities.emf.ModelingUtil;
 
 public class RecognitionAttributeMatch extends RecognitionActionMatch {
 

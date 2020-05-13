@@ -21,9 +21,9 @@ import org.sidiff.historymodel.HistoryModelFactory;
 import org.sidiff.historymodel.ModelStatus;
 import org.sidiff.historymodel.Problem;
 import org.sidiff.historymodel.Version;
-import org.sidiff.matching.api.MatchingFacade;
-import org.sidiff.matching.model.Correspondence;
-import org.sidiff.matching.model.Matching;
+import org.sidiff.revision.difference.Correspondence;
+import org.sidiff.revision.difference.Difference;
+import org.sidiff.revision.difference.derivation.api.TechnicalDifferenceFacade;
 import org.sidiff.revision.difference.derivation.api.settings.DifferenceSettings;
 
 public class HistoryModelGenerator {
@@ -72,7 +72,7 @@ public class HistoryModelGenerator {
 //					continue;
 //				}
 
-				Matching matching = generateMatching(versionA, versionB, settings);
+				Difference matching = generateMatching(versionA, versionB, settings);
 				generateUUIDs(matching);
 			} catch (InvalidModelException e) {
 				e.printStackTrace();
@@ -153,18 +153,18 @@ public class HistoryModelGenerator {
 		}
 	}
 	
-	private static Matching generateMatching(Version versionA, Version versionB, DifferenceSettings settings) 
+	private static Difference generateMatching(Version versionA, Version versionB, DifferenceSettings settings) 
 			throws InvalidModelException, NoCorrespondencesException {
 		
 		Resource resourceA = versionA.getModel();
 		Resource resourceB = versionB.getModel();
 		
-		Matching matching = MatchingFacade.match(Arrays.asList(resourceA, resourceB), settings);
+		Difference matching = TechnicalDifferenceFacade.match(Arrays.asList(resourceA, resourceB), settings);
 
 		return matching;
 	}
 	
-	private static void generateUUIDs(Matching matching) {
+	private static void generateUUIDs(Difference matching) {
 		for (Correspondence correspondence : matching.getCorrespondences()) {
 			if (!UUIDResource.isDynamic(correspondence.getMatchedA()) && !UUIDResource.isDynamic(correspondence.getMatchedB())) {
 				String uuid = EMFUtil.getXmiId(correspondence.getMatchedA());

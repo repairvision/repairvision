@@ -9,12 +9,9 @@ import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
-
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
-
 import org.eclipse.emf.ecore.resource.Resource;
-import org.sidiff.difference.symmetric.SymmetricPackage;
 import org.sidiff.historymodel.Annotation;
 import org.sidiff.historymodel.ChangeSet;
 import org.sidiff.historymodel.History;
@@ -25,7 +22,8 @@ import org.sidiff.historymodel.ModificationClassification;
 import org.sidiff.historymodel.Problem;
 import org.sidiff.historymodel.ProblemSeverity;
 import org.sidiff.historymodel.Version;
-import org.sidiff.matching.model.MatchingModelPackage;
+
+import org.sidiff.revision.difference.DifferencePackage;
 
 /**
  * <!-- begin-user-doc -->
@@ -125,7 +123,7 @@ public class HistoryModelPackageImpl extends EPackageImpl implements HistoryMode
 
 	/**
 	 * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
-	 * 
+	 *
 	 * <p>This method is used to initialize {@link HistoryModelPackage#eINSTANCE} when that field is accessed.
 	 * Clients should not invoke it directly. Instead, they should simply access that field to obtain the package.
 	 * <!-- begin-user-doc -->
@@ -139,14 +137,14 @@ public class HistoryModelPackageImpl extends EPackageImpl implements HistoryMode
 		if (isInited) return (HistoryModelPackage)EPackage.Registry.INSTANCE.getEPackage(HistoryModelPackage.eNS_URI);
 
 		// Obtain or create and register package
-		HistoryModelPackageImpl theHistoryModelPackage = (HistoryModelPackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof HistoryModelPackageImpl ? EPackage.Registry.INSTANCE.get(eNS_URI) : new HistoryModelPackageImpl());
+		Object registeredHistoryModelPackage = EPackage.Registry.INSTANCE.get(eNS_URI);
+		HistoryModelPackageImpl theHistoryModelPackage = registeredHistoryModelPackage instanceof HistoryModelPackageImpl ? (HistoryModelPackageImpl)registeredHistoryModelPackage : new HistoryModelPackageImpl();
 
 		isInited = true;
 
 		// Initialize simple dependencies
+		DifferencePackage.eINSTANCE.eClass();
 		EcorePackage.eINSTANCE.eClass();
-		MatchingModelPackage.eINSTANCE.eClass();
-		SymmetricPackage.eINSTANCE.eClass();
 
 		// Create package meta-data objects
 		theHistoryModelPackage.createPackageContents();
@@ -157,7 +155,6 @@ public class HistoryModelPackageImpl extends EPackageImpl implements HistoryMode
 		// Mark meta-data to indicate it can't be changed
 		theHistoryModelPackage.freeze();
 
-  
 		// Update the registry and return the package
 		EPackage.Registry.INSTANCE.put(HistoryModelPackage.eNS_URI, theHistoryModelPackage);
 		return theHistoryModelPackage;
@@ -168,6 +165,7 @@ public class HistoryModelPackageImpl extends EPackageImpl implements HistoryMode
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getHistory() {
 		return historyEClass;
 	}
@@ -177,6 +175,7 @@ public class HistoryModelPackageImpl extends EPackageImpl implements HistoryMode
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EAttribute getHistory_Name() {
 		return (EAttribute)historyEClass.getEStructuralFeatures().get(0);
 	}
@@ -186,6 +185,7 @@ public class HistoryModelPackageImpl extends EPackageImpl implements HistoryMode
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getHistory_Versions() {
 		return (EReference)historyEClass.getEStructuralFeatures().get(1);
 	}
@@ -195,6 +195,7 @@ public class HistoryModelPackageImpl extends EPackageImpl implements HistoryMode
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getHistory_AllProblems() {
 		return (EReference)historyEClass.getEStructuralFeatures().get(2);
 	}
@@ -204,6 +205,7 @@ public class HistoryModelPackageImpl extends EPackageImpl implements HistoryMode
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EOperation getHistory__GetPredecessorVersions__Version() {
 		return historyEClass.getEOperations().get(0);
 	}
@@ -213,6 +215,7 @@ public class HistoryModelPackageImpl extends EPackageImpl implements HistoryMode
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EOperation getHistory__GetSuccessorVersions__Version() {
 		return historyEClass.getEOperations().get(1);
 	}
@@ -222,6 +225,7 @@ public class HistoryModelPackageImpl extends EPackageImpl implements HistoryMode
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EOperation getHistory__GetProblems__boolean_boolean() {
 		return historyEClass.getEOperations().get(2);
 	}
@@ -231,6 +235,7 @@ public class HistoryModelPackageImpl extends EPackageImpl implements HistoryMode
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EOperation getHistory__GetUniqueProblems() {
 		return historyEClass.getEOperations().get(3);
 	}
@@ -240,6 +245,7 @@ public class HistoryModelPackageImpl extends EPackageImpl implements HistoryMode
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getVersion() {
 		return versionEClass;
 	}
@@ -249,6 +255,7 @@ public class HistoryModelPackageImpl extends EPackageImpl implements HistoryMode
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getVersion_Problems() {
 		return (EReference)versionEClass.getEStructuralFeatures().get(0);
 	}
@@ -258,6 +265,7 @@ public class HistoryModelPackageImpl extends EPackageImpl implements HistoryMode
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EAttribute getVersion_Name() {
 		return (EAttribute)versionEClass.getEStructuralFeatures().get(1);
 	}
@@ -267,6 +275,7 @@ public class HistoryModelPackageImpl extends EPackageImpl implements HistoryMode
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EAttribute getVersion_ModelURI() {
 		return (EAttribute)versionEClass.getEStructuralFeatures().get(2);
 	}
@@ -276,6 +285,7 @@ public class HistoryModelPackageImpl extends EPackageImpl implements HistoryMode
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EAttribute getVersion_Model() {
 		return (EAttribute)versionEClass.getEStructuralFeatures().get(3);
 	}
@@ -285,6 +295,7 @@ public class HistoryModelPackageImpl extends EPackageImpl implements HistoryMode
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EAttribute getVersion_Status() {
 		return (EAttribute)versionEClass.getEStructuralFeatures().get(4);
 	}
@@ -294,6 +305,7 @@ public class HistoryModelPackageImpl extends EPackageImpl implements HistoryMode
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EAttribute getVersion_RepositoryVersion() {
 		return (EAttribute)versionEClass.getEStructuralFeatures().get(5);
 	}
@@ -303,6 +315,7 @@ public class HistoryModelPackageImpl extends EPackageImpl implements HistoryMode
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getVersion_History() {
 		return (EReference)versionEClass.getEStructuralFeatures().get(6);
 	}
@@ -312,6 +325,7 @@ public class HistoryModelPackageImpl extends EPackageImpl implements HistoryMode
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EOperation getVersion__GetElement__String() {
 		return versionEClass.getEOperations().get(0);
 	}
@@ -321,6 +335,7 @@ public class HistoryModelPackageImpl extends EPackageImpl implements HistoryMode
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EOperation getVersion__GetPredecessor() {
 		return versionEClass.getEOperations().get(1);
 	}
@@ -330,6 +345,7 @@ public class HistoryModelPackageImpl extends EPackageImpl implements HistoryMode
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EOperation getVersion__GetSuccessor() {
 		return versionEClass.getEOperations().get(2);
 	}
@@ -339,6 +355,7 @@ public class HistoryModelPackageImpl extends EPackageImpl implements HistoryMode
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EOperation getVersion__GetIndex() {
 		return versionEClass.getEOperations().get(3);
 	}
@@ -348,6 +365,7 @@ public class HistoryModelPackageImpl extends EPackageImpl implements HistoryMode
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getProblem() {
 		return problemEClass;
 	}
@@ -357,6 +375,7 @@ public class HistoryModelPackageImpl extends EPackageImpl implements HistoryMode
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getProblem_Version() {
 		return (EReference)problemEClass.getEStructuralFeatures().get(0);
 	}
@@ -366,6 +385,7 @@ public class HistoryModelPackageImpl extends EPackageImpl implements HistoryMode
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EAttribute getProblem_Name() {
 		return (EAttribute)problemEClass.getEStructuralFeatures().get(1);
 	}
@@ -375,6 +395,7 @@ public class HistoryModelPackageImpl extends EPackageImpl implements HistoryMode
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getProblem_IntroducedIn() {
 		return (EReference)problemEClass.getEStructuralFeatures().get(2);
 	}
@@ -384,6 +405,7 @@ public class HistoryModelPackageImpl extends EPackageImpl implements HistoryMode
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EAttribute getProblem_Introduced() {
 		return (EAttribute)problemEClass.getEStructuralFeatures().get(3);
 	}
@@ -393,6 +415,7 @@ public class HistoryModelPackageImpl extends EPackageImpl implements HistoryMode
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getProblem_ResolvedIn() {
 		return (EReference)problemEClass.getEStructuralFeatures().get(4);
 	}
@@ -402,6 +425,7 @@ public class HistoryModelPackageImpl extends EPackageImpl implements HistoryMode
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EAttribute getProblem_Resolved() {
 		return (EAttribute)problemEClass.getEStructuralFeatures().get(5);
 	}
@@ -411,6 +435,7 @@ public class HistoryModelPackageImpl extends EPackageImpl implements HistoryMode
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EAttribute getProblem_Message() {
 		return (EAttribute)problemEClass.getEStructuralFeatures().get(6);
 	}
@@ -420,6 +445,7 @@ public class HistoryModelPackageImpl extends EPackageImpl implements HistoryMode
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EAttribute getProblem_Severity() {
 		return (EAttribute)problemEClass.getEStructuralFeatures().get(7);
 	}
@@ -429,6 +455,7 @@ public class HistoryModelPackageImpl extends EPackageImpl implements HistoryMode
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getProblem_Predecessor() {
 		return (EReference)problemEClass.getEStructuralFeatures().get(8);
 	}
@@ -438,6 +465,7 @@ public class HistoryModelPackageImpl extends EPackageImpl implements HistoryMode
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getProblem_Successor() {
 		return (EReference)problemEClass.getEStructuralFeatures().get(9);
 	}
@@ -447,6 +475,7 @@ public class HistoryModelPackageImpl extends EPackageImpl implements HistoryMode
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getProblem_InvalidElements() {
 		return (EReference)problemEClass.getEStructuralFeatures().get(10);
 	}
@@ -456,6 +485,7 @@ public class HistoryModelPackageImpl extends EPackageImpl implements HistoryMode
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getProblem_ContextElement() {
 		return (EReference)problemEClass.getEStructuralFeatures().get(11);
 	}
@@ -465,6 +495,7 @@ public class HistoryModelPackageImpl extends EPackageImpl implements HistoryMode
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getProblem_Modifications() {
 		return (EReference)problemEClass.getEStructuralFeatures().get(12);
 	}
@@ -474,6 +505,7 @@ public class HistoryModelPackageImpl extends EPackageImpl implements HistoryMode
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EAttribute getProblem_ModificationClassification() {
 		return (EAttribute)problemEClass.getEStructuralFeatures().get(13);
 	}
@@ -483,6 +515,7 @@ public class HistoryModelPackageImpl extends EPackageImpl implements HistoryMode
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getProblem_Annotations() {
 		return (EReference)problemEClass.getEStructuralFeatures().get(14);
 	}
@@ -492,6 +525,7 @@ public class HistoryModelPackageImpl extends EPackageImpl implements HistoryMode
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getChangeSet() {
 		return changeSetEClass;
 	}
@@ -501,6 +535,7 @@ public class HistoryModelPackageImpl extends EPackageImpl implements HistoryMode
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getChangeSet_Changes() {
 		return (EReference)changeSetEClass.getEStructuralFeatures().get(0);
 	}
@@ -510,6 +545,7 @@ public class HistoryModelPackageImpl extends EPackageImpl implements HistoryMode
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EAttribute getChangeSet_Name() {
 		return (EAttribute)changeSetEClass.getEStructuralFeatures().get(1);
 	}
@@ -519,6 +555,7 @@ public class HistoryModelPackageImpl extends EPackageImpl implements HistoryMode
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getAnnotation() {
 		return annotationEClass;
 	}
@@ -528,6 +565,7 @@ public class HistoryModelPackageImpl extends EPackageImpl implements HistoryMode
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EAttribute getAnnotation_Key() {
 		return (EAttribute)annotationEClass.getEStructuralFeatures().get(0);
 	}
@@ -537,6 +575,7 @@ public class HistoryModelPackageImpl extends EPackageImpl implements HistoryMode
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EAttribute getAnnotation_Value() {
 		return (EAttribute)annotationEClass.getEStructuralFeatures().get(1);
 	}
@@ -546,6 +585,7 @@ public class HistoryModelPackageImpl extends EPackageImpl implements HistoryMode
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EEnum getProblemSeverity() {
 		return problemSeverityEEnum;
 	}
@@ -555,6 +595,7 @@ public class HistoryModelPackageImpl extends EPackageImpl implements HistoryMode
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EEnum getModelStatus() {
 		return modelStatusEEnum;
 	}
@@ -564,6 +605,7 @@ public class HistoryModelPackageImpl extends EPackageImpl implements HistoryMode
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EEnum getModificationClassification() {
 		return modificationClassificationEEnum;
 	}
@@ -573,6 +615,7 @@ public class HistoryModelPackageImpl extends EPackageImpl implements HistoryMode
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EDataType getResource() {
 		return resourceEDataType;
 	}
@@ -582,6 +625,7 @@ public class HistoryModelPackageImpl extends EPackageImpl implements HistoryMode
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public HistoryModelFactory getHistoryModelFactory() {
 		return (HistoryModelFactory)getEFactoryInstance();
 	}
@@ -686,7 +730,7 @@ public class HistoryModelPackageImpl extends EPackageImpl implements HistoryMode
 
 		// Obtain other dependent packages
 		EcorePackage theEcorePackage = (EcorePackage)EPackage.Registry.INSTANCE.getEPackage(EcorePackage.eNS_URI);
-		SymmetricPackage theSymmetricPackage = (SymmetricPackage)EPackage.Registry.INSTANCE.getEPackage(SymmetricPackage.eNS_URI);
+		DifferencePackage theDifferencePackage = (DifferencePackage)EPackage.Registry.INSTANCE.getEPackage(DifferencePackage.eNS_URI);
 
 		// Create type parameters
 
@@ -748,7 +792,7 @@ public class HistoryModelPackageImpl extends EPackageImpl implements HistoryMode
 		initEReference(getProblem_Annotations(), this.getAnnotation(), null, "annotations", null, 0, -1, Problem.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(changeSetEClass, ChangeSet.class, "ChangeSet", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getChangeSet_Changes(), theSymmetricPackage.getChange(), null, "changes", null, 0, -1, ChangeSet.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getChangeSet_Changes(), theDifferencePackage.getChange(), null, "changes", null, 0, -1, ChangeSet.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getChangeSet_Name(), theEcorePackage.getEString(), "name", null, 0, 1, ChangeSet.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(annotationEClass, Annotation.class, "Annotation", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);

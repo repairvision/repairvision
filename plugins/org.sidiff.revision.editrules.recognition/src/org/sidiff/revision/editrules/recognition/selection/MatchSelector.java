@@ -1,8 +1,8 @@
 package org.sidiff.revision.editrules.recognition.selection;
 
 import org.eclipse.emf.ecore.EObject;
-import org.sidiff.difference.symmetric.Change;
 import org.sidiff.graphpattern.NodePattern;
+import org.sidiff.revision.difference.Change;
 import org.sidiff.revision.editrules.recognition.pattern.RecognitionPattern;
 import org.sidiff.revision.editrules.recognition.pattern.domain.Domain;
 import org.sidiff.revision.editrules.recognition.pattern.graph.path.MatchingPathFactory;

@@ -1,6 +1,6 @@
 package org.sidiff.history.revision;
 
-import org.sidiff.history.revision.difference.IDifference;
+import org.sidiff.history.revision.difference.IRevisionDifference;
 import org.sidiff.history.revision.metamodel.IMetaModel;
 
 public interface IRevision {
@@ -11,5 +11,5 @@ public interface IRevision {
 	
 	IVersion getVersionB();
 	
-	IDifference getDifference();
+	IRevisionDifference getDifference();
 }

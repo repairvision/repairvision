@@ -8,7 +8,7 @@ import org.eclipse.emf.henshin.model.GraphElement;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Parameter;
 import org.eclipse.emf.henshin.model.Rule;
-import org.sidiff.difference.symmetric.Change;
+import org.sidiff.revision.difference.Change;
 
 /**
  * Represents a single history-based repair operation.

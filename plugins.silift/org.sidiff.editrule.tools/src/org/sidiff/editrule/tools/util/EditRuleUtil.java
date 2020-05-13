@@ -1,5 +1,7 @@
 package org.sidiff.editrule.tools.util;
 
+import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.getRemoteNode;
+
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
@@ -17,7 +19,6 @@ import org.eclipse.emf.henshin.model.Parameter;
 import org.eclipse.emf.henshin.model.ParameterMapping;
 import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.emf.henshin.model.Unit;
-import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.*;
 import org.sidiff.common.henshin.INamingConventions;
 
 public class EditRuleUtil {

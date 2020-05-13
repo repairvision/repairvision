@@ -10,7 +10,6 @@ import org.sidiff.common.emf.access.Scope;
 import org.sidiff.correspondences.ICorrespondences;
 import org.sidiff.correspondences.matchingmodel.MatchingModelCorrespondences;
 import org.sidiff.matcher.IMatcher;
-import org.sidiff.matching.api.settings.MatchingSettings;
 import org.sidiff.revision.difference.derivation.ITechnicalDifferenceBuilder;
 import org.sidiff.revision.difference.derivation.api.util.TechnicalDifferenceUtils;
 

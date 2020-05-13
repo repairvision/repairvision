@@ -398,9 +398,9 @@ public class ProblemItemProvider
 	public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object) {
 		if (childrenFeatures == null) {
 			super.getChildrenFeatures(object);
-			childrenFeatures.add(HistoryModelPackage.Literals.PROBLEM__ANNOTATIONS);
 			childrenFeatures.add(HistoryModelPackage.Literals.PROBLEM__INVALID_ELEMENTS);
 			childrenFeatures.add(HistoryModelPackage.Literals.PROBLEM__MODIFICATIONS);
+			childrenFeatures.add(HistoryModelPackage.Literals.PROBLEM__ANNOTATIONS);
 		}
 		return childrenFeatures;
 	}
@@ -500,8 +500,8 @@ public class ProblemItemProvider
 			case HistoryModelPackage.PROBLEM__MODIFICATION_CLASSIFICATION:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 				return;
-			case HistoryModelPackage.PROBLEM__ANNOTATIONS:
 			case HistoryModelPackage.PROBLEM__MODIFICATIONS:
+			case HistoryModelPackage.PROBLEM__ANNOTATIONS:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 				return;
 		}
@@ -521,13 +521,13 @@ public class ProblemItemProvider
 
 		newChildDescriptors.add
 			(createChildParameter
-				(HistoryModelPackage.Literals.PROBLEM__ANNOTATIONS,
-				 HistoryModelFactory.eINSTANCE.createAnnotation()));
+				(HistoryModelPackage.Literals.PROBLEM__MODIFICATIONS,
+				 HistoryModelFactory.eINSTANCE.createChangeSet()));
 
 		newChildDescriptors.add
 			(createChildParameter
-				(HistoryModelPackage.Literals.PROBLEM__MODIFICATIONS,
-				 HistoryModelFactory.eINSTANCE.createChangeSet()));
+				(HistoryModelPackage.Literals.PROBLEM__ANNOTATIONS,
+				 HistoryModelFactory.eINSTANCE.createAnnotation()));
 	}
 
 	/**

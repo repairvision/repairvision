@@ -6,13 +6,13 @@ import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
-import org.sidiff.difference.symmetric.AddObject;
-import org.sidiff.difference.symmetric.AddReference;
-import org.sidiff.difference.symmetric.AttributeValueChange;
-import org.sidiff.difference.symmetric.Change;
-import org.sidiff.difference.symmetric.RemoveObject;
-import org.sidiff.difference.symmetric.RemoveReference;
 import org.sidiff.graphpattern.NodePattern;
+import org.sidiff.revision.difference.AddObject;
+import org.sidiff.revision.difference.AddReference;
+import org.sidiff.revision.difference.AttributeValueChange;
+import org.sidiff.revision.difference.Change;
+import org.sidiff.revision.difference.RemoveObject;
+import org.sidiff.revision.difference.RemoveReference;
 import org.sidiff.revision.editrules.recognition.pattern.domain.Domain;
 
 public abstract class ChangePattern implements IVariable {

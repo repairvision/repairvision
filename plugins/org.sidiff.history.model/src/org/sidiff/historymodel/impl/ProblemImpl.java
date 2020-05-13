@@ -247,6 +247,7 @@ public class ProblemImpl extends MinimalEObjectImpl.Container implements Problem
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public Version getVersion() {
 		if (eContainerFeatureID() != HistoryModelPackage.PROBLEM__VERSION) return null;
 		return (Version)eInternalContainer();
@@ -267,6 +268,7 @@ public class ProblemImpl extends MinimalEObjectImpl.Container implements Problem
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setVersion(Version newVersion) {
 		if (newVersion != eInternalContainer() || (eContainerFeatureID() != HistoryModelPackage.PROBLEM__VERSION && newVersion != null)) {
 			if (EcoreUtil.isAncestor(this, newVersion))
@@ -288,6 +290,7 @@ public class ProblemImpl extends MinimalEObjectImpl.Container implements Problem
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public String getName() {
 		return name;
 	}
@@ -297,6 +300,7 @@ public class ProblemImpl extends MinimalEObjectImpl.Container implements Problem
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setName(String newName) {
 		String oldName = name;
 		name = newName;
@@ -309,6 +313,7 @@ public class ProblemImpl extends MinimalEObjectImpl.Container implements Problem
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public Version getIntroducedIn() {
 		if (introducedIn != null && introducedIn.eIsProxy()) {
 			InternalEObject oldIntroducedIn = (InternalEObject)introducedIn;
@@ -369,6 +374,7 @@ public class ProblemImpl extends MinimalEObjectImpl.Container implements Problem
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public Version getResolvedIn() {
 		if (resolvedIn != null && resolvedIn.eIsProxy()) {
 			InternalEObject oldResolvedIn = (InternalEObject)resolvedIn;
@@ -395,24 +401,12 @@ public class ProblemImpl extends MinimalEObjectImpl.Container implements Problem
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setResolvedIn(Version newResolvedIn) {
 		Version oldResolvedIn = resolvedIn;
 		resolvedIn = newResolvedIn;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, HistoryModelPackage.PROBLEM__RESOLVED_IN, oldResolvedIn, resolvedIn));
-		
-		// propagate value:
-		if (getPredecessor()!= null) {
-			if (getPredecessor().getResolvedIn() != newResolvedIn) {
-				getPredecessor().setResolvedIn(newResolvedIn);
-			}
-		}
-		
-		if (getSuccessor() != null) {
-			if (getSuccessor().getResolvedIn() != newResolvedIn) {
-				getSuccessor().setResolvedIn(newResolvedIn);
-			}
-		}
 	}
 
 	/**
@@ -429,6 +423,7 @@ public class ProblemImpl extends MinimalEObjectImpl.Container implements Problem
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public String getMessage() {
 		return message;
 	}
@@ -438,6 +433,7 @@ public class ProblemImpl extends MinimalEObjectImpl.Container implements Problem
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setMessage(String newMessage) {
 		String oldMessage = message;
 		message = newMessage;
@@ -450,6 +446,7 @@ public class ProblemImpl extends MinimalEObjectImpl.Container implements Problem
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public ProblemSeverity getSeverity() {
 		return severity;
 	}
@@ -459,6 +456,7 @@ public class ProblemImpl extends MinimalEObjectImpl.Container implements Problem
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setSeverity(ProblemSeverity newSeverity) {
 		ProblemSeverity oldSeverity = severity;
 		severity = newSeverity == null ? SEVERITY_EDEFAULT : newSeverity;
@@ -471,6 +469,7 @@ public class ProblemImpl extends MinimalEObjectImpl.Container implements Problem
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public Problem getPredecessor() {
 		if (predecessor != null && predecessor.eIsProxy()) {
 			InternalEObject oldPredecessor = (InternalEObject)predecessor;
@@ -512,6 +511,7 @@ public class ProblemImpl extends MinimalEObjectImpl.Container implements Problem
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setPredecessor(Problem newPredecessor) {
 		if (newPredecessor != predecessor) {
 			NotificationChain msgs = null;
@@ -531,6 +531,7 @@ public class ProblemImpl extends MinimalEObjectImpl.Container implements Problem
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public Problem getSuccessor() {
 		if (successor != null && successor.eIsProxy()) {
 			InternalEObject oldSuccessor = (InternalEObject)successor;
@@ -572,6 +573,7 @@ public class ProblemImpl extends MinimalEObjectImpl.Container implements Problem
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setSuccessor(Problem newSuccessor) {
 		if (newSuccessor != successor) {
 			NotificationChain msgs = null;
@@ -629,6 +631,7 @@ public class ProblemImpl extends MinimalEObjectImpl.Container implements Problem
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setContextElement(EObject newContextElement) {
 		EObject oldContextElement = contextElement;
 		contextElement = newContextElement;
@@ -641,6 +644,7 @@ public class ProblemImpl extends MinimalEObjectImpl.Container implements Problem
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EList<ChangeSet> getModifications() {
 		if (modifications == null) {
 			modifications = new EObjectContainmentEList<ChangeSet>(ChangeSet.class, this, HistoryModelPackage.PROBLEM__MODIFICATIONS);
@@ -653,6 +657,7 @@ public class ProblemImpl extends MinimalEObjectImpl.Container implements Problem
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EList<ModificationClassification> getModificationClassification() {
 		if (modificationClassification == null) {
 			modificationClassification = new EDataTypeUniqueEList<ModificationClassification>(ModificationClassification.class, this, HistoryModelPackage.PROBLEM__MODIFICATION_CLASSIFICATION);
@@ -665,6 +670,7 @@ public class ProblemImpl extends MinimalEObjectImpl.Container implements Problem
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EList<Annotation> getAnnotations() {
 		if (annotations == null) {
 			annotations = new EObjectContainmentEList<Annotation>(Annotation.class, this, HistoryModelPackage.PROBLEM__ANNOTATIONS);
@@ -930,7 +936,7 @@ public class ProblemImpl extends MinimalEObjectImpl.Container implements Problem
 	public String toString() {
 		if (eIsProxy()) return super.toString();
 
-		StringBuffer result = new StringBuffer(super.toString());
+		StringBuilder result = new StringBuilder(super.toString());
 		result.append(" (name: ");
 		result.append(name);
 		result.append(", message: ");

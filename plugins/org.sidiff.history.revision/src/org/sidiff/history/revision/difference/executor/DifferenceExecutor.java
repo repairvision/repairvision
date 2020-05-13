@@ -14,14 +14,14 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.sidiff.difference.symmetric.AddObject;
-import org.sidiff.difference.symmetric.AddReference;
-import org.sidiff.difference.symmetric.AttributeValueChange;
-import org.sidiff.difference.symmetric.Change;
-import org.sidiff.difference.symmetric.RemoveObject;
-import org.sidiff.difference.symmetric.RemoveReference;
-import org.sidiff.difference.symmetric.SymmetricDifference;
 import org.sidiff.history.revision.util.EcoreMergeUtil;
+import org.sidiff.revision.difference.AddObject;
+import org.sidiff.revision.difference.AddReference;
+import org.sidiff.revision.difference.AttributeValueChange;
+import org.sidiff.revision.difference.Change;
+import org.sidiff.revision.difference.Difference;
+import org.sidiff.revision.difference.RemoveObject;
+import org.sidiff.revision.difference.RemoveReference;
 
 /**
  * Applies the difference between model A and B on model A. Thus, model A and
@@ -34,7 +34,7 @@ public class DifferenceExecutor implements Runnable {
 	/**
 	 * The difference between model A and B.
 	 */
-	private SymmetricDifference difference;
+	private Difference difference;
 	
 	/**
 	 * The change to be executed. 
@@ -57,7 +57,7 @@ public class DifferenceExecutor implements Runnable {
 	 * @param difference
 	 *            The difference to execute.
 	 */
-	public DifferenceExecutor(SymmetricDifference difference) {
+	public DifferenceExecutor(Difference difference) {
 		this.difference = difference;
 		this.changes = difference.getChanges();
 	}
@@ -70,7 +70,7 @@ public class DifferenceExecutor implements Runnable {
 	 * @param changes
 	 *            The changes to execute.
 	 */
-	public DifferenceExecutor(SymmetricDifference difference, Collection<Change> changes) {
+	public DifferenceExecutor(Difference difference, Collection<Change> changes) {
 		this.difference = difference;
 		this.changes = changes;
 	}
@@ -313,7 +313,7 @@ public class DifferenceExecutor implements Runnable {
 	/**
 	 * @return The difference between model A and model B.
 	 */
-	public SymmetricDifference getDifference() {
+	public Difference getDifference() {
 		return difference;
 	}
 

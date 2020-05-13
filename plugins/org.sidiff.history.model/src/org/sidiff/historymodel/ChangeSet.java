@@ -3,10 +3,8 @@
 package org.sidiff.historymodel;
 
 import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.emf.ecore.EObject;
-
-import org.sidiff.difference.symmetric.Change;
+import org.sidiff.revision.difference.Change;
 
 /**
  * <!-- begin-user-doc -->
@@ -28,7 +26,7 @@ import org.sidiff.difference.symmetric.Change;
 public interface ChangeSet extends EObject {
 	/**
 	 * Returns the value of the '<em><b>Changes</b></em>' containment reference list.
-	 * The list contents are of type {@link org.sidiff.difference.symmetric.Change}.
+	 * The list contents are of type {@link org.sidiff.revision.difference.Change}.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Changes</em>' containment reference list isn't clear,

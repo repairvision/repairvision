@@ -6,7 +6,7 @@
     editorPluginClass="org.sidiff.historymodel.presentation.ModelEditorPlugin" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
     testSuiteClass="org.sidiff.historymodel.tests.ModelAllTests" importerID="org.eclipse.emf.importer.ecore"
     complianceLevel="8.0" copyrightFields="false" editPluginID="org.sidiff.history.model.edit"
-    editorPluginID="org.sidiff.history.model.editor" usedGenPackages="../../org.eclipse.emf.ecore/model/Ecore.genmodel#//ecore ../../org.sidiff.matching.model/model/MatchingModel.genmodel#//model ../../org.sidiff.difference.symmetric/model/Symmetric.genmodel#//symmetric"
+    editorPluginID="org.sidiff.history.model.editor" usedGenPackages="../../org.sidiff.revision.difference/model/difference.genmodel#//difference ../../org.eclipse.emf.ecore/model/Ecore.genmodel#//ecore"
     operationReflection="true" importOrganizing="true">
   <foreignModel>model.ecore</foreignModel>
   <genPackages prefix="HistoryModel" basePackage="org.sidiff" resource="XMI" disposableProviderFactory="true"
@@ -64,7 +64,6 @@
       <genOperations ecoreOperation="model.ecore#//Version/getIndex"/>
     </genClasses>
     <genClasses ecoreClass="model.ecore#//Problem">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference model.ecore#//Problem/annotations"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference model.ecore#//Problem/version"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model.ecore#//Problem/name"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference model.ecore#//Problem/introducedIn"/>
@@ -80,6 +79,7 @@
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference model.ecore#//Problem/contextElement"/>
       <genFeatures children="true" createChild="true" propertySortChoices="true" ecoreFeature="ecore:EReference model.ecore#//Problem/modifications"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model.ecore#//Problem/modificationClassification"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference model.ecore#//Problem/annotations"/>
     </genClasses>
     <genClasses ecoreClass="model.ecore#//ChangeSet">
       <genFeatures children="true" createChild="true" propertySortChoices="true" ecoreFeature="ecore:EReference model.ecore#//ChangeSet/changes"/>

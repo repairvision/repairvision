@@ -34,10 +34,10 @@ import org.sidiff.graphpattern.tools.csp.GraphPatternMatch;
 import org.sidiff.graphpattern.tools.csp.GraphPatternMatchings;
 import org.sidiff.graphpattern.tools.csp.NodePatternDomain;
 import org.sidiff.graphpattern.tools.csp.NodePatternDomain.EdgeMatching;
+import org.sidiff.graphpattern.tools.csp.NodePatternVariable;
 import org.sidiff.revision.editrules.generation.decompose.dependencies.Dependency;
 import org.sidiff.revision.editrules.generation.decompose.dependencies.DependencyNode;
 import org.sidiff.revision.editrules.generation.decompose.dependencies.DependencyOrdering;
-import org.sidiff.graphpattern.tools.csp.NodePatternVariable;
 
 public class DecomposingEditRules {
 

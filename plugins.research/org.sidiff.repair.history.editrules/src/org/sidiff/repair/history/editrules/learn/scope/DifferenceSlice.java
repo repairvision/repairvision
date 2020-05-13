@@ -4,13 +4,13 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.sidiff.difference.symmetric.Change;
-import org.sidiff.difference.symmetric.SymmetricDifference;
-import org.sidiff.matching.model.Correspondence;
+import org.sidiff.revision.difference.Change;
+import org.sidiff.revision.difference.Correspondence;
+import org.sidiff.revision.difference.Difference;
 
 public class DifferenceSlice {
 	
-	protected SymmetricDifference difference;
+	protected Difference difference;
 
 	// difference slice //
 	
@@ -18,7 +18,7 @@ public class DifferenceSlice {
 	
 	protected Set<Change> changes;
 
-	public DifferenceSlice(SymmetricDifference difference) {
+	public DifferenceSlice(Difference difference) {
 		this.difference = difference;
 		this.correspondences = new HashSet<>();
 		this.changes = new HashSet<>();
@@ -56,11 +56,11 @@ public class DifferenceSlice {
 		return changed;
 	}
 	
-	public SymmetricDifference getDifference() {
+	public Difference getDifference() {
 		return difference;
 	}
 
-	public void setDifference(SymmetricDifference difference) {
+	public void setDifference(Difference difference) {
 		this.difference = difference;
 	}
 

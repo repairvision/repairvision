@@ -4,10 +4,10 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.sidiff.difference.symmetric.Change;
 import org.sidiff.history.revision.IRevision;
 import org.sidiff.history.revision.difference.executor.DifferenceUndo;
 import org.sidiff.history.revision.util.SymmetricDifferenceUtil;
+import org.sidiff.revision.difference.Change;
 
 public class RollbackHistoricalChanges {
 	

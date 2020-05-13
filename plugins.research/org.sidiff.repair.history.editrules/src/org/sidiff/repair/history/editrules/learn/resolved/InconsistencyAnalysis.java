@@ -16,11 +16,6 @@ import org.sidiff.common.emf.exceptions.NoCorrespondencesException;
 import org.sidiff.common.utilities.java.JUtil;
 import org.sidiff.correspondences.CorrespondencesUtil;
 import org.sidiff.correspondences.matchingmodel.MatchingModelCorrespondences;
-import org.sidiff.difference.symmetric.AddReference;
-import org.sidiff.difference.symmetric.AttributeValueChange;
-import org.sidiff.difference.symmetric.Change;
-import org.sidiff.difference.symmetric.RemoveReference;
-import org.sidiff.difference.symmetric.SymmetricDifference;
 import org.sidiff.generic.matcher.uuid.UUIDMatcher;
 import org.sidiff.history.analysis.tracing.InconsistencyTrace;
 import org.sidiff.history.revision.IRevision;
@@ -31,7 +26,12 @@ import org.sidiff.historymodel.ChangeSet;
 import org.sidiff.historymodel.HistoryModelFactory;
 import org.sidiff.historymodel.Problem;
 import org.sidiff.matcher.IMatcher;
-import org.sidiff.matching.model.Correspondence;
+import org.sidiff.revision.difference.AddReference;
+import org.sidiff.revision.difference.AttributeValueChange;
+import org.sidiff.revision.difference.Change;
+import org.sidiff.revision.difference.Correspondence;
+import org.sidiff.revision.difference.RemoveReference;
+import org.sidiff.revision.difference.Difference;
 import org.sidiff.revision.difference.derivation.api.TechnicalDifferenceFacade;
 import org.sidiff.revision.difference.derivation.api.settings.DifferenceSettings;
 import org.sidiff.validation.constraint.api.ValidationFacade;
@@ -55,7 +55,7 @@ public class InconsistencyAnalysis {
 		this.inconsistency = InconsistencyTrace.createRepairedInconsistency(introducedValidationError, false);
 	}
 	
-	protected SymmetricDifference calculateDifference(Resource modelA, Resource modelB, IMatcher matcher) {
+	protected Difference calculateDifference(Resource modelA, Resource modelB, IMatcher matcher) {
 		
 		DifferenceSettings settings = new DifferenceSettings();
 		settings.setMatcher(matcher);
@@ -98,7 +98,7 @@ public class InconsistencyAnalysis {
 		// Calculate inverse difference: historical -> introduced
 		Resource historical = inconsistency.getModelHistorical();
 		Resource introduced = inconsistency.getModelIntroduced();
-		SymmetricDifference difference = calculateDifference(introduced, historical, new UUIDMatcher());
+		Difference difference = calculateDifference(introduced, historical, new UUIDMatcher());
 		
 		IRevision revision = new Revision(difference);
 
@@ -141,7 +141,7 @@ public class InconsistencyAnalysis {
 		// Calculate inverse difference: historical -> introduced
 		Resource introduced = inconsistency.getModelIntroduced();
 		Resource resolved = inconsistency.getModelResolved();
-		SymmetricDifference difference = calculateDifference(introduced, resolved, new UUIDMatcher());
+		Difference difference = calculateDifference(introduced, resolved, new UUIDMatcher());
 		
 		IRevision changeIndex = new Revision(difference);
 
@@ -165,7 +165,7 @@ public class InconsistencyAnalysis {
 	protected void explore(
 			IConstraint constraint, List<RepairAction> repairFilter, 
 			EObject context, Resource inconsistent, Stack<DifferenceExecutor> exploration,
-			SymmetricDifference difference, IRevision revision, 
+			Difference difference, IRevision revision, 
 			List<Set<Change>> repairSteps, Set<Change> currentRepairStep) {
 		
 		// Calculate repair alternatives:

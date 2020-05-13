@@ -6,8 +6,8 @@ import java.util.List;
 import java.util.Set;
 
 import org.eclipse.emf.ecore.EObject;
-import org.sidiff.difference.symmetric.Change;
 import org.sidiff.history.revision.IRevision;
+import org.sidiff.revision.difference.Change;
 import org.sidiff.validation.constraint.impact.ImpactAnalysis;
 import org.sidiff.validation.constraint.impact.ImpactAnalyzes;
 import org.sidiff.validation.constraint.impact.PotentialImpactAnalysis;

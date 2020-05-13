@@ -93,6 +93,7 @@ public class HistoryImpl extends MinimalEObjectImpl.Container implements History
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public String getName() {
 		return name;
 	}
@@ -102,6 +103,7 @@ public class HistoryImpl extends MinimalEObjectImpl.Container implements History
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setName(String newName) {
 		String oldName = name;
 		name = newName;
@@ -114,6 +116,7 @@ public class HistoryImpl extends MinimalEObjectImpl.Container implements History
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EList<Version> getVersions() {
 		if (versions == null) {
 			versions = new EObjectContainmentWithInverseEList<Version>(Version.class, this, HistoryModelPackage.HISTORY__VERSIONS, HistoryModelPackage.VERSION__HISTORY);

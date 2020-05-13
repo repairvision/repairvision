@@ -179,6 +179,7 @@ public class VersionImpl extends MinimalEObjectImpl.Container implements Version
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EList<Problem> getProblems() {
 		if (problems == null) {
 			problems = new EObjectContainmentWithInverseEList<Problem>(Problem.class, this, HistoryModelPackage.VERSION__PROBLEMS, HistoryModelPackage.PROBLEM__VERSION);
@@ -191,6 +192,7 @@ public class VersionImpl extends MinimalEObjectImpl.Container implements Version
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public String getName() {
 		return name;
 	}
@@ -200,6 +202,7 @@ public class VersionImpl extends MinimalEObjectImpl.Container implements Version
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setName(String newName) {
 		String oldName = name;
 		name = newName;
@@ -212,6 +215,7 @@ public class VersionImpl extends MinimalEObjectImpl.Container implements Version
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public String getModelURI() {
 		return modelURI;
 	}
@@ -221,6 +225,7 @@ public class VersionImpl extends MinimalEObjectImpl.Container implements Version
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setModelURI(String newModelURI) {
 		String oldModelURI = modelURI;
 		modelURI = newModelURI;
@@ -266,6 +271,7 @@ public class VersionImpl extends MinimalEObjectImpl.Container implements Version
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public ModelStatus getStatus() {
 		return status;
 	}
@@ -275,6 +281,7 @@ public class VersionImpl extends MinimalEObjectImpl.Container implements Version
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setStatus(ModelStatus newStatus) {
 		ModelStatus oldStatus = status;
 		status = newStatus == null ? STATUS_EDEFAULT : newStatus;
@@ -287,6 +294,7 @@ public class VersionImpl extends MinimalEObjectImpl.Container implements Version
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public String getRepositoryVersion() {
 		return repositoryVersion;
 	}
@@ -296,6 +304,7 @@ public class VersionImpl extends MinimalEObjectImpl.Container implements Version
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setRepositoryVersion(String newRepositoryVersion) {
 		String oldRepositoryVersion = repositoryVersion;
 		repositoryVersion = newRepositoryVersion;
@@ -308,6 +317,7 @@ public class VersionImpl extends MinimalEObjectImpl.Container implements Version
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public History getHistory() {
 		if (eContainerFeatureID() != HistoryModelPackage.VERSION__HISTORY) return null;
 		return (History)eInternalContainer();
@@ -328,6 +338,7 @@ public class VersionImpl extends MinimalEObjectImpl.Container implements Version
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setHistory(History newHistory) {
 		if (newHistory != eInternalContainer() || (eContainerFeatureID() != HistoryModelPackage.VERSION__HISTORY && newHistory != null)) {
 			if (EcoreUtil.isAncestor(this, newHistory))
@@ -590,7 +601,7 @@ public class VersionImpl extends MinimalEObjectImpl.Container implements Version
 	public String toString() {
 		if (eIsProxy()) return super.toString();
 
-		StringBuffer result = new StringBuffer(super.toString());
+		StringBuilder result = new StringBuilder(super.toString());
 		result.append(" (name: ");
 		result.append(name);
 		result.append(", modelURI: ");

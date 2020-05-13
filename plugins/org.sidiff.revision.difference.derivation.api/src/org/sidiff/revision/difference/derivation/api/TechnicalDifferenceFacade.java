@@ -1,50 +1,69 @@
 package org.sidiff.revision.difference.derivation.api;
 
 import java.util.Arrays;
+import java.util.Collection;
 
 import org.eclipse.emf.ecore.resource.Resource;
 import org.sidiff.common.emf.exceptions.InvalidModelException;
 import org.sidiff.common.emf.exceptions.NoCorrespondencesException;
 import org.sidiff.common.emf.modelstorage.EMFStorage;
-import org.sidiff.difference.symmetric.SymmetricDifference;
-import org.sidiff.difference.symmetric.SymmetricFactory;
-import org.sidiff.matching.api.MatchingFacade;
-import org.sidiff.matching.model.Matching;
+import org.sidiff.correspondences.ICorrespondences;
+import org.sidiff.correspondences.matchingmodel.MatchingModelCorrespondences;
+import org.sidiff.matcher.IMatcher;
+import org.sidiff.revision.difference.Difference;
 import org.sidiff.revision.difference.derivation.ITechnicalDifferenceBuilder;
 import org.sidiff.revision.difference.derivation.api.settings.DifferenceSettings;
+import org.sidiff.revision.difference.derivation.api.settings.MatchingSettings;
+import org.sidiff.revision.difference.util.DifferenceUtil;
 
 /**
  * Convenient access to differencing functions.
  */
-public class TechnicalDifferenceFacade extends MatchingFacade {
+public class TechnicalDifferenceFacade {
 
-	public static String SYMMETRIC_DIFF_EXT = "symmetric";
+	public static String DIFFERENCE_FILE_EXTENSION = DifferenceUtil.FILE_EXTENSION;
 	
 	/**
-	 * Derives a technical {@link SymmetricDifference} based on a given
-	 * {@link Matching} between two models.
+	 * Computes a {@link Matching} between the given models.
 	 * 
-	 * @param matching
-	 *            The matching between the input models.
+	 * @param models
+	 *            The models to be matched.
 	 * @param settings
-	 *            Specifies the settings of the difference algorithm.
-	 * @return A technical {@link SymmetricDifference} between the input models.
-	 * 
-	 * @see MatchingFacade#match(java.util.Collection, org.sidiff.matching.api.settings.MatchingSettings)
+	 *            Specifies the settings of the matching algorithm.
+	 * @return A {@link Matching} between the given models
+	 * @throws NoCorrespondencesException
+	 * @throws InvalidModelException
 	 */
-	public static SymmetricDifference deriveTechnicalDifference(Matching matching, DifferenceSettings settings) {
-		SymmetricDifference symmetricDifference = SymmetricFactory.eINSTANCE.createSymmetricDifference();
-		symmetricDifference.setMatching(matching);
+	public static Difference match(Collection<Resource> models, MatchingSettings settings) throws NoCorrespondencesException, InvalidModelException {
+		IMatcher matcher = settings.getMatcher();	
+		matcher.startMatching(models, settings.getScope());	
 		
-		// Derive technical difference
-		ITechnicalDifferenceBuilder tdBuilder = settings.getTechBuilder();
-		tdBuilder.deriveTechDiff(symmetricDifference, settings.getScope());
+		ICorrespondences correspondences = matcher.getCorrespondencesService();
+		Difference difference = ((MatchingModelCorrespondences)correspondences).getDifference();	
 		
-		return symmetricDifference;
+		return difference;
 	}
 	
 	/**
-	 * Derives a technical {@link SymmetricDifference} between two models.
+	 * Derives a technical {@link Difference} based on a given
+	 * {@link Matching} between two models.
+	 * 
+	 * @param difference
+	 *            The matching between the input models.
+	 * @param settings
+	 *            Specifies the settings of the difference algorithm.
+	 * @return A technical {@link Difference} between the input models.
+	 * 
+	 * @see MatchingFacade#match(java.util.Collection, org.sidiff.matching.api.settings.MatchingSettings)
+	 */
+	public static Difference deriveTechnicalDifference(Difference difference, DifferenceSettings settings) {
+		ITechnicalDifferenceBuilder tdBuilder = settings.getTechBuilder();
+		tdBuilder.deriveTechDiff(difference, settings.getScope());
+		return difference;
+	}
+	
+	/**
+	 * Derives a technical {@link Difference} between two models.
 	 * Although, a symmetric difference is usually undirected the underlying
 	 * difference model of SiLift implies a direction.
 	 * 
@@ -54,16 +73,16 @@ public class TechnicalDifferenceFacade extends MatchingFacade {
 	 *            The modified model.
 	 * @param settings
 	 *            Specifies the settings of the difference algorithm.
-	 * @return A technical {@link SymmetricDifference} between the input models.
+	 * @return A technical {@link Difference} between the input models.
 	 * @throws InvalidModelException
 	 * @throws NoCorrespondencesException 
 	 */
-	public static SymmetricDifference deriveTechnicalDifference(Resource modelA, Resource modelB, DifferenceSettings settings) throws InvalidModelException, NoCorrespondencesException{
+	public static Difference deriveTechnicalDifference(Resource modelA, Resource modelB, DifferenceSettings settings) throws InvalidModelException, NoCorrespondencesException{
 		return deriveTechnicalDifference(match(Arrays.asList(modelA, modelB), settings), settings);
 	}
 	
 	/**
-	 * Serializes a technical {@link SymmetricDifference}.
+	 * Serializes a technical {@link Difference}.
 	 * 
 	 * @param symDiff
 	 *            The difference to be serialized.
@@ -72,26 +91,26 @@ public class TechnicalDifferenceFacade extends MatchingFacade {
 	 * @param fileName
 	 *            The file name of the difference.
 	 */
-	public static void serializeTechnicalDifference(SymmetricDifference symDiff, String path, String fileName) {
+	public static void serializeTechnicalDifference(Difference symDiff, String path, String fileName) {
 		if (!(path.endsWith("/") || path.endsWith("\\"))) {
 			path = path + "/";
 		}
 
-		if (!(fileName.endsWith("." + SYMMETRIC_DIFF_EXT))) {
-			fileName = fileName + "." + SYMMETRIC_DIFF_EXT;
+		if (!(fileName.endsWith("." + DIFFERENCE_FILE_EXTENSION))) {
+			fileName = fileName + "." + DIFFERENCE_FILE_EXTENSION;
 		}
 
 		EMFStorage.eSaveAs(EMFStorage.pathToUri(path + fileName), symDiff);
 	}
 	
 	/**
-	 * Load a technical {@link SymmetricDifference}.
+	 * Load a technical {@link Difference}.
 	 * 
 	 * @param path
 	 *            The path to the symmetric difference.
-	 * @return The loaded technical {@link SymmetricDifference}.
+	 * @return The loaded technical {@link Difference}.
 	 */
-	public static SymmetricDifference loadTechnicalDifference(String path) {
-		return (SymmetricDifference)EMFStorage.eLoad(EMFStorage.pathToUri(path));
+	public static Difference loadTechnicalDifference(String path) {
+		return (Difference)EMFStorage.eLoad(EMFStorage.pathToUri(path));
 	}
 }

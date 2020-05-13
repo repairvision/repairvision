@@ -5,8 +5,7 @@ package org.sidiff.historymodel.provider;
 import org.eclipse.emf.common.EMFPlugin;
 import org.eclipse.emf.common.util.ResourceLocator;
 import org.eclipse.emf.ecore.provider.EcoreEditPlugin;
-import org.sidiff.difference.symmetric.provider.SymmetricEditPlugin;
-import org.sidiff.matching.model.model.provider.MatchingModelEditPlugin;
+import org.sidiff.revision.difference.provider.DifferenceEditPlugin;
 
 /**
  * This is the central singleton for the Model edit plugin.
@@ -40,9 +39,8 @@ public final class ModelEditPlugin extends EMFPlugin {
 	public ModelEditPlugin() {
 		super
 		  (new ResourceLocator [] {
+		     DifferenceEditPlugin.INSTANCE,
 		     EcoreEditPlugin.INSTANCE,
-		     MatchingModelEditPlugin.INSTANCE,
-		     SymmetricEditPlugin.INSTANCE,
 		   });
 	}
 

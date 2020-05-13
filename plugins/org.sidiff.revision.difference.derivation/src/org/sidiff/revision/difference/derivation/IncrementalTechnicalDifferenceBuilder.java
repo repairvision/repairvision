@@ -7,7 +7,7 @@ import java.util.Set;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.sidiff.common.emf.access.EMFModelAccess;
 import org.sidiff.common.emf.access.Scope;
-import org.sidiff.difference.symmetric.SymmetricDifference;
+import org.sidiff.revision.difference.Difference;
 
 /**
  * Incremental technical difference builder which must be initialized with a
@@ -54,7 +54,7 @@ public class IncrementalTechnicalDifferenceBuilder implements ITechnicalDifferen
 	}
 
 	@Override
-	public SymmetricDifference deriveTechDiff(SymmetricDifference difference, Scope scope) {
+	public Difference deriveTechDiff(Difference difference, Scope scope) {
 		Resource modelA = difference.getModelA();
 		Resource modelB = difference.getModelB();
 		

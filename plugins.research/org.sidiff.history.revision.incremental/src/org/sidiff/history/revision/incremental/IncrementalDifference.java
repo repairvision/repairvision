@@ -16,16 +16,15 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.xmi.XMIResource;
 import org.sidiff.common.emf.access.EMFMetaAccess;
-import org.sidiff.difference.symmetric.AddObject;
-import org.sidiff.difference.symmetric.AddReference;
-import org.sidiff.difference.symmetric.AttributeValueChange;
-import org.sidiff.difference.symmetric.Change;
-import org.sidiff.difference.symmetric.RemoveObject;
-import org.sidiff.difference.symmetric.RemoveReference;
-import org.sidiff.difference.symmetric.SymmetricDifference;
-import org.sidiff.difference.symmetric.SymmetricFactory;
-import org.sidiff.matching.model.Correspondence;
-import org.sidiff.matching.model.MatchingModelFactory;
+import org.sidiff.revision.difference.AddObject;
+import org.sidiff.revision.difference.AddReference;
+import org.sidiff.revision.difference.AttributeValueChange;
+import org.sidiff.revision.difference.Change;
+import org.sidiff.revision.difference.Correspondence;
+import org.sidiff.revision.difference.RemoveObject;
+import org.sidiff.revision.difference.RemoveReference;
+import org.sidiff.revision.difference.Difference;
+import org.sidiff.revision.difference.DifferenceFactory;
 
 public class IncrementalDifference {
 	
@@ -43,7 +42,7 @@ public class IncrementalDifference {
 
 	private Map<EObject, List<Change>> unresolvedChangesA = new HashMap<>();
 	
-	protected SymmetricDifference difference;
+	protected Difference difference;
 
 	public IncrementalDifference(XMIResource resourceA, XMIResource resourceB) {
 		this.resourceA = resourceA;
@@ -52,13 +51,12 @@ public class IncrementalDifference {
 		this.elementsA = new HashSet<>();
 		this.elementsB = new HashSet<>();
 
-		this.difference = SymmetricFactory.eINSTANCE.createSymmetricDifference();
-		this.difference.setMatching(MatchingModelFactory.eINSTANCE.createMatching());
-		this.difference.getMatching().setEResourceA(resourceA);
-		this.difference.getMatching().setEResourceB(resourceB);
+		this.difference = DifferenceFactory.eINSTANCE.createDifference();
+		this.difference.setEResourceA(resourceA);
+		this.difference.setEResourceB(resourceB);
 	}
 	
-	public SymmetricDifference getSymmetricDifference() {
+	public Difference getSymmetricDifference() {
 		return difference;
 	}
 
@@ -117,7 +115,7 @@ public class IncrementalDifference {
 				List<Change> changes = difference.getChanges();
 				
 				// Removed object:
-				RemoveObject removeObject = SymmetricFactory.eINSTANCE.createRemoveObject();
+				RemoveObject removeObject = DifferenceFactory.eINSTANCE.createRemoveObject();
 				removeObject.setObj(elementA);
 
 				changes.add(removeObject);
@@ -151,7 +149,7 @@ public class IncrementalDifference {
 				List<Change> changes = difference.getChanges();
 				
 				// Add-Object:
-				AddObject addObject = SymmetricFactory.eINSTANCE.createAddObject();
+				AddObject addObject = DifferenceFactory.eINSTANCE.createAddObject();
 				addObject.setObj(elementB);
 
 				changes.add(addObject);
@@ -176,7 +174,7 @@ public class IncrementalDifference {
 				// Attribute-Initializations:
 				if (CREATE_ATTRIBUTE_INITIALIZATIONS) {
 					for (EAttribute attribute : elementB.eClass().getEAllAttributes()) {
-						AttributeValueChange avc = SymmetricFactory.eINSTANCE.createAttributeValueChange();
+						AttributeValueChange avc = DifferenceFactory.eINSTANCE.createAttributeValueChange();
 						avc.setObjB(elementB);
 						avc.setType(attribute);
 						
@@ -202,10 +200,10 @@ public class IncrementalDifference {
 		
 		if (isCorresponding(elementA, idA, elementB, idB)) {
 			List<Change> changes = difference.getChanges();
-			List<Correspondence> correspondences = difference.getMatching().getCorrespondences();
+			List<Correspondence> correspondences = difference.getCorrespondences();
 			
 			// Correspondence:
-			Correspondence correspondence = MatchingModelFactory.eINSTANCE.createCorrespondence();
+			Correspondence correspondence = DifferenceFactory.eINSTANCE.createCorrespondence();
 			correspondence.setMatchedA(elementA);
 			correspondence.setMatchedB(elementB);
 
@@ -280,7 +278,7 @@ public class IncrementalDifference {
 					Object elementBValue = elementB.eGet(attribute);
 
 					if (!isEqualValue(elementAValue, elementBValue)) {
-						AttributeValueChange avc = SymmetricFactory.eINSTANCE.createAttributeValueChange();
+						AttributeValueChange avc = DifferenceFactory.eINSTANCE.createAttributeValueChange();
 						avc.setObjA(elementA);
 						avc.setObjB(elementB);
 						avc.setType(attribute);
@@ -296,7 +294,7 @@ public class IncrementalDifference {
 
 	private void createRemoveReference(EObject sourceA, EObject targetA, EReference type) {
 		
-		RemoveReference removeReference = SymmetricFactory.eINSTANCE.createRemoveReference();
+		RemoveReference removeReference = DifferenceFactory.eINSTANCE.createRemoveReference();
 		removeReference.setSrc(sourceA);
 		removeReference.setTgt(targetA);
 		removeReference.setType(type);
@@ -312,7 +310,7 @@ public class IncrementalDifference {
 	
 	private void createAddReference(EObject sourceB, EObject targetB, EReference type) {
 		
-		AddReference addReference = SymmetricFactory.eINSTANCE.createAddReference();
+		AddReference addReference = DifferenceFactory.eINSTANCE.createAddReference();
 		addReference.setSrc(sourceB);
 		addReference.setTgt(targetB);
 		addReference.setType(type);
@@ -400,7 +398,7 @@ public class IncrementalDifference {
 
 	private void removeElementA(EObject elementA) {
 		
-		for (Iterator<Correspondence> iterator = difference.getMatching().getCorrespondences().iterator(); iterator.hasNext();) {
+		for (Iterator<Correspondence> iterator = difference.getCorrespondences().iterator(); iterator.hasNext();) {
 			Correspondence correspondece = iterator.next();
 			
 			if (correspondece.getMatchedA() == elementA) {
@@ -482,7 +480,7 @@ public class IncrementalDifference {
 	
 	private void removeElementB(EObject elementB) {
 		
-		for (Iterator<Correspondence> iterator = difference.getMatching().getCorrespondences().iterator(); iterator.hasNext();) {
+		for (Iterator<Correspondence> iterator = difference.getCorrespondences().iterator(); iterator.hasNext();) {
 			Correspondence correspondece = iterator.next();
 			
 			if (correspondece.getMatchedB() == elementB) {

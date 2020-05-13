@@ -37,7 +37,7 @@ public class StringUtil {
 		String name = obj.toString();
 		name = name.replaceFirst("org\\.sidiff\\.consistency\\.graphpattern\\.impl\\.", "");
 		name = name.replaceFirst("org\\.eclipse\\.uml2\\.uml\\.internal\\.impl\\.", "");
-		name = name.replaceFirst("org\\.sidiff\\.difference\\.symmetric\\.impl\\.", "");
+		name = name.replaceFirst("org\\.sidiff\\.revision\\.difference\\.impl\\.", "");
 		return name;
 	}
 }

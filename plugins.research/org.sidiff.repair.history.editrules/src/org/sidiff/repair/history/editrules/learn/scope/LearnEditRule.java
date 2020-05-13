@@ -16,13 +16,13 @@ import org.eclipse.swt.widgets.Display;
 import org.sidiff.common.emf.exceptions.InvalidModelException;
 import org.sidiff.common.emf.exceptions.NoCorrespondencesException;
 import org.sidiff.common.utilities.ui.util.WorkbenchUtil;
-import org.sidiff.difference.symmetric.SymmetricDifference;
 import org.sidiff.editrule.tools.recorder.DifferenceToEditRule;
 import org.sidiff.editrule.tools.recorder.TransformationSetup;
 import org.sidiff.editrule.tools.recorder.filters.IAttributeFilter;
 import org.sidiff.editrule.tools.recorder.filters.IReferenceFilter;
 import org.sidiff.editrule.tools.util.EditRuleUtil;
 import org.sidiff.editrule.tools.util.HenshinDiagramUtil;
+import org.sidiff.revision.difference.Difference;
 import org.sidiff.revision.difference.derivation.api.settings.DifferenceSettings;
 import org.sidiff.validation.constraint.api.util.Validation;
 import org.sidiff.validation.constraint.interpreter.IConstraint;
@@ -54,10 +54,10 @@ public class LearnEditRule {
 	/**
 	 * Mapping from historical model version to resolved model version.
 	 */
-	protected SymmetricDifference historicalToResolved; 
+	protected Difference historicalToResolved; 
 	
 	/**
-	 * Difference navigation: historical, resolved
+	 * RevisionDifference navigation: historical, resolved
 	 */
 	protected DifferenceNavigation navigation;
 	
@@ -66,7 +66,7 @@ public class LearnEditRule {
 	 */
 	protected DifferenceSlicer slicer;
 	
-	public LearnEditRule(SymmetricDifference historicalToResolved) {
+	public LearnEditRule(Difference historicalToResolved) {
 		
 		this.modelHistorical = historicalToResolved.getModelA();
 		this.modelCurrent = historicalToResolved.getModelB();
@@ -105,7 +105,7 @@ public class LearnEditRule {
 		try {
 			
 			// Calculate mapping from introduced model version to resolved model version:
-			SymmetricDifference invalidToResolved = deriveTechnicalDifference(
+			Difference invalidToResolved = deriveTechnicalDifference(
 					invalidContext.eResource(), modelCurrent, matchingSettings);
 			
 			// Search resolved context element:
@@ -172,7 +172,7 @@ public class LearnEditRule {
 		slicingCriterion.setRevisedReferenceFilter(revisedReferenceFilter);
 		slicingCriterion.setRevisedAttributeFilter(revisedAttributeFilter);
 		
-		// Difference Slice //
+		// RevisionDifference Slice //
 		
 		slicer = new DifferenceSlicer(slicingCriterion, navigation);
 		return slicer.getSlice();

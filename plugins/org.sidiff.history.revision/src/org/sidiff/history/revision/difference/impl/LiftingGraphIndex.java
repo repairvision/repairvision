@@ -11,22 +11,21 @@ import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.sidiff.common.utilities.java.StringPrinter;
-import org.sidiff.difference.symmetric.AddObject;
-import org.sidiff.difference.symmetric.AddReference;
-import org.sidiff.difference.symmetric.AttributeValueChange;
-import org.sidiff.difference.symmetric.Change;
-import org.sidiff.difference.symmetric.RemoveObject;
-import org.sidiff.difference.symmetric.RemoveReference;
-import org.sidiff.difference.symmetric.SymmetricDifference;
-import org.sidiff.difference.symmetric.SymmetricPackage;
-import org.sidiff.matching.model.Correspondence;
-import org.sidiff.matching.model.MatchingModelPackage;
+import org.sidiff.revision.difference.AddObject;
+import org.sidiff.revision.difference.AddReference;
+import org.sidiff.revision.difference.AttributeValueChange;
+import org.sidiff.revision.difference.Change;
+import org.sidiff.revision.difference.Correspondence;
+import org.sidiff.revision.difference.Difference;
+import org.sidiff.revision.difference.RemoveObject;
+import org.sidiff.revision.difference.RemoveReference;
+import org.sidiff.revision.difference.DifferencePackage;
 
 public class LiftingGraphIndex {
 
-	private static final MatchingModelPackage MATCHING_PACKAGE = MatchingModelPackage.eINSTANCE;
+	private static final DifferencePackage MATCHING_PACKAGE = DifferencePackage.eINSTANCE;
 	
-	private SymmetricDifference difference;
+	private Difference difference;
 	
 	private Map<EObject, Collection<Change>> localChanges;
 	
@@ -36,12 +35,12 @@ public class LiftingGraphIndex {
 	 * @param difference
 	 *            The difference containing the changes.
 	 */
-	public LiftingGraphIndex(SymmetricDifference difference) {
+	public LiftingGraphIndex(Difference difference) {
 		this.difference = difference;
 		this.localChanges = new HashMap<EObject, Collection<Change>>();
 	}
 	
-	public SymmetricDifference getDifference() {
+	public Difference getDifference() {
 		return difference;
 	}
 	
@@ -52,7 +51,7 @@ public class LiftingGraphIndex {
 	
 	// FIXME: This should be done by SiLift!
 	private void indexCorrespondences() {
-		for (Correspondence correspondence : difference.getMatching().getCorrespondences()) {
+		for (Correspondence correspondence : difference.getCorrespondences()) {
 			difference.addCorrespondence(correspondence);
 		}
 	}
@@ -63,7 +62,7 @@ public class LiftingGraphIndex {
 	 * @param difference
 	 *            The difference containing the changes.
 	 */
-	private void createChangeIndexMap(SymmetricDifference difference) {
+	private void createChangeIndexMap(Difference difference) {
 		
 		for (Change change : difference.getChanges()) {
 			
@@ -132,7 +131,7 @@ public class LiftingGraphIndex {
 			
 			if (oppositeType != null) {
 				Iterator<RemoveReference> oppositeChanges = getLocalChanges(removeReference.getTgt(), 
-						SymmetricPackage.eINSTANCE.getRemoveReference_Src(), RemoveReference.class);
+						DifferencePackage.eINSTANCE.getRemoveReference_Src(), RemoveReference.class);
 				
 				while (oppositeChanges.hasNext()) {
 					RemoveReference oppositeChange = oppositeChanges.next();
@@ -152,7 +151,7 @@ public class LiftingGraphIndex {
 			
 			if (oppositeType != null) {
 				Iterator<AddReference> oppositeChanges = getLocalChanges(addReference.getTgt(), 
-						SymmetricPackage.eINSTANCE.getAddReference_Src(), AddReference.class);
+						DifferencePackage.eINSTANCE.getAddReference_Src(), AddReference.class);
 				
 				while (oppositeChanges.hasNext()) {
 					AddReference oppositeChange = oppositeChanges.next();
@@ -296,14 +295,14 @@ public class LiftingGraphIndex {
 						// Check type:
 						if (nextLocalChange instanceof RemoveReference) {
 							if (((RemoveReference) nextLocalChange).getType() == referenceType) {
-								if (nextLocalChange.eGet(SymmetricPackage.eINSTANCE.getRemoveReference_Src()) == element) {
+								if (nextLocalChange.eGet(DifferencePackage.eINSTANCE.getRemoveReference_Src()) == element) {
 									next = (C) nextLocalChange;
 									return true;
 								}
 							}
 						} else if (nextLocalChange instanceof AddReference) {
 							if (((AddReference) nextLocalChange).getType() == referenceType) {
-								if (nextLocalChange.eGet(SymmetricPackage.eINSTANCE.getAddReference_Src()) == element) {
+								if (nextLocalChange.eGet(DifferencePackage.eINSTANCE.getAddReference_Src()) == element) {
 									next = (C) nextLocalChange;
 									return true;
 								}
@@ -334,9 +333,9 @@ public class LiftingGraphIndex {
 	 *            The element of model A or model B.
 	 * @param correspondenceReference
 	 *            Model A:
-	 *            {@link SymmetricPackage.eINSTANCE.getCorrespondence_MatchedA())} /
+	 *            {@link DifferencePackage.eINSTANCE.getCorrespondence_MatchedA())} /
 	 *            Model B:
-	 *            {@link SymmetricPackage.eINSTANCE.getCorrespondence_MatchedA()}.
+	 *            {@link DifferencePackage.eINSTANCE.getCorrespondence_MatchedA()}.
 	 * @return The correspondence of the model A/B object or <code>null</code>.
 	 */
 	public Correspondence getCorrespondence(EObject modelElement, EReference correspondenceReference) {

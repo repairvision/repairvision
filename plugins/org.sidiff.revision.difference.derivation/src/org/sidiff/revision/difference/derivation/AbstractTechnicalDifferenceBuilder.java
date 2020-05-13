@@ -16,14 +16,14 @@ import org.sidiff.common.emf.access.EMFMetaAccess;
 import org.sidiff.common.emf.access.EMFModelAccess;
 import org.sidiff.common.emf.access.EObjectLocation;
 import org.sidiff.common.emf.access.Scope;
-import org.sidiff.difference.symmetric.AddObject;
-import org.sidiff.difference.symmetric.AddReference;
-import org.sidiff.difference.symmetric.AttributeValueChange;
-import org.sidiff.difference.symmetric.RemoveObject;
-import org.sidiff.difference.symmetric.RemoveReference;
-import org.sidiff.difference.symmetric.SymmetricDifference;
-import org.sidiff.difference.symmetric.SymmetricFactory;
-import org.sidiff.matching.model.Correspondence;
+import org.sidiff.revision.difference.AddObject;
+import org.sidiff.revision.difference.AddReference;
+import org.sidiff.revision.difference.AttributeValueChange;
+import org.sidiff.revision.difference.Correspondence;
+import org.sidiff.revision.difference.Difference;
+import org.sidiff.revision.difference.RemoveObject;
+import org.sidiff.revision.difference.RemoveReference;
+import org.sidiff.revision.difference.DifferenceFactory;
 
 /**
  * Abstract base class for deriving a low-level difference (which is called
@@ -36,10 +36,10 @@ import org.sidiff.matching.model.Correspondence;
  */
 public abstract class AbstractTechnicalDifferenceBuilder implements ITechnicalDifferenceBuilder {
 
-	private SymmetricDifference diff;
+	private Difference diff;
 	private Scope scope;
 
-	private final SymmetricFactory factory = SymmetricFactory.eINSTANCE;
+	private final DifferenceFactory factory = DifferenceFactory.eINSTANCE;
 
 	// information provided by subclasses
 	private Set<EClass> unconsideredNodeTypes;
@@ -53,7 +53,7 @@ public abstract class AbstractTechnicalDifferenceBuilder implements ITechnicalDi
 	}
 
 	@Override
-	public SymmetricDifference deriveTechDiff(SymmetricDifference difference, Scope scope) {
+	public Difference deriveTechDiff(Difference difference, Scope scope) {
 		this.diff = difference;
 		this.scope = scope;
 
@@ -65,7 +65,7 @@ public abstract class AbstractTechnicalDifferenceBuilder implements ITechnicalDi
 	}
 
 	private void processCorrespondences() {
-		for (Iterator<Correspondence> iterator = diff.getMatching().getCorrespondences().iterator(); iterator.hasNext();) {
+		for (Iterator<Correspondence> iterator = diff.getCorrespondences().iterator(); iterator.hasNext();) {
 			Correspondence c = iterator.next();
 			EObject nodeA = c.getMatchedA();
 			EObject nodeB = c.getMatchedB();
@@ -78,9 +78,6 @@ public abstract class AbstractTechnicalDifferenceBuilder implements ITechnicalDi
 			}
 
 			if (unconsideredNodeTypes.contains(nodeType)) {
-				// skip and also delete correspondence
-				if(c.getContainerCorrespondence() != null)
-					c.getContainerCorrespondence().getContainmentCorrespondences().remove(c);
 				iterator.remove();
 				continue;
 			}
@@ -130,7 +127,7 @@ public abstract class AbstractTechnicalDifferenceBuilder implements ITechnicalDi
 
 	private void processUnmatchedA() {
 
-		for(EObject elementA : diff.getMatching().getUnmatchedA()){
+		for(EObject elementA : diff.getUnmatchedA()){
 			if (!doProcess(elementA)) {
 				continue;
 			}
@@ -155,7 +152,7 @@ public abstract class AbstractTechnicalDifferenceBuilder implements ITechnicalDi
 
 	private void processUnmatchedB() {
 
-		for(EObject elementB : diff.getMatching().getUnmatchedB()){
+		for(EObject elementB : diff.getUnmatchedB()){
 			
 			if (!doProcess(elementB)) {
 				continue;

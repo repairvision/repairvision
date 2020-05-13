@@ -12,14 +12,14 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.impl.ResourceImpl;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
-import org.sidiff.difference.symmetric.Change;
-import org.sidiff.difference.symmetric.SymmetricDifference;
 import org.sidiff.history.revision.IRevision;
 import org.sidiff.history.revision.IVersion;
-import org.sidiff.history.revision.difference.IDifference;
-import org.sidiff.history.revision.difference.impl.Difference;
+import org.sidiff.history.revision.difference.IRevisionDifference;
+import org.sidiff.history.revision.difference.impl.RevisionDifference;
 import org.sidiff.history.revision.metamodel.IMetaModel;
 import org.sidiff.history.revision.metamodel.impl.MetaModel;
+import org.sidiff.revision.difference.Change;
+import org.sidiff.revision.difference.Difference;
 import org.sidiff.revision.difference.derivation.api.settings.DifferenceSettings;
 
 public class Revision implements IRevision {
@@ -30,7 +30,7 @@ public class Revision implements IRevision {
 	
 	private Version versionB;
 	
-	private Difference difference;
+	private RevisionDifference revisionDifference;
 	
 	public Revision(Resource modelA, Resource modelB, DifferenceSettings differenceSettings) {
 		this.versionA = new Version(modelA);
@@ -41,16 +41,16 @@ public class Revision implements IRevision {
 		initDifference(versionA, versionB, differenceSettings);
 	}
 	
-	public Revision(SymmetricDifference symmetricDifference) {
-		Resource modelA = symmetricDifference.getModelA();
-		Resource modelB = symmetricDifference.getModelB();
+	public Revision(Difference difference) {
+		Resource modelA = difference.getModelA();
+		Resource modelB = difference.getModelB();
 		
 		this.versionA = new Version(modelA);
 		this.versionB = new Version(modelB);
 		
 		initMetaModel(modelA, modelB);
 		initVersions(modelA, modelB);
-		initDifference(symmetricDifference);
+		initDifference(difference);
 	}
 	
 	protected void initMetaModel(Resource modelA, Resource modelB) {
@@ -119,11 +119,11 @@ public class Revision implements IRevision {
 	}
 	
 	protected void initDifference(IVersion versionA, IVersion versionB, DifferenceSettings differenceSettings) {
-		this.difference = new Difference(versionA, versionB, differenceSettings);
+		this.revisionDifference = new RevisionDifference(versionA, versionB, differenceSettings);
 	}
 	
-	protected void initDifference(SymmetricDifference symmetricDifference) {
-		this.difference = new Difference(symmetricDifference);
+	protected void initDifference(Difference revisionDifference) {
+		this.revisionDifference = new RevisionDifference(revisionDifference);
 	}
 	
 	@Override
@@ -137,8 +137,8 @@ public class Revision implements IRevision {
 	}
 	
 	@Override
-	public IDifference getDifference() {
-		return difference;
+	public IRevisionDifference getDifference() {
+		return revisionDifference;
 	}
 
 	@Override

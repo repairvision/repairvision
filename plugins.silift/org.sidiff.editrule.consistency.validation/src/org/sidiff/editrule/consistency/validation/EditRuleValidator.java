@@ -8,7 +8,6 @@ import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.getRHSMinusLHS
 import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.getRHSMinusLHSNodes;
 import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.getRequireEdges;
 import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.isLHSNode;
-import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.isPreservedNode;
 import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.isRHSNode;
 import static org.sidiff.common.henshin.ParameterInfo.getOutermostParameter;
 import static org.sidiff.common.henshin.ParameterInfo.getParameterDirection;
@@ -25,13 +24,11 @@ import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.henshin.model.And;
-import org.eclipse.emf.henshin.model.Annotation;
 import org.eclipse.emf.henshin.model.Attribute;
 import org.eclipse.emf.henshin.model.BinaryFormula;
 import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.Mapping;
 import org.eclipse.emf.henshin.model.Module;
-import org.eclipse.emf.henshin.model.NamedElement;
 import org.eclipse.emf.henshin.model.NestedCondition;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Parameter;
@@ -48,8 +45,6 @@ import org.sidiff.common.henshin.INamingConventions;
 import org.sidiff.common.henshin.ParameterInfo;
 import org.sidiff.common.henshin.ParameterInfo.ParameterDirection;
 import org.sidiff.common.henshin.view.NodePair;
-import org.sidiff.editrule.analysis.annotations.EditRuleAnnotations;
-import org.sidiff.editrule.analysis.conditions.EditRuleConditions;
 
 /**
  * Checks the Edit-Rule constraints.
@@ -81,7 +76,6 @@ public class EditRuleValidator {
 
 		// Application conditions (NACs/PACs)
 		validations.addAll(EditRuleValidator.validateEditRule_acComposition(editModule));
-		validations.addAll(EditRuleValidator.validateEditRule_acBoundaries(editModule));
 		validations.addAll(EditRuleValidator.validateEditRule_lhsBoundaries(editModule));
 
 		// Multi-Rules
@@ -91,9 +85,6 @@ public class EditRuleValidator {
 		validations.addAll(EditRuleValidator.validateEditRule_multiRuleParameterEmbedding(editModule));
 		validations.addAll(EditRuleValidator.validateEditRule_uniqueMultiMappings(editModule));
 		
-		// Annotations
-		validations.addAll(validateEditRule_checkKownAnnotations(editModule));
-
 		return validations;
 	}
 
@@ -935,45 +926,6 @@ public class EditRuleValidator {
 
 		return false;
 	}
-	
-	/**
-	 * <p>
-	 * Validates the "AC Boundaries" constraint of the Edit-Rule:
-	 * </p>
-	 * <p>
-	 * Only << preserved >> nodes may serve as boundary nodes of a postcondition.
-	 * </p>
-	 * 
-	 * @param editModule
-	 *            The Module of the Edit-Rule.
-	 */
-	public static List<EditRuleValidation> validateEditRule_acBoundaries(Module editModule) {
-		List<EditRuleValidation> invalids = new LinkedList<EditRuleValidation>();
-
-		for (Rule rule : HenshinModuleAnalysis.getAllRules(editModule)) {
-			for (NestedCondition nc : rule.getLhs().getNestedConditions()) {
-				ApplicationCondition ac = new ApplicationCondition(nc);
-
-				// Is explicit postcondition?
-				if (EditRuleConditions.isPostcondition(nc.getConclusion())) {
-					
-					// Check boundary nodes:
-					for (Node lhsBoundaryNode : ac.getLhsBoundaryNodes()) {
-						if (!isPreservedNode(lhsBoundaryNode)) {
-							EditRuleValidation info = new EditRuleValidation(
-									"Only << preserved >> nodes may serve as boundary nodes of a postcondition!",
-									editModule, ValidationType.acBoundaries, lhsBoundaryNode.getGraph().getRule(),
-									lhsBoundaryNode);
-							invalids.add(info);
-							break;
-						}
-					}
-				}
-			}
-		}
-
-		return invalids;
-	}
 
 	/**
 	 * <p>
@@ -1559,38 +1511,5 @@ public class EditRuleValidator {
 		for (Rule multiRule : kernel.getMultiRules()) {
 			checkUniqueMultiMappings(multiRule, invalids);
 		}
-	}
-	
-	/**
-	 * Check the Edit-Rule for unknown annotations.
-	 * 
-	 * @param editModule
-	 *            The Module of the Edit-Rule.
-	 * @param invalids
-	 *            List to collect the validation errors.
-	 */
-	private static  List<EditRuleValidation> validateEditRule_checkKownAnnotations(Module editModule) {
-		List<EditRuleValidation> invalids = new LinkedList<EditRuleValidation>();
-		
-		for (Iterator<EObject> iterator = editModule.eAllContents(); iterator.hasNext();) {
-			EObject obj = iterator.next();
-			
-			if (obj instanceof NamedElement) {
-				NamedElement element = (NamedElement) obj;
-				
-				for (Annotation annotation : element.getAnnotations()) {
-					if (!EditRuleAnnotations.isKnownAnnotation(annotation)) {
-						invalids.add(new EditRuleValidation(
-								"Unknown Annotation found!", 
-								Diagnostic.WARNING,
-								editModule,
-								ValidationType.knownAnnotation, 
-								annotation));
-					}
-				}
-			}
-		}
-		
-		return invalids;
 	}
 }

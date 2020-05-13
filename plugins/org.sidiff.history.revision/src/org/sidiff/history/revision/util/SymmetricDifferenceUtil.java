@@ -17,23 +17,24 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.sidiff.common.emf.exceptions.InvalidModelException;
 import org.sidiff.common.emf.exceptions.NoCorrespondencesException;
-import org.sidiff.difference.symmetric.AddObject;
-import org.sidiff.difference.symmetric.AddReference;
-import org.sidiff.difference.symmetric.AttributeValueChange;
-import org.sidiff.difference.symmetric.Change;
-import org.sidiff.difference.symmetric.RemoveObject;
-import org.sidiff.difference.symmetric.RemoveReference;
-import org.sidiff.difference.symmetric.SymmetricDifference;
-import org.sidiff.difference.symmetric.SymmetricFactory;
-import org.sidiff.difference.symmetric.SymmetricPackage;
 import org.sidiff.history.revision.IRevision;
 import org.sidiff.matcher.IMatcher;
+import org.sidiff.revision.difference.AddObject;
+import org.sidiff.revision.difference.AddReference;
+import org.sidiff.revision.difference.AttributeValueChange;
+import org.sidiff.revision.difference.Change;
+import org.sidiff.revision.difference.Difference;
+import org.sidiff.revision.difference.RemoveObject;
+import org.sidiff.revision.difference.RemoveReference;
+import org.sidiff.revision.difference.DifferenceFactory;
+import org.sidiff.revision.difference.DifferencePackage;
 import org.sidiff.revision.difference.derivation.api.TechnicalDifferenceFacade;
 import org.sidiff.revision.difference.derivation.api.settings.DifferenceSettings;
+import org.sidiff.revision.difference.util.DifferenceUtil;
 
 public class SymmetricDifferenceUtil {
 
-	private static final SymmetricPackage SYMMETRIC_PACKAGE = SymmetricPackage.eINSTANCE;
+	private static final DifferencePackage DIFFERENCE_PACKAGE = DifferencePackage.eINSTANCE;
 	
 	public static class DifferenceCalculationException extends Exception {
 
@@ -44,7 +45,7 @@ public class SymmetricDifferenceUtil {
 		}
 	}
 
-	public static SymmetricDifference calculateDifference(Resource modelA, Resource modelB, IMatcher matcher)
+	public static Difference calculateDifference(Resource modelA, Resource modelB, IMatcher matcher)
 			throws DifferenceCalculationException {
 
 		DifferenceSettings settings = new DifferenceSettings();
@@ -56,10 +57,10 @@ public class SymmetricDifferenceUtil {
 			e.printStackTrace();
 		}
 
-		throw new DifferenceCalculationException("Difference could not be calculated.");
+		throw new DifferenceCalculationException("RevisionDifference could not be calculated.");
 	}
 
-	public static SymmetricDifference calculateDifference(Resource modelA, Resource modelB, DifferenceSettings settings)
+	public static Difference calculateDifference(Resource modelA, Resource modelB, DifferenceSettings settings)
 			throws DifferenceCalculationException {
 
 		try {
@@ -68,10 +69,10 @@ public class SymmetricDifferenceUtil {
 			e.printStackTrace();
 		}
 
-		throw new DifferenceCalculationException("Difference could not be calculated.");
+		throw new DifferenceCalculationException("RevisionDifference could not be calculated.");
 	}
 
-	public static void saveDifference(SymmetricDifference difference) {
+	public static void saveDifference(Difference difference) {
 		try {
 			URI modelA = difference.getModelA().getURI();
 			URI modelB = difference.getModelB().getURI();
@@ -103,7 +104,7 @@ public class SymmetricDifferenceUtil {
 	public static URI getDifferenceURI(URI modelA, URI modelB) {
 		return URI.createURI(
 				modelA.trimFileExtension().toString() + "_to_" +
-				modelB.trimFileExtension().appendFileExtension("symmetric").lastSegment());
+				modelB.trimFileExtension().appendFileExtension(DifferenceUtil.FILE_EXTENSION).lastSegment());
 	}
 	
 	public static boolean validateChange(Change change) {
@@ -137,11 +138,11 @@ public class SymmetricDifferenceUtil {
 	
 	public static boolean isChangeType(EClass type) {
 		
-		if ((type == SYMMETRIC_PACKAGE.getAddObject())
-				|| (type == SYMMETRIC_PACKAGE.getRemoveObject())
-				|| (type == SYMMETRIC_PACKAGE.getAddReference())
-				|| (type == SYMMETRIC_PACKAGE.getRemoveReference())
-				|| (type == SYMMETRIC_PACKAGE.getAttributeValueChange())) {
+		if ((type == DIFFERENCE_PACKAGE.getAddObject())
+				|| (type == DIFFERENCE_PACKAGE.getRemoveObject())
+				|| (type == DIFFERENCE_PACKAGE.getAddReference())
+				|| (type == DIFFERENCE_PACKAGE.getRemoveReference())
+				|| (type == DIFFERENCE_PACKAGE.getAttributeValueChange())) {
 			return true;
 		}
 		
@@ -150,14 +151,14 @@ public class SymmetricDifferenceUtil {
 	
 	public static boolean isChangeReference(EReference type) {
 		
-		if ((type == SYMMETRIC_PACKAGE.getAddObject_Obj())
-				|| (type == SYMMETRIC_PACKAGE.getRemoveObject_Obj())
-				|| (type == SYMMETRIC_PACKAGE.getAddReference_Src())
-				|| (type == SYMMETRIC_PACKAGE.getAddReference_Tgt())
-				|| (type == SYMMETRIC_PACKAGE.getRemoveReference_Src())
-				|| (type == SYMMETRIC_PACKAGE.getRemoveReference_Tgt())
-				|| (type == SYMMETRIC_PACKAGE.getAttributeValueChange_ObjA())
-				|| (type == SYMMETRIC_PACKAGE.getAttributeValueChange_ObjB())) {
+		if ((type == DIFFERENCE_PACKAGE.getAddObject_Obj())
+				|| (type == DIFFERENCE_PACKAGE.getRemoveObject_Obj())
+				|| (type == DIFFERENCE_PACKAGE.getAddReference_Src())
+				|| (type == DIFFERENCE_PACKAGE.getAddReference_Tgt())
+				|| (type == DIFFERENCE_PACKAGE.getRemoveReference_Src())
+				|| (type == DIFFERENCE_PACKAGE.getRemoveReference_Tgt())
+				|| (type == DIFFERENCE_PACKAGE.getAttributeValueChange_ObjA())
+				|| (type == DIFFERENCE_PACKAGE.getAttributeValueChange_ObjB())) {
 			return true;
 		}
 		
@@ -166,9 +167,9 @@ public class SymmetricDifferenceUtil {
 	
 	public static boolean isChangeTypeReference(EReference type) {
 		
-		if ((type == SYMMETRIC_PACKAGE.getAddReference_Type())
-				|| (type == SYMMETRIC_PACKAGE.getRemoveReference_Type())
-				|| (type == SYMMETRIC_PACKAGE.getAttributeValueChange_Type())) {
+		if ((type == DIFFERENCE_PACKAGE.getAddReference_Type())
+				|| (type == DIFFERENCE_PACKAGE.getRemoveReference_Type())
+				|| (type == DIFFERENCE_PACKAGE.getAttributeValueChange_Type())) {
 			return true;
 		}
 		
@@ -266,14 +267,14 @@ public class SymmetricDifferenceUtil {
 
 		if (change instanceof AddObject) {
 			AddObject addObject = (AddObject) change;
-			AddObject newAddObject = SymmetricFactory.eINSTANCE.createAddObject();
+			AddObject newAddObject = DifferenceFactory.eINSTANCE.createAddObject();
 			newAddObject.setObj(addObject.getObj());
 			return newAddObject;
 		}
 
 		else if (change instanceof AddReference) {
 			AddReference addReference = (AddReference) change;
-			AddReference newAddReference = SymmetricFactory.eINSTANCE.createAddReference();
+			AddReference newAddReference = DifferenceFactory.eINSTANCE.createAddReference();
 			newAddReference.setSrc(addReference.getSrc());
 			newAddReference.setTgt(addReference.getTgt());
 			newAddReference.setType(addReference.getType());
@@ -282,14 +283,14 @@ public class SymmetricDifferenceUtil {
 
 		else if (change instanceof RemoveObject) {
 			RemoveObject removeObject = (RemoveObject) change;
-			RemoveObject newRemoveObject = SymmetricFactory.eINSTANCE.createRemoveObject();
+			RemoveObject newRemoveObject = DifferenceFactory.eINSTANCE.createRemoveObject();
 			newRemoveObject.setObj(removeObject.getObj());
 			return newRemoveObject;
 		}
 
 		else if (change instanceof RemoveReference) {
 			RemoveReference removeReference = (RemoveReference) change;
-			RemoveReference newRemoveReference = SymmetricFactory.eINSTANCE.createRemoveReference();
+			RemoveReference newRemoveReference = DifferenceFactory.eINSTANCE.createRemoveReference();
 			newRemoveReference.setSrc(removeReference.getSrc());
 			newRemoveReference.setTgt(removeReference.getTgt());
 			newRemoveReference.setType(removeReference.getType());
@@ -298,7 +299,7 @@ public class SymmetricDifferenceUtil {
 
 		else if (change instanceof AttributeValueChange) {
 			AttributeValueChange avc = (AttributeValueChange) change;
-			AttributeValueChange newAVC = SymmetricFactory.eINSTANCE.createAttributeValueChange();
+			AttributeValueChange newAVC = DifferenceFactory.eINSTANCE.createAttributeValueChange();
 			newAVC.setObjA(avc.getObjA());
 			newAVC.setObjB(avc.getObjB());
 			newAVC.setType(avc.getType());
@@ -320,7 +321,7 @@ public class SymmetricDifferenceUtil {
 		if (change instanceof AddObject) {
 			AddObject addObject = (AddObject) change;
 
-			RemoveObject newRemoveObject = SymmetricFactory.eINSTANCE.createRemoveObject();
+			RemoveObject newRemoveObject = DifferenceFactory.eINSTANCE.createRemoveObject();
 			newRemoveObject.setObj(addObject.getObj());
 			return newRemoveObject;
 		}
@@ -328,7 +329,7 @@ public class SymmetricDifferenceUtil {
 		else if (change instanceof AddReference) {
 			AddReference addReference = (AddReference) change;
 
-			RemoveReference newRemoveReference = SymmetricFactory.eINSTANCE.createRemoveReference();
+			RemoveReference newRemoveReference = DifferenceFactory.eINSTANCE.createRemoveReference();
 			newRemoveReference.setSrc(addReference.getSrc());
 			newRemoveReference.setTgt(addReference.getTgt());
 			newRemoveReference.setType(addReference.getType());
@@ -338,7 +339,7 @@ public class SymmetricDifferenceUtil {
 		else if (change instanceof RemoveObject) {
 			RemoveObject removeObject = (RemoveObject) change;
 
-			AddObject newAddObject = SymmetricFactory.eINSTANCE.createAddObject();
+			AddObject newAddObject = DifferenceFactory.eINSTANCE.createAddObject();
 			newAddObject.setObj(removeObject.getObj());
 			return newAddObject;
 		}
@@ -346,7 +347,7 @@ public class SymmetricDifferenceUtil {
 		else if (change instanceof RemoveReference) {
 			RemoveReference removeReference = (RemoveReference) change;
 
-			AddReference newAddReference = SymmetricFactory.eINSTANCE.createAddReference();
+			AddReference newAddReference = DifferenceFactory.eINSTANCE.createAddReference();
 			newAddReference.setSrc(removeReference.getSrc());
 			newAddReference.setTgt(removeReference.getTgt());
 			newAddReference.setType(removeReference.getType());
@@ -356,7 +357,7 @@ public class SymmetricDifferenceUtil {
 		else if (change instanceof AttributeValueChange) {
 			AttributeValueChange avc = (AttributeValueChange) change;
 
-			AttributeValueChange newAVC = SymmetricFactory.eINSTANCE.createAttributeValueChange();
+			AttributeValueChange newAVC = DifferenceFactory.eINSTANCE.createAttributeValueChange();
 			newAVC.setObjA(avc.getObjB());
 			newAVC.setObjB(avc.getObjA());
 			newAVC.setType(avc.getType());
@@ -466,7 +467,7 @@ public class SymmetricDifferenceUtil {
 			if (removeReference.getType().getEOpposite() != null) {
 				Iterator<RemoveReference> localChanges = revision.getDifference().getLocalChanges(
 						removeReference.getTgt(),
-						SymmetricPackage.eINSTANCE.getRemoveReference_Src(), 
+						DifferencePackage.eINSTANCE.getRemoveReference_Src(), 
 						RemoveReference.class);
 				
 				while (localChanges.hasNext()) {
@@ -487,7 +488,7 @@ public class SymmetricDifferenceUtil {
 			if (addReference.getType().getEOpposite() != null) {
 				Iterator<AddReference> localChanges = revision.getDifference().getLocalChanges(
 						addReference.getTgt(),
-						SymmetricPackage.eINSTANCE.getAddReference_Src(), 
+						DifferencePackage.eINSTANCE.getAddReference_Src(), 
 						AddReference.class);
 				
 				while (localChanges.hasNext()) {

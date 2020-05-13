@@ -13,16 +13,16 @@ import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Parameter;
 import org.eclipse.emf.henshin.model.Rule;
-import org.sidiff.difference.symmetric.AddObject;
-import org.sidiff.difference.symmetric.AddReference;
-import org.sidiff.difference.symmetric.AttributeValueChange;
-import org.sidiff.difference.symmetric.Change;
-import org.sidiff.difference.symmetric.RemoveObject;
-import org.sidiff.difference.symmetric.RemoveReference;
-import org.sidiff.difference.symmetric.SymmetricPackage;
 import org.sidiff.graphpattern.NodePattern;
 import org.sidiff.graphpattern.attributes.JavaSciptParser;
 import org.sidiff.history.revision.IRevision;
+import org.sidiff.revision.difference.AddObject;
+import org.sidiff.revision.difference.AddReference;
+import org.sidiff.revision.difference.AttributeValueChange;
+import org.sidiff.revision.difference.Change;
+import org.sidiff.revision.difference.RemoveObject;
+import org.sidiff.revision.difference.RemoveReference;
+import org.sidiff.revision.difference.DifferencePackage;
 import org.sidiff.revision.editrules.recognition.IMatching;
 import org.sidiff.revision.editrules.recognition.match.RecognitionAttributeMatch;
 import org.sidiff.revision.editrules.recognition.match.RecognitionEdgeMatch;
@@ -218,7 +218,7 @@ public class RecognitionMatchCreator {
 			return true;
 		} else {
 			for (NodePattern changeNode : matching.getNodes()) {
-				if (!(changeNode.getType() == SymmetricPackage.eINSTANCE.getAttributeValueChange())) {
+				if (!(changeNode.getType() == DifferencePackage.eINSTANCE.getAttributeValueChange())) {
 					if (matching.getFirstMatch(changeNode) == null) {
 						return false;
 					}

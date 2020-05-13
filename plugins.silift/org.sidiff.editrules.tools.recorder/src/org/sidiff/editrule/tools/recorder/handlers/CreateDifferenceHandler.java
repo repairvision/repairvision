@@ -22,14 +22,13 @@ import org.sidiff.common.utilities.emf.DocumentType;
 import org.sidiff.common.utilities.ui.util.WorkbenchUtil;
 import org.sidiff.correspondences.ICorrespondences;
 import org.sidiff.correspondences.matchingmodel.MatchingModelCorrespondences;
-import org.sidiff.difference.symmetric.SymmetricDifference;
-import org.sidiff.difference.symmetric.SymmetricFactory;
 import org.sidiff.matcher.IMatcher;
 import org.sidiff.matcher.MatcherUtil;
-import org.sidiff.matching.model.Correspondence;
-import org.sidiff.matching.model.Matching;
+import org.sidiff.revision.difference.Correspondence;
+import org.sidiff.revision.difference.Difference;
 import org.sidiff.revision.difference.derivation.GenericTechnicalDifferenceBuilder;
 import org.sidiff.revision.difference.derivation.ITechnicalDifferenceBuilder;
+import org.sidiff.revision.difference.util.DifferenceUtil;
 
 public class CreateDifferenceHandler extends AbstractHandler {
 
@@ -51,24 +50,21 @@ public class CreateDifferenceHandler extends AbstractHandler {
 			}
 			
 			IMatcher matcher = matchers.get(0);
-			Matching matching = createMatching(modelA, modelB, scope, matcher);
+			Difference difference = createMatching(modelA, modelB, scope, matcher);
 			
 			for (IMatcher subsequentMatcher : matchers.subList(1, matchers.size())) {
-				Matching subsequentMatching = createMatching(modelA, modelB, scope, subsequentMatcher);
-				iterativeMatching(matching, subsequentMatching);
+				Difference subsequentMatching = createMatching(modelA, modelB, scope, subsequentMatcher);
+				iterativeMatching(difference, subsequentMatching);
 			}
 
-			SymmetricDifference symmetricDifference = SymmetricFactory.eINSTANCE.createSymmetricDifference();
-			symmetricDifference.setMatching(matching);
-
 			ITechnicalDifferenceBuilder tdBuilder = new GenericTechnicalDifferenceBuilder();
-			tdBuilder.deriveTechDiff(symmetricDifference, scope);
+			tdBuilder.deriveTechDiff(difference, scope);
 
 			// Create difference resource:
 			ResourceSet differenceRSS = new ResourceSetImpl();
 			Resource differenceResource = differenceRSS
 					.createResource(getDifferenceURI(modelA.getURI(), modelB.getURI()));
-			differenceResource.getContents().add(symmetricDifference);
+			differenceResource.getContents().add(difference);
 			
 			try {
 				differenceResource.save(Collections.emptyMap());
@@ -95,7 +91,7 @@ public class CreateDifferenceHandler extends AbstractHandler {
 				});
 	}
 
-	private Matching createMatching(Resource modelA, Resource modelB, Scope scope, IMatcher matcher) {
+	private Difference createMatching(Resource modelA, Resource modelB, Scope scope, IMatcher matcher) {
 		matcher.reset();
 		
 		if (matcher.getCandidatesService() != null) {
@@ -110,12 +106,12 @@ public class CreateDifferenceHandler extends AbstractHandler {
 		matcher.startMatching(models, scope);
 		
 		ICorrespondences correspondences = matcher.getCorrespondencesService();
-		Matching matching = ((MatchingModelCorrespondences) correspondences).getMatching();
+		Difference matching = ((MatchingModelCorrespondences) correspondences).getDifference();
 		
 		return matching;
 	}
 	
-	private void iterativeMatching(Matching base, Matching subsequent) {
+	private void iterativeMatching(Difference base, Difference subsequent) {
 		List<Correspondence> newCorrespondences = new ArrayList<>();
 		
 		for (Correspondence subsequentCorrespondence : subsequent.getCorrespondences()) {
@@ -131,7 +127,7 @@ public class CreateDifferenceHandler extends AbstractHandler {
 		}
 	}
 	
-	private boolean containsCorrespondence(Matching matching, Correspondence correspondence) {
+	private boolean containsCorrespondence(Difference matching, Correspondence correspondence) {
 		for (Correspondence otherCorrespondence : matching.getCorrespondences()) {
 			if ((otherCorrespondence.getMatchedA() == correspondence.getMatchedA())
 					|| (otherCorrespondence.getMatchedB() == correspondence.getMatchedB())) {
@@ -144,7 +140,7 @@ public class CreateDifferenceHandler extends AbstractHandler {
 	protected static URI getDifferenceURI(URI modelA, URI modelB) {
 		return URI.createURI(
 				modelA.trimFileExtension().toString() + "_to_" +
-				modelB.trimFileExtension().appendFileExtension("symmetric").lastSegment());
+				modelB.trimFileExtension().appendFileExtension(DifferenceUtil.FILE_EXTENSION).lastSegment());
 	}
 
 }

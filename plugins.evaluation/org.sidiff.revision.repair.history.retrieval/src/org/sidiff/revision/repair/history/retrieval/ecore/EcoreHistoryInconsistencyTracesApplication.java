@@ -29,9 +29,9 @@ import org.sidiff.historymodel.HistoryModelFactory;
 import org.sidiff.historymodel.ModelStatus;
 import org.sidiff.historymodel.Problem;
 import org.sidiff.historymodel.Version;
-import org.sidiff.matching.api.MatchingFacade;
-import org.sidiff.matching.model.Correspondence;
-import org.sidiff.matching.model.Matching;
+import org.sidiff.revision.difference.Correspondence;
+import org.sidiff.revision.difference.Difference;
+import org.sidiff.revision.difference.derivation.api.TechnicalDifferenceFacade;
 import org.sidiff.revision.repair.history.retrieval.metadata.HistoryMetadata;
 import org.sidiff.revision.repair.history.retrieval.metadata.VersionMetadata;
 import org.sidiff.revision.repair.history.retrieval.metadata.coevolution.CoevolutionDataSetMetadata;
@@ -235,7 +235,7 @@ public class EcoreHistoryInconsistencyTracesApplication implements IApplication 
 
 	protected void matchVersions(History history, Resource resourceA, Resource resourceB, EcoreHistorySettings settings) {
 		try {
-			Matching matching = generateMatching(resourceA, resourceB, settings);
+			Difference matching = generateMatching(resourceA, resourceB, settings);
 			generateUUIDs(matching);
 		} catch (InvalidModelException e) {
 			e.printStackTrace();
@@ -273,16 +273,16 @@ public class EcoreHistoryInconsistencyTracesApplication implements IApplication 
 		return version;
 	}
 	
-	protected Matching generateMatching(Resource resourceA, Resource resourceB, EcoreHistorySettings settings) 
+	protected Difference generateMatching(Resource resourceA, Resource resourceB, EcoreHistorySettings settings) 
 			throws InvalidModelException, NoCorrespondencesException {
 		
-		Matching matching = MatchingFacade.match(
+		Difference matching = TechnicalDifferenceFacade.match(
 				Arrays.asList(resourceA, resourceB), settings.getDifferenceSettings());
 
 		return matching;
 	}
 	
-	protected void generateUUIDs(Matching matching) {
+	protected void generateUUIDs(Difference matching) {
 		if (PRINT_IDS) System.out.println("HistoryModelGenerator.generateUUIDs()");
 		
 		for (Correspondence correspondence : matching.getCorrespondences()) {

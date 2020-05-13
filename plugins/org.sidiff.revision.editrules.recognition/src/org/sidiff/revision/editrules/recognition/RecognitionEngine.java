@@ -1,10 +1,10 @@
 package org.sidiff.revision.editrules.recognition;
 
 import org.eclipse.emf.henshin.model.Rule;
-import org.sidiff.difference.symmetric.SymmetricDifference;
 import org.sidiff.graphpattern.GraphPattern;
 import org.sidiff.graphpattern.GraphpatternFactory;
 import org.sidiff.history.revision.IRevision;
+import org.sidiff.revision.difference.Difference;
 import org.sidiff.revision.editrules.recognition.configuration.RecognitionEngineSettings;
 import org.sidiff.revision.editrules.recognition.impact.ImpactScope;
 import org.sidiff.revision.editrules.recognition.match.util.RecognitionMatchCreator;
@@ -22,7 +22,7 @@ public class RecognitionEngine implements IRecognitionEngine {
 	
 	protected boolean started = false;
 
-	protected SymmetricDifference difference;
+	protected Difference difference;
 	
 //	protected MergeImports mergeImports;
 	

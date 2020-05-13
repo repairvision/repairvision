@@ -1,10 +1,10 @@
 package org.sidiff.revision.editrules.recognition.pattern.graph;
 
 import org.eclipse.emf.ecore.EObject;
-import org.sidiff.difference.symmetric.AddReference;
-import org.sidiff.difference.symmetric.Change;
-import org.sidiff.difference.symmetric.RemoveReference;
 import org.sidiff.graphpattern.GraphpatternFactory;
+import org.sidiff.revision.difference.AddReference;
+import org.sidiff.revision.difference.Change;
+import org.sidiff.revision.difference.RemoveReference;
 import org.sidiff.revision.editrules.recognition.pattern.domain.Domain;
 
 public abstract class ChangePatternReference extends ChangePattern  {

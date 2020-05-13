@@ -5,7 +5,6 @@ package org.sidiff.historymodel.presentation;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -64,7 +63,6 @@ import org.eclipse.emf.edit.ui.provider.UnwrappingSelectionProvider;
 import org.eclipse.emf.edit.ui.util.EditUIMarkerHelper;
 import org.eclipse.emf.edit.ui.util.EditUIUtil;
 import org.eclipse.emf.edit.ui.view.ExtendedPropertySheetPage;
-import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IStatusLineManager;
@@ -73,8 +71,8 @@ import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
-import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.util.LocalSelectionTransfer;
+import org.eclipse.jface.viewers.ColumnWeightData;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.ISelectionProvider;
@@ -83,6 +81,7 @@ import org.eclipse.jface.viewers.ListViewer;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.StructuredViewer;
+import org.eclipse.jface.viewers.TableLayout;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
@@ -94,9 +93,14 @@ import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.events.ControlAdapter;
 import org.eclipse.swt.events.ControlEvent;
 import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.graphics.Rectangle;
+import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Menu;
+import org.eclipse.swt.widgets.Table;
+import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.Tree;
+import org.eclipse.swt.widgets.TreeColumn;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
@@ -107,7 +111,6 @@ import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.actions.WorkspaceModifyOperation;
 import org.eclipse.ui.dialogs.SaveAsDialog;
 import org.eclipse.ui.ide.IGotoMarker;
-import org.eclipse.ui.part.DrillDownAdapter;
 import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.ui.part.MultiPageEditorPart;
 import org.eclipse.ui.views.contentoutline.ContentOutline;
@@ -116,10 +119,8 @@ import org.eclipse.ui.views.contentoutline.IContentOutlinePage;
 import org.eclipse.ui.views.properties.IPropertySheetPage;
 import org.eclipse.ui.views.properties.PropertySheet;
 import org.eclipse.ui.views.properties.PropertySheetPage;
-import org.sidiff.difference.symmetric.provider.SymmetricItemProviderAdapterFactory;
 import org.sidiff.historymodel.provider.HistoryModelItemProviderAdapterFactory;
-import org.sidiff.integration.editor.highlighting.EditorHighlighting;
-import org.sidiff.matching.model.provider.MatchingModelItemProviderAdapterFactory;
+import org.sidiff.revision.difference.provider.DifferenceItemProviderAdapterFactory;
 
 
 /**
@@ -287,6 +288,7 @@ public class HistoryModelEditor
 	 */
 	protected IPartListener partListener =
 		new IPartListener() {
+			@Override
 			public void partActivated(IWorkbenchPart p) {
 				if (p instanceof ContentOutline) {
 					if (((ContentOutline)p).getCurrentPage() == contentOutlinePage) {
@@ -305,15 +307,19 @@ public class HistoryModelEditor
 					handleActivate();
 				}
 			}
+			@Override
 			public void partBroughtToTop(IWorkbenchPart p) {
 				// Ignore.
 			}
+			@Override
 			public void partClosed(IWorkbenchPart p) {
 				// Ignore.
 			}
+			@Override
 			public void partDeactivated(IWorkbenchPart p) {
 				// Ignore.
 			}
+			@Override
 			public void partOpened(IWorkbenchPart p) {
 				// Ignore.
 			}
@@ -399,6 +405,7 @@ public class HistoryModelEditor
 					dispatching = true;
 					getSite().getShell().getDisplay().asyncExec
 						(new Runnable() {
+							 @Override
 							 public void run() {
 								 dispatching = false;
 								 updateProblemIndication();
@@ -428,6 +435,7 @@ public class HistoryModelEditor
 	 */
 	protected IResourceChangeListener resourceChangeListener =
 		new IResourceChangeListener() {
+			@Override
 			public void resourceChanged(IResourceChangeEvent event) {
 				IResourceDelta delta = event.getDelta();
 				try {
@@ -436,6 +444,7 @@ public class HistoryModelEditor
 						protected Collection<Resource> changedResources = new ArrayList<Resource>();
 						protected Collection<Resource> removedResources = new ArrayList<Resource>();
 
+						@Override
 						public boolean visit(IResourceDelta delta) {
 							if (delta.getResource().getType() == IResource.FILE) {
 								if (delta.getKind() == IResourceDelta.REMOVED ||
@@ -471,6 +480,7 @@ public class HistoryModelEditor
 					if (!visitor.getRemovedResources().isEmpty()) {
 						getSite().getShell().getDisplay().asyncExec
 							(new Runnable() {
+								 @Override
 								 public void run() {
 									 removedResources.addAll(visitor.getRemovedResources());
 									 if (!isDirty()) {
@@ -483,6 +493,7 @@ public class HistoryModelEditor
 					if (!visitor.getChangedResources().isEmpty()) {
 						getSite().getShell().getDisplay().asyncExec
 							(new Runnable() {
+								 @Override
 								 public void run() {
 									 changedResources.addAll(visitor.getChangedResources());
 									 if (getSite().getPage().getActiveEditor() == HistoryModelEditor.this) {
@@ -541,8 +552,9 @@ public class HistoryModelEditor
 	 */
 	protected void handleChangedResources() {
 		if (!changedResources.isEmpty() && (!isDirty() || handleDirtyConflict())) {
+			ResourceSet resourceSet = editingDomain.getResourceSet();
 			if (isDirty()) {
-				changedResources.addAll(editingDomain.getResourceSet().getResources());
+				changedResources.addAll(resourceSet.getResources());
 			}
 			editingDomain.getCommandStack().flush();
 
@@ -551,7 +563,7 @@ public class HistoryModelEditor
 				if (resource.isLoaded()) {
 					resource.unload();
 					try {
-						resource.load(Collections.EMPTY_MAP);
+						resource.load(resourceSet.getLoadOptions());
 					}
 					catch (IOException exception) {
 						if (!resourceToDiagnosticMap.containsKey(resource)) {
@@ -662,9 +674,8 @@ public class HistoryModelEditor
 
 		adapterFactory.addAdapterFactory(new ResourceItemProviderAdapterFactory());
 		adapterFactory.addAdapterFactory(new HistoryModelItemProviderAdapterFactory());
+		adapterFactory.addAdapterFactory(new DifferenceItemProviderAdapterFactory());
 		adapterFactory.addAdapterFactory(new EcoreItemProviderAdapterFactory());
-		adapterFactory.addAdapterFactory(new MatchingModelItemProviderAdapterFactory());
-		adapterFactory.addAdapterFactory(new SymmetricItemProviderAdapterFactory());
 		adapterFactory.addAdapterFactory(new ReflectiveItemProviderAdapterFactory());
 
 		// Create the command stack that will notify this editor as commands are executed.
@@ -675,9 +686,11 @@ public class HistoryModelEditor
 		//
 		commandStack.addCommandStackListener
 			(new CommandStackListener() {
+				 @Override
 				 public void commandStackChanged(final EventObject event) {
 					 getContainer().getDisplay().asyncExec
 						 (new Runnable() {
+							  @Override
 							  public void run() {
 								  firePropertyChange(IEditorPart.PROP_DIRTY);
 
@@ -689,7 +702,7 @@ public class HistoryModelEditor
 								  }
 								  for (Iterator<PropertySheetPage> i = propertySheetPages.iterator(); i.hasNext(); ) {
 									  PropertySheetPage propertySheetPage = i.next();
-									  if (propertySheetPage.getControl().isDisposed()) {
+									  if (propertySheetPage.getControl() == null || propertySheetPage.getControl().isDisposed()) {
 										  i.remove();
 									  }
 									  else {
@@ -730,6 +743,7 @@ public class HistoryModelEditor
 		if (theSelection != null && !theSelection.isEmpty()) {
 			Runnable runnable =
 				new Runnable() {
+					@Override
 					public void run() {
 						// Try to select the items in the current content viewer of the editor.
 						//
@@ -750,6 +764,7 @@ public class HistoryModelEditor
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EditingDomain getEditingDomain() {
 		return editingDomain;
 	}
@@ -846,6 +861,7 @@ public class HistoryModelEditor
 					new ISelectionChangedListener() {
 						// This just notifies those things that are affected by the section.
 						//
+						@Override
 						public void selectionChanged(SelectionChangedEvent selectionChangedEvent) {
 							setSelection(selectionChangedEvent.getSelection());
 						}
@@ -880,6 +896,7 @@ public class HistoryModelEditor
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public Viewer getViewer() {
 		return currentViewer;
 	}
@@ -974,11 +991,10 @@ public class HistoryModelEditor
 	 */
 	@Override
 	public void createPages() {
-
 		// Creates the model from the editor input
 		//
 		createModel();
-		
+
 		// Only creates the other pages if there is something that can be edited
 		//
 		if (!getEditingDomain().getResourceSet().getResources().isEmpty()) {
@@ -1015,209 +1031,184 @@ public class HistoryModelEditor
 				createContextMenuFor(selectionViewer);
 				int pageIndex = addPage(viewerPane.getControl());
 				setPageText(pageIndex, getString("_UI_SelectionPage_label"));
-				
-				// Create toolbar actions
-				//
-				
-				// Highlighting:
-				Action highlighting = new Action("Model Element Highlighting", Action.AS_CHECK_BOX) {
-					public void run() {
-						if (isChecked()) {
-							addSelectionChangedListener(EditorHighlighting.getInstance().getSelectionChangedListener());
-						} else {
-							EditorHighlighting.getInstance().setSelection(Collections.emptyList());
-							removeSelectionChangedListener(EditorHighlighting.getInstance().getSelectionChangedListener());
-						}
-					}
-				};
-				highlighting.setChecked(false);
-				highlighting.setToolTipText("Model Element Highlighting");
-				highlighting.setImageDescriptor(ImageDescriptor.createFromURL((URL) ModelEditorPlugin.INSTANCE.getPluginResourceLocator().getImage("full/obj16/highlighter.png")));
-				viewerPane.getToolBarManager().add(highlighting);
-				
-				// Seperator:
-				viewerPane.getToolBarManager().add(new Separator());
-				
-				// Navigation:
-				new DrillDownAdapter(selectionViewer).addNavigationActions(viewerPane.getToolBarManager());
-
-				
-				viewerPane.getToolBarManager().update(true);
 			}
 
-//			// Create a page for the parent tree view.
-//			//
-//			{
-//				ViewerPane viewerPane =
-//					new ViewerPane(getSite().getPage(), HistoryModelEditor.this) {
-//						@Override
-//						public Viewer createViewer(Composite composite) {
-//							Tree tree = new Tree(composite, SWT.MULTI);
-//							TreeViewer newTreeViewer = new TreeViewer(tree);
-//							return newTreeViewer;
-//						}
-//						@Override
-//						public void requestActivation() {
-//							super.requestActivation();
-//							setCurrentViewerPane(this);
-//						}
-//					};
-//				viewerPane.createControl(getContainer());
-//
-//				parentViewer = (TreeViewer)viewerPane.getViewer();
-//				parentViewer.setAutoExpandLevel(30);
-//				parentViewer.setContentProvider(new ReverseAdapterFactoryContentProvider(adapterFactory));
-//				parentViewer.setLabelProvider(new AdapterFactoryLabelProvider(adapterFactory));
-//
-//				createContextMenuFor(parentViewer);
-//				int pageIndex = addPage(viewerPane.getControl());
-//				setPageText(pageIndex, getString("_UI_ParentPage_label"));
-//			}
-//
-//			// This is the page for the list viewer
-//			//
-//			{
-//				ViewerPane viewerPane =
-//					new ViewerPane(getSite().getPage(), HistoryModelEditor.this) {
-//						@Override
-//						public Viewer createViewer(Composite composite) {
-//							return new ListViewer(composite);
-//						}
-//						@Override
-//						public void requestActivation() {
-//							super.requestActivation();
-//							setCurrentViewerPane(this);
-//						}
-//					};
-//				viewerPane.createControl(getContainer());
-//				listViewer = (ListViewer)viewerPane.getViewer();
-//				listViewer.setContentProvider(new AdapterFactoryContentProvider(adapterFactory));
-//				listViewer.setLabelProvider(new AdapterFactoryLabelProvider(adapterFactory));
-//
-//				createContextMenuFor(listViewer);
-//				int pageIndex = addPage(viewerPane.getControl());
-//				setPageText(pageIndex, getString("_UI_ListPage_label"));
-//			}
-//
-//			// This is the page for the tree viewer
-//			//
-//			{
-//				ViewerPane viewerPane =
-//					new ViewerPane(getSite().getPage(), HistoryModelEditor.this) {
-//						@Override
-//						public Viewer createViewer(Composite composite) {
-//							return new TreeViewer(composite);
-//						}
-//						@Override
-//						public void requestActivation() {
-//							super.requestActivation();
-//							setCurrentViewerPane(this);
-//						}
-//					};
-//				viewerPane.createControl(getContainer());
-//				treeViewer = (TreeViewer)viewerPane.getViewer();
-//				treeViewer.setContentProvider(new AdapterFactoryContentProvider(adapterFactory));
-//				treeViewer.setLabelProvider(new AdapterFactoryLabelProvider(adapterFactory));
-//
-//				new AdapterFactoryTreeEditor(treeViewer.getTree(), adapterFactory);
-//
-//				createContextMenuFor(treeViewer);
-//				int pageIndex = addPage(viewerPane.getControl());
-//				setPageText(pageIndex, getString("_UI_TreePage_label"));
-//			}
-//
-//			// This is the page for the table viewer.
-//			//
-//			{
-//				ViewerPane viewerPane =
-//					new ViewerPane(getSite().getPage(), HistoryModelEditor.this) {
-//						@Override
-//						public Viewer createViewer(Composite composite) {
-//							return new TableViewer(composite);
-//						}
-//						@Override
-//						public void requestActivation() {
-//							super.requestActivation();
-//							setCurrentViewerPane(this);
-//						}
-//					};
-//				viewerPane.createControl(getContainer());
-//				tableViewer = (TableViewer)viewerPane.getViewer();
-//
-//				Table table = tableViewer.getTable();
-//				TableLayout layout = new TableLayout();
-//				table.setLayout(layout);
-//				table.setHeaderVisible(true);
-//				table.setLinesVisible(true);
-//
-//				TableColumn objectColumn = new TableColumn(table, SWT.NONE);
-//				layout.addColumnData(new ColumnWeightData(3, 100, true));
-//				objectColumn.setText(getString("_UI_ObjectColumn_label"));
-//				objectColumn.setResizable(true);
-//
-//				TableColumn selfColumn = new TableColumn(table, SWT.NONE);
-//				layout.addColumnData(new ColumnWeightData(2, 100, true));
-//				selfColumn.setText(getString("_UI_SelfColumn_label"));
-//				selfColumn.setResizable(true);
-//
-//				tableViewer.setColumnProperties(new String [] {"a", "b"});
-//				tableViewer.setContentProvider(new AdapterFactoryContentProvider(adapterFactory));
-//				tableViewer.setLabelProvider(new AdapterFactoryLabelProvider(adapterFactory));
-//
-//				createContextMenuFor(tableViewer);
-//				int pageIndex = addPage(viewerPane.getControl());
-//				setPageText(pageIndex, getString("_UI_TablePage_label"));
-//			}
-//
-//			// This is the page for the table tree viewer.
-//			//
-//			{
-//				ViewerPane viewerPane =
-//					new ViewerPane(getSite().getPage(), HistoryModelEditor.this) {
-//						@Override
-//						public Viewer createViewer(Composite composite) {
-//							return new TreeViewer(composite);
-//						}
-//						@Override
-//						public void requestActivation() {
-//							super.requestActivation();
-//							setCurrentViewerPane(this);
-//						}
-//					};
-//				viewerPane.createControl(getContainer());
-//
-//				treeViewerWithColumns = (TreeViewer)viewerPane.getViewer();
-//
-//				Tree tree = treeViewerWithColumns.getTree();
-//				tree.setLayoutData(new FillLayout());
-//				tree.setHeaderVisible(true);
-//				tree.setLinesVisible(true);
-//
-//				TreeColumn objectColumn = new TreeColumn(tree, SWT.NONE);
-//				objectColumn.setText(getString("_UI_ObjectColumn_label"));
-//				objectColumn.setResizable(true);
-//				objectColumn.setWidth(250);
-//
-//				TreeColumn selfColumn = new TreeColumn(tree, SWT.NONE);
-//				selfColumn.setText(getString("_UI_SelfColumn_label"));
-//				selfColumn.setResizable(true);
-//				selfColumn.setWidth(200);
-//
-//				treeViewerWithColumns.setColumnProperties(new String [] {"a", "b"});
-//				treeViewerWithColumns.setContentProvider(new AdapterFactoryContentProvider(adapterFactory));
-//				treeViewerWithColumns.setLabelProvider(new AdapterFactoryLabelProvider(adapterFactory));
-//
-//				createContextMenuFor(treeViewerWithColumns);
-//				int pageIndex = addPage(viewerPane.getControl());
-//				setPageText(pageIndex, getString("_UI_TreeWithColumnsPage_label"));
-//			}
-//
-//			getSite().getShell().getDisplay().asyncExec
-//				(new Runnable() {
-//					 public void run() {
-//						 setActivePage(0);
-//					 }
-//				 });
+			// Create a page for the parent tree view.
+			//
+			{
+				ViewerPane viewerPane =
+					new ViewerPane(getSite().getPage(), HistoryModelEditor.this) {
+						@Override
+						public Viewer createViewer(Composite composite) {
+							Tree tree = new Tree(composite, SWT.MULTI);
+							TreeViewer newTreeViewer = new TreeViewer(tree);
+							return newTreeViewer;
+						}
+						@Override
+						public void requestActivation() {
+							super.requestActivation();
+							setCurrentViewerPane(this);
+						}
+					};
+				viewerPane.createControl(getContainer());
+
+				parentViewer = (TreeViewer)viewerPane.getViewer();
+				parentViewer.setAutoExpandLevel(30);
+				parentViewer.setContentProvider(new ReverseAdapterFactoryContentProvider(adapterFactory));
+				parentViewer.setLabelProvider(new AdapterFactoryLabelProvider(adapterFactory));
+
+				createContextMenuFor(parentViewer);
+				int pageIndex = addPage(viewerPane.getControl());
+				setPageText(pageIndex, getString("_UI_ParentPage_label"));
+			}
+
+			// This is the page for the list viewer
+			//
+			{
+				ViewerPane viewerPane =
+					new ViewerPane(getSite().getPage(), HistoryModelEditor.this) {
+						@Override
+						public Viewer createViewer(Composite composite) {
+							return new ListViewer(composite);
+						}
+						@Override
+						public void requestActivation() {
+							super.requestActivation();
+							setCurrentViewerPane(this);
+						}
+					};
+				viewerPane.createControl(getContainer());
+				listViewer = (ListViewer)viewerPane.getViewer();
+				listViewer.setContentProvider(new AdapterFactoryContentProvider(adapterFactory));
+				listViewer.setLabelProvider(new AdapterFactoryLabelProvider(adapterFactory));
+
+				createContextMenuFor(listViewer);
+				int pageIndex = addPage(viewerPane.getControl());
+				setPageText(pageIndex, getString("_UI_ListPage_label"));
+			}
+
+			// This is the page for the tree viewer
+			//
+			{
+				ViewerPane viewerPane =
+					new ViewerPane(getSite().getPage(), HistoryModelEditor.this) {
+						@Override
+						public Viewer createViewer(Composite composite) {
+							return new TreeViewer(composite);
+						}
+						@Override
+						public void requestActivation() {
+							super.requestActivation();
+							setCurrentViewerPane(this);
+						}
+					};
+				viewerPane.createControl(getContainer());
+				treeViewer = (TreeViewer)viewerPane.getViewer();
+				treeViewer.setContentProvider(new AdapterFactoryContentProvider(adapterFactory));
+				treeViewer.setLabelProvider(new AdapterFactoryLabelProvider(adapterFactory));
+
+				new AdapterFactoryTreeEditor(treeViewer.getTree(), adapterFactory);
+
+				createContextMenuFor(treeViewer);
+				int pageIndex = addPage(viewerPane.getControl());
+				setPageText(pageIndex, getString("_UI_TreePage_label"));
+			}
+
+			// This is the page for the table viewer.
+			//
+			{
+				ViewerPane viewerPane =
+					new ViewerPane(getSite().getPage(), HistoryModelEditor.this) {
+						@Override
+						public Viewer createViewer(Composite composite) {
+							return new TableViewer(composite);
+						}
+						@Override
+						public void requestActivation() {
+							super.requestActivation();
+							setCurrentViewerPane(this);
+						}
+					};
+				viewerPane.createControl(getContainer());
+				tableViewer = (TableViewer)viewerPane.getViewer();
+
+				Table table = tableViewer.getTable();
+				TableLayout layout = new TableLayout();
+				table.setLayout(layout);
+				table.setHeaderVisible(true);
+				table.setLinesVisible(true);
+
+				TableColumn objectColumn = new TableColumn(table, SWT.NONE);
+				layout.addColumnData(new ColumnWeightData(3, 100, true));
+				objectColumn.setText(getString("_UI_ObjectColumn_label"));
+				objectColumn.setResizable(true);
+
+				TableColumn selfColumn = new TableColumn(table, SWT.NONE);
+				layout.addColumnData(new ColumnWeightData(2, 100, true));
+				selfColumn.setText(getString("_UI_SelfColumn_label"));
+				selfColumn.setResizable(true);
+
+				tableViewer.setColumnProperties(new String [] {"a", "b"});
+				tableViewer.setContentProvider(new AdapterFactoryContentProvider(adapterFactory));
+				tableViewer.setLabelProvider(new AdapterFactoryLabelProvider(adapterFactory));
+
+				createContextMenuFor(tableViewer);
+				int pageIndex = addPage(viewerPane.getControl());
+				setPageText(pageIndex, getString("_UI_TablePage_label"));
+			}
+
+			// This is the page for the table tree viewer.
+			//
+			{
+				ViewerPane viewerPane =
+					new ViewerPane(getSite().getPage(), HistoryModelEditor.this) {
+						@Override
+						public Viewer createViewer(Composite composite) {
+							return new TreeViewer(composite);
+						}
+						@Override
+						public void requestActivation() {
+							super.requestActivation();
+							setCurrentViewerPane(this);
+						}
+					};
+				viewerPane.createControl(getContainer());
+
+				treeViewerWithColumns = (TreeViewer)viewerPane.getViewer();
+
+				Tree tree = treeViewerWithColumns.getTree();
+				tree.setLayoutData(new FillLayout());
+				tree.setHeaderVisible(true);
+				tree.setLinesVisible(true);
+
+				TreeColumn objectColumn = new TreeColumn(tree, SWT.NONE);
+				objectColumn.setText(getString("_UI_ObjectColumn_label"));
+				objectColumn.setResizable(true);
+				objectColumn.setWidth(250);
+
+				TreeColumn selfColumn = new TreeColumn(tree, SWT.NONE);
+				selfColumn.setText(getString("_UI_SelfColumn_label"));
+				selfColumn.setResizable(true);
+				selfColumn.setWidth(200);
+
+				treeViewerWithColumns.setColumnProperties(new String [] {"a", "b"});
+				treeViewerWithColumns.setContentProvider(new AdapterFactoryContentProvider(adapterFactory));
+				treeViewerWithColumns.setLabelProvider(new AdapterFactoryLabelProvider(adapterFactory));
+
+				createContextMenuFor(treeViewerWithColumns);
+				int pageIndex = addPage(viewerPane.getControl());
+				setPageText(pageIndex, getString("_UI_TreeWithColumnsPage_label"));
+			}
+
+			getSite().getShell().getDisplay().asyncExec
+				(new Runnable() {
+					 @Override
+					 public void run() {
+						 if (!getContainer().isDisposed()) {
+							 setActivePage(0);
+						 }
+					 }
+				 });
 		}
 
 		// Ensures that this editor will only display the page's tab
@@ -1238,6 +1229,7 @@ public class HistoryModelEditor
 
 		getSite().getShell().getDisplay().asyncExec
 			(new Runnable() {
+				 @Override
 				 public void run() {
 					 updateProblemIndication();
 				 }
@@ -1255,9 +1247,9 @@ public class HistoryModelEditor
 		if (getPageCount() <= 1) {
 			setPageText(0, "");
 			if (getContainer() instanceof CTabFolder) {
-				((CTabFolder)getContainer()).setTabHeight(1);
 				Point point = getContainer().getSize();
-				getContainer().setSize(point.x, point.y + 6);
+				Rectangle clientArea = getContainer().getClientArea();
+				getContainer().setSize(point.x,  2 * point.y - clientArea.height - clientArea.y);
 			}
 		}
 	}
@@ -1273,9 +1265,9 @@ public class HistoryModelEditor
 		if (getPageCount() > 1) {
 			setPageText(0, getString("_UI_SelectionPage_label"));
 			if (getContainer() instanceof CTabFolder) {
-				((CTabFolder)getContainer()).setTabHeight(SWT.DEFAULT);
 				Point point = getContainer().getSize();
-				getContainer().setSize(point.x, point.y - 6);
+				Rectangle clientArea = getContainer().getClientArea();
+				getContainer().setSize(point.x, clientArea.height + clientArea.y);
 			}
 		}
 	}
@@ -1301,17 +1293,16 @@ public class HistoryModelEditor
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
-	public Object getAdapter(Class key) {
+	public <T> T getAdapter(Class<T> key) {
 		if (key.equals(IContentOutlinePage.class)) {
-			return showOutlineView() ? getContentOutlinePage() : null;
+			return showOutlineView() ? key.cast(getContentOutlinePage()) : null;
 		}
 		else if (key.equals(IPropertySheetPage.class)) {
-			return getPropertySheetPage();
+			return key.cast(getPropertySheetPage());
 		}
 		else if (key.equals(IGotoMarker.class)) {
-			return this;
+			return key.cast(this);
 		}
 		else {
 			return super.getAdapter(key);
@@ -1374,6 +1365,7 @@ public class HistoryModelEditor
 				(new ISelectionChangedListener() {
 					 // This ensures that we handle selections correctly.
 					 //
+					 @Override
 					 public void selectionChanged(SelectionChangedEvent event) {
 						 handleContentOutlineSelection(event.getSelection());
 					 }
@@ -1391,7 +1383,7 @@ public class HistoryModelEditor
 	 */
 	public IPropertySheetPage getPropertySheetPage() {
 		PropertySheetPage propertySheetPage =
-			new ExtendedPropertySheetPage(editingDomain) {
+			new ExtendedPropertySheetPage(editingDomain, ExtendedPropertySheetPage.Decoration.NONE, null, 0, false) {
 				@Override
 				public void setSelectionToViewer(List<?> selection) {
 					HistoryModelEditor.this.setSelectionToViewer(selection);
@@ -1598,6 +1590,7 @@ public class HistoryModelEditor
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void gotoMarker(IMarker marker) {
 		List<?> targetObjects = markerHelper.getTargetObjects(editingDomain, marker);
 		if (!targetObjects.isEmpty()) {
@@ -1642,6 +1635,7 @@ public class HistoryModelEditor
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void addSelectionChangedListener(ISelectionChangedListener listener) {
 		selectionChangedListeners.add(listener);
 	}
@@ -1652,6 +1646,7 @@ public class HistoryModelEditor
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void removeSelectionChangedListener(ISelectionChangedListener listener) {
 		selectionChangedListeners.remove(listener);
 	}
@@ -1662,6 +1657,7 @@ public class HistoryModelEditor
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public ISelection getSelection() {
 		return editorSelection;
 	}
@@ -1673,6 +1669,7 @@ public class HistoryModelEditor
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setSelection(ISelection selection) {
 		editorSelection = selection;
 
@@ -1742,6 +1739,7 @@ public class HistoryModelEditor
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void menuAboutToShow(IMenuManager menuManager) {
 		((IMenuListener)getEditorSite().getActionBarContributor()).menuAboutToShow(menuManager);
 	}

@@ -16,15 +16,15 @@ import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.GraphElement;
 import org.eclipse.emf.henshin.model.Node;
 import org.sidiff.common.utilities.henshin.ChangePatternUtil;
-import org.sidiff.difference.symmetric.AddObject;
-import org.sidiff.difference.symmetric.AddReference;
-import org.sidiff.difference.symmetric.AttributeValueChange;
-import org.sidiff.difference.symmetric.Change;
-import org.sidiff.difference.symmetric.RemoveObject;
-import org.sidiff.difference.symmetric.RemoveReference;
-import org.sidiff.difference.symmetric.SymmetricDifference;
 import org.sidiff.graphpattern.attributes.JavaSciptParser;
 import org.sidiff.history.revision.IRevision;
+import org.sidiff.revision.difference.AddObject;
+import org.sidiff.revision.difference.AddReference;
+import org.sidiff.revision.difference.AttributeValueChange;
+import org.sidiff.revision.difference.Change;
+import org.sidiff.revision.difference.RemoveObject;
+import org.sidiff.revision.difference.RemoveReference;
+import org.sidiff.revision.difference.Difference;
 import org.sidiff.revision.repair.api.util.ComplementMatching;
 import org.sidiff.revision.repair.api.util.IMatching;
 import org.sidiff.revision.repair.api.util.RecognitionMatching;
@@ -45,7 +45,7 @@ public class DeveloperIntentionOracle {
 	public DeveloperIntentionOracle(IRevision currentToResolvedRevision) {
 		this.currentToResolvedRevision = currentToResolvedRevision;
 		
-		SymmetricDifference diff = currentToResolvedRevision.getDifference().getSymmetricDifference();
+		Difference diff = currentToResolvedRevision.getDifference().getSymmetricDifference();
 		this.currentToResolvedSignatures = toChangeSignatures(diff);
 		this.currentToResolvedContextSignatures = toChangeContextSignatures(diff);
 	}
@@ -435,7 +435,7 @@ public class DeveloperIntentionOracle {
 				|| changeSignatures.stream().filter(currentToResolvedContextSignatures::contains).findAny().isPresent();
 	}
 	
-	private Set<String> toChangeSignatures(SymmetricDifference difference) {
+	private Set<String> toChangeSignatures(Difference difference) {
 		Set<String> changeSignatures = new HashSet<>();
 		
 		for (Change change : difference.getChanges()) {
@@ -465,7 +465,7 @@ public class DeveloperIntentionOracle {
 		return changeSignatures;
 	}
 	
-	private Set<String> toChangeContextSignatures(SymmetricDifference difference) {
+	private Set<String> toChangeContextSignatures(Difference difference) {
 		Set<String> changeSignatures = new HashSet<>();
 		
 		// Create change signature with context on model A: 

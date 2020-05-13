@@ -249,7 +249,7 @@ public class RepairPreferencePage extends PreferencePage implements IWorkbenchPr
 		Group grpTechnicalDifference = new Group(container, SWT.NONE);
 		{
 			grpTechnicalDifference.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false, 1, 1));
-			grpTechnicalDifference.setText("Technical Difference");
+			grpTechnicalDifference.setText("Technical RevisionDifference");
 			grpTechnicalDifference.setLayout(new GridLayout(1, false));
 			
 			viewer_difference = new ComboViewer(grpTechnicalDifference, SWT.NONE);
@@ -603,7 +603,7 @@ public class RepairPreferencePage extends PreferencePage implements IWorkbenchPr
 				// Matcher:
 				setAvailableMatcher(MatcherUtil.getAvailableMatchers(getDoumentTypes()));
 				
-				// Technical Difference Builder:
+				// Technical RevisionDifference Builder:
 				setAvailableTechnicalDifferenceBuilder(
 						TechnicalDifferenceBuilderUtil.getAvailableTechnicalDifferenceBuilders(getDoumentTypes()));
 			}

@@ -8,30 +8,30 @@ import java.util.Set;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.sidiff.common.utilities.emf.ModelingUtil;
-import org.sidiff.difference.symmetric.AddObject;
-import org.sidiff.difference.symmetric.AddReference;
-import org.sidiff.difference.symmetric.AttributeValueChange;
-import org.sidiff.difference.symmetric.Change;
-import org.sidiff.difference.symmetric.RemoveObject;
-import org.sidiff.difference.symmetric.RemoveReference;
 import org.sidiff.editrule.tools.recorder.filters.IObjectFilter;
 import org.sidiff.editrule.tools.recorder.filters.IReferenceFilter;
-import org.sidiff.matching.model.Correspondence;
+import org.sidiff.revision.difference.AddObject;
+import org.sidiff.revision.difference.AddReference;
+import org.sidiff.revision.difference.AttributeValueChange;
+import org.sidiff.revision.difference.Change;
+import org.sidiff.revision.difference.Correspondence;
+import org.sidiff.revision.difference.RemoveObject;
+import org.sidiff.revision.difference.RemoveReference;
 
 public class DifferenceSlicer {
 	
 	/**
-	 * Difference slicing criterion: historical, resolved
+	 * RevisionDifference slicing criterion: historical, resolved
 	 */
 	protected DifferenceSlicingCriterion slicingCriterion;
 	
 	/**
-	 * Difference navigation: historical, resolved
+	 * RevisionDifference navigation: historical, resolved
 	 */
 	protected DifferenceNavigation navigation;
 	
 	/**
-	 * Difference slice: historical, resolved
+	 * RevisionDifference slice: historical, resolved
 	 */
 	protected DifferenceSlice slice;
 	

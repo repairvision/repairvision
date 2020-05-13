@@ -13,13 +13,13 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.henshin.model.Module;
 import org.sidiff.common.emf.modelstorage.EMFHandlerUtil;
 import org.sidiff.common.ui.util.UIUtil;
-import org.sidiff.difference.symmetric.Change;
-import org.sidiff.difference.symmetric.SymmetricDifference;
 import org.sidiff.editrule.tools.recorder.DifferenceToEditRule;
 import org.sidiff.editrule.tools.recorder.TransformationSetup;
 import org.sidiff.editrule.tools.util.EditRuleUtil;
 import org.sidiff.editrule.tools.util.HenshinDiagramUtil;
-import org.sidiff.matching.model.Correspondence;
+import org.sidiff.revision.difference.Change;
+import org.sidiff.revision.difference.Correspondence;
+import org.sidiff.revision.difference.Difference;
 
 /**
  * Transforms a symmetric difference into an edit-rule.
@@ -30,11 +30,11 @@ public class CreateEditRuleHandler extends AbstractHandler implements IHandler {
 
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
-		SymmetricDifference difference = EMFHandlerUtil.getSelection(event, SymmetricDifference.class);
+		Difference difference = EMFHandlerUtil.getSelection(event, Difference.class);
 		
 		if (difference != null) {
 			String eoName = difference.eResource().getURI().segments()[difference.eResource().getURI().segmentCount() - 2];
-			Module module = createEditRule(eoName, difference.getMatching().getCorrespondences(), difference.getChanges());
+			Module module = createEditRule(eoName, difference.getCorrespondences(), difference.getChanges());
 
 			if (module != null) {
 				module.getImports().addAll(EditRuleUtil.getImports(module));

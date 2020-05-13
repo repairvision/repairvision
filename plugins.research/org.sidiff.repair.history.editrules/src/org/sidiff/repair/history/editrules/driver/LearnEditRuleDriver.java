@@ -8,14 +8,12 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.sidiff.common.emf.exceptions.InvalidModelException;
 import org.sidiff.common.emf.exceptions.NoCorrespondencesException;
 import org.sidiff.common.ui.util.UIUtil;
-import org.sidiff.difference.symmetric.SymmetricDifference;
-import org.sidiff.difference.symmetric.SymmetricFactory;
 import org.sidiff.history.analysis.tracing.InconsistencyTrace;
 import org.sidiff.historymodel.History;
-import org.sidiff.matching.model.Matching;
-import org.sidiff.matching.model.MatchingModelFactory;
 import org.sidiff.repair.history.editrules.generator.EditRule;
 import org.sidiff.repair.history.editrules.learn.scope.LearnEditRule;
+import org.sidiff.revision.difference.Difference;
+import org.sidiff.revision.difference.DifferenceFactory;
 import org.sidiff.revision.difference.derivation.api.TechnicalDifferenceFacade;
 import org.sidiff.revision.difference.derivation.api.settings.DifferenceSettings;
 import org.sidiff.validation.constraint.interpreter.IConstraint;
@@ -28,13 +26,13 @@ public class LearnEditRuleDriver {
 			History history, List<IConstraint> supportedConsistencyRules,
 			DifferenceSettings differenceSettings, InconsistencyTrace repaired) {
 		
-		SymmetricDifference historicalToResolved = calcualteDifference(true,
+		Difference historicalToResolved = calcualteDifference(true,
 				repaired.getModelHistorical(), repaired.getModelResolved(), differenceSettings);
 
-		SymmetricDifference actualToResolved = calcualteDifference(true,
+		Difference actualToResolved = calcualteDifference(true,
 				repaired.getModelCurrent(), repaired.getModelResolved(), differenceSettings);
 
-		SymmetricDifference actualToHistorical = calcualteDifference(true,
+		Difference actualToHistorical = calcualteDifference(true,
 				repaired.getModelCurrent(), repaired.getModelHistorical(), differenceSettings);
 		
 		// Validation:
@@ -73,13 +71,13 @@ public class LearnEditRuleDriver {
 		}
 	}
 	
-	private static SymmetricDifference calcualteDifference(
+	private static Difference calcualteDifference(
 			boolean ignoreNoCorrespondences,
 			Resource modelA, Resource modelB,
 			DifferenceSettings differenceSettings) {
 		
 		try {
-			SymmetricDifference difference = TechnicalDifferenceFacade.deriveTechnicalDifference(
+			Difference difference = TechnicalDifferenceFacade.deriveTechnicalDifference(
 					modelA, modelB, differenceSettings);
 			return difference;
 		} catch (InvalidModelException e) {
@@ -91,17 +89,12 @@ public class LearnEditRuleDriver {
 		}
 		
 		// Empty difference:
-		Matching matching = MatchingModelFactory.eINSTANCE.createMatching();
-		matching.setEResourceA(modelA);
-		matching.setEResourceB(modelB);
-		matching.setUriA(modelA.getURI().toString());
-		matching.setUriB(modelB.getURI().toString());
+		Difference difference = DifferenceFactory.eINSTANCE.createDifference();
+		difference.setEResourceA(modelA);
+		difference.setEResourceB(modelB);
+		difference.setUriModelA(modelA.getURI().toString());
+		difference.setUriModelB(modelB.getURI().toString());
 		
-		SymmetricDifference symmetricDifference = SymmetricFactory.eINSTANCE.createSymmetricDifference();
-		symmetricDifference.setMatching(matching);
-		symmetricDifference.setUriModelA(modelA.getURI().toString());
-		symmetricDifference.setUriModelB(modelB.getURI().toString());
-		
-		return symmetricDifference;
+		return difference;
 	}
 }

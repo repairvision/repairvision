@@ -20,7 +20,6 @@ import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.provider.ViewerNotification;
-import org.sidiff.difference.symmetric.SymmetricFactory;
 import org.sidiff.historymodel.ChangeSet;
 import org.sidiff.historymodel.HistoryModelPackage;
 
@@ -201,27 +200,27 @@ public class ChangeSetItemProvider
 		newChildDescriptors.add
 			(createChildParameter
 				(HistoryModelPackage.Literals.CHANGE_SET__CHANGES,
-				 SymmetricFactory.eINSTANCE.createAddObject()));
+				 org.sidiff.revision.difference.DifferenceFactory.eINSTANCE.createAddObject()));
 
 		newChildDescriptors.add
 			(createChildParameter
 				(HistoryModelPackage.Literals.CHANGE_SET__CHANGES,
-				 SymmetricFactory.eINSTANCE.createRemoveObject()));
+				 org.sidiff.revision.difference.DifferenceFactory.eINSTANCE.createRemoveObject()));
 
 		newChildDescriptors.add
 			(createChildParameter
 				(HistoryModelPackage.Literals.CHANGE_SET__CHANGES,
-				 SymmetricFactory.eINSTANCE.createAddReference()));
+				 org.sidiff.revision.difference.DifferenceFactory.eINSTANCE.createAddReference()));
 
 		newChildDescriptors.add
 			(createChildParameter
 				(HistoryModelPackage.Literals.CHANGE_SET__CHANGES,
-				 SymmetricFactory.eINSTANCE.createRemoveReference()));
+				 org.sidiff.revision.difference.DifferenceFactory.eINSTANCE.createRemoveReference()));
 
 		newChildDescriptors.add
 			(createChildParameter
 				(HistoryModelPackage.Literals.CHANGE_SET__CHANGES,
-				 SymmetricFactory.eINSTANCE.createAttributeValueChange()));
+				 org.sidiff.revision.difference.DifferenceFactory.eINSTANCE.createAttributeValueChange()));
 	}
 
 	/**

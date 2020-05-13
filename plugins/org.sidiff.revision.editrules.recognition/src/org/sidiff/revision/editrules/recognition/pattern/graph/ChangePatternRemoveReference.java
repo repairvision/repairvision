@@ -4,12 +4,12 @@ import java.util.Iterator;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
-import org.sidiff.difference.symmetric.Change;
-import org.sidiff.difference.symmetric.RemoveReference;
-import org.sidiff.difference.symmetric.SymmetricPackage;
 import org.sidiff.graphpattern.Association;
 import org.sidiff.graphpattern.EdgePattern;
 import org.sidiff.graphpattern.GraphpatternFactory;
+import org.sidiff.revision.difference.Change;
+import org.sidiff.revision.difference.RemoveReference;
+import org.sidiff.revision.difference.DifferencePackage;
 import org.sidiff.revision.editrules.recognition.pattern.domain.Domain;
 import org.sidiff.revision.editrules.recognition.pattern.graph.path.MatchingPath;
 
@@ -18,18 +18,18 @@ public class ChangePatternRemoveReference extends ChangePatternReference  {
 	public ChangePatternRemoveReference(ActionEdge edge) {
 		super(edge);
 		
-		this.changeNodePattern.setType(SymmetricPackage.eINSTANCE.getRemoveReference());
+		this.changeNodePattern.setType(DifferencePackage.eINSTANCE.getRemoveReference());
 		this.changeNodePattern.setName(edge.getEditRuleEdge().getType().getName());
 		this.changeType = changeNodePattern.getType();
 		
 		// change-pattern:
 		EdgePattern srcEdge = GraphpatternFactory.eINSTANCE.createEdgePattern();
-		srcEdge.setType(SymmetricPackage.eINSTANCE.getRemoveReference_Src());
+		srcEdge.setType(DifferencePackage.eINSTANCE.getRemoveReference_Src());
 		srcEdge.setSource(changeNodePattern);
 		srcEdge.setTarget(edge.getEdgePatternA().getSource());
 		
 		EdgePattern tgtEdge = GraphpatternFactory.eINSTANCE.createEdgePattern();
-		tgtEdge.setType(SymmetricPackage.eINSTANCE.getRemoveReference_Tgt());
+		tgtEdge.setType(DifferencePackage.eINSTANCE.getRemoveReference_Tgt());
 		tgtEdge.setSource(changeNodePattern);
 		tgtEdge.setTarget(edge.getEdgePatternA().getTarget());
 		
@@ -95,8 +95,8 @@ public class ChangePatternRemoveReference extends ChangePatternReference  {
 		
 		while (matchedA.hasNext()) {
 			EReference changeReference = (stepSource == edge.getSource()) 
-					? SymmetricPackage.eINSTANCE.getRemoveReference_Src()
-					: SymmetricPackage.eINSTANCE.getRemoveReference_Tgt();
+					? DifferencePackage.eINSTANCE.getRemoveReference_Src()
+					: DifferencePackage.eINSTANCE.getRemoveReference_Tgt();
 			
 			Iterator<RemoveReference> changes = actionGraph.getRevision().getDifference().getLocalChanges(
 					matchedA.next(), changeReference, RemoveReference.class);

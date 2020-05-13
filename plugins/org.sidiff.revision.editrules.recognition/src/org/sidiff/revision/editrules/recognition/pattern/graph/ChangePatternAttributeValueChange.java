@@ -4,11 +4,11 @@ import java.util.Iterator;
 
 import org.eclipse.emf.ecore.EObject;
 import org.sidiff.common.henshin.view.AttributePair;
-import org.sidiff.difference.symmetric.AttributeValueChange;
-import org.sidiff.difference.symmetric.Change;
-import org.sidiff.difference.symmetric.SymmetricPackage;
 import org.sidiff.graphpattern.EdgePattern;
 import org.sidiff.graphpattern.GraphpatternFactory;
+import org.sidiff.revision.difference.AttributeValueChange;
+import org.sidiff.revision.difference.Change;
+import org.sidiff.revision.difference.DifferencePackage;
 import org.sidiff.revision.editrules.recognition.pattern.domain.Domain;
 import org.sidiff.revision.editrules.recognition.pattern.graph.path.MatchingPath;
 
@@ -37,15 +37,15 @@ public class ChangePatternAttributeValueChange extends ChangePattern {
 		
 		this.changeNodePattern = GraphpatternFactory.eINSTANCE.createNodePattern();
 		this.changeNodePattern.setName(node.getEditRuleNode().getType().getName());
-		this.changeNodePattern.setType(SymmetricPackage.eINSTANCE.getAttributeValueChange());
+		this.changeNodePattern.setType(DifferencePackage.eINSTANCE.getAttributeValueChange());
 		
 		EdgePattern srcEdge = GraphpatternFactory.eINSTANCE.createEdgePattern();
-		srcEdge.setType(SymmetricPackage.eINSTANCE.getAttributeValueChange_ObjA());
+		srcEdge.setType(DifferencePackage.eINSTANCE.getAttributeValueChange_ObjA());
 		srcEdge.setSource(changeNodePattern);
 		srcEdge.setTarget(node.getNodePatternA());
 		
 		EdgePattern tgtEdge = GraphpatternFactory.eINSTANCE.createEdgePattern();
-		tgtEdge.setType(SymmetricPackage.eINSTANCE.getAttributeValueChange_ObjB());
+		tgtEdge.setType(DifferencePackage.eINSTANCE.getAttributeValueChange_ObjB());
 		tgtEdge.setSource(changeNodePattern);
 		tgtEdge.setTarget(node.getNodePatternB());
 		
@@ -86,7 +86,7 @@ public class ChangePatternAttributeValueChange extends ChangePattern {
 		
 		while (matchedB.hasNext()) {
 			Iterator<AttributeValueChange> changes = actionGraph.getRevision().getDifference().getLocalChanges(
-					matchedB.next(), SymmetricPackage.eINSTANCE.getAttributeValueChange_ObjB(), AttributeValueChange.class);
+					matchedB.next(), DifferencePackage.eINSTANCE.getAttributeValueChange_ObjB(), AttributeValueChange.class);
 			
 			changes.forEachRemaining(attributeValueChange -> {
 				Domain.get(changeNodePattern).mark(attributeValueChange);

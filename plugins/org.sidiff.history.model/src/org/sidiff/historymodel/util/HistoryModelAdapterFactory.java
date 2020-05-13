@@ -4,11 +4,14 @@ package org.sidiff.historymodel.util;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
-
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
-
 import org.eclipse.emf.ecore.EObject;
-import org.sidiff.historymodel.*;
+import org.sidiff.historymodel.Annotation;
+import org.sidiff.historymodel.ChangeSet;
+import org.sidiff.historymodel.History;
+import org.sidiff.historymodel.HistoryModelPackage;
+import org.sidiff.historymodel.Problem;
+import org.sidiff.historymodel.Version;
 
 /**
  * <!-- begin-user-doc -->

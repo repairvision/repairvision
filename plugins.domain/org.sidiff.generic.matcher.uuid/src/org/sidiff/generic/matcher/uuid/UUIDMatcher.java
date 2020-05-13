@@ -117,7 +117,7 @@ public class UUIDMatcher implements IMatcher {
 					if (resourceA != modelA) { // already initialized
 						for (Iterator<EObject> iterator = resourceA.getAllContents(); iterator.hasNext();) {
 							EObject obj = iterator.next();
-							getMatching().getUnmatchedA().add(obj);
+							getDifference().getUnmatchedA().add(obj);
 						}
 					}
 				}
@@ -127,7 +127,7 @@ public class UUIDMatcher implements IMatcher {
 					if (resourceB != modelB) { // already initialized
 						for (Iterator<EObject> iterator = resourceB.getAllContents(); iterator.hasNext();) {
 							EObject obj = iterator.next();
-							getMatching().getUnmatchedB().add(obj);
+							getDifference().getUnmatchedB().add(obj);
 						}
 					}
 				}
