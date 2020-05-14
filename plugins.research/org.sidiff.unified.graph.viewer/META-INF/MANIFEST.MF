@@ -6,7 +6,8 @@ Bundle-Version: 0.0.1.qualifier
 Bundle-Activator: org.sidiff.difference.symmetric.graphviewer.Activator
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
-Require-Bundle: com.google.inject;bundle-version="3.0.0",
+Require-Bundle: com.google.guava,
+ com.google.inject,
  org.eclipse.core.runtime,
  org.eclipse.gef;bundle-version="3.11.0",
  org.eclipse.gef.common;bundle-version="5.0.0",
@@ -19,10 +20,16 @@ Require-Bundle: com.google.inject;bundle-version="3.0.0",
  org.eclipse.gef.graph;bundle-version="5.0.0",
  org.eclipse.gef.layout,
  org.sidiff.graphpattern,
- org.sidiff.consistency.common,
- org.sidiff.difference.technical.api,
  org.sidiff.history.model.editor,
- org.sidiff.repair.history.evolution,
- org.sidiff.history.analysis
+ org.sidiff.history.analysis,
+ org.sidiff.revision.difference,
+ org.sidiff.revision.changes,
+ org.sidiff.history.revision.incremental,
+ org.sidiff.revision.repair.history.evaluation,
+ org.sidiff.history.revision,
+ org.sidiff.repair.history.editrules,
+ org.sidiff.common.utilities,
+ org.sidiff.common.emf
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
+Automatic-Module-Name: org.sidiff.unified.graph.viewer

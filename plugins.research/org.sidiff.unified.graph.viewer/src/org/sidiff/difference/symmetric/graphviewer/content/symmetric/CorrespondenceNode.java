@@ -6,7 +6,7 @@ import java.util.List;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.sidiff.difference.symmetric.graphviewer.content.MatchingNode;
-import org.sidiff.matching.model.Correspondence;
+import org.sidiff.revision.difference.Correspondence;
 
 import javafx.scene.paint.Color;
 

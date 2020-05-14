@@ -1,7 +1,5 @@
 package org.sidiff.difference.symmetric.graphviewer.parts.design.util;
 
-import com.sun.javafx.tk.Toolkit;
-
 import javafx.scene.control.Label;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
@@ -9,7 +7,6 @@ import javafx.scene.text.Text;
 /**
  * @author Manuel Ohrndorf
  */
-@SuppressWarnings("restriction")
 public class JavaFXUtil {
 
 	/**
@@ -26,11 +23,9 @@ public class JavaFXUtil {
 	 */
 	public static double getTextWidth(Object text) {
 		if (text instanceof Label) {
-			return Toolkit.getToolkit().getFontLoader().computeStringWidth(
-					((Label) text).getText(), ((Label) text).getFont());
+			return new FontMetrics(((Label) text).getFont()).computeStringWidth(((Label) text).getText());
 		} else if (text instanceof Text) {
-			return Toolkit.getToolkit().getFontLoader().computeStringWidth(
-					((Text) text).getText(), ((Text) text).getFont());
+			return new FontMetrics(((Text) text).getFont()).computeStringWidth(((Text) text).getText());
 		}
 		
 		return -1;

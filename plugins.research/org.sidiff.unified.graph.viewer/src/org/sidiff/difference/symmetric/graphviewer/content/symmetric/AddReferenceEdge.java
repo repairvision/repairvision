@@ -5,10 +5,10 @@ import java.util.List;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
-import org.sidiff.difference.symmetric.AddReference;
-import org.sidiff.difference.symmetric.Change;
 import org.sidiff.difference.symmetric.graphviewer.content.MatchingEdge;
 import org.sidiff.difference.symmetric.graphviewer.content.MatchingNode;
+import org.sidiff.revision.difference.AddReference;
+import org.sidiff.revision.difference.Change;
 
 import javafx.scene.paint.Color;
 

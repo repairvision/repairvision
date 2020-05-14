@@ -7,29 +7,29 @@ import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.emf.ecore.EObject;
-import org.sidiff.difference.symmetric.AddObject;
-import org.sidiff.difference.symmetric.AddReference;
-import org.sidiff.difference.symmetric.Change;
-import org.sidiff.difference.symmetric.RemoveObject;
-import org.sidiff.difference.symmetric.RemoveReference;
-import org.sidiff.difference.symmetric.SymmetricDifference;
 import org.sidiff.difference.symmetric.graphviewer.content.symmetric.AddObjectNode;
 import org.sidiff.difference.symmetric.graphviewer.content.symmetric.AddReferenceEdge;
 import org.sidiff.difference.symmetric.graphviewer.content.symmetric.CorrespondenceNode;
 import org.sidiff.difference.symmetric.graphviewer.content.symmetric.RemoveObjectNode;
 import org.sidiff.difference.symmetric.graphviewer.content.symmetric.RemoveReferenceEdge;
-import org.sidiff.matching.model.Correspondence;
-import org.sidiff.matching.model.MatchingModelFactory;
+import org.sidiff.revision.difference.AddObject;
+import org.sidiff.revision.difference.AddReference;
+import org.sidiff.revision.difference.Change;
+import org.sidiff.revision.difference.Correspondence;
+import org.sidiff.revision.difference.Difference;
+import org.sidiff.revision.difference.DifferenceFactory;
+import org.sidiff.revision.difference.RemoveObject;
+import org.sidiff.revision.difference.RemoveReference;
 
-public class SymmetricDifferenceImporter implements MatchingGraphImporter {
+public class DifferenceImporter implements MatchingGraphImporter {
 
-	protected SymmetricDifference difference;
+	protected Difference difference;
 	
 	protected Map<EObject, MatchingNode> nodes = new HashMap<>();
 	
 	protected Map<EObject, MatchingEdge> edges = new HashMap<>();
 	
-	public SymmetricDifferenceImporter(SymmetricDifference difference, Set<Change> changeFilter) {
+	public DifferenceImporter(Difference difference, Set<Change> changeFilter) {
 		this.difference = difference;
 		
 		// Create nodes:
@@ -45,7 +45,7 @@ public class SymmetricDifferenceImporter implements MatchingGraphImporter {
 			}
 		}
 		
-		for (Correspondence correspondence : difference.getMatching().getCorrespondences()) {
+		for (Correspondence correspondence : difference.getCorrespondences()) {
 			CorrespondenceNode node = new CorrespondenceNode(correspondence);
 			nodes.put(correspondence.getMatchedA(), node);
 			nodes.put(correspondence.getMatchedB(), node);
@@ -74,7 +74,7 @@ public class SymmetricDifferenceImporter implements MatchingGraphImporter {
 		
 		// Merge Imports:
 		if (node == null) {
-			Correspondence correspondence = MatchingModelFactory.eINSTANCE.createCorrespondence();
+			Correspondence correspondence = DifferenceFactory.eINSTANCE.createCorrespondence();
 			correspondence.setMatchedA(obj);
 			correspondence.setMatchedB(obj);
 			difference.addCorrespondence(correspondence);

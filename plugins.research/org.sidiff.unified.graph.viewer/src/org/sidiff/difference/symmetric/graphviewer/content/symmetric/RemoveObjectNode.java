@@ -5,9 +5,9 @@ import java.util.List;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
-import org.sidiff.difference.symmetric.Change;
-import org.sidiff.difference.symmetric.RemoveObject;
 import org.sidiff.difference.symmetric.graphviewer.content.MatchingNode;
+import org.sidiff.revision.difference.Change;
+import org.sidiff.revision.difference.RemoveObject;
 
 import javafx.scene.paint.Color;
 

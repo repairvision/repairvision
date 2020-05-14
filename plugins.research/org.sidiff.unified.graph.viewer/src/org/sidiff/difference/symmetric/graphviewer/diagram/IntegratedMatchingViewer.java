@@ -47,19 +47,19 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.part.ViewPart;
 import org.eclipse.ui.views.properties.IPropertySheetPage;
 import org.sidiff.common.emf.modelstorage.EMFStorage;
-import org.sidiff.consistency.common.ui.util.WorkbenchUtil;
-import org.sidiff.difference.symmetric.Change;
-import org.sidiff.difference.symmetric.graphviewer.content.SymmetricDifferenceImporter;
+import org.sidiff.common.utilities.ui.util.WorkbenchUtil;
+import org.sidiff.difference.symmetric.graphviewer.content.DifferenceImporter;
+import org.sidiff.history.analysis.tracing.InconsistencyTrace;
 import org.sidiff.history.analysis.util.HistoryAnalysisUtil;
+import org.sidiff.history.revision.incremental.IncrementalDifference;
+import org.sidiff.history.revision.util.SymmetricDifferenceUtil;
 import org.sidiff.historymodel.ChangeSet;
 import org.sidiff.historymodel.History;
 import org.sidiff.historymodel.HistoryModelFactory;
 import org.sidiff.historymodel.Problem;
 import org.sidiff.repair.history.editrules.learn.resolved.InconsistencyAnalysis;
-import org.sidiff.repair.history.evaluation.driver.data.InconsistencyTrace;
-import org.sidiff.repair.history.evaluation.util.EvaluationUtil;
-import org.sidiff.repair.history.evolution.IncrementalDifference;
-import org.sidiff.repair.history.evolution.difference.SymmetricDifferenceUtil;
+import org.sidiff.revision.difference.Change;
+import org.sidiff.revision.repair.history.evaluation.util.EvaluationUtil;
 
 public class IntegratedMatchingViewer extends ViewPart implements ISelectionProvider {
 
@@ -381,11 +381,11 @@ public class IntegratedMatchingViewer extends ViewPart implements ISelectionProv
 	private void setHistoryViewersSelection(EObject selected) {
 		EObject elementA = ((Resource) treeViewer_modelA.getInput()).getEObject(EcoreUtil.getURI(selected).fragment());
 		EObject elementB = ((Resource) treeViewer_modelB.getInput()).getEObject(EcoreUtil.getURI(selected).fragment());
-		
+
 		if (elementA != null) {
 			treeViewer_modelA.setSelection(new StructuredSelection(elementA), true);
 		}
-		
+
 		if (elementB != null) {
 			treeViewer_modelB.setSelection(new StructuredSelection(elementB), true);
 		}
@@ -506,7 +506,7 @@ public class IntegratedMatchingViewer extends ViewPart implements ISelectionProv
 		treeViewer_difference.setInput(EvaluationUtil.toEObjectList(difference.getSymmetricDifference().getChanges(), "Changes"));
 		
 		// Show changes as diagram:
-		SymmetricDifferenceImporter importer = new SymmetricDifferenceImporter(
+		DifferenceImporter importer = new DifferenceImporter(
 				difference.getSymmetricDifference(),
 				changeFilter);
 		diagram.setInput(importer);
