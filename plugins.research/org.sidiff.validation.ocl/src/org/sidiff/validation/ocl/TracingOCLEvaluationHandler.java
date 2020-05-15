@@ -13,7 +13,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
 import org.eclipse.ocl.pivot.utilities.ParserException;
-import org.sidiff.common.emf.modelstorage.EMFHandlerUtil;
+import org.sidiff.common.utilities.emf.EMFHandlerUtil;
 import org.sidiff.common.utilities.ui.util.InfoConsole;
 import org.sidiff.common.utilities.ui.util.WorkbenchUtil;
 

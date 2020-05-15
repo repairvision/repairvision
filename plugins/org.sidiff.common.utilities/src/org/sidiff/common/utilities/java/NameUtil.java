@@ -1,52 +1,12 @@
-package org.sidiff.common.emf.ecore;
-
-import java.util.HashMap;
-import java.util.Map;
+package org.sidiff.common.utilities.java;
 
 import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecore.impl.EStringToStringMapEntryImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 
 public class NameUtil {
-	
-	private static final Map<String, String> dict;
-
-	static {
-		dict = new HashMap<String, String>();
-		dict.put("SET", "Set");
-		dict.put("UNSET", "Unset");
-		dict.put("ADD", "Add");
-		dict.put("CREATE", "Create");
-		dict.put("DELETE", "Delete");
-		dict.put("MOVE", "Move");
-		dict.put("REMOVE", "Remove");
-		dict.put("CHANGE", "Change");
-		dict.put("NOT", "Not");
-		dict.put("REFERENCE", "Reference");
-		dict.put("MOVEs", "Moves");
-		dict.put("CHANGEs", "Changes");
-		dict.put("FROM", "From");
-		dict.put("TO", "To");
-		dict.put("IN", "In");
-		dict.put("ATTRIBUTE", "Attribute");
-		dict.put("Id", "ID");
-		dict.put("TGT", "Target");
-		dict.put("SRC", "Source");
-	}
-
-	private static String dictionary(String input) {
-		// Translate:
-		String output = dict.get(input);
-
-		if (output == null) {
-			return input;
-		} else {
-			return output;
-		}
-	}
 	
 	public static String beautifyName(String name) {
 
@@ -58,9 +18,6 @@ public class NameUtil {
 
 		// Make first letters upper-case
 		name = capitalizeFirstLetter(name);
-
-		// Translate special words:
-		name = translate(name);
 
 		return name;
 	}
@@ -87,59 +44,29 @@ public class NameUtil {
 		return result.toString();
 	}
 
-	private static String translate(String input) {
-		StringBuilder result = new StringBuilder(input.length());
-		String[] words = input.split("\\s");
-
-		for (int i = 0, l = words.length; i < l; ++i) {
-			if (i > 0) {
-				result.append(" ");
-			}
-			result.append(dictionary(words[i]));
-
-		}
-		return result.toString();
-	}
-
 	public static String getName(EObject eObject) {
 
-		// FIXME[MO@06.11.13]: This isn't generic -> emf instance level
-		if (eObject instanceof EAnnotation) {
-			EAnnotation annotation = (EAnnotation) eObject;
-			String res = "Annotation: " + annotation.getSource();
-			return res;
-		}
+		// Generic name search:
+		String name = "[" + eObject.eClass().getName() + "]";
 
-		else if (eObject instanceof EStringToStringMapEntryImpl) {
-			EStringToStringMapEntryImpl entryImpl = (EStringToStringMapEntryImpl) eObject;
-			String res = "MapEntry: " + entryImpl.getKey() + " -> " + entryImpl.getValue();
-			if (entryImpl.eContainer() != null){
-				res += " in \"" + getName(entryImpl.eContainer()) + "\"";
+		// Check for attribute "name":
+		EStructuralFeature attrName = eObject.eClass().getEStructuralFeature("name");
+		
+		if (attrName != null && attrName instanceof EAttribute) {
+			Object nameAttrValue = eObject.eGet(attrName);
+
+			if (nameAttrValue instanceof String) {
+				name = (String) nameAttrValue;
 			}
-			
-			return res;
 		}
-
-		else {
-			// Generic name search:
-			String name = "[" + eObject.eClass().getName() + "]";
-
-			// Check for attribute "name":
-			EStructuralFeature attrName = eObject.eClass().getEStructuralFeature("name");
-			if (attrName != null && attrName instanceof EAttribute) {
-				Object nameAttrValue = eObject.eGet(attrName);
-
-				if (nameAttrValue instanceof String) {
-					name = (String) nameAttrValue;
-				}
-			}
-			return name;
-		}
+		
+		return name;
 	}
 	
 	public static String getQualifiedArgumentName(EObject eObject){
 		String label = "";
 		EObject eContainer = eObject.eContainer();
+		
 		if (eObject instanceof EAnnotation) {
 
 			EAnnotation eAnnotation = (EAnnotation) eObject;

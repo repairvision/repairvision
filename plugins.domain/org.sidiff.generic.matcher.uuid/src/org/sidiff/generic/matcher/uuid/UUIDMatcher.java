@@ -11,9 +11,9 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.sidiff.candidates.ICandidates;
-import org.sidiff.common.emf.EMFUtil;
-import org.sidiff.common.emf.access.Scope;
 import org.sidiff.common.utilities.emf.DocumentType;
+import org.sidiff.common.utilities.emf.EMFStorage;
+import org.sidiff.common.utilities.emf.Scope;
 import org.sidiff.correspondences.ICorrespondences;
 import org.sidiff.correspondences.matchingmodel.MatchingModelCorrespondences;
 import org.sidiff.matcher.IMatcher;
@@ -172,7 +172,7 @@ public class UUIDMatcher implements IMatcher {
 	}
 	
 	protected EObject getCorresponding(Resource resource, EObject element, List<Resource> resources) {
-		String id = EMFUtil.getXmiId(element);
+		String id = EMFStorage.getXmiId(element);
 		String fragment = resource.getURIFragment(element);
 		Boolean isDynamic = null;
 		

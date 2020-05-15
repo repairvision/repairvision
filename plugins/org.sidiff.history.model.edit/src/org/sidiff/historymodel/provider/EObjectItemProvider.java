@@ -4,7 +4,7 @@ import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
-import org.sidiff.common.emf.EMFUtil;
+import org.sidiff.common.utilities.emf.EMFStorage;
 
 public class EObjectItemProvider extends ItemProviderAdapter {
 
@@ -32,7 +32,7 @@ public class EObjectItemProvider extends ItemProviderAdapter {
 			 nameValue = (String) element.eGet(nameFeature);
 		}
 		
-		return nameValue +  EMFUtil.getXmiId(element);
+		return nameValue +  EMFStorage.getXmiId(element);
 	}
 	
 	private String deriveQualifiedName(EObject element){

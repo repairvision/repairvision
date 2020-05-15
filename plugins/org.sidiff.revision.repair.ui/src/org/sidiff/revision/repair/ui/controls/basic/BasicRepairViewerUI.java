@@ -26,7 +26,7 @@ import org.eclipse.swt.widgets.Menu;
 import org.eclipse.ui.IWorkbenchPartSite;
 import org.eclipse.ui.dialogs.PreferencesUtil;
 import org.eclipse.ui.part.DrillDownAdapter;
-import org.sidiff.common.emf.modelstorage.EMFStorage;
+import org.sidiff.common.utilities.emf.EMFStorage;
 import org.sidiff.common.utilities.ui.util.WorkbenchUtil;
 import org.sidiff.integration.editor.highlighting.EditorHighlighting;
 import org.sidiff.integration.editor.highlighting.ISelectionHighlightingAdapter;

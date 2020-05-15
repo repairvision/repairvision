@@ -3,7 +3,7 @@ package org.sidiff.revision.difference.derivation;
 import java.util.Set;
 
 import org.eclipse.emf.ecore.resource.Resource;
-import org.sidiff.common.emf.access.Scope;
+import org.sidiff.common.utilities.emf.Scope;
 import org.sidiff.revision.difference.Difference;
 
 /**

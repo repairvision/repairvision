@@ -11,7 +11,7 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.henshin.model.Module;
-import org.sidiff.common.emf.modelstorage.EMFHandlerUtil;
+import org.sidiff.common.utilities.emf.EMFHandlerUtil;
 import org.sidiff.common.utilities.ui.util.WorkbenchUtil;
 import org.sidiff.editrule.tools.recorder.DifferenceToEditRule;
 import org.sidiff.editrule.tools.recorder.TransformationSetup;

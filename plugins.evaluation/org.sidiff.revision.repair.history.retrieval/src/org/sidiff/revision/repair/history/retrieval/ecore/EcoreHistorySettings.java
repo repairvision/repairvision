@@ -7,7 +7,7 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
-import org.sidiff.common.emf.access.Scope;
+import org.sidiff.common.utilities.emf.Scope;
 import org.sidiff.history.analysis.validation.EMFValidator;
 import org.sidiff.history.analysis.validation.IValidator;
 import org.sidiff.history.revision.util.SettingsUtil;

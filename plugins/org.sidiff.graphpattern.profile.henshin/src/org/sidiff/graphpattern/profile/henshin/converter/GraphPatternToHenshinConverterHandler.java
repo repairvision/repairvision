@@ -8,7 +8,7 @@ import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
-import org.sidiff.common.emf.modelstorage.EMFHandlerUtil;
+import org.sidiff.common.utilities.emf.EMFHandlerUtil;
 import org.sidiff.common.utilities.ui.util.WorkbenchUtil;
 import org.sidiff.graphpattern.Bundle;
 import org.sidiff.graphpattern.GraphPattern;

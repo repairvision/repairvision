@@ -1,4 +1,4 @@
-package org.sidiff.common.emf.modelstorage;
+package org.sidiff.common.utilities.emf;
 
 
 import org.eclipse.emf.common.util.URI;

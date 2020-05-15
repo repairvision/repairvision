@@ -3,13 +3,12 @@ Bundle-ManifestVersion: 2
 Bundle-Name: SiDiff Matching Service
 Bundle-SymbolicName: org.sidiff.matcher;singleton:=true
 Bundle-Version: 1.0.1.qualifier
-Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Require-Bundle: org.eclipse.core.runtime,
  org.sidiff.candidates;visibility:=reexport,
- org.sidiff.common.emf;visibility:=reexport,
  org.sidiff.correspondences;visibility:=reexport,
  org.sidiff.event;visibility:=reexport,
- org.sidiff.common.utilities
+ org.sidiff.common.utilities;visibility:=reexport
 Export-Package: org.sidiff.matcher,
  org.sidiff.matcher.events,
  org.sidiff.matcher.mode

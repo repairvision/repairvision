@@ -1,4 +1,4 @@
-package org.sidiff.common.emf.modelstorage;
+package org.sidiff.common.utilities.emf;
 
 import java.util.ArrayList;
 import java.util.List;

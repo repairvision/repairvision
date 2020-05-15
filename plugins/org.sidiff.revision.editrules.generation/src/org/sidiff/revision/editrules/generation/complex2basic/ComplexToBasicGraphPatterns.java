@@ -5,6 +5,7 @@ import static org.sidiff.graphpattern.profile.constraints.util.ConstraintProfile
 import static org.sidiff.revision.editrules.generation.generator.util.GraphPatternGeneratorUtil.isContext;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -14,7 +15,7 @@ import java.util.Set;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.sidiff.common.emf.EMFUtil;
+import org.eclipse.emf.ecore.util.EcoreUtil.Copier;
 import org.sidiff.common.utilities.java.StringUtil;
 import org.sidiff.graphpattern.Bundle;
 import org.sidiff.graphpattern.EdgePattern;
@@ -228,7 +229,7 @@ public class ComplexToBasicGraphPatterns {
 		basicGraphNodes.addAll(basicGraphContextNodes);
 		basicGraphNodes.addAll(subGraph.contentNodes);
 		basicGraphNodes.addAll(subGraph.contextNodes);
-		Map<EObject, EObject> subGraphCopy = EMFUtil.copyAll(basicGraphNodes);	// original -> copy
+		Map<EObject, EObject> subGraphCopy = copyAll(basicGraphNodes);	// original -> copy
 		
 		// Clean-up edges:
 		for (Entry<EObject, EObject> elementCopy : subGraphCopy.entrySet()) {
@@ -272,6 +273,14 @@ public class ComplexToBasicGraphPatterns {
 		GraphPatternGeneratorUtil.generateInputParameters(basicPattern);
 		
 		return basicPattern;
+	}
+	
+	private Map<EObject, EObject> copyAll(Collection<? extends EObject> eObjects){
+		Copier copier = new Copier();
+		copier.copyAll(eObjects);
+		copier.copyReferences();
+	
+		return copier;
 	}
 
 	private List<EdgePattern> getContextEdges(Set<NodePattern> basicGraphContentNodes, NodePattern fullGraphNode) {

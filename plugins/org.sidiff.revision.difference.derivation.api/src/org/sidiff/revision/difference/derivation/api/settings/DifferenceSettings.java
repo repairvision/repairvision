@@ -6,7 +6,7 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.MultiStatus;
 import org.eclipse.core.runtime.Status;
 import org.sidiff.candidates.ICandidates;
-import org.sidiff.common.emf.access.Scope;
+import org.sidiff.common.utilities.emf.Scope;
 import org.sidiff.correspondences.ICorrespondences;
 import org.sidiff.correspondences.matchingmodel.MatchingModelCorrespondences;
 import org.sidiff.matcher.IMatcher;

@@ -8,7 +8,7 @@ import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.henshin.model.Module;
-import org.sidiff.common.emf.modelstorage.EMFHandlerUtil;
+import org.sidiff.common.utilities.emf.EMFHandlerUtil;
 import org.sidiff.common.utilities.ui.util.WorkbenchUtil;
 import org.sidiff.editrule.tools.util.EditRuleUtil;
 

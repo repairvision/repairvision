@@ -5,8 +5,8 @@ import java.util.List;
 import java.util.Set;
 
 import org.eclipse.emf.ecore.resource.Resource;
-import org.sidiff.common.emf.access.Scope;
 import org.sidiff.common.utilities.emf.DocumentType;
+import org.sidiff.common.utilities.emf.Scope;
 import org.sidiff.revision.difference.Difference;
 
 /**

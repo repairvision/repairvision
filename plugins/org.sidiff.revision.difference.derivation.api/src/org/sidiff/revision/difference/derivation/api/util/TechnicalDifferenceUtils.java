@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.eclipse.emf.ecore.resource.Resource;
-import org.sidiff.common.emf.modelstorage.EMFStorage;
+import org.sidiff.common.utilities.emf.EMFStorage;
 import org.sidiff.revision.difference.derivation.ITechnicalDifferenceBuilder;
 import org.sidiff.revision.difference.derivation.api.settings.DifferenceSettings;
 import org.sidiff.revision.difference.derivation.util.TechnicalDifferenceBuilderUtil;

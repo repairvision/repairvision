@@ -6,7 +6,7 @@ import java.util.Set;
 
 import org.eclipse.emf.ecore.resource.Resource;
 import org.sidiff.candidates.ICandidates;
-import org.sidiff.common.emf.access.Scope;
+import org.sidiff.common.utilities.emf.Scope;
 import org.sidiff.correspondences.ICorrespondences;
 import org.sidiff.matcher.mode.MatcherMode;
 import org.sidiff.service.IService;

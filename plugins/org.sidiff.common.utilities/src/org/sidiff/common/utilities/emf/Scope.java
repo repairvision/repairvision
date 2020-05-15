@@ -1,4 +1,4 @@
-package org.sidiff.common.emf.access;
+package org.sidiff.common.utilities.emf;
 
 /**
  * Just like EMF Compare, we distinguish two comparison modes (which we call

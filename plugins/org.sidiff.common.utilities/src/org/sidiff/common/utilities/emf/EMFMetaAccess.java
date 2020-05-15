@@ -1,4 +1,4 @@
-package org.sidiff.common.emf.access;
+package org.sidiff.common.utilities.emf;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;

@@ -11,8 +11,8 @@ import org.eclipse.emf.compare.Match;
 import org.eclipse.emf.compare.scope.DefaultComparisonScope;
 import org.eclipse.emf.compare.scope.IComparisonScope;
 import org.eclipse.emf.ecore.resource.Resource;
-import org.sidiff.common.emf.access.Scope;
 import org.sidiff.common.utilities.emf.DocumentType;
+import org.sidiff.common.utilities.emf.Scope;
 import org.sidiff.matcher.BaseMatcher;
 
 /**

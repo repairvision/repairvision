@@ -7,7 +7,6 @@ import java.util.Set;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.sidiff.common.collections.ValueMap;
-import org.sidiff.common.emf.EMFUtil;
 import org.sidiff.common.utilities.emf.DocumentType;
 
 public abstract class LocalSignatureMatcher extends SignatureBasedMatcher<String> {	
@@ -16,7 +15,7 @@ public abstract class LocalSignatureMatcher extends SignatureBasedMatcher<String
 	protected ValueMap<String, EObject> calculateSignatures(Resource model) {
 		
 		ValueMap<String, EObject> idMap = new ValueMap<String, EObject>();
-		for (EObject currentObject : EMFUtil.getAllContentAsIterable(model)) {
+		for (EObject currentObject : (Iterable<EObject>) () -> model.getAllContents()) {
 			//Only do this for unmatched elements
 			if(!this.getCorrespondencesService().hasCorrespondences(currentObject)){
 				String id = getElementSignature(currentObject);

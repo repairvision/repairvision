@@ -25,7 +25,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.ui.IWorkbenchPage;
-import org.sidiff.common.emf.EMFUtil;
+import org.sidiff.common.utilities.emf.EMFStorage;
 
 @SuppressWarnings("restriction")
 public class HistoryModelEditorTools {
@@ -81,7 +81,7 @@ public class HistoryModelEditorTools {
 						while (properContent.hasNext() && (next == null)) {
 							next = properContent.next();
 							
-							if (!uriFragmentScope.contains(EMFUtil.getXmiId(next))) {
+							if (!uriFragmentScope.contains(EMFStorage.getXmiId(next))) {
 								next = null;
 							}
 						}

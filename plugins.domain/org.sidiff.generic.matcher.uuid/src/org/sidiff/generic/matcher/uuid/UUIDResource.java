@@ -13,7 +13,7 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.emf.ecore.xmi.impl.XMLParserPoolImpl;
-import org.sidiff.common.emf.modelstorage.XMIIDResourceImpl;
+import org.sidiff.common.utilities.emf.XMIIDResourceImpl;
 
 public class UUIDResource extends XMIIDResourceImpl {
 	

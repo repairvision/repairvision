@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.Collection;
 
 import org.eclipse.emf.ecore.resource.Resource;
-import org.sidiff.common.emf.modelstorage.EMFStorage;
+import org.sidiff.common.utilities.emf.EMFStorage;
 import org.sidiff.correspondences.ICorrespondences;
 import org.sidiff.correspondences.matchingmodel.MatchingModelCorrespondences;
 import org.sidiff.matcher.IMatcher;

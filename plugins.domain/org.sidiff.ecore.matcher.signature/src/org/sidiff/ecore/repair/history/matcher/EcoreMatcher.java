@@ -24,7 +24,7 @@ import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.impl.EStringToStringMapEntryImpl;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.sidiff.common.emf.access.Scope;
+import org.sidiff.common.utilities.emf.Scope;
 import org.sidiff.matcher.BaseMatcher;
 
 public class EcoreMatcher extends BaseMatcher {

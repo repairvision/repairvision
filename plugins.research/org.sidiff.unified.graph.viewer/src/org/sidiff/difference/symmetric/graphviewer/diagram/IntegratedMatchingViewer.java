@@ -46,7 +46,7 @@ import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.part.ViewPart;
 import org.eclipse.ui.views.properties.IPropertySheetPage;
-import org.sidiff.common.emf.modelstorage.EMFStorage;
+import org.sidiff.common.utilities.emf.EMFStorage;
 import org.sidiff.common.utilities.ui.util.WorkbenchUtil;
 import org.sidiff.difference.symmetric.graphviewer.content.DifferenceImporter;
 import org.sidiff.history.analysis.tracing.InconsistencyTrace;

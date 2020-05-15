@@ -11,7 +11,7 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.equinox.app.IApplication;
 import org.eclipse.equinox.app.IApplicationContext;
-import org.sidiff.common.emf.access.Scope;
+import org.sidiff.common.utilities.emf.Scope;
 import org.sidiff.generic.matcher.uuid.UUIDMatcher;
 import org.sidiff.history.revision.util.SettingsUtil;
 import org.sidiff.historymodel.History;

@@ -1,4 +1,4 @@
-package org.sidiff.common.emf.modelstorage;
+package org.sidiff.common.utilities.emf;
 
 import java.io.File;
 import java.io.IOException;
@@ -7,7 +7,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
@@ -452,30 +451,6 @@ public class EMFStorage {
 	public static URI iResourceToURI(IResource iResource) {
 		return URI.createPlatformResourceURI(iResource.getFullPath().toString(), true);
 	}
-	
-	/**
-	 * Converts a <code>IFile</code> to a platform resource URI.
-	 * 
-	 * @param file
-	 *            The <code>IFile</code> to convert.
-	 * @return The given file as file URI.
-	 * @deprecated Use {@link #iResourceToURI(IResource)} instead.
-	 */
-	public static URI iFileToURI(IFile iFile) {
-		return iResourceToURI(iFile);
-	}
-	
-	/**
-	 * Converts a <code>IFile</code> to a platform resource URI.
-	 * 
-	 * @param file
-	 *            The <code>IFolder</code> to convert.
-	 * @return The given folder as file URI.
-	 * @deprecated Use {@link #iResourceToURI(IResource)} instead.
-	 */
-	public static URI iFolderToURI(IFolder iFolder) {
-		return iResourceToURI(iFolder);
-	}
 
 	/**
 	 * Returns the folder path.
@@ -491,6 +466,31 @@ public class EMFStorage {
 			return new File(path.getParent());
 		} else {
 			return path;
+		}
+	}
+
+	/**
+	 * Returns the xmi:id attribute value for the given eObject as a <tt>String</tt>. Returns <b>null</b> in case there's no containing resource or the eObject simply didn't have a xmi:id attribute.
+	 */
+	public static String getXmiId(EObject eObject) {
+		String objectID = null;
+		if (eObject != null && eObject.eResource() instanceof XMIResource) {
+			objectID = ((XMIResource) eObject.eResource()).getID(eObject);
+		}
+		return objectID;
+	}
+
+	/**
+	 * Sets the xmi:id attribute value for the given eObject
+	 * 
+	 * @param eObject
+	 * 				the object for that the id is set
+	 * @param id
+	 * 				the id that is set
+	 */
+	public static void setXmiId(EObject eObject, String id){
+		if (eObject.eResource() instanceof XMIResource) {
+			((XMIResource) eObject.eResource()).setID(eObject, id);
 		}
 	}
 }

@@ -21,7 +21,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
-import org.sidiff.common.emf.access.EMFMetaAccess;
+import org.sidiff.common.utilities.emf.EMFMetaAccess;
 import org.sidiff.graphpattern.AttributePattern;
 import org.sidiff.graphpattern.Bundle;
 import org.sidiff.graphpattern.EdgePattern;

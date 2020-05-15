@@ -19,7 +19,7 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.equinox.app.IApplication;
 import org.eclipse.equinox.app.IApplicationContext;
-import org.sidiff.common.emf.EMFUtil;
+import org.sidiff.common.utilities.emf.EMFStorage;
 import org.sidiff.generic.matcher.uuid.UUIDResource;
 import org.sidiff.generic.matcher.uuid.UUIDResourceFactory;
 import org.sidiff.historymodel.History;
@@ -278,9 +278,9 @@ public class EcoreHistoryInconsistencyTracesApplication implements IApplication 
 		
 		for (Correspondence correspondence : matching.getCorrespondences()) {
 			if (!UUIDResource.isDynamic(correspondence.getMatchedA()) && !UUIDResource.isDynamic(correspondence.getMatchedB())) {
-				String uuid = EMFUtil.getXmiId(correspondence.getMatchedA());
+				String uuid = EMFStorage.getXmiId(correspondence.getMatchedA());
 				assert uuid != null : "UUID for element" + correspondence.getMatchedA() + "not set!";
-				EMFUtil.setXmiId(correspondence.getMatchedB(), uuid);
+				EMFStorage.setXmiId(correspondence.getMatchedB(), uuid);
 				
 				if (PRINT_IDS) System.out.println("Corresponding: " + uuid + " :: " + correspondence.getMatchedB());
 			}

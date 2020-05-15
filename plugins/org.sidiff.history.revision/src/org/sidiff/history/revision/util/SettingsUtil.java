@@ -1,7 +1,7 @@
 package org.sidiff.history.revision.util;
 
 import org.eclipse.emf.ecore.EObject;
-import org.sidiff.common.emf.access.Scope;
+import org.sidiff.common.utilities.emf.Scope;
 import org.sidiff.correspondences.matchingmodel.MatchingModelCorrespondences;
 import org.sidiff.generic.matcher.uuid.UUIDMatcher;
 import org.sidiff.revision.difference.derivation.api.settings.DifferenceSettings;

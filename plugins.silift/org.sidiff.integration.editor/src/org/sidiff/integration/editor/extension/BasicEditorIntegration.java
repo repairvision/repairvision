@@ -30,10 +30,10 @@ import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.FileEditorInput;
-import org.sidiff.common.emf.modelstorage.EMFStorage;
 import org.sidiff.common.logging.LogEvent;
 import org.sidiff.common.logging.LogUtil;
 import org.sidiff.common.utilities.emf.DocumentType;
+import org.sidiff.common.utilities.emf.EMFStorage;
 
 public class BasicEditorIntegration extends AbstractEditorIntegration {
 

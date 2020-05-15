@@ -8,8 +8,8 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
-import org.sidiff.common.emf.modelstorage.EMFHandlerUtil;
-import org.sidiff.common.emf.modelstorage.EMFStorage;
+import org.sidiff.common.utilities.emf.EMFHandlerUtil;
+import org.sidiff.common.utilities.emf.EMFStorage;
 
 public class ModelToGraphPatternFactory {
 

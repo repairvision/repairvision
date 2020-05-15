@@ -7,7 +7,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.sidiff.common.collections.DefaultComparators;
 import org.sidiff.common.collections.ValueMap;
-import org.sidiff.common.emf.access.Scope;
+import org.sidiff.common.utilities.emf.Scope;
 
 public abstract class SignatureBasedMatcher<T> extends BaseMatcher {
 	

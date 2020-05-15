@@ -17,8 +17,8 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.handlers.HandlerUtil;
-import org.sidiff.common.emf.EMFUtil;
 import org.sidiff.common.utilities.emf.DocumentType;
+import org.sidiff.common.utilities.emf.EMFStorage;
 import org.sidiff.common.utilities.java.JUtil;
 import org.sidiff.common.utilities.ui.util.WorkbenchUtil;
 import org.sidiff.historymodel.Problem;
@@ -52,13 +52,13 @@ public class ShowEditStepsWithFilterHandler extends AbstractHandler {
 					Resource introducedResource = new ResourceSetImpl().getResource(getModelURI(introduced), true);
 					EcoreUtil.resolveAll(introducedResource);
 					
-					String uriFragmentContext = EMFUtil.getXmiId(inconsistency.getContextElement()); // UUID
+					String uriFragmentContext = EMFStorage.getXmiId(inconsistency.getContextElement()); // UUID
 					
 					Set<EObject> scopes = new HashSet<>();
 					scopes.addAll(getScope(beforeIntroducedResource, uriFragmentContext, inconsistency.getName()));
 					scopes.addAll(getScope(introducedResource, uriFragmentContext, inconsistency.getName()));
 					
-					Set<String> uriFragmentScope = scopes.stream().map(o -> EMFUtil.getXmiId(o)).collect(Collectors.toSet());
+					Set<String> uriFragmentScope = scopes.stream().map(o -> EMFStorage.getXmiId(o)).collect(Collectors.toSet());
 					
 					HistoryModelEditorTools.compare(
 							beforeIntroducedResource.getResourceSet(),
@@ -77,13 +77,13 @@ public class ShowEditStepsWithFilterHandler extends AbstractHandler {
 					Resource resolvedResource = new ResourceSetImpl().getResource(getModelURI(resolved), true);
 					EcoreUtil.resolveAll(resolvedResource);
 					
-					String uriFragmentContext = EMFUtil.getXmiId(inconsistency.getContextElement()); // UUID
+					String uriFragmentContext = EMFStorage.getXmiId(inconsistency.getContextElement()); // UUID
 					
 					Set<EObject> scopes = new HashSet<>();
 					scopes.addAll(getScope(beforeResolvedResource, uriFragmentContext, inconsistency.getName()));
 					scopes.addAll(getScope(resolvedResource, uriFragmentContext, inconsistency.getName()));
 					
-					Set<String> uriFragmentScope = scopes.stream().map(o -> EMFUtil.getXmiId(o)).collect(Collectors.toSet());
+					Set<String> uriFragmentScope = scopes.stream().map(o -> EMFStorage.getXmiId(o)).collect(Collectors.toSet());
 					
 					HistoryModelEditorTools.compare(
 							beforeResolvedResource.getResourceSet(),

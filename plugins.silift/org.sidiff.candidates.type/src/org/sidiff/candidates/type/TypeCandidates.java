@@ -14,7 +14,6 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.sidiff.candidates.ICandidates;
 import org.sidiff.common.collections.ClassificationUtil;
 import org.sidiff.common.collections.ValueMap;
-import org.sidiff.common.emf.EMFUtil;
 
 
 public abstract class TypeCandidates implements ICandidates {
@@ -34,7 +33,8 @@ public abstract class TypeCandidates implements ICandidates {
 				Resource resource = (Resource) iterator.next();
 				Map<EClass, Set<EObject>> typeMap;
 				List<EObject> allElements = new ArrayList<EObject>();
-				for(EObject obj : EMFUtil.getAllContentAsIterable(resource)){
+				
+				for(EObject obj : (Iterable<EObject>) () -> resource.getAllContents()){
 					allElements.add(obj);
 				}
 				typeMap = ClassificationUtil.classifiedSets(allElements, EMFClassifiers.ELEMENT_BY_CLASS);

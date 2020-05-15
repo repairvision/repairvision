@@ -3,7 +3,7 @@ package org.sidiff.common.settings;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.MultiStatus;
 import org.eclipse.core.runtime.Status;
-import org.sidiff.common.emf.access.Scope;
+import org.sidiff.common.utilities.emf.Scope;
 
 /**
  * @see BaseSettingsItem

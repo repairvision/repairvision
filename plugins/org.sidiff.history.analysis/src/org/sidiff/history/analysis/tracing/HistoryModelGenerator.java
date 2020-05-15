@@ -9,7 +9,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
-import org.sidiff.common.emf.EMFUtil;
+import org.sidiff.common.utilities.emf.EMFStorage;
 import org.sidiff.generic.matcher.uuid.UUIDResource;
 import org.sidiff.history.analysis.validation.IValidator;
 import org.sidiff.history.repository.IModelRepository;
@@ -148,8 +148,8 @@ public class HistoryModelGenerator {
 	private static void generateUUIDs(Difference matching) {
 		for (Correspondence correspondence : matching.getCorrespondences()) {
 			if (!UUIDResource.isDynamic(correspondence.getMatchedA()) && !UUIDResource.isDynamic(correspondence.getMatchedB())) {
-				String uuid = EMFUtil.getXmiId(correspondence.getMatchedA());
-				EMFUtil.setXmiId(correspondence.getMatchedB(), uuid);
+				String uuid = EMFStorage.getXmiId(correspondence.getMatchedA());
+				EMFStorage.setXmiId(correspondence.getMatchedB(), uuid);
 			}
 		}
 	}

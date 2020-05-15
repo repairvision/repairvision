@@ -12,9 +12,9 @@ import org.eclipse.emf.henshin.model.GraphElement;
 import org.eclipse.emf.henshin.model.NestedCondition;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
-import org.sidiff.common.emf.access.EMFMetaAccess;
 import org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx;
 import org.sidiff.common.henshin.view.AttributePair;
+import org.sidiff.common.utilities.emf.EMFMetaAccess;
 
 public class ChangePatternUtil {
 
