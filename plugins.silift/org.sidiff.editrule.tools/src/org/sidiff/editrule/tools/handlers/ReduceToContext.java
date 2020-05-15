@@ -20,7 +20,7 @@ import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.emf.henshin.model.Node;
 import org.sidiff.common.emf.modelstorage.EMFHandlerUtil;
-import org.sidiff.common.ui.util.UIUtil;
+import org.sidiff.common.utilities.ui.util.WorkbenchUtil;
 
 /**
  * Removes all non context (preserve) nodes from an edit rule.
@@ -42,7 +42,7 @@ public class ReduceToContext extends AbstractHandler implements IHandler {
 				e.printStackTrace();
 			}
 			
-			UIUtil.showMessage("Edit-Rule saved:\n\n" + EcoreUtil.getURI(editRule).toPlatformString(true));
+			WorkbenchUtil.showMessage("Edit-Rule saved:\n\n" + EcoreUtil.getURI(editRule).toPlatformString(true));
 		}
 		
 		return null;

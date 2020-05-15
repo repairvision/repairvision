@@ -11,8 +11,6 @@ import java.util.Stack;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
-import org.sidiff.common.emf.exceptions.InvalidModelException;
-import org.sidiff.common.emf.exceptions.NoCorrespondencesException;
 import org.sidiff.common.utilities.java.JUtil;
 import org.sidiff.correspondences.CorrespondencesUtil;
 import org.sidiff.correspondences.matchingmodel.MatchingModelCorrespondences;
@@ -30,8 +28,8 @@ import org.sidiff.revision.difference.AddReference;
 import org.sidiff.revision.difference.AttributeValueChange;
 import org.sidiff.revision.difference.Change;
 import org.sidiff.revision.difference.Correspondence;
-import org.sidiff.revision.difference.RemoveReference;
 import org.sidiff.revision.difference.Difference;
+import org.sidiff.revision.difference.RemoveReference;
 import org.sidiff.revision.difference.derivation.api.TechnicalDifferenceFacade;
 import org.sidiff.revision.difference.derivation.api.settings.DifferenceSettings;
 import org.sidiff.validation.constraint.api.ValidationFacade;
@@ -63,13 +61,7 @@ public class InconsistencyAnalysis {
 				CorrespondencesUtil.getAvailableCorrespondencesService(
 						MatchingModelCorrespondences.SERVICE_ID));
 
-		try {
-			return TechnicalDifferenceFacade.deriveTechnicalDifference(modelA, modelB, settings);
-		} catch (InvalidModelException | NoCorrespondencesException e) {
-			e.printStackTrace();
-		}
-		
-		return null;
+		return TechnicalDifferenceFacade.deriveTechnicalDifference(modelA, modelB, settings);
 	}
 	
 	public List<ChangeSet> getCausingChanges() {

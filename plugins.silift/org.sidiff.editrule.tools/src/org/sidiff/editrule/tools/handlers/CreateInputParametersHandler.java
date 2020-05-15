@@ -23,7 +23,7 @@ import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.dialogs.ElementListSelectionDialog;
 import org.sidiff.common.emf.modelstorage.EMFHandlerUtil;
-import org.sidiff.common.ui.util.UIUtil;
+import org.sidiff.common.utilities.ui.util.WorkbenchUtil;
 import org.sidiff.editrule.tools.util.EditRuleUtil;
 
 /**
@@ -97,7 +97,7 @@ public class CreateInputParametersHandler extends AbstractHandler {
 					e.printStackTrace();
 				}
 				
-				UIUtil.showMessage("Edit-Rule saved:\n\n" + EcoreUtil.getURI(editRule).toPlatformString(true));
+				WorkbenchUtil.showMessage("Edit-Rule saved:\n\n" + EcoreUtil.getURI(editRule).toPlatformString(true));
 			}
 		}
 		

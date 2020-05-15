@@ -4,7 +4,7 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.gef.fx.nodes.Connection;
 import org.eclipse.gef.fx.nodes.GeometryNode;
 import org.eclipse.gef.geometry.planar.ICurve;
-import org.sidiff.common.emf.provider.ItemProviderUtil;
+import org.sidiff.common.utilities.emf.ItemProviderUtil;
 import org.sidiff.difference.symmetric.graphviewer.content.MatchingEdge;
 import org.sidiff.difference.symmetric.graphviewer.parts.design.util.ImmediateTooltip;
 

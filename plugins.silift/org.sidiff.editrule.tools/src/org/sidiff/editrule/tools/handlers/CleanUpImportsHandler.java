@@ -9,7 +9,7 @@ import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.henshin.model.Module;
 import org.sidiff.common.emf.modelstorage.EMFHandlerUtil;
-import org.sidiff.common.ui.util.UIUtil;
+import org.sidiff.common.utilities.ui.util.WorkbenchUtil;
 import org.sidiff.editrule.tools.util.EditRuleUtil;
 
 public class CleanUpImportsHandler extends AbstractHandler{
@@ -27,7 +27,7 @@ public class CleanUpImportsHandler extends AbstractHandler{
 				e.printStackTrace();
 			}
 			
-			UIUtil.showMessage("Edit-Rule saved:\n\n" + EcoreUtil.getURI(editRule).toPlatformString(true));
+			WorkbenchUtil.showMessage("Edit-Rule saved:\n\n" + EcoreUtil.getURI(editRule).toPlatformString(true));
 		}
 		
 		return null;

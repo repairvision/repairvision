@@ -12,8 +12,8 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.sidiff.candidates.ICandidates;
 import org.sidiff.common.emf.EMFUtil;
-import org.sidiff.common.emf.access.EMFModelAccess;
 import org.sidiff.common.emf.access.Scope;
+import org.sidiff.common.utilities.emf.DocumentType;
 import org.sidiff.correspondences.ICorrespondences;
 import org.sidiff.correspondences.matchingmodel.MatchingModelCorrespondences;
 import org.sidiff.matcher.IMatcher;
@@ -56,12 +56,12 @@ public class UUIDMatcher implements IMatcher {
 
 	@Override
 	public Set<String> getDocumentTypes() {
-		return Collections.singleton(EMFModelAccess.GENERIC_DOCUMENT_TYPE);
+		return Collections.singleton(DocumentType.GENERIC_DOCUMENT_TYPE);
 	}
 
 	@Override
 	public boolean canHandleDocTypes(Set<String> documentTypes) {
-		return getDocumentTypes().contains(EMFModelAccess.GENERIC_DOCUMENT_TYPE)
+		return getDocumentTypes().contains(DocumentType.GENERIC_DOCUMENT_TYPE)
 				|| getDocumentTypes().containsAll(documentTypes);
 	}
 	
@@ -71,9 +71,9 @@ public class UUIDMatcher implements IMatcher {
 		
 		for (Resource model : models) {
 			if (isResourceSetCapable()) {
-				docTypes.addAll(EMFModelAccess.getDocumentTypes(model, Scope.RESOURCE_SET));
+				docTypes.addAll(DocumentType.getDocumentTypes(model, Scope.RESOURCE_SET));
 			} else {
-				docTypes.addAll(EMFModelAccess.getDocumentTypes(model, Scope.RESOURCE));
+				docTypes.addAll(DocumentType.getDocumentTypes(model, Scope.RESOURCE));
 			}
 		}
 

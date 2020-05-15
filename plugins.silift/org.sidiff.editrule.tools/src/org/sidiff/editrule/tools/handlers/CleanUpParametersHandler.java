@@ -24,7 +24,7 @@ import org.eclipse.emf.henshin.model.Unit;
 import org.eclipse.emf.henshin.model.impl.HenshinFactoryImpl;
 import org.sidiff.common.emf.modelstorage.EMFHandlerUtil;
 import org.sidiff.common.henshin.INamingConventions;
-import org.sidiff.common.ui.util.UIUtil;
+import org.sidiff.common.utilities.ui.util.WorkbenchUtil;
 
 /**
  * Cleans up unused Henshin rule parameters.
@@ -46,7 +46,7 @@ public class CleanUpParametersHandler extends AbstractHandler {
 				e.printStackTrace();
 			}
 			
-			UIUtil.showMessage("Edit-Rule saved:\n\n" + EcoreUtil.getURI(editRule).toPlatformString(true));
+			WorkbenchUtil.showMessage("Edit-Rule saved:\n\n" + EcoreUtil.getURI(editRule).toPlatformString(true));
 		}
 		
 		return null;

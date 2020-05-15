@@ -15,8 +15,6 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.sidiff.common.emf.exceptions.InvalidModelException;
-import org.sidiff.common.emf.exceptions.NoCorrespondencesException;
 import org.sidiff.history.revision.IRevision;
 import org.sidiff.matcher.IMatcher;
 import org.sidiff.revision.difference.AddObject;
@@ -24,10 +22,10 @@ import org.sidiff.revision.difference.AddReference;
 import org.sidiff.revision.difference.AttributeValueChange;
 import org.sidiff.revision.difference.Change;
 import org.sidiff.revision.difference.Difference;
-import org.sidiff.revision.difference.RemoveObject;
-import org.sidiff.revision.difference.RemoveReference;
 import org.sidiff.revision.difference.DifferenceFactory;
 import org.sidiff.revision.difference.DifferencePackage;
+import org.sidiff.revision.difference.RemoveObject;
+import org.sidiff.revision.difference.RemoveReference;
 import org.sidiff.revision.difference.derivation.api.TechnicalDifferenceFacade;
 import org.sidiff.revision.difference.derivation.api.settings.DifferenceSettings;
 import org.sidiff.revision.difference.util.DifferenceUtil;
@@ -35,41 +33,17 @@ import org.sidiff.revision.difference.util.DifferenceUtil;
 public class SymmetricDifferenceUtil {
 
 	private static final DifferencePackage DIFFERENCE_PACKAGE = DifferencePackage.eINSTANCE;
-	
-	public static class DifferenceCalculationException extends Exception {
 
-		private static final long serialVersionUID = 1L;
-
-		public DifferenceCalculationException(String message) {
-			super(message);
-		}
-	}
-
-	public static Difference calculateDifference(Resource modelA, Resource modelB, IMatcher matcher)
-			throws DifferenceCalculationException {
+	public static Difference calculateDifference(Resource modelA, Resource modelB, IMatcher matcher) {
 
 		DifferenceSettings settings = new DifferenceSettings();
 		settings.setMatcher(matcher);
 
-		try {
-			return TechnicalDifferenceFacade.deriveTechnicalDifference(modelA, modelB, settings);
-		} catch (InvalidModelException | NoCorrespondencesException e) {
-			e.printStackTrace();
-		}
-
-		throw new DifferenceCalculationException("RevisionDifference could not be calculated.");
+		return TechnicalDifferenceFacade.deriveTechnicalDifference(modelA, modelB, settings);
 	}
 
-	public static Difference calculateDifference(Resource modelA, Resource modelB, DifferenceSettings settings)
-			throws DifferenceCalculationException {
-
-		try {
-			return TechnicalDifferenceFacade.deriveTechnicalDifference(modelA, modelB, settings);
-		} catch (InvalidModelException | NoCorrespondencesException e) {
-			e.printStackTrace();
-		}
-
-		throw new DifferenceCalculationException("RevisionDifference could not be calculated.");
+	public static Difference calculateDifference(Resource modelA, Resource modelB, DifferenceSettings settings) {
+		return TechnicalDifferenceFacade.deriveTechnicalDifference(modelA, modelB, settings);
 	}
 
 	public static void saveDifference(Difference difference) {

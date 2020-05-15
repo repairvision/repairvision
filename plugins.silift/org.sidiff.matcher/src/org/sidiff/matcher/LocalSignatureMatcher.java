@@ -8,7 +8,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.sidiff.common.collections.ValueMap;
 import org.sidiff.common.emf.EMFUtil;
-import org.sidiff.common.emf.access.EMFModelAccess;
+import org.sidiff.common.utilities.emf.DocumentType;
 
 public abstract class LocalSignatureMatcher extends SignatureBasedMatcher<String> {	
 
@@ -91,7 +91,7 @@ public abstract class LocalSignatureMatcher extends SignatureBasedMatcher<String
 	@Override
 	public Set<String> getDocumentTypes() {
 		Set<String> docTypes = new HashSet<String>();
-		docTypes.add(EMFModelAccess.GENERIC_DOCUMENT_TYPE);
+		docTypes.add(DocumentType.GENERIC_DOCUMENT_TYPE);
 		return docTypes;
 	}
 

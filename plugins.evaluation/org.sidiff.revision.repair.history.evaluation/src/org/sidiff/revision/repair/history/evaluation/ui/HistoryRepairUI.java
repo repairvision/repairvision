@@ -25,7 +25,6 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.IWorkbenchPartSite;
 import org.sidiff.common.emf.modelstorage.EMFStorage;
-import org.sidiff.common.ui.util.UIUtil;
 import org.sidiff.common.utilities.ui.util.WorkbenchUtil;
 import org.sidiff.history.analysis.tracing.InconsistencyTrace;
 import org.sidiff.historymodel.History;
@@ -104,10 +103,10 @@ public class HistoryRepairUI extends BasicRepairViewerUI<HistoryRepairApplicatio
 						InconsistencyTrace repaired = InconsistencyTrace.createRepairedInconsistency(validationError, true);
 						
 						if (repaired != null) {
-							UIUtil.openEditor(EMFStorage.uriToPath(repaired.getModelHistorical().getURI()));
-							UIUtil.openEditor(EMFStorage.uriToPath(repaired.getModelIntroduced().getURI()));
-							UIUtil.openEditor(EMFStorage.uriToPath(repaired.getModelCurrent().getURI()));
-							UIUtil.openEditor(EMFStorage.uriToPath(repaired.getModelResolved().getURI()));
+							WorkbenchUtil.openEditor(EMFStorage.uriToPath(repaired.getModelHistorical().getURI()));
+							WorkbenchUtil.openEditor(EMFStorage.uriToPath(repaired.getModelIntroduced().getURI()));
+							WorkbenchUtil.openEditor(EMFStorage.uriToPath(repaired.getModelCurrent().getURI()));
+							WorkbenchUtil.openEditor(EMFStorage.uriToPath(repaired.getModelResolved().getURI()));
 						}
 					} catch (FileNotFoundException e) {
 						e.printStackTrace();

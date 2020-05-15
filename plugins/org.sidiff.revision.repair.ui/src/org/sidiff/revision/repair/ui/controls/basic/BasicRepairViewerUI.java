@@ -27,7 +27,6 @@ import org.eclipse.ui.IWorkbenchPartSite;
 import org.eclipse.ui.dialogs.PreferencesUtil;
 import org.eclipse.ui.part.DrillDownAdapter;
 import org.sidiff.common.emf.modelstorage.EMFStorage;
-import org.sidiff.common.ui.util.UIUtil;
 import org.sidiff.common.utilities.ui.util.WorkbenchUtil;
 import org.sidiff.integration.editor.highlighting.EditorHighlighting;
 import org.sidiff.integration.editor.highlighting.ISelectionHighlightingAdapter;
@@ -352,7 +351,7 @@ public class BasicRepairViewerUI<A extends IRepairApplication<?, ?>> extends Bas
 		openHistoricModel = new Action() {
 			public void run() {
 				try {
-					UIUtil.openEditor(EMFStorage.uriToPath(application.getRepairJob().getRevision().getVersionA().getTargetResource().getURI()));
+					WorkbenchUtil.openEditor(EMFStorage.uriToPath(application.getRepairJob().getRevision().getVersionA().getTargetResource().getURI()));
 				} catch (FileNotFoundException e) {
 					e.printStackTrace();
 				}

@@ -15,7 +15,6 @@ import org.sidiff.candidates.ICandidates;
 import org.sidiff.common.collections.ClassificationUtil;
 import org.sidiff.common.collections.ValueMap;
 import org.sidiff.common.emf.EMFUtil;
-import org.sidiff.common.emf.collections.EMFClassifiers;
 
 
 public abstract class TypeCandidates implements ICandidates {

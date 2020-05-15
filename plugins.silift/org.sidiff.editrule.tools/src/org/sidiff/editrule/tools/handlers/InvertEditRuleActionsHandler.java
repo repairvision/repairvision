@@ -18,7 +18,7 @@ import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.emf.henshin.model.Unit;
 import org.sidiff.common.emf.modelstorage.EMFHandlerUtil;
 import org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx;
-import org.sidiff.common.ui.util.UIUtil;
+import org.sidiff.common.utilities.ui.util.WorkbenchUtil;
 
 public class InvertEditRuleActionsHandler extends AbstractHandler {
 
@@ -37,7 +37,7 @@ public class InvertEditRuleActionsHandler extends AbstractHandler {
 					.appendFileExtension(currentURI.fileExtension()));
 			editRule.eResource().save(Collections.emptyMap());
 			
-			UIUtil.showMessage("Edit-Rule saved:\n\n" + EcoreUtil.getURI(editRule).toPlatformString(true));
+			WorkbenchUtil.showMessage("Edit-Rule saved:\n\n" + EcoreUtil.getURI(editRule).toPlatformString(true));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

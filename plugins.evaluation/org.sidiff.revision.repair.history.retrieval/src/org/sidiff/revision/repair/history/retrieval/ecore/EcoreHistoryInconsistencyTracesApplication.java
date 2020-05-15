@@ -20,8 +20,6 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.equinox.app.IApplication;
 import org.eclipse.equinox.app.IApplicationContext;
 import org.sidiff.common.emf.EMFUtil;
-import org.sidiff.common.emf.exceptions.InvalidModelException;
-import org.sidiff.common.emf.exceptions.NoCorrespondencesException;
 import org.sidiff.generic.matcher.uuid.UUIDResource;
 import org.sidiff.generic.matcher.uuid.UUIDResourceFactory;
 import org.sidiff.historymodel.History;
@@ -234,14 +232,8 @@ public class EcoreHistoryInconsistencyTracesApplication implements IApplication 
 	}
 
 	protected void matchVersions(History history, Resource resourceA, Resource resourceB, EcoreHistorySettings settings) {
-		try {
-			Difference matching = generateMatching(resourceA, resourceB, settings);
-			generateUUIDs(matching);
-		} catch (InvalidModelException e) {
-			e.printStackTrace();
-		} catch (NoCorrespondencesException e) {
-			System.err.println("No correspondences found: " + resourceA.getURI() + " -> " + resourceB.getURI());
-		}
+		Difference matching = generateMatching(resourceA, resourceB, settings);
+		generateUUIDs(matching);
 	}
 	
 	protected Version generateVersion(
@@ -273,8 +265,7 @@ public class EcoreHistoryInconsistencyTracesApplication implements IApplication 
 		return version;
 	}
 	
-	protected Difference generateMatching(Resource resourceA, Resource resourceB, EcoreHistorySettings settings) 
-			throws InvalidModelException, NoCorrespondencesException {
+	protected Difference generateMatching(Resource resourceA, Resource resourceB, EcoreHistorySettings settings) {
 		
 		Difference matching = TechnicalDifferenceFacade.match(
 				Arrays.asList(resourceA, resourceB), settings.getDifferenceSettings());

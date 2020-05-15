@@ -7,10 +7,10 @@ import java.util.Set;
 
 import org.eclipse.emf.ecore.resource.Resource;
 import org.sidiff.candidates.ICandidates;
-import org.sidiff.common.emf.access.EMFModelAccess;
 import org.sidiff.common.emf.access.Scope;
 import org.sidiff.common.logging.LogEvent;
 import org.sidiff.common.logging.LogUtil;
+import org.sidiff.common.utilities.emf.DocumentType;
 import org.sidiff.correspondences.ICorrespondences;
 import org.sidiff.matcher.mode.MatcherMode;
 
@@ -92,10 +92,10 @@ public class IncrementalMatcher implements IMatcher {
 		Set<String> docTypes = new HashSet<String>();
 		for(Resource model : models){
 			if(isResourceSetCapable()){
-				docTypes.addAll(EMFModelAccess.getDocumentTypes(model,
+				docTypes.addAll(DocumentType.getDocumentTypes(model,
 						Scope.RESOURCE_SET));
 			}else{
-				docTypes.addAll(EMFModelAccess.getDocumentTypes(model, Scope.RESOURCE));
+				docTypes.addAll(DocumentType.getDocumentTypes(model, Scope.RESOURCE));
 			}
 		}
 

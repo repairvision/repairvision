@@ -31,8 +31,8 @@ import org.eclipse.pde.ui.IFieldData;
 import org.eclipse.pde.ui.templates.OptionTemplateSection;
 import org.eclipse.pde.ui.templates.PluginReference;
 import org.osgi.framework.Constants;
-import org.sidiff.common.ui.util.UIUtil;
 import org.sidiff.common.utilities.emf.DocumentType;
+import org.sidiff.common.utilities.ui.util.WorkbenchUtil;
 import org.sidiff.graphpattern.Bundle;
 import org.sidiff.revision.editrules.project.RuleBasePlugin;
 import org.sidiff.revision.editrules.project.builder.Activator;
@@ -91,7 +91,7 @@ public class RuleBaseTemplateSection extends OptionTemplateSection {
 		IPluginElement element = factory.createElement(extension);
 		
 		// register new rulebase:
-		String documentType = DocumentType.getDocumentType(pageEditRules.getSelectedDocumentTypes());
+		String documentType = DocumentType.getDocumentTypes(pageEditRules.getSelectedDocumentTypes());
 		
 		element.setName(RuleBasePlugin.EXTENSION_POINT_ELEMENT_RULEBASE);
 		element.setAttribute(RuleBasePlugin.EXTENSION_POINT_ATTRIBUTE_RULEBASE_NAME, getStringOption(KEY_PACKAGE_NAME));
@@ -221,7 +221,7 @@ public class RuleBaseTemplateSection extends OptionTemplateSection {
 		if (diagramDashboardURI.diagramURI != null) {
 			try {
 				String path = project.getLocation().removeLastSegments(1) + diagramDashboardURI.diagramURI.toPlatformString(true);
-				UIUtil.openEditor(path);
+				WorkbenchUtil.openEditor(path);
 			} catch (FileNotFoundException e) {
 				e.printStackTrace();
 			}

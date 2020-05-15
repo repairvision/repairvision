@@ -9,8 +9,6 @@ import java.util.NoSuchElementException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
-import org.sidiff.common.emf.exceptions.InvalidModelException;
-import org.sidiff.common.emf.exceptions.NoCorrespondencesException;
 import org.sidiff.common.utilities.emf.DocumentType;
 import org.sidiff.correspondences.CorrespondencesUtil;
 import org.sidiff.correspondences.matchingmodel.MatchingModelCorrespondences;
@@ -68,45 +66,41 @@ public class EditRuleGenerator {
 			if (monitor.isCanceled()) {
 				break;
 			}
-			
+
 			Resource vA = history[0];
 			Resource vB = history[1];
-			
-			try {
-				
-				// Calculate difference:
-				DifferenceSettings diffSettings =  new DifferenceSettings(
-						Collections.singleton(DocumentType.getDocumentType(vA)));
-//				diffSettings.setTechBuilder(TechnicalDifferenceUtils.getGenericTechnicalDifferenceBuilder());
-				diffSettings.setTechBuilder(TechnicalDifferenceUtils.getTechnicalDifferenceBuilder(
-						"org.sidiff.ecore.difference.technical.TechnicalDifferenceBuilderEcore"));
-				diffSettings.setMatcher(MatchingUtils.getMatcherByKey(
-						"EMFCompareMatcherAdapter"));
-				diffSettings.setCorrespondencesService(CorrespondencesUtil.getAvailableCorrespondencesService(
-						MatchingModelCorrespondences.SERVICE_ID));
-				
-				Difference difference = TechnicalDifferenceFacade.deriveTechnicalDifference(
-						vA, vB, diffSettings);
-				
-				// Validation:
-				List<RequiredValidation[]> validationPairs = findValidationPairs(difference);
-				
-				// Learn edit-rules:
-				for (RequiredValidation[] validationPair : validationPairs) {
-					List<EditRule> editRules = calculateEditRules(difference, validationPair);
-					
-//					System.out.println();
-//					System.out.println("## " + validationPair[0].getRule().getName() + " ##");
-//					System.out.println(validationPair[0].getRequiredTree());
-//					System.out.println();
-//					System.out.println(validationPair[1].getRequiredTree());
-					
-					for (EditRule editRule : editRules) {
-						integrateIntoRulebase(editRule );
-					}
+
+
+			// Calculate difference:
+			DifferenceSettings diffSettings =  new DifferenceSettings(
+					Collections.singleton(DocumentType.getDocumentType(vA)));
+			//				diffSettings.setTechBuilder(TechnicalDifferenceUtils.getGenericTechnicalDifferenceBuilder());
+			diffSettings.setTechBuilder(TechnicalDifferenceUtils.getTechnicalDifferenceBuilder(
+					"org.sidiff.ecore.difference.technical.TechnicalDifferenceBuilderEcore"));
+			diffSettings.setMatcher(MatchingUtils.getMatcherByKey(
+					"EMFCompareMatcherAdapter"));
+			diffSettings.setCorrespondencesService(CorrespondencesUtil.getAvailableCorrespondencesService(
+					MatchingModelCorrespondences.SERVICE_ID));
+
+			Difference difference = TechnicalDifferenceFacade.deriveTechnicalDifference(
+					vA, vB, diffSettings);
+
+			// Validation:
+			List<RequiredValidation[]> validationPairs = findValidationPairs(difference);
+
+			// Learn edit-rules:
+			for (RequiredValidation[] validationPair : validationPairs) {
+				List<EditRule> editRules = calculateEditRules(difference, validationPair);
+
+				//					System.out.println();
+				//					System.out.println("## " + validationPair[0].getRule().getName() + " ##");
+				//					System.out.println(validationPair[0].getRequiredTree());
+				//					System.out.println();
+				//					System.out.println(validationPair[1].getRequiredTree());
+
+				for (EditRule editRule : editRules) {
+					integrateIntoRulebase(editRule );
 				}
-			} catch (InvalidModelException | NoCorrespondencesException e) {
-				e.printStackTrace();
 			}
 			
 			monitor.worked(1);
@@ -119,8 +113,7 @@ public class EditRuleGenerator {
 		}
 	}
 	
-	protected List<RequiredValidation[]> findValidationPairs(Difference difference) 
-			throws InvalidModelException, NoCorrespondencesException {
+	protected List<RequiredValidation[]> findValidationPairs(Difference difference) {
 		
 		System.out.println("================================================================================");
 		System.out.println("=============================== ANALYZE HISTORY ================================");

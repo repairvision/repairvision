@@ -10,8 +10,6 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.sidiff.common.emf.EMFUtil;
-import org.sidiff.common.emf.exceptions.InvalidModelException;
-import org.sidiff.common.emf.exceptions.NoCorrespondencesException;
 import org.sidiff.generic.matcher.uuid.UUIDResource;
 import org.sidiff.history.analysis.validation.IValidator;
 import org.sidiff.history.repository.IModelRepository;
@@ -60,25 +58,9 @@ public class HistoryModelGenerator {
 			
 			Version versionA = history.getVersions().get(i);
 			Version versionB = history.getVersions().get(j);
-			
-			// TODO: Do we need this workaround!?
-//			while (versionB.getStatus().equals(ModelStatus.DEFECT) && (j < (history.getVersions().size() - 1))) {
-//				versionB = history.getVersions().get(++j);
-//			}
-			
-			try {
-//				if (versionA.getStatus().equals(ModelStatus.DEFECT)
-//						|| versionB.getStatus().equals(ModelStatus.DEFECT)) {
-//					continue;
-//				}
 
-				Difference matching = generateMatching(versionA, versionB, settings);
-				generateUUIDs(matching);
-			} catch (InvalidModelException e) {
-				e.printStackTrace();
-			} catch (NoCorrespondencesException e) {
-				System.err.println(" No correspondences found: " + versionA.getName() + " -> " + versionB.getName());
-			}
+			Difference matching = generateMatching(versionA, versionB, settings);
+			generateUUIDs(matching);
 		}
 		
 		generateIntroducedAndResolved(history, validator);
@@ -153,8 +135,7 @@ public class HistoryModelGenerator {
 		}
 	}
 	
-	private static Difference generateMatching(Version versionA, Version versionB, DifferenceSettings settings) 
-			throws InvalidModelException, NoCorrespondencesException {
+	private static Difference generateMatching(Version versionA, Version versionB, DifferenceSettings settings) {
 		
 		Resource resourceA = versionA.getModel();
 		Resource resourceB = versionB.getModel();

@@ -18,9 +18,9 @@ import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.handlers.HandlerUtil;
 import org.sidiff.common.emf.EMFUtil;
-import org.sidiff.common.ui.util.UIUtil;
 import org.sidiff.common.utilities.emf.DocumentType;
 import org.sidiff.common.utilities.java.JUtil;
+import org.sidiff.common.utilities.ui.util.WorkbenchUtil;
 import org.sidiff.historymodel.Problem;
 import org.sidiff.historymodel.Version;
 import org.sidiff.historymodel.presentation.util.HistoryModelEditorTools;
@@ -65,7 +65,7 @@ public class ShowEditStepsWithFilterHandler extends AbstractHandler {
 							introducedResource.getResourceSet(),
 							uriFragmentScope);
 				} else {
-					UIUtil.showMessage("No introducing edit step found!");
+					WorkbenchUtil.showMessage("No introducing edit step found!");
 				}
 				
 				if (inconsistency.isResolved()) {
@@ -90,7 +90,7 @@ public class ShowEditStepsWithFilterHandler extends AbstractHandler {
 							resolvedResource.getResourceSet(),
 							uriFragmentScope);
 				} else {
-					UIUtil.showMessage("No resolving edit step found!");
+					WorkbenchUtil.showMessage("No resolving edit step found!");
 				}
 			}
 		}

@@ -1,4 +1,4 @@
-package org.sidiff.common.emf.access;
+package org.sidiff.revision.difference.derivation.util;
 
 /**
  * The location of an EObject, relative to a reference resource.

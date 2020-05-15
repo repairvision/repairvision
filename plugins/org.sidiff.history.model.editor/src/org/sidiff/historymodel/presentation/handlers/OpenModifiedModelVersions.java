@@ -9,7 +9,7 @@ import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.handlers.HandlerUtil;
 import org.sidiff.common.emf.modelstorage.EMFStorage;
-import org.sidiff.common.ui.util.UIUtil;
+import org.sidiff.common.utilities.ui.util.WorkbenchUtil;
 import org.sidiff.historymodel.Problem;
 import org.sidiff.historymodel.Version;
 
@@ -33,7 +33,7 @@ public class OpenModifiedModelVersions extends AbstractHandler {
 				
 				if (beforeIntroduced != null) {
 					try {
-						UIUtil.openEditor(EMFStorage.uriToPath(beforeIntroduced.getModel().getURI()));
+						WorkbenchUtil.openEditor(EMFStorage.uriToPath(beforeIntroduced.getModel().getURI()));
 					} catch (FileNotFoundException e) {
 						e.printStackTrace();
 					}
@@ -41,7 +41,7 @@ public class OpenModifiedModelVersions extends AbstractHandler {
 				
 				if (introduced != null) {
 					try {
-						UIUtil.openEditor(EMFStorage.uriToPath(introduced.getModel().getURI()));
+						WorkbenchUtil.openEditor(EMFStorage.uriToPath(introduced.getModel().getURI()));
 					} catch (FileNotFoundException e) {
 						e.printStackTrace();
 					}
@@ -49,7 +49,7 @@ public class OpenModifiedModelVersions extends AbstractHandler {
 				
 				if (beforeResolved != null) {
 					try {
-						UIUtil.openEditor(EMFStorage.uriToPath(beforeResolved.getModel().getURI()));
+						WorkbenchUtil.openEditor(EMFStorage.uriToPath(beforeResolved.getModel().getURI()));
 					} catch (FileNotFoundException e) {
 						e.printStackTrace();
 					}
@@ -57,7 +57,7 @@ public class OpenModifiedModelVersions extends AbstractHandler {
 				
 				if (resolved != null) {
 					try {
-						UIUtil.openEditor(EMFStorage.uriToPath(resolved.getModel().getURI()));
+						WorkbenchUtil.openEditor(EMFStorage.uriToPath(resolved.getModel().getURI()));
 					} catch (FileNotFoundException e) {
 						e.printStackTrace();
 					}

@@ -9,29 +9,14 @@
 -->
 
 <plugin>
-   <extension point="org.eclipse.ui.newWizards">
-      <!-- @generated Difference -->
-      <category
-            id="org.eclipse.emf.ecore.Wizard.category.ID"
-            name="%_UI_Wizard_category"/>
-      <wizard
-            id="org.sidiff.revision.difference.presentation.DifferenceModelWizardID"
-            name="%_UI_DifferenceModelWizard_label"
-            class="org.sidiff.revision.difference.presentation.DifferenceModelWizard"
-            category="org.eclipse.emf.ecore.Wizard.category.ID"
-            icon="icons/full/obj16/DifferenceModelFile.gif">
-         <description>%_UI_DifferenceModelWizard_description</description>
-         <selection class="org.eclipse.core.resources.IResource"/>
-      </wizard>
-   </extension>
 
    <extension point="org.eclipse.ui.editors">
       <!-- @generated Difference -->
       <editor
             id="org.sidiff.revision.difference.presentation.DifferenceEditorID"
             name="%_UI_DifferenceEditor_label"
-            icon="icons/full/obj16/DifferenceModelFile.gif"
-            extensions="difference"
+            icon="icons/change.gif"
+            extensions="revisiondiff"
             class="org.sidiff.revision.difference.presentation.DifferenceEditor"
             contributorClass="org.sidiff.revision.difference.presentation.DifferenceActionBarContributor">
       </editor>

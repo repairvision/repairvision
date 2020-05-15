@@ -26,7 +26,7 @@ import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.handlers.HandlerUtil;
 import org.sidiff.common.emf.modelstorage.EMFHandlerUtil;
-import org.sidiff.common.ui.util.UIUtil;
+import org.sidiff.common.utilities.ui.util.WorkbenchUtil;
 import org.sidiff.historymodel.History;
 import org.sidiff.repair.history.editrules.generator.EditRuleGenerator.RulebaseLimitExceededException;
 import org.sidiff.repair.history.editrules.util.CreateProjectDialog;
@@ -90,7 +90,7 @@ public class EditRuleGeneratorHandler extends AbstractHandler implements IHandle
 						try {
 							generator.analyzeHistory(history, monitor);
 						} catch (RulebaseLimitExceededException e) {
-							UIUtil.showMessage("The edit rule limit (" 
+							WorkbenchUtil.showMessage("The edit rule limit (" 
 									+ RULEBASE_LIMIT + ") was exceeded: " + projectName);
 							return Status.CANCEL_STATUS;
 						}
@@ -98,10 +98,10 @@ public class EditRuleGeneratorHandler extends AbstractHandler implements IHandle
 
 					// Report to user:
 					if (monitor.isCanceled()) {
-						UIUtil.showMessage("Edit rule generation incomplete: " + projectName);
+						WorkbenchUtil.showMessage("Edit rule generation incomplete: " + projectName);
 						return Status.CANCEL_STATUS;
 					} else {
-						UIUtil.showMessage("Edit rule generation finished: " + projectName);
+						WorkbenchUtil.showMessage("Edit rule generation finished: " + projectName);
 						return Status.OK_STATUS;
 					}
 				}

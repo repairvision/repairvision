@@ -11,8 +11,8 @@ import org.eclipse.emf.compare.Match;
 import org.eclipse.emf.compare.scope.DefaultComparisonScope;
 import org.eclipse.emf.compare.scope.IComparisonScope;
 import org.eclipse.emf.ecore.resource.Resource;
-import org.sidiff.common.emf.access.EMFModelAccess;
 import org.sidiff.common.emf.access.Scope;
+import org.sidiff.common.utilities.emf.DocumentType;
 import org.sidiff.matcher.BaseMatcher;
 
 /**
@@ -121,7 +121,7 @@ public class EMFCompareMatcherAdapter extends BaseMatcher{
 	@Override
 	public Set<String> getDocumentTypes() {
 		Set<String> docTypes = new HashSet<String>();
-		docTypes.add(EMFModelAccess.GENERIC_DOCUMENT_TYPE);
+		docTypes.add(DocumentType.GENERIC_DOCUMENT_TYPE);
 		return docTypes;
 	}
 }

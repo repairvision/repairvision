@@ -5,8 +5,8 @@ import java.util.List;
 import java.util.Set;
 
 import org.eclipse.emf.ecore.resource.Resource;
-import org.sidiff.common.emf.access.EMFModelAccess;
 import org.sidiff.common.emf.access.Scope;
+import org.sidiff.common.utilities.emf.DocumentType;
 import org.sidiff.revision.difference.Difference;
 
 /**
@@ -91,8 +91,8 @@ public class IncrementalTechnicalDifferenceBuilder implements ITechnicalDifferen
 
 	@Override
 	public boolean canHandleModels(Resource modelA, Resource modelB) {
-		Set<String> docTypes = EMFModelAccess.getDocumentTypes(modelA, Scope.RESOURCE_SET);
-		docTypes.addAll(EMFModelAccess.getDocumentTypes(modelB, Scope.RESOURCE_SET));
+		Set<String> docTypes = DocumentType.getDocumentTypes(modelA, Scope.RESOURCE_SET);
+		docTypes.addAll(DocumentType.getDocumentTypes(modelB, Scope.RESOURCE_SET));
 
 		return canHandleDocTypes(docTypes);
 	}

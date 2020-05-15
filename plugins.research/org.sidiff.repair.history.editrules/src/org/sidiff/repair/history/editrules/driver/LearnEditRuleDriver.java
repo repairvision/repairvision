@@ -5,15 +5,12 @@ import java.util.List;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
-import org.sidiff.common.emf.exceptions.InvalidModelException;
-import org.sidiff.common.emf.exceptions.NoCorrespondencesException;
-import org.sidiff.common.ui.util.UIUtil;
+import org.sidiff.common.utilities.ui.util.WorkbenchUtil;
 import org.sidiff.history.analysis.tracing.InconsistencyTrace;
 import org.sidiff.historymodel.History;
 import org.sidiff.repair.history.editrules.generator.EditRule;
 import org.sidiff.repair.history.editrules.learn.scope.LearnEditRule;
 import org.sidiff.revision.difference.Difference;
-import org.sidiff.revision.difference.DifferenceFactory;
 import org.sidiff.revision.difference.derivation.api.TechnicalDifferenceFacade;
 import org.sidiff.revision.difference.derivation.api.settings.DifferenceSettings;
 import org.sidiff.validation.constraint.interpreter.IConstraint;
@@ -67,7 +64,7 @@ public class LearnEditRuleDriver {
 			URI uri = LearnEditRule.generateURI(editRuleName, history.eResource());
 			editRule.saveEditRule(uri, true);
 		} else {
-			UIUtil.showError("Inconsistency trace could not be found!");
+			WorkbenchUtil.showError("Inconsistency trace could not be found!");
 		}
 	}
 	
@@ -76,25 +73,8 @@ public class LearnEditRuleDriver {
 			Resource modelA, Resource modelB,
 			DifferenceSettings differenceSettings) {
 		
-		try {
-			Difference difference = TechnicalDifferenceFacade.deriveTechnicalDifference(
-					modelA, modelB, differenceSettings);
-			return difference;
-		} catch (InvalidModelException e) {
-			UIUtil.showError("Invalid Models:\n" + "  " + modelA + "\n" + "  " + modelB + "\n");
-		} catch (NoCorrespondencesException e) {
-			if (!ignoreNoCorrespondences) {
-				UIUtil.showError("No Correspondences Found:\n" + "  " + modelA + "\n" + "  " + modelB + "\n");
-			}
-		}
-		
-		// Empty difference:
-		Difference difference = DifferenceFactory.eINSTANCE.createDifference();
-		difference.setEResourceA(modelA);
-		difference.setEResourceB(modelB);
-		difference.setUriModelA(modelA.getURI().toString());
-		difference.setUriModelB(modelB.getURI().toString());
-		
+		Difference difference = TechnicalDifferenceFacade.deriveTechnicalDifference(
+				modelA, modelB, differenceSettings);
 		return difference;
 	}
 }

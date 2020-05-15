@@ -8,7 +8,7 @@ import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
-import org.sidiff.common.emf.access.EMFModelAccess;
+import org.sidiff.common.utilities.emf.DocumentType;
 
 /**
  * Generic technical difference builder. <br/>
@@ -41,7 +41,7 @@ public class GenericTechnicalDifferenceBuilder extends AbstractTechnicalDifferen
 	@Override
 	public Set<String> getDocumentTypes() {
 		Set<String> docTypes = new HashSet<String>();
-		docTypes.add(EMFModelAccess.GENERIC_DOCUMENT_TYPE);
+		docTypes.add(DocumentType.GENERIC_DOCUMENT_TYPE);
 		return docTypes;
 	}
 	

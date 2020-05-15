@@ -8,22 +8,22 @@ import java.util.Set;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EDataTypeEList;
-import org.sidiff.common.emf.EMFResourceUtil;
 import org.sidiff.common.emf.access.EMFMetaAccess;
-import org.sidiff.common.emf.access.EMFModelAccess;
-import org.sidiff.common.emf.access.EObjectLocation;
 import org.sidiff.common.emf.access.Scope;
+import org.sidiff.common.utilities.emf.DocumentType;
 import org.sidiff.revision.difference.AddObject;
 import org.sidiff.revision.difference.AddReference;
 import org.sidiff.revision.difference.AttributeValueChange;
 import org.sidiff.revision.difference.Correspondence;
 import org.sidiff.revision.difference.Difference;
+import org.sidiff.revision.difference.DifferenceFactory;
 import org.sidiff.revision.difference.RemoveObject;
 import org.sidiff.revision.difference.RemoveReference;
-import org.sidiff.revision.difference.DifferenceFactory;
+import org.sidiff.revision.difference.derivation.util.EObjectLocation;
 
 /**
  * Abstract base class for deriving a low-level difference (which is called
@@ -82,8 +82,8 @@ public abstract class AbstractTechnicalDifferenceBuilder implements ITechnicalDi
 				continue;
 			}
 
-			EObjectLocation objectALocation = EMFResourceUtil.locate(diff.getModelA(), nodeA);
-			EObjectLocation objectBLocation = EMFResourceUtil.locate(diff.getModelB(), nodeB);
+			EObjectLocation objectALocation = locate(diff.getModelA(), nodeA);
+			EObjectLocation objectBLocation = locate(diff.getModelB(), nodeB);
 			assert (objectALocation == objectBLocation) : "different object locations not yet supported!";
 
 			if (objectALocation == EObjectLocation.PACKAGE_REGISTRY) {
@@ -356,22 +356,22 @@ public abstract class AbstractTechnicalDifferenceBuilder implements ITechnicalDi
 
 	protected boolean doProcess(EObject object) {
 		// generic td builders can process every eObject
-		return getDocumentTypes().contains(EMFModelAccess.GENERIC_DOCUMENT_TYPE)
-				|| getDocumentTypes().contains(EMFModelAccess.getDocumentType(object));
+		return getDocumentTypes().contains(DocumentType.GENERIC_DOCUMENT_TYPE)
+				|| getDocumentTypes().contains(DocumentType.getDocumentType(object));
 	}
 
 	@Override
 	public boolean canHandleDocTypes(Set<String> documentTypes) {
 		// generic td builders can handle every model
-		return getDocumentTypes().contains(EMFModelAccess.GENERIC_DOCUMENT_TYPE)
+		return getDocumentTypes().contains(DocumentType.GENERIC_DOCUMENT_TYPE)
 				|| getDocumentTypes().containsAll(documentTypes);
 	}
 	
 	@Override
 	public boolean canHandleModels(Resource modelA, Resource modelB) {
 
-		Set<String> docTypes = EMFModelAccess.getDocumentTypes(modelA, Scope.RESOURCE_SET);
-		docTypes.addAll(EMFModelAccess.getDocumentTypes(modelB, Scope.RESOURCE_SET));
+		Set<String> docTypes = DocumentType.getDocumentTypes(modelA, Scope.RESOURCE_SET);
+		docTypes.addAll(DocumentType.getDocumentTypes(modelB, Scope.RESOURCE_SET));
 
 		return canHandleDocTypes(docTypes);
 	}
@@ -405,4 +405,31 @@ public abstract class AbstractTechnicalDifferenceBuilder implements ITechnicalDi
 	 */
 	protected abstract Set<EAttribute> getUnconsideredAttributeTypes();
 
+	public EObjectLocation locate(Resource model, EObject eObject) {
+		// RESOURCE_INTERNAL..?
+		if (contains(model, eObject)) {
+			return EObjectLocation.RESOURCE_INTERNAL;
+		}
+
+		// RESOURCE_SET_INTERNAL..?
+		for (Resource r : model.getResourceSet().getResources()) {
+			if (r == model) {
+				continue;
+			}
+			if (contains(r, eObject)) {
+				return EObjectLocation.RESOURCE_SET_INTERNAL;
+			}
+		}
+
+		// Must be found in PACKAGE_REGISTRY
+		assert (EPackage.Registry.INSTANCE.containsValue(eObject.eClass().getEPackage())) : "" + eObject;
+		
+		return EObjectLocation.PACKAGE_REGISTRY;
+	}
+
+	protected boolean contains(Resource resource, EObject eObject) {
+		if(eObject.eResource() == null)
+			return false;
+		return eObject.eResource().equals(resource);
+	}
 }

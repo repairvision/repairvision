@@ -1,4 +1,4 @@
-package org.sidiff.common.emf.collections;
+package org.sidiff.candidates.type;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;

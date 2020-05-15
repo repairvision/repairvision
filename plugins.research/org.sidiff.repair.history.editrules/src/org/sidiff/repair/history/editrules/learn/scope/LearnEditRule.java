@@ -13,8 +13,6 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.swt.widgets.Display;
-import org.sidiff.common.emf.exceptions.InvalidModelException;
-import org.sidiff.common.emf.exceptions.NoCorrespondencesException;
 import org.sidiff.common.utilities.ui.util.WorkbenchUtil;
 import org.sidiff.editrule.tools.recorder.DifferenceToEditRule;
 import org.sidiff.editrule.tools.recorder.TransformationSetup;
@@ -85,11 +83,7 @@ public class LearnEditRule {
 		// Calculate difference: Historical -> Resolved
 		this.matchingSettings = matchingSettings;
 		
-		try {
-			historicalToResolved = deriveTechnicalDifference(modelHistorical, modelResolved, matchingSettings);
-		} catch (InvalidModelException | NoCorrespondencesException e) {
-			e.printStackTrace();
-		}
+		historicalToResolved = deriveTechnicalDifference(modelHistorical, modelResolved, matchingSettings);
 		
 		this.navigation = new DifferenceNavigation(historicalToResolved);
 	}
@@ -101,23 +95,16 @@ public class LearnEditRule {
 	 *            The violated consistency rule.
 	 */
 	public DifferenceSlice learnByResolvedInconsistency(EObject invalidContext, IConstraint consistencyRule) {
-		
-		try {
-			
-			// Calculate mapping from introduced model version to resolved model version:
-			Difference invalidToResolved = deriveTechnicalDifference(
-					invalidContext.eResource(), modelCurrent, matchingSettings);
-			
-			// Search resolved context element:
-			EObject contextResolved = invalidToResolved.getCorrespondingObjectInB(invalidContext);
-			
-			// Learn edit-rule:
-			return learnByConsistentChange(contextResolved, consistencyRule);
-			
-		} catch (InvalidModelException | NoCorrespondencesException e) {
-			e.printStackTrace();
-		}
-		return null;
+
+		// Calculate mapping from introduced model version to resolved model version:
+		Difference invalidToResolved = deriveTechnicalDifference(
+				invalidContext.eResource(), modelCurrent, matchingSettings);
+
+		// Search resolved context element:
+		EObject contextResolved = invalidToResolved.getCorrespondingObjectInB(invalidContext);
+
+		// Learn edit-rule:
+		return learnByConsistentChange(contextResolved, consistencyRule);
 	}
 	
 	/**

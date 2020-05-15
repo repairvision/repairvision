@@ -12,7 +12,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.henshin.model.Module;
 import org.sidiff.common.emf.modelstorage.EMFHandlerUtil;
-import org.sidiff.common.ui.util.UIUtil;
+import org.sidiff.common.utilities.ui.util.WorkbenchUtil;
 import org.sidiff.editrule.tools.recorder.DifferenceToEditRule;
 import org.sidiff.editrule.tools.recorder.TransformationSetup;
 import org.sidiff.editrule.tools.util.EditRuleUtil;
@@ -56,14 +56,14 @@ public class CreateEditRuleHandler extends AbstractHandler implements IHandler {
 					e.printStackTrace();
 				}
 
-				UIUtil.showMessage("Edit-Rule saved:\n\n" + eoURI.toPlatformString(true));
+				WorkbenchUtil.showMessage("Edit-Rule saved:\n\n" + eoURI.toPlatformString(true));
 				return null;
 			} else {
-				UIUtil.showError("Could not transform this difference to an edit-rule.");
+				WorkbenchUtil.showError("Could not transform this difference to an edit-rule.");
 				return null;
 			}
 		} else {
-			UIUtil.showError("The selected resource does not contain a model difference.");
+			WorkbenchUtil.showError("The selected resource does not contain a model difference.");
 			return null;
 		}
 	}

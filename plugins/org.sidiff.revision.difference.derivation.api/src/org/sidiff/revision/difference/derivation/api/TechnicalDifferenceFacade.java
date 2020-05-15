@@ -4,8 +4,6 @@ import java.util.Arrays;
 import java.util.Collection;
 
 import org.eclipse.emf.ecore.resource.Resource;
-import org.sidiff.common.emf.exceptions.InvalidModelException;
-import org.sidiff.common.emf.exceptions.NoCorrespondencesException;
 import org.sidiff.common.emf.modelstorage.EMFStorage;
 import org.sidiff.correspondences.ICorrespondences;
 import org.sidiff.correspondences.matchingmodel.MatchingModelCorrespondences;
@@ -34,7 +32,7 @@ public class TechnicalDifferenceFacade {
 	 * @throws NoCorrespondencesException
 	 * @throws InvalidModelException
 	 */
-	public static Difference match(Collection<Resource> models, MatchingSettings settings) throws NoCorrespondencesException, InvalidModelException {
+	public static Difference match(Collection<Resource> models, MatchingSettings settings) {
 		IMatcher matcher = settings.getMatcher();	
 		matcher.startMatching(models, settings.getScope());	
 		
@@ -77,7 +75,7 @@ public class TechnicalDifferenceFacade {
 	 * @throws InvalidModelException
 	 * @throws NoCorrespondencesException 
 	 */
-	public static Difference deriveTechnicalDifference(Resource modelA, Resource modelB, DifferenceSettings settings) throws InvalidModelException, NoCorrespondencesException{
+	public static Difference deriveTechnicalDifference(Resource modelA, Resource modelB, DifferenceSettings settings) {
 		return deriveTechnicalDifference(match(Arrays.asList(modelA, modelB), settings), settings);
 	}
 	

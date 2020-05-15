@@ -18,8 +18,8 @@ import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.swt.widgets.Display;
 import org.sidiff.common.emf.modelstorage.EMFHandlerUtil;
 import org.sidiff.common.emf.modelstorage.EMFStorage;
-import org.sidiff.common.ui.util.UIUtil;
-import org.sidiff.common.ui.util.UIUtil.NotEmptyValidator;
+import org.sidiff.common.utilities.ui.util.WorkbenchUtil;
+import org.sidiff.common.utilities.ui.util.WorkbenchUtil.NotEmptyValidator;
 import org.sidiff.editrule.tools.util.EditRuleNaming;
 import org.sidiff.editrule.tools.util.EditRuleUtil;
 
@@ -62,7 +62,7 @@ public class RenameEditRuleHandler extends AbstractHandler {
 				
 				renameEditRule(editRule, name, description);
 				
-				UIUtil.showMessage("Edit-Rule saved:\n\n" + EcoreUtil.getURI(editRule).toPlatformString(true));
+				WorkbenchUtil.showMessage("Edit-Rule saved:\n\n" + EcoreUtil.getURI(editRule).toPlatformString(true));
 			}
 		}
 		

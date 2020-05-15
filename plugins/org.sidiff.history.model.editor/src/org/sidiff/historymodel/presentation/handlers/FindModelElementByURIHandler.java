@@ -14,7 +14,6 @@ import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.handlers.HandlerUtil;
 import org.sidiff.common.emf.modelstorage.EMFStorage;
-import org.sidiff.common.ui.util.UIUtil;
 import org.sidiff.common.utilities.ui.util.WorkbenchUtil;
 import org.sidiff.integration.editor.highlighting.EditorHighlighting;
 
@@ -64,7 +63,7 @@ public class FindModelElementByURIHandler extends AbstractHandler {
 					URI resourceURI = modelElementURI.trimFragment();
 					
 					// Show the editor:
-					UIUtil.openEditor(EMFStorage.uriToPath(resourceURI));
+					WorkbenchUtil.openEditor(EMFStorage.uriToPath(resourceURI));
 					
 					// Highlight the model element:
 					EObject modelElement = resourceSet.getEObject(modelElementURI, true);

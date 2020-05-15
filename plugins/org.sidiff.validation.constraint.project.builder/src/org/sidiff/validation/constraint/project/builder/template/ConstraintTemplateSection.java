@@ -42,7 +42,6 @@ import org.eclipse.pde.ui.IFieldData;
 import org.eclipse.pde.ui.templates.OptionTemplateSection;
 import org.eclipse.pde.ui.templates.PluginReference;
 import org.osgi.framework.Constants;
-import org.sidiff.common.ui.util.UIUtil;
 import org.sidiff.common.utilities.emf.DocumentType;
 import org.sidiff.common.utilities.java.StringUtil;
 import org.sidiff.common.utilities.ui.util.WorkbenchUtil;
@@ -202,7 +201,7 @@ public class ConstraintTemplateSection extends OptionTemplateSection {
 		
 		try {
 			WorkbenchUtil.refreshProject(project);
-			UIUtil.openEditor(folFile.getAbsolutePath());
+			WorkbenchUtil.openEditor(folFile.getAbsolutePath());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

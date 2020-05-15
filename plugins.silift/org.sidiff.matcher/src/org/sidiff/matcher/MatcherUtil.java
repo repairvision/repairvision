@@ -9,7 +9,7 @@ import java.util.Set;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.ecore.resource.Resource;
-import org.sidiff.common.emf.access.EMFModelAccess;
+import org.sidiff.common.utilities.emf.DocumentType;
 
 /**
  * 
@@ -64,7 +64,7 @@ public class MatcherUtil {
 		List<IMatcher> matchingServices = new ArrayList<IMatcher>();
 		
 		for(IMatcher matcher : getAllAvailableMatchers()){
-			if(matcher.getDocumentTypes().contains(EMFModelAccess.GENERIC_DOCUMENT_TYPE)){
+			if(matcher.getDocumentTypes().contains(DocumentType.GENERIC_DOCUMENT_TYPE)){
 				matchingServices.add(matcher);	
 			}
 		}
