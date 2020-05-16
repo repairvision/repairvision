@@ -27,7 +27,7 @@ import org.sidiff.revision.difference.Difference;
 import org.sidiff.revision.difference.matcher.IMatcher;
 import org.sidiff.revision.difference.matcher.util.MatcherUtil;
 
-public class EcoreMatcher implements IMatcher {
+public class EcoreSignatureMatcher implements IMatcher {
 	
 	private Set<Resource> resourceSetA = new HashSet<>();
 	
@@ -561,7 +561,7 @@ public class EcoreMatcher implements IMatcher {
 	}
 	
 	protected void createUnmatched(Difference difference) {
-		MatcherUtil.createUnmatched(difference, resourceSetA);
-		MatcherUtil.createUnmatched(difference, resourceSetB);
+		MatcherUtil.createUnmatchedA(difference, resourceSetA);
+		MatcherUtil.createUnmatchedB(difference, resourceSetB);
 	}
 }

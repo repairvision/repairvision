@@ -1,0 +1,16 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: SiDiff Technical Difference
+Bundle-SymbolicName: org.sidiff.revision.difference.builder;singleton:=true
+Bundle-Version: 1.1.0.qualifier
+Bundle-Vendor: Software Engineering Group
+Export-Package: org.sidiff.revision.difference.builder,
+ org.sidiff.revision.difference.builder.util
+Require-Bundle: org.eclipse.core.runtime,
+ org.sidiff.revision.difference.matcher;visibility:=reexport,
+ org.sidiff.revision.difference;visibility:=reexport,
+ org.sidiff.common.utilities,
+ org.sidiff.common.emf
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Automatic-Module-Name: org.sidiff.revision.difference.derivation
+Bundle-ActivationPolicy: lazy

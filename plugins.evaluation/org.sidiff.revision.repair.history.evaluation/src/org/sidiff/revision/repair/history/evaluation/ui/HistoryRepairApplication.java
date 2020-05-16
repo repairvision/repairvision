@@ -19,8 +19,8 @@ import org.sidiff.generic.matcher.uuid.UUIDMatcherProvider;
 import org.sidiff.history.analysis.tracing.InconsistencyTrace;
 import org.sidiff.historymodel.History;
 import org.sidiff.historymodel.Problem;
+import org.sidiff.revision.difference.api.registry.DifferenceBuilderRegistry;
 import org.sidiff.revision.difference.api.settings.DifferenceSettings;
-import org.sidiff.revision.difference.derivation.util.TechnicalDifferenceBuilderUtil;
 import org.sidiff.revision.editrules.project.registry.util.RulebaseUtil;
 import org.sidiff.revision.repair.api.IRepairFacade;
 import org.sidiff.revision.repair.api.IRepairPlan;
@@ -210,7 +210,7 @@ public class HistoryRepairApplication implements IRepairApplication<PEORepairJob
 	public DifferenceSettings getMatchingSettings() {
 		DifferenceSettings settings = RepairPreferencePage.getMatchingSettings();
 		settings.setMatcher(new UUIDMatcherProvider());
-		settings.setTechBuilder(TechnicalDifferenceBuilderUtil.getGenericTechnicalDifferenceBuilder());
+		settings.setTechBuilder(DifferenceBuilderRegistry.getGenericTechnicalDifferenceBuilder());
 		
 		return settings;
 	}

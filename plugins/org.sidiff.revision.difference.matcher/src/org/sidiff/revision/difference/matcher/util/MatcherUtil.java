@@ -22,11 +22,21 @@ public class MatcherUtil {
 		return canHandleDocTypes(matcherProvider, documentTypes);
 	}
 
-	public static void createUnmatched(Difference difference, Collection<Resource> resources) {
+	public static void createUnmatchedB(Difference difference, Collection<Resource> resources) {
 		for (Resource resource : resources) {
 			for (EObject element : (Iterable<EObject>) () -> resource.getAllContents()) {
 				if (difference.isUnmatchedB(element)) {
 					difference.getUnmatchedB().add(element);
+				}
+			}
+		}
+	}
+	
+	public static void createUnmatchedA(Difference difference, Collection<Resource> resources) {
+		for (Resource resource : resources) {
+			for (EObject element : (Iterable<EObject>) () -> resource.getAllContents()) {
+				if (difference.isUnmatchedA(element)) {
+					difference.getUnmatchedA().add(element);
 				}
 			}
 		}

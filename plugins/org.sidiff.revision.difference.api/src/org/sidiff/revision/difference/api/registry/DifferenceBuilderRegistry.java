@@ -1,63 +1,67 @@
 package org.sidiff.revision.difference.api.registry;
 
-import java.io.File;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
 
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IConfigurationElement;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.ecore.resource.Resource;
-import org.sidiff.common.utilities.emf.EMFStorage;
-import org.sidiff.revision.difference.api.settings.DifferenceSettings;
-import org.sidiff.revision.difference.derivation.ITechnicalDifferenceBuilder;
-import org.sidiff.revision.difference.derivation.util.TechnicalDifferenceBuilderUtil;
+import org.sidiff.revision.difference.builder.GenericDifferenceBuilderProvider;
+import org.sidiff.revision.difference.builder.IDifferenceBuilderProvider;
+import org.sidiff.revision.difference.builder.util.DifferenceBuilderUtil;
 
-/**
- * Access to the registered difference builders.
- */
-public class DifferenceBuilderRegistry extends MatcherRegistry{
-	
-	/**
-	 * Find all available technical difference builders matching the given
-	 * document types.
-	 * 
-	 * @param documentTypes
-	 *            The document types, i.e. the package namespace URI of a model. There can be more than one.
-	 * @return All available technical difference builders matching the given
-	 *         document types.
-	 * @see #getAvailableTechnicalDifferenceBuilders(String)
-	 */
-	public static List<ITechnicalDifferenceBuilder> getAvailableTechnicalDifferenceBuilders(Set<String> documentTypes) {
-		return TechnicalDifferenceBuilderUtil.getAvailableTechnicalDifferenceBuilders(documentTypes);
-	}
-	
-	/**
-	 * Find all available technical difference builders matching the document types of the given models.
-	 * 
-	 * @param documentTypes
-	 *            The document types, i.e. the package namespace URI of a model. There can be more than one.
-	 * @return All available technical difference builders matching the given
-	 *         document types.
-	 * @see #getAvailableTechnicalDifferenceBuilders(String)
-	 */
-	public static List<ITechnicalDifferenceBuilder> getAvailableTechnicalDifferenceBuilders(Resource modelA, Resource modelB) {
-		return TechnicalDifferenceBuilderUtil.getAvailableTechnicalDifferenceBuilders(modelA, modelB);
-	}
-	
-	public static ITechnicalDifferenceBuilder getGenericTechnicalDifferenceBuilder() {
-		return TechnicalDifferenceBuilderUtil.getGenericTechnicalDifferenceBuilder();
-	}
+public class DifferenceBuilderRegistry {
+
+	private final static IDifferenceBuilderProvider GENERIC_TECHNICAL_DIFFERENCE_BUILDER = new GenericDifferenceBuilderProvider();
 
 	/**
-	 * 
-	 * Returns the default technical difference builder for the given
-	 * documentTypes: <br/>
-	 * In case of Ecore: take first non-generics diff builder. <br/>
-	 * Otherwise: take first technical difference builder
+	 * Returns the available technical difference builders for the given documentTypes.
+	 * If no convenient builder is found, a generic technical difference builder will be returned.
 	 * 
 	 * @param documentTypes
 	 * @return
 	 */
-	public static ITechnicalDifferenceBuilder getDefaultTechnicalDifferenceBuilder(Set<String> documentTypes) {
-		return TechnicalDifferenceBuilderUtil.getDefaultTechnicalDifferenceBuilder(documentTypes);
+	public static List<IDifferenceBuilderProvider> getAvailableTechnicalDifferenceBuilders(Set<String> documentTypes){
+		List<IDifferenceBuilderProvider> tdbSet = new ArrayList<IDifferenceBuilderProvider>();
+
+		for(IDifferenceBuilderProvider techBuilder : getAllAvailableTechnicalDifferenceBuilders()){
+			if (DifferenceBuilderUtil.canHandleDocTypes(techBuilder, documentTypes)) {
+				tdbSet.add(techBuilder);
+			}
+		}
+
+		return tdbSet;
+	}
+
+	/**
+	 * Returns the available technical difference builders for the documentTypes of the given models.
+	 * If no convenient builder is found, a generic technical difference builder will be returned.
+	 * 
+	 * @param documentTypes
+	 * @return
+	 */
+	public static List<IDifferenceBuilderProvider> getAvailableTechnicalDifferenceBuilders(Resource modelA, Resource modelB){
+		List<IDifferenceBuilderProvider> tdbSet = new ArrayList<IDifferenceBuilderProvider>();
+
+		for(IDifferenceBuilderProvider techBuilder : getAllAvailableTechnicalDifferenceBuilders()){
+			if (DifferenceBuilderUtil.canHandleModels(techBuilder, modelA, modelB)) {
+				tdbSet.add(techBuilder);
+			}
+		}
+
+		return tdbSet;
+	}
+
+	/**
+	 * Returns a generic technical difference builder.
+	 * 
+	 * @return
+	 */
+	public static IDifferenceBuilderProvider getGenericTechnicalDifferenceBuilder(){
+		return GENERIC_TECHNICAL_DIFFERENCE_BUILDER;
 	}
 
 	/**
@@ -66,59 +70,46 @@ public class DifferenceBuilderRegistry extends MatcherRegistry{
 	 * @param name
 	 * @return
 	 */
-	public static ITechnicalDifferenceBuilder getTechnicalDifferenceBuilder(String key){
-		return TechnicalDifferenceBuilderUtil.getTechnicalDifferenceBuilder(key);
-	}
-	
-	public static String extractCommonPath(String... paths) {
-		String result = null;
-		for (String path : paths) {
-			File file = new File(path);
-			assert (file.isFile()) : "Not a File!" + path;
-
-			if (result == null) {
-				result = file.getParent();
+	public static IDifferenceBuilderProvider getTechnicalDifferenceBuilder(String key){
+		IDifferenceBuilderProvider tbExtension = null;
+		for(IDifferenceBuilderProvider techBuilder : getAllAvailableTechnicalDifferenceBuilders()){
+			if (techBuilder.getKey().equals(key)) {
+				tbExtension = techBuilder;
+				break;
 			}
-
-			assert (result.equals(file.getParent())) : "Different Paths! " + result + " vs. " + file.getParent();
 		}
-		return result + "/";
+		return tbExtension;
 	}
 
 	/**
-	 * Generates a file name for a new difference between model A and model B.
+	 * Get all technical difference builders from the extension registry.
 	 * 
-	 * @param modelA
-	 *            The earlier version of the model.
-	 * @param modelB
-	 *            The later version of the model.
-	 * @param settings
-	 *            Specifies the settings of the semantic lifting algorithm.
-	 * @return A file name MODELAxMODELB_MATCHINGENGINE_LIFTING_POSTPROCESSING.
+	 * @return
 	 */
-	public static String generateDifferenceFileName(Resource modelA, Resource modelB, DifferenceSettings settings) {
-		String fileName = extractModelName(EMFStorage.uriToPath(modelA.getURI())) + "_x_"
-				+ extractModelName(EMFStorage.uriToPath(modelB.getURI()));
+	public static List<IDifferenceBuilderProvider> getAllAvailableTechnicalDifferenceBuilders(){
+		List<IDifferenceBuilderProvider> availableTechBuilders = new ArrayList<IDifferenceBuilderProvider>();
 
-		if (settings.getMatcher() != null) {
-			fileName += "_" + settings.getMatcher().getKey();
+		for (IConfigurationElement configurationElement : Platform.getExtensionRegistry().getConfigurationElementsFor(IDifferenceBuilderProvider.EXTENSION_POINT_ID)) {
+			try {
+				IDifferenceBuilderProvider techBuilder = (IDifferenceBuilderProvider) configurationElement.createExecutableExtension(IDifferenceBuilderProvider.EXTENSION_POINT_ATTRIBUTE);
+
+				if (!availableTechBuilders.contains(techBuilder)) {
+					availableTechBuilders.add(techBuilder);
+				}
+			} catch (CoreException e) {
+				e.printStackTrace();
+			}
 		}
 
-		fileName += "_technical";
+		availableTechBuilders.sort(new Comparator<IDifferenceBuilderProvider>() {
 
-		return fileName;
+			@Override
+			public int compare(IDifferenceBuilderProvider t1, IDifferenceBuilderProvider t2) {
+				return t1.getName().compareTo(t2.getName());
+			}
+		});
+
+		return availableTechBuilders;
 	}
 
-
-	/**
-	 * Cut of the file extension.
-	 * 
-	 * @param filename
-	 *            The file name with extension.
-	 * @return The file name without extension.
-	 */
-	protected static String extractModelName(String filename) {
-		String fName = new File(filename).getName();
-		return fName.substring(0, fName.lastIndexOf('.'));
-	}
 }

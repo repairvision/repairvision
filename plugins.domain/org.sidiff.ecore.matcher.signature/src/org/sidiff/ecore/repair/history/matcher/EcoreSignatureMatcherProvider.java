@@ -7,7 +7,7 @@ import org.eclipse.emf.ecore.EcorePackage;
 import org.sidiff.revision.difference.matcher.IMatcher;
 import org.sidiff.revision.difference.matcher.IMatcherProvider;
 
-public class EcoreMatcherProvider implements IMatcherProvider {
+public class EcoreSignatureMatcherProvider implements IMatcherProvider {
 
 	@Override
 	public String getKey() {
@@ -16,7 +16,7 @@ public class EcoreMatcherProvider implements IMatcherProvider {
 	
 	@Override
 	public String getName() {
-		return "Ecore Matcher";
+		return "Ecore Signature Matcher";
 	}
 	
 	@Override
@@ -26,6 +26,6 @@ public class EcoreMatcherProvider implements IMatcherProvider {
 
 	@Override
 	public IMatcher createMatcher() {
-		return new EcoreMatcher();
+		return new EcoreSignatureMatcher();
 	}
 }

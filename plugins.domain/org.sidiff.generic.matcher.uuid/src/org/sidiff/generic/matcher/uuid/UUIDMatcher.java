@@ -37,7 +37,7 @@ public class UUIDMatcher implements IMatcher {
 			}
 		}
 		
-		MatcherUtil.createUnmatched(difference, resourceSetB);
+		MatcherUtil.createUnmatchedB(difference, resourceSetB);
 	}
 
 	private boolean addCorrespondence(Difference difference, EObject elementA, EObject elementB) {

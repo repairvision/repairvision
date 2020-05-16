@@ -70,8 +70,7 @@ public class EditRuleGenerator {
 
 
 			// Calculate difference:
-			DifferenceSettings diffSettings =  new DifferenceSettings(
-					Collections.singleton(DocumentType.getDocumentType(vA)));
+			DifferenceSettings diffSettings =  new DifferenceSettings();
 			//				diffSettings.setTechBuilder(TechnicalDifferenceUtils.getGenericTechnicalDifferenceBuilder());
 			diffSettings.setTechBuilder(DifferenceBuilderRegistry.getTechnicalDifferenceBuilder(
 					"org.sidiff.ecore.difference.technical.TechnicalDifferenceBuilderEcore"));

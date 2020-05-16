@@ -33,11 +33,10 @@ import org.eclipse.ui.IWorkbenchPreferencePage;
 import org.sidiff.common.utilities.emf.DocumentType;
 import org.sidiff.common.utilities.ui.util.NameUtil;
 import org.sidiff.history.revision.util.SettingsUtil;
-import org.sidiff.revision.difference.api.registry.MatcherRegistry;
 import org.sidiff.revision.difference.api.registry.DifferenceBuilderRegistry;
+import org.sidiff.revision.difference.api.registry.MatcherRegistry;
 import org.sidiff.revision.difference.api.settings.DifferenceSettings;
-import org.sidiff.revision.difference.derivation.ITechnicalDifferenceBuilder;
-import org.sidiff.revision.difference.derivation.util.TechnicalDifferenceBuilderUtil;
+import org.sidiff.revision.difference.builder.IDifferenceBuilderProvider;
 import org.sidiff.revision.difference.matcher.IConfigurableMatcher;
 import org.sidiff.revision.difference.matcher.IMatcherProvider;
 import org.sidiff.revision.editrules.project.development.registry.WorkspaceRulebaseExtension;
@@ -70,9 +69,9 @@ public class RepairPreferencePage extends PreferencePage implements IWorkbenchPr
 	
 	protected static IMatcherProvider matchingEngine;
 	
-	protected static List<ITechnicalDifferenceBuilder> availableDifferenceBuilder;
+	protected static List<IDifferenceBuilderProvider> availableDifferenceBuilder;
 	
-	protected static ITechnicalDifferenceBuilder differenceBuilder;
+	protected static IDifferenceBuilderProvider differenceBuilderProvider;
 	
 	protected static UserInterfaceProvider userInterfaceProvider = new UserInterfaceProvider();
 	
@@ -264,8 +263,8 @@ public class RepairPreferencePage extends PreferencePage implements IWorkbenchPr
 				@Override
 				public String getText(Object element) {
 					
-					if (element instanceof ITechnicalDifferenceBuilder) {
-						return ((ITechnicalDifferenceBuilder) element).getName();
+					if (element instanceof IDifferenceBuilderProvider) {
+						return ((IDifferenceBuilderProvider) element).getName();
 					}
 					
 					return super.getText(element);
@@ -288,10 +287,10 @@ public class RepairPreferencePage extends PreferencePage implements IWorkbenchPr
 			}
 			
 			// Selection:
-			differenceBuilder = getInitialDifferenceBuilder();
+			differenceBuilderProvider = getInitialDifferenceBuilder();
 			
-			if (differenceBuilder != null) {
-				viewer_difference.setSelection(new StructuredSelection(differenceBuilder));
+			if (differenceBuilderProvider != null) {
+				viewer_difference.setSelection(new StructuredSelection(differenceBuilderProvider));
 				viewer_difference.refresh(true);
 			}
 			
@@ -300,11 +299,11 @@ public class RepairPreferencePage extends PreferencePage implements IWorkbenchPr
 
 				@Override
 				public void selectionChanged(SelectionChangedEvent event) {
-					differenceBuilder = getSelection();
+					differenceBuilderProvider = getSelection();
 				}
 
-				private ITechnicalDifferenceBuilder getSelection() {
-					return (ITechnicalDifferenceBuilder) ((StructuredSelection) viewer_difference.getSelection()).getFirstElement();
+				private IDifferenceBuilderProvider getSelection() {
+					return (IDifferenceBuilderProvider) ((StructuredSelection) viewer_difference.getSelection()).getFirstElement();
 				}
 			});
 		}
@@ -485,17 +484,17 @@ public class RepairPreferencePage extends PreferencePage implements IWorkbenchPr
 		return selectedMatcher;
 	}
 	
-	private static ITechnicalDifferenceBuilder getInitialDifferenceBuilder() {
-		ITechnicalDifferenceBuilder selectedBuilder = null;
+	private static IDifferenceBuilderProvider getInitialDifferenceBuilder() {
+		IDifferenceBuilderProvider selectedBuilder = null;
 		
-		if ((differenceBuilder != null) && (availableDifferenceBuilder != null) && (availableDifferenceBuilder.contains(differenceBuilder))) {
-			selectedBuilder = differenceBuilder;
+		if ((differenceBuilderProvider != null) && (availableDifferenceBuilder != null) && (availableDifferenceBuilder.contains(differenceBuilderProvider))) {
+			selectedBuilder = differenceBuilderProvider;
 		} else {
 			if ((availableDifferenceBuilder != null) && (!availableDifferenceBuilder.isEmpty())) {
-				ITechnicalDifferenceBuilder defaultBuilder = DifferenceBuilderRegistry.getDefaultTechnicalDifferenceBuilder(getDoumentTypes());
+				IDifferenceBuilderProvider defaultBuilder = DifferenceBuilderRegistry.getGenericTechnicalDifferenceBuilder();
 				
 				// [WORKAROUND]: Do not reload technical difference builder...
-				for (ITechnicalDifferenceBuilder builder : availableDifferenceBuilder) {
+				for (IDifferenceBuilderProvider builder : availableDifferenceBuilder) {
 					if (defaultBuilder.getKey().equals(builder.getKey())) {
 						selectedBuilder = builder;
 						break;
@@ -530,13 +529,13 @@ public class RepairPreferencePage extends PreferencePage implements IWorkbenchPr
 		matchingEngine = getInitialMatcher();
 	}
 	
-	public static ITechnicalDifferenceBuilder getSelectedTechnicalDifferenceBuilder() {
-		return differenceBuilder;
+	public static IDifferenceBuilderProvider getSelectedTechnicalDifferenceBuilder() {
+		return differenceBuilderProvider;
 	}
 	
-	public static void setAvailableTechnicalDifferenceBuilder(List<ITechnicalDifferenceBuilder> builders) {
+	public static void setAvailableTechnicalDifferenceBuilder(List<IDifferenceBuilderProvider> builders) {
 		RepairPreferencePage.availableDifferenceBuilder = builders;
-		differenceBuilder = getInitialDifferenceBuilder();
+		differenceBuilderProvider = getInitialDifferenceBuilder();
 	}
 	
 	public static IMatcherProvider getSelectedMatcher() {
@@ -605,11 +604,11 @@ public class RepairPreferencePage extends PreferencePage implements IWorkbenchPr
 				
 				// Technical RevisionDifference Builder:
 				setAvailableTechnicalDifferenceBuilder(
-						TechnicalDifferenceBuilderUtil.getAvailableTechnicalDifferenceBuilders(getDoumentTypes()));
+						DifferenceBuilderRegistry.getAvailableTechnicalDifferenceBuilders(getDoumentTypes()));
 			}
 		} else {
 			setAvailableMatcher(null);
-			differenceBuilder = null;
+			differenceBuilderProvider = null;
 
 			setAvailableTechnicalDifferenceBuilder(null);
 			documentType = null;

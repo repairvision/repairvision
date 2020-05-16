@@ -14,7 +14,7 @@ import org.sidiff.history.revision.util.SettingsUtil;
 import org.sidiff.revision.difference.api.registry.MatcherRegistry;
 import org.sidiff.revision.difference.api.registry.DifferenceBuilderRegistry;
 import org.sidiff.revision.difference.api.settings.DifferenceSettings;
-import org.sidiff.revision.difference.derivation.ITechnicalDifferenceBuilder;
+import org.sidiff.revision.difference.builder.IDifferenceBuilderProvider;
 import org.sidiff.revision.difference.matcher.IMatcherProvider;
 import org.sidiff.revision.repair.history.retrieval.miner.connectors.EclipseGitOrgMiner;
 import org.sidiff.revision.repair.history.retrieval.miner.connectors.GitHubComMiner;
@@ -71,7 +71,7 @@ public class EcoreHistorySettings {
 		IMatcherProvider matcherProvider = MatcherRegistry.getMatcherByKey("org.sidiff.ecore.repair.history.matcher.EcoreMatcher");
 		differenceSettings.setMatcher(matcherProvider);
 		
-		ITechnicalDifferenceBuilder builder = DifferenceBuilderRegistry.getTechnicalDifferenceBuilder("org.sidiff.ecore.difference.technical.TechnicalDifferenceBuilderEcoreNoAnnotations");
+		IDifferenceBuilderProvider builder = DifferenceBuilderRegistry.getTechnicalDifferenceBuilder("org.sidiff.ecore.difference.technical.TechnicalDifferenceBuilderEcoreNoAnnotations");
 		differenceSettings.setTechBuilder(builder);
 		return differenceSettings;
 	}

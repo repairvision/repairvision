@@ -1,13 +1,12 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <!-- Schema file written by PDE -->
-<schema targetNamespace="org.sidiff.revision.difference.derivation" xmlns="http://www.w3.org/2001/XMLSchema">
+<schema targetNamespace="org.sidiff.revision.difference.builder" xmlns="http://www.w3.org/2001/XMLSchema">
 <annotation>
       <appinfo>
-         <meta.schema plugin="org.sidiff.revision.difference.derivation" id="technical_difference_builder_extension" name="TechnicalDifferenceBuilder"/>
+         <meta.schema plugin="org.sidiff.revision.difference.builder" id="provider" name="Provider"/>
       </appinfo>
       <documentation>
-         This extension point is used to add a technical difference builder to the lifting engine. A plugin that adds this extension point has to implement the ITechnicalDifferenceBuilder interface. This interface offers the following information:
-- The document type the technical difference builder was implemented for.
+         This extension point is used to add a technical difference builder to the difference pipeline.
       </documentation>
    </annotation>
 
@@ -19,7 +18,7 @@
       </annotation>
       <complexType>
          <choice>
-            <element ref="technical" minOccurs="1" maxOccurs="unbounded"/>
+            <element ref="builder" minOccurs="1" maxOccurs="unbounded"/>
          </choice>
          <attribute name="point" type="string" use="required">
             <annotation>
@@ -48,15 +47,15 @@
       </complexType>
    </element>
 
-   <element name="technical">
+   <element name="builder">
       <complexType>
-         <attribute name="difference_builder" type="string">
+         <attribute name="class" type="string">
             <annotation>
                <documentation>
                   
                </documentation>
                <appinfo>
-                  <meta.attribute kind="java" basedOn=":org.sidiff.revision.difference.derivation.ITechnicalDifferenceBuilder"/>
+                  <meta.attribute kind="java" basedOn=":org.sidiff.revision.difference.builder.IDifferenceBuilderProvider"/>
                </appinfo>
             </annotation>
          </attribute>

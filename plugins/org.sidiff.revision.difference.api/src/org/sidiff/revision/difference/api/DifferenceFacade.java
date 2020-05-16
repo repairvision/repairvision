@@ -5,7 +5,7 @@ import org.sidiff.revision.difference.Difference;
 import org.sidiff.revision.difference.DifferenceFactory;
 import org.sidiff.revision.difference.api.settings.DifferenceSettings;
 import org.sidiff.revision.difference.api.settings.MatchingSettings;
-import org.sidiff.revision.difference.derivation.ITechnicalDifferenceBuilder;
+import org.sidiff.revision.difference.builder.IDifferenceBuilderProvider;
 import org.sidiff.revision.difference.matcher.IMatcherProvider;
 import org.sidiff.revision.difference.util.DifferenceUtil;
 
@@ -72,8 +72,8 @@ public class DifferenceFacade {
 	 *      org.sidiff.matching.api.settings.MatchingSettings)
 	 */
 	public static Difference deriveDifference(Difference difference, DifferenceSettings settings) {
-		ITechnicalDifferenceBuilder tdBuilder = settings.getTechBuilder();
-		tdBuilder.deriveTechDiff(difference, settings.getScope());
+		IDifferenceBuilderProvider tdBuilder = settings.getTechBuilder();
+		tdBuilder.createDifferenceBuilder().deriveTechDiff(difference, settings.getScope());
 		return difference;
 	}
 
