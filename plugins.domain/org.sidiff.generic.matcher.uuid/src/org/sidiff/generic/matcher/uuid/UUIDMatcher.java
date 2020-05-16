@@ -2,12 +2,10 @@ package org.sidiff.generic.matcher.uuid;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Set;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.resource.Resource;
-import org.sidiff.common.utilities.emf.DocumentType;
 import org.sidiff.common.utilities.emf.EMFStorage;
 import org.sidiff.common.utilities.emf.Scope;
 import org.sidiff.revision.difference.Difference;
@@ -15,21 +13,6 @@ import org.sidiff.revision.difference.matcher.IMatcher;
 import org.sidiff.revision.difference.matcher.util.MatcherUtil;
 
 public class UUIDMatcher implements IMatcher {
-	
-	@Override
-	public String getKey() {
-		return getName();
-	}
-
-	@Override
-	public String getName() {
-		return "UUID Resource Matcher";
-	}
-
-	@Override
-	public Set<String> getDocumentTypes() {
-		return Collections.singleton(DocumentType.GENERIC_DOCUMENT_TYPE);
-	}
 	
 	@Override
 	public void startMatching(Difference difference, Resource modelA, Resource modelB, Scope scope) {

@@ -8,18 +8,18 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.sidiff.common.utilities.emf.DocumentType;
 import org.sidiff.revision.difference.Difference;
-import org.sidiff.revision.difference.matcher.IMatcher;
+import org.sidiff.revision.difference.matcher.IMatcherProvider;
 
 public class MatcherUtil {
 
-	public static boolean canHandleDocTypes(IMatcher matcher, Set<String> documentTypes) {
-		return matcher.getDocumentTypes().contains(DocumentType.GENERIC_DOCUMENT_TYPE) 
-				|| matcher.getDocumentTypes().containsAll(documentTypes);
+	public static boolean canHandleDocTypes(IMatcherProvider matcherProvider, Set<String> documentTypes) {
+		return matcherProvider.getDocumentTypes().contains(DocumentType.GENERIC_DOCUMENT_TYPE) 
+				|| matcherProvider.getDocumentTypes().containsAll(documentTypes);
 	}
 	
-	public static boolean canHandleModels(IMatcher matcher, Collection<Resource> models) {
+	public static boolean canHandleModels(IMatcherProvider matcherProvider, Collection<Resource> models) {
 		Set<String> documentTypes = models.stream().map(model -> DocumentType.getDocumentType(model)).collect(Collectors.toSet());
-		return canHandleDocTypes(matcher, documentTypes);
+		return canHandleDocTypes(matcherProvider, documentTypes);
 	}
 
 	public static void createUnmatched(Difference difference, Collection<Resource> resources) {
@@ -31,9 +31,4 @@ public class MatcherUtil {
 			}
 		}
 	}
-
-
-	
-
-	
 }

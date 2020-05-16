@@ -12,13 +12,13 @@ import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.equinox.app.IApplication;
 import org.eclipse.equinox.app.IApplicationContext;
 import org.sidiff.common.utilities.emf.Scope;
-import org.sidiff.generic.matcher.uuid.UUIDMatcher;
+import org.sidiff.generic.matcher.uuid.UUIDMatcherProvider;
 import org.sidiff.history.revision.util.SettingsUtil;
 import org.sidiff.historymodel.History;
 import org.sidiff.revision.difference.api.settings.DifferenceSettings;
 import org.sidiff.revision.difference.derivation.GenericTechnicalDifferenceBuilder;
 import org.sidiff.revision.difference.derivation.ITechnicalDifferenceBuilder;
-import org.sidiff.revision.difference.matcher.IMatcher;
+import org.sidiff.revision.difference.matcher.IMatcherProvider;
 import org.sidiff.revision.editrules.project.registry.RulebaseRegistry;
 import org.sidiff.revision.editrules.project.registry.util.RulebaseUtil;
 import org.sidiff.revision.repair.api.IRepairFacade;
@@ -79,15 +79,15 @@ public class HistoryEvaluationApplication implements IApplication {
 	
 	private DifferenceSettings getSettings() {
 		DifferenceSettings differenceSettings = SettingsUtil.getDefaultDifferenceSettings();
-		IMatcher matcher = new UUIDMatcher();
+		IMatcherProvider matcherProvider = new UUIDMatcherProvider();
 //		IMatcher matcher = MatchingUtils.getMatcherByKey(MATCHER);
 		ITechnicalDifferenceBuilder builder = new GenericTechnicalDifferenceBuilder();
 //		ITechnicalDifferenceBuilder builder = TechnicalDifferenceUtils.getTechnicalDifferenceBuilder(DIFFERENCE_BUILDER);
-		differenceSettings.setMatcher(matcher);
+		differenceSettings.setMatcher(matcherProvider);
 		differenceSettings.setTechBuilder(builder);
 		differenceSettings.setScope(Scope.RESOURCE_SET);
 		
-		if ((matcher == null) || (builder == null)) {
+		if ((matcherProvider == null) || (builder == null)) {
 			throw new RuntimeException("Invalid difference settings!");
 		}
 		

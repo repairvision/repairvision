@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: SiDiff Correspondences Service - Matching Model
-Bundle-SymbolicName: org.sidiff.revision.difference.matchingmodel;singleton:=true
+Bundle-SymbolicName: org.sidiff.generic.matcher.adapter.sidiff;singleton:=true
 Bundle-Version: 1.1.0.qualifier
 Bundle-ClassPath: .
 Bundle-Vendor: Software Engineering Group, University of Siegen
@@ -9,7 +9,9 @@ Bundle-Localization: plugin
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Require-Bundle: org.eclipse.emf.ecore,
  org.sidiff.correspondences;visibility:=reexport,
- org.sidiff.revision.difference
-Export-Package: org.sidiff.correspondences.matchingmodel
+ org.sidiff.revision.difference,
+ org.sidiff.revision.difference.api,
+ org.sidiff.revision.difference.matcher,
+ org.sidiff.matcher
 Automatic-Module-Name: org.sidiff.correspondences.matchingmodel
 Bundle-ActivationPolicy: lazy

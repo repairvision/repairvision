@@ -33,13 +33,13 @@ import org.eclipse.ui.IWorkbenchPreferencePage;
 import org.sidiff.common.utilities.emf.DocumentType;
 import org.sidiff.common.utilities.ui.util.NameUtil;
 import org.sidiff.history.revision.util.SettingsUtil;
+import org.sidiff.revision.difference.api.registry.MatcherRegistry;
+import org.sidiff.revision.difference.api.registry.DifferenceBuilderRegistry;
 import org.sidiff.revision.difference.api.settings.DifferenceSettings;
-import org.sidiff.revision.difference.api.util.MatchingUtils;
-import org.sidiff.revision.difference.api.util.TechnicalDifferenceUtils;
 import org.sidiff.revision.difference.derivation.ITechnicalDifferenceBuilder;
 import org.sidiff.revision.difference.derivation.util.TechnicalDifferenceBuilderUtil;
 import org.sidiff.revision.difference.matcher.IConfigurableMatcher;
-import org.sidiff.revision.difference.matcher.IMatcher;
+import org.sidiff.revision.difference.matcher.IMatcherProvider;
 import org.sidiff.revision.editrules.project.development.registry.WorkspaceRulebaseExtension;
 import org.sidiff.revision.editrules.project.development.registry.WorkspaceRulebaseRegistry;
 import org.sidiff.revision.editrules.project.registry.RulebaseExtension;
@@ -66,9 +66,9 @@ public class RepairPreferencePage extends PreferencePage implements IWorkbenchPr
 	
 	protected static String documentType;
 	
-	protected static List<IMatcher> availableMatchers;
+	protected static List<IMatcherProvider> availableMatchers;
 	
-	protected static IMatcher matchingEngine;
+	protected static IMatcherProvider matchingEngine;
 	
 	protected static List<ITechnicalDifferenceBuilder> availableDifferenceBuilder;
 	
@@ -147,8 +147,8 @@ public class RepairPreferencePage extends PreferencePage implements IWorkbenchPr
 				@Override
 				public String getText(Object element) {
 					
-					if (element instanceof IMatcher) {
-						return ((IMatcher) element).getName();
+					if (element instanceof IMatcherProvider) {
+						return ((IMatcherProvider) element).getName();
 					}
 					
 					return super.getText(element);
@@ -191,8 +191,8 @@ public class RepairPreferencePage extends PreferencePage implements IWorkbenchPr
 					appendMatcherSettings(grpMatching);
 				}
 
-				private IMatcher getSelection() {
-					return (IMatcher) ((StructuredSelection) viewer_matching.getSelection()).getFirstElement();
+				private IMatcherProvider getSelection() {
+					return (IMatcherProvider) ((StructuredSelection) viewer_matching.getSelection()).getFirstElement();
 				}
 			});
 		}
@@ -460,8 +460,8 @@ public class RepairPreferencePage extends PreferencePage implements IWorkbenchPr
 		}
 	}
 
-	private static IMatcher getInitialMatcher() {
-		IMatcher selectedMatcher = null;
+	private static IMatcherProvider getInitialMatcher() {
+		IMatcherProvider selectedMatcher = null;
 		
 		if ((matchingEngine != null) && (availableMatchers != null) && (availableMatchers.contains(matchingEngine))) {
 			selectedMatcher = matchingEngine;
@@ -492,7 +492,7 @@ public class RepairPreferencePage extends PreferencePage implements IWorkbenchPr
 			selectedBuilder = differenceBuilder;
 		} else {
 			if ((availableDifferenceBuilder != null) && (!availableDifferenceBuilder.isEmpty())) {
-				ITechnicalDifferenceBuilder defaultBuilder = TechnicalDifferenceUtils.getDefaultTechnicalDifferenceBuilder(getDoumentTypes());
+				ITechnicalDifferenceBuilder defaultBuilder = DifferenceBuilderRegistry.getDefaultTechnicalDifferenceBuilder(getDoumentTypes());
 				
 				// [WORKAROUND]: Do not reload technical difference builder...
 				for (ITechnicalDifferenceBuilder builder : availableDifferenceBuilder) {
@@ -507,26 +507,26 @@ public class RepairPreferencePage extends PreferencePage implements IWorkbenchPr
 		return selectedBuilder;
 	}
 	
-	private static IMatcher getMatcherByName(String name) {
-		for (IMatcher matcher : availableMatchers) {
-			if (matcher.getName().equalsIgnoreCase(name)) {
-				return matcher;
+	private static IMatcherProvider getMatcherByName(String name) {
+		for (IMatcherProvider matcherProvider : availableMatchers) {
+			if (matcherProvider.getName().equalsIgnoreCase(name)) {
+				return matcherProvider;
 			}
 		}
 		return null;
 	}
 	
-	private static IMatcher getMatcherByNameFragment(String name) {
-		for (IMatcher matcher : availableMatchers) {
-			if (matcher.getName().contains(name)) {
-				return matcher;
+	private static IMatcherProvider getMatcherByNameFragment(String name) {
+		for (IMatcherProvider matcherProvider : availableMatchers) {
+			if (matcherProvider.getName().contains(name)) {
+				return matcherProvider;
 			}
 		}
 		return null;
 	}
 	
-	public static void setAvailableMatcher(List<IMatcher> matchers) {
-		RepairPreferencePage.availableMatchers = matchers;
+	public static void setAvailableMatcher(List<IMatcherProvider> matcherProviders) {
+		RepairPreferencePage.availableMatchers = matcherProviders;
 		matchingEngine = getInitialMatcher();
 	}
 	
@@ -539,7 +539,7 @@ public class RepairPreferencePage extends PreferencePage implements IWorkbenchPr
 		differenceBuilder = getInitialDifferenceBuilder();
 	}
 	
-	public static IMatcher getSelectedMatcher() {
+	public static IMatcherProvider getSelectedMatcher() {
 		return matchingEngine;
 	}
 	
@@ -601,7 +601,7 @@ public class RepairPreferencePage extends PreferencePage implements IWorkbenchPr
 				documentType = newDocumentType;
 				
 				// Matcher:
-				setAvailableMatcher(MatchingUtils.getAvailableMatchers(getDoumentTypes()));
+				setAvailableMatcher(MatcherRegistry.getAvailableMatchers(getDoumentTypes()));
 				
 				// Technical RevisionDifference Builder:
 				setAvailableTechnicalDifferenceBuilder(

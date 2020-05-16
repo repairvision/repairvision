@@ -8,7 +8,6 @@ import java.util.Set;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.sidiff.common.utilities.emf.Scope;
-import org.sidiff.common.utilities.ui.util.NameUtil;
 import org.sidiff.revision.difference.Difference;
 import org.sidiff.revision.difference.matcher.IMatcher;
 
@@ -17,21 +16,6 @@ import org.sidiff.revision.difference.matcher.IMatcher;
  */
 public abstract class BaseMatcher implements IMatcher {
 
-	/**
-	 * RESOURCE or RESOURCE_SET
-	 */
-	protected Scope scope;	
-	
-	@Override
-	public String getKey(){
-		return getClass().getSimpleName();
-	}
-	
-	@Override
-	public String getName() {
-		return NameUtil.beautifyName(getKey());
-	}
-	
 	@Override
 	public void startMatching(Difference difference, Resource modelA, Resource modelB, Scope scope) {
 		List<Resource> resourcesA = scope == Scope.RESOURCE ? Collections.singletonList(modelA) : modelA.getResourceSet().getResources();

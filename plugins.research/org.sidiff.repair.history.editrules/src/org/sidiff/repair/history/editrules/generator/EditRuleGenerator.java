@@ -14,10 +14,10 @@ import org.sidiff.repair.history.editrules.learn.scope.LearnEditRule;
 import org.sidiff.repair.history.editrules.util.IterableHistory;
 import org.sidiff.revision.difference.Change;
 import org.sidiff.revision.difference.Difference;
-import org.sidiff.revision.difference.api.TechnicalDifferenceFacade;
+import org.sidiff.revision.difference.api.DifferenceFacade;
+import org.sidiff.revision.difference.api.registry.MatcherRegistry;
+import org.sidiff.revision.difference.api.registry.DifferenceBuilderRegistry;
 import org.sidiff.revision.difference.api.settings.DifferenceSettings;
-import org.sidiff.revision.difference.api.util.MatchingUtils;
-import org.sidiff.revision.difference.api.util.TechnicalDifferenceUtils;
 import org.sidiff.validation.constraint.api.ValidationFacade;
 import org.sidiff.validation.constraint.api.util.RequiredValidation;
 import org.sidiff.validation.constraint.interpreter.decisiontree.IDecisionNode;
@@ -73,12 +73,12 @@ public class EditRuleGenerator {
 			DifferenceSettings diffSettings =  new DifferenceSettings(
 					Collections.singleton(DocumentType.getDocumentType(vA)));
 			//				diffSettings.setTechBuilder(TechnicalDifferenceUtils.getGenericTechnicalDifferenceBuilder());
-			diffSettings.setTechBuilder(TechnicalDifferenceUtils.getTechnicalDifferenceBuilder(
+			diffSettings.setTechBuilder(DifferenceBuilderRegistry.getTechnicalDifferenceBuilder(
 					"org.sidiff.ecore.difference.technical.TechnicalDifferenceBuilderEcore"));
-			diffSettings.setMatcher(MatchingUtils.getMatcherByKey(
+			diffSettings.setMatcher(MatcherRegistry.getMatcherByKey(
 					"EMFCompareMatcherAdapter"));
 
-			Difference difference = TechnicalDifferenceFacade.difference(vA, vB, diffSettings);
+			Difference difference = DifferenceFacade.difference(vA, vB, diffSettings);
 
 			// Validation:
 			List<RequiredValidation[]> validationPairs = findValidationPairs(difference);

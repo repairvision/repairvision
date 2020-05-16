@@ -25,26 +25,26 @@ import org.sidiff.revision.difference.DifferenceFactory;
 import org.sidiff.revision.difference.DifferencePackage;
 import org.sidiff.revision.difference.RemoveObject;
 import org.sidiff.revision.difference.RemoveReference;
-import org.sidiff.revision.difference.api.TechnicalDifferenceFacade;
+import org.sidiff.revision.difference.api.DifferenceFacade;
 import org.sidiff.revision.difference.api.settings.DifferenceSettings;
-import org.sidiff.revision.difference.matcher.IMatcher;
+import org.sidiff.revision.difference.matcher.IMatcherProvider;
 import org.sidiff.revision.difference.util.DifferenceUtil;
 
 public class SymmetricDifferenceUtil {
 
 	private static final DifferencePackage DIFFERENCE_PACKAGE = DifferencePackage.eINSTANCE;
 
-	public static Difference calculateDifference(Resource modelA, Resource modelB, IMatcher matcher) {
+	public static Difference calculateDifference(Resource modelA, Resource modelB, IMatcherProvider matcherProvider) {
 
 		DifferenceSettings settings = new DifferenceSettings();
-		settings.setMatcher(matcher);
+		settings.setMatcher(matcherProvider);
 
 		
-		return TechnicalDifferenceFacade.difference(modelA, modelB, settings);
+		return DifferenceFacade.difference(modelA, modelB, settings);
 	}
 
 	public static Difference calculateDifference(Resource modelA, Resource modelB, DifferenceSettings settings) {
-		return TechnicalDifferenceFacade.difference(modelA, modelB, settings);
+		return DifferenceFacade.difference(modelA, modelB, settings);
 	}
 
 	public static void saveDifference(Difference difference) {

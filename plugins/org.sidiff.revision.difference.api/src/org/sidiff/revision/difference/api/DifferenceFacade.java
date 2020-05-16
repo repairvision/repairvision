@@ -6,13 +6,13 @@ import org.sidiff.revision.difference.DifferenceFactory;
 import org.sidiff.revision.difference.api.settings.DifferenceSettings;
 import org.sidiff.revision.difference.api.settings.MatchingSettings;
 import org.sidiff.revision.difference.derivation.ITechnicalDifferenceBuilder;
-import org.sidiff.revision.difference.matcher.IMatcher;
+import org.sidiff.revision.difference.matcher.IMatcherProvider;
 import org.sidiff.revision.difference.util.DifferenceUtil;
 
 /**
  * Convenient access to differencing functions.
  */
-public class TechnicalDifferenceFacade {
+public class DifferenceFacade {
 
 	public static String DIFFERENCE_FILE_EXTENSION = DifferenceUtil.FILE_EXTENSION;
 
@@ -41,10 +41,10 @@ public class TechnicalDifferenceFacade {
 	 * @return A {@link Matching} between the given models
 	 */
 	public static Difference match(Resource modelA, Resource modelB, MatchingSettings settings) {
-		IMatcher matcher = settings.getMatcher();
+		IMatcherProvider matcherProvider = settings.getMatcher();
 
 		Difference difference = DifferenceFactory.eINSTANCE.createDifference();
-		matcher.startMatching(difference, modelA, modelB, settings.getScope());
+		matcherProvider.createMatcher().startMatching(difference, modelA, modelB, settings.getScope());
 
 		return difference;
 	}

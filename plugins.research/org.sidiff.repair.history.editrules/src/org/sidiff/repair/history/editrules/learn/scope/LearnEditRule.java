@@ -1,6 +1,6 @@
 package org.sidiff.repair.history.editrules.learn.scope;
 
-import static org.sidiff.revision.difference.api.TechnicalDifferenceFacade.difference;
+import static org.sidiff.revision.difference.api.DifferenceFacade.difference;
 
 import java.io.IOException;
 import java.util.Collections;

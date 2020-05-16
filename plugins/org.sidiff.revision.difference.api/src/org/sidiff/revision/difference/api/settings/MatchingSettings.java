@@ -6,8 +6,8 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.MultiStatus;
 import org.eclipse.core.runtime.Status;
 import org.sidiff.common.utilities.emf.Scope;
-import org.sidiff.revision.difference.api.util.MatchingUtils;
-import org.sidiff.revision.difference.matcher.IMatcher;
+import org.sidiff.revision.difference.api.registry.MatcherRegistry;
+import org.sidiff.revision.difference.matcher.IMatcherProvider;
 
 public class MatchingSettings {
 	
@@ -21,24 +21,24 @@ public class MatchingSettings {
 	/**
 	 * The Matcher for calculating correspondences.
 	 */
-	private IMatcher matcher;
+	private IMatcherProvider matcherProvider;
 	
 	/**
 	 * default {@link MatchingSettings}
 	 */
 	public MatchingSettings() {
 		super();
-		this.matcher = MatchingUtils.getGenericMatchers().iterator().next();
+		this.matcherProvider = MatcherRegistry.getGenericMatchers().iterator().next();
 	}
 
 	public MatchingSettings(Set<String> documentTypes) {
 		super();
-		this.matcher = MatchingUtils.getAvailableMatchers(documentTypes).iterator().next();
+		this.matcherProvider = MatcherRegistry.getAvailableMatchers(documentTypes).iterator().next();
 	}
 
-	public MatchingSettings(Scope scope, IMatcher matcher) {
+	public MatchingSettings(Scope scope, IMatcherProvider matcherProvider) {
 		this.scope = scope;
-		this.matcher = matcher;
+		this.matcherProvider = matcherProvider;
 	}
 
 	@Override
@@ -85,14 +85,14 @@ public class MatchingSettings {
 	/**
 	 * @return The Matcher for model comparison.
 	 */
-	public IMatcher getMatcher() {
-		return matcher;
+	public IMatcherProvider getMatcher() {
+		return matcherProvider;
 	}
 	
 	/**
-	 * @param matcher The Matcher for model comparison.
+	 * @param matcherProvider The Matcher for model comparison.
 	 */
-	public void setMatcher(IMatcher matcher) {
-		this.matcher = matcher;
+	public void setMatcher(IMatcherProvider matcherProvider) {
+		this.matcherProvider = matcherProvider;
 	}
 }

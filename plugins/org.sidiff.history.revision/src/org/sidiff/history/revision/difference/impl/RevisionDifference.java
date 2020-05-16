@@ -24,7 +24,7 @@ import org.sidiff.revision.difference.Difference;
 import org.sidiff.revision.difference.DifferenceFactory;
 import org.sidiff.revision.difference.api.settings.DifferenceSettings;
 import org.sidiff.revision.difference.derivation.ITechnicalDifferenceBuilder;
-import org.sidiff.revision.difference.matcher.IMatcher;
+import org.sidiff.revision.difference.matcher.IMatcherProvider;
 
 public class RevisionDifference implements IRevisionDifference {
 
@@ -39,10 +39,10 @@ public class RevisionDifference implements IRevisionDifference {
 		Resource resourceB = versionB.getTargetResource();
 
 		// Calculate difference:
-		IMatcher matcher = settings.getMatcher();
+		IMatcherProvider matcherProvider = settings.getMatcher();
 		
 		Difference difference = DifferenceFactory.eINSTANCE.createDifference();
-		matcher.startMatching(difference, resourceA, resourceB, settings.getScope());
+		matcherProvider.createMatcher().startMatching(difference, resourceA, resourceB, settings.getScope());
 
 		ITechnicalDifferenceBuilder tdBuilder = settings.getTechBuilder();
 		tdBuilder.deriveTechDiff(difference, settings.getScope());

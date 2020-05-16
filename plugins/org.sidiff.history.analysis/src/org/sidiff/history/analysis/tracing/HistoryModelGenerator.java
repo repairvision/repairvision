@@ -20,7 +20,7 @@ import org.sidiff.historymodel.Problem;
 import org.sidiff.historymodel.Version;
 import org.sidiff.revision.difference.Correspondence;
 import org.sidiff.revision.difference.Difference;
-import org.sidiff.revision.difference.api.TechnicalDifferenceFacade;
+import org.sidiff.revision.difference.api.DifferenceFacade;
 import org.sidiff.revision.difference.api.settings.DifferenceSettings;
 
 public class HistoryModelGenerator {
@@ -139,7 +139,7 @@ public class HistoryModelGenerator {
 		Resource resourceA = versionA.getModel();
 		Resource resourceB = versionB.getModel();
 		
-		Difference matching = TechnicalDifferenceFacade.match(resourceA, resourceB, settings);
+		Difference matching = DifferenceFacade.match(resourceA, resourceB, settings);
 
 		return matching;
 	}

@@ -2,10 +2,9 @@
 <?eclipse version="3.4"?>
 <plugin>
    <extension
-         point="org.sidiff.revision.difference.matcher.engine">
-      <client
-            class="org.sidiff.ecore.repair.history.matcher.EcoreMatcher">
-      </client>
+         point="org.sidiff.revision.difference.matcher.provider">
+      <matcher
+            class="org.sidiff.ecore.repair.history.matcher.EcoreMatcherProvider"></matcher>
    </extension>
 
 </plugin>

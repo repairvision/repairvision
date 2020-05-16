@@ -21,10 +21,10 @@ import org.sidiff.common.utilities.ui.util.WorkbenchUtil;
 import org.sidiff.revision.difference.Correspondence;
 import org.sidiff.revision.difference.Difference;
 import org.sidiff.revision.difference.DifferenceFactory;
-import org.sidiff.revision.difference.api.util.MatchingUtils;
+import org.sidiff.revision.difference.api.registry.MatcherRegistry;
 import org.sidiff.revision.difference.derivation.GenericTechnicalDifferenceBuilder;
 import org.sidiff.revision.difference.derivation.ITechnicalDifferenceBuilder;
-import org.sidiff.revision.difference.matcher.IMatcher;
+import org.sidiff.revision.difference.matcher.IMatcherProvider;
 import org.sidiff.revision.difference.util.DifferenceUtil;
 
 public class CreateDifferenceHandler extends AbstractHandler {
@@ -40,16 +40,16 @@ public class CreateDifferenceHandler extends AbstractHandler {
 			Scope scope = Scope.RESOURCE;
 			Set<String> documentType = Collections.singleton(DocumentType.getDocumentType(modelB));
 			
-			List<IMatcher> matchers = askForMatcher(documentType);
+			List<IMatcherProvider> matcherProviders = askForMatcher(documentType);
 			
-			if (matchers.isEmpty()) {
+			if (matcherProviders.isEmpty()) {
 				return null;
 			}
 			
-			IMatcher matcher = matchers.get(0);
-			Difference difference = createMatching(modelA, modelB, scope, matcher);
+			IMatcherProvider matcherProvider = matcherProviders.get(0);
+			Difference difference = createMatching(modelA, modelB, scope, matcherProvider);
 			
-			for (IMatcher subsequentMatcher : matchers.subList(1, matchers.size())) {
+			for (IMatcherProvider subsequentMatcher : matcherProviders.subList(1, matcherProviders.size())) {
 				Difference subsequentMatching = createMatching(modelA, modelB, scope, subsequentMatcher);
 				iterativeMatching(difference, subsequentMatching);
 			}
@@ -75,22 +75,22 @@ public class CreateDifferenceHandler extends AbstractHandler {
 		return null;
 	}
 
-	private List<IMatcher> askForMatcher(Set<String> documentType) {
+	private List<IMatcherProvider> askForMatcher(Set<String> documentType) {
 		return WorkbenchUtil.showSelections(
 				"Select Matching-Engine(s)", 
-				MatchingUtils.getAvailableMatchers(documentType), 
+				MatcherRegistry.getAvailableMatchers(documentType), 
 				new ColumnLabelProvider() {
 					
 					@Override
 					public String getText(Object element) {
-						return ((IMatcher) element).getName();
+						return ((IMatcherProvider) element).getName();
 					}
 				});
 	}
 
-	private Difference createMatching(Resource modelA, Resource modelB, Scope scope, IMatcher matcher) {
+	private Difference createMatching(Resource modelA, Resource modelB, Scope scope, IMatcherProvider matcherProvider) {
 		Difference difference = DifferenceFactory.eINSTANCE.createDifference();
-		matcher.startMatching(difference, modelA, modelB, scope);
+		matcherProvider.createMatcher().startMatching(difference, modelA, modelB, scope);
 		return difference;
 	}
 	

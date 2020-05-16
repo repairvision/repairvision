@@ -28,7 +28,7 @@ import org.sidiff.historymodel.Problem;
 import org.sidiff.historymodel.Version;
 import org.sidiff.revision.difference.Correspondence;
 import org.sidiff.revision.difference.Difference;
-import org.sidiff.revision.difference.api.TechnicalDifferenceFacade;
+import org.sidiff.revision.difference.api.DifferenceFacade;
 import org.sidiff.revision.repair.history.retrieval.metadata.HistoryMetadata;
 import org.sidiff.revision.repair.history.retrieval.metadata.VersionMetadata;
 import org.sidiff.revision.repair.history.retrieval.metadata.coevolution.CoevolutionDataSetMetadata;
@@ -265,7 +265,7 @@ public class EcoreHistoryInconsistencyTracesApplication implements IApplication 
 	}
 	
 	protected Difference generateMatching(Resource resourceA, Resource resourceB, EcoreHistorySettings settings) {
-		return TechnicalDifferenceFacade.match(resourceA, resourceB, settings.getDifferenceSettings());
+		return DifferenceFacade.match(resourceA, resourceB, settings.getDifferenceSettings());
 	}
 	
 	protected void generateUUIDs(Difference matching) {

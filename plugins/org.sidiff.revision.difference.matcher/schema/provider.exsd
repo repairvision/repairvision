@@ -3,7 +3,7 @@
 <schema targetNamespace="org.sidiff.revision.difference.matcher" xmlns="http://www.w3.org/2001/XMLSchema">
 <annotation>
       <appinfo>
-         <meta.schema plugin="org.sidiff.revision.difference.matcher" id="org.sidiff.revision.difference.matcher.extensionpoint" name="Matcher"/>
+         <meta.schema plugin="org.sidiff.revision.difference.matcher" id="provider" name="Provider"/>
       </appinfo>
       <documentation>
          This extension point is used to add new matchers. A plugin that adds this extension point has to implement the IMatcher interface.
@@ -18,7 +18,8 @@
       </annotation>
       <complexType>
          <choice minOccurs="1" maxOccurs="unbounded">
-            <element ref="client" minOccurs="1" maxOccurs="unbounded"/>
+            <element ref="matcher" minOccurs="1" maxOccurs="unbounded"/>
+            <element ref="bundle" minOccurs="1" maxOccurs="unbounded"/>
          </choice>
          <attribute name="point" type="string" use="required">
             <annotation>
@@ -47,15 +48,30 @@
       </complexType>
    </element>
 
-   <element name="client">
+   <element name="matcher">
       <complexType>
-         <attribute name="class" type="string">
+         <attribute name="class" type="string" use="required">
             <annotation>
                <documentation>
                   
                </documentation>
                <appinfo>
-                  <meta.attribute kind="java" basedOn=":org.sidiff.matchingservice.IMatching"/>
+                  <meta.attribute kind="java" basedOn=":org.sidiff.revision.difference.matcher.IMatcherProvider"/>
+               </appinfo>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="bundle">
+      <complexType>
+         <attribute name="class" type="string" use="required">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+               <appinfo>
+                  <meta.attribute kind="java" basedOn=":org.sidiff.revision.difference.matcher.IMatcherProviderBundle"/>
                </appinfo>
             </annotation>
          </attribute>

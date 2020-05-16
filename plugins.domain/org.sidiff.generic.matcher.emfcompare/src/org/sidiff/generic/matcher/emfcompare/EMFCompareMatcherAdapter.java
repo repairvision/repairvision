@@ -1,15 +1,11 @@
 package org.sidiff.generic.matcher.emfcompare;
 
-import java.util.Collections;
-import java.util.Set;
-
 import org.eclipse.emf.compare.Comparison;
 import org.eclipse.emf.compare.EMFCompare;
 import org.eclipse.emf.compare.Match;
 import org.eclipse.emf.compare.scope.DefaultComparisonScope;
 import org.eclipse.emf.compare.scope.IComparisonScope;
 import org.eclipse.emf.ecore.resource.Resource;
-import org.sidiff.common.utilities.emf.DocumentType;
 import org.sidiff.common.utilities.emf.Scope;
 import org.sidiff.revision.difference.Difference;
 import org.sidiff.revision.difference.matcher.IMatcher;
@@ -19,21 +15,6 @@ import org.sidiff.revision.difference.matcher.IMatcher;
  */
 public class EMFCompareMatcherAdapter implements IMatcher {
 
-	@Override
-	public String getKey() {
-		return getClass().getSimpleName();
-	}
-	
-	@Override
-	public String getName() {
-		return "EMFCompare Generic Matcher";
-	}
-
-	@Override
-	public Set<String> getDocumentTypes() {
-		return Collections.singleton(DocumentType.GENERIC_DOCUMENT_TYPE);
-	}
-	
 	@Override
 	public void startMatching(Difference difference, Resource modelA, Resource modelB, Scope scope) {
 		IComparisonScope emfScope = null;

@@ -1,35 +1,41 @@
-package org.sidiff.correspondences.matchingmodel;
+package org.sidiff.generic.matcher.adapter.sidiff;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.List;
+import java.util.Optional;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
-import org.sidiff.common.exceptions.SiDiffRuntimeException;
+import org.sidiff.correspondences.AbstractCorrespondences;
 import org.sidiff.correspondences.ICorrespondences;
 import org.sidiff.revision.difference.Correspondence;
 import org.sidiff.revision.difference.Difference;
 import org.sidiff.revision.difference.DifferenceFactory;
 
-public class MatchingModelCorrespondences implements ICorrespondences {
+public class ReVisionDifferenceModelCorrespondences extends AbstractCorrespondences {
 
-	public static final String SERVICE_ID = "SymmetricDifferencCorrespondences";
+	public static final String SERVICE_ID = "ReVisionDifferenceCorrespondences";
 
 	/**
-	 * The underlaying Difference-Model-Instance of the Service.
+	 * The underlying Difference-Model instance of the service.
 	 */
-	private Difference matching = null;
+	private Difference difference = null;
+
+	public ReVisionDifferenceModelCorrespondences(Difference difference) {
+		this.difference = difference;
+	}
 
 	public Difference getDifference() {
-		return matching;
+		return difference;
 	}		
 
 	public Correspondence getCorrespondence(EObject element) {
-		Correspondence correspondence = matching.getCorrespondenceOfModelA(element);
+		Correspondence correspondence = difference.getCorrespondenceOfModelA(element);
 		
 		if (correspondence == null) {
-			return matching.getCorrespondenceOfModelB(element);
+			return difference.getCorrespondenceOfModelB(element);
 		}
 		
 		return null;
@@ -42,6 +48,7 @@ public class MatchingModelCorrespondences implements ICorrespondences {
 
 	@Override
 	public void addCorrespondence(EObject... elements) {
+		
 		if (elements.length != 2) {
 			throw new UnsupportedOperationException("Only pairwise matches allowed: Size " + elements.length);
 		}
@@ -49,18 +56,27 @@ public class MatchingModelCorrespondences implements ICorrespondences {
 		addCorrespondence(elements[0], elements[1]);
 
 	}
+	@Override
+	public void addCorrespondence(List<EObject> elements) {
+
+		if (elements.size() != 2) {
+			throw new UnsupportedOperationException("Only pairwise matches allowed: Size " + elements.size());
+		}
+
+		addCorrespondence(elements.get(0), elements.get(1));
+	}
+
 	public void addCorrespondence(EObject elementA, EObject elementB) {
 
 		// add correspondence to matching
 		Correspondence correspondence = DifferenceFactory.eINSTANCE.createCorrespondence();
 		correspondence.setMatchedA(elementA);
 		correspondence.setMatchedB(elementB);
-		matching.addCorrespondence(correspondence);
+		difference.addCorrespondence(correspondence);
 
-		// remove elementA and elementB from unmatchedA and unmatchedB,
-		// respectively
-		matching.getUnmatchedA().remove(elementA);
-		matching.getUnmatchedB().remove(elementB);
+		// remove elementA and elementB from unmatchedA and unmatchedB, respectively
+		difference.getUnmatchedA().remove(elementA);
+		difference.getUnmatchedB().remove(elementB);
 	}
 
 
@@ -68,17 +84,19 @@ public class MatchingModelCorrespondences implements ICorrespondences {
 		Correspondence correspondence = getCorrespondence(element);
 
 		// update matching
-		matching.removeCorrespondence(correspondence);
-		matching.getUnmatchedA().add(correspondence.getMatchedA());
-		matching.getUnmatchedB().add(correspondence.getMatchedB());
+		difference.removeCorrespondence(correspondence);
+		difference.getUnmatchedA().add(correspondence.getMatchedA());
+		difference.getUnmatchedB().add(correspondence.getMatchedB());
 	}
 
 	@Override
 	public Collection<EObject> getCorrespondences(EObject element) {
 		ArrayList<EObject> correspondences = new ArrayList<EObject>();
 		Correspondence correspondence = getCorrespondence(element);
+		
 		if (correspondence != null) {
-			correspondences.add(correspondence.getMatchedA() == element ? correspondence.getMatchedB()
+			correspondences.add(correspondence.getMatchedA() == element 
+					? correspondence.getMatchedB()
 					: correspondence.getMatchedA());
 		}
 
@@ -88,17 +106,27 @@ public class MatchingModelCorrespondences implements ICorrespondences {
 	public EObject getCorrespondingElement(EObject element) {
 		return getCorrespondences(element).iterator().next();
 	}
+	
 	@Override
 	public boolean isCorresponding(EObject... elements) {
+		
 		if (elements.length != 2) {
-			throw new UnsupportedOperationException(); // only pairwise matches
-			// allowed
+			throw new UnsupportedOperationException(); // only pairwise matches allowed
 		}		
 
 		return isCorresponding(elements[0], elements[1]);
-
-
 	}
+	
+	@Override
+	public boolean isCorresponding(List<EObject> elements) {
+		
+		if (elements.size() != 2) {
+			throw new UnsupportedOperationException(); // only pairwise matches allowed
+		}		
+
+		return isCorresponding(elements.get(0), elements.get(1));
+	}
+
 	public boolean isCorresponding(EObject elementA, EObject elementB) {
 		// correspondence between elementA and elementB
 		return getCorrespondence(elementA) != null && getCorrespondence(elementA).getMatchedB() == elementB;
@@ -107,6 +135,7 @@ public class MatchingModelCorrespondences implements ICorrespondences {
 	@Override
 	public Collection<EObject> getElementsWithCorrespondences(Resource model) {
 		ArrayList<EObject> result = new ArrayList<EObject>();
+		
 		if (model == getDifference().getEResourceA()) {
 			for (Correspondence correspondence : getDifference().getCorrespondences()) {
 				result.add(correspondence.getMatchedA());
@@ -141,116 +170,73 @@ public class MatchingModelCorrespondences implements ICorrespondences {
 	}
 
 	@Override
+	public void removeCorrespondence(List<EObject> elements) {
+		for (EObject element : elements) {
+			removeCorrespondences(element);
+		}
+	}
+
+	@Override
 	public void removeFromCorrespondence(EObject element) {
-		//As we only support pairwise correspondences, we remove the whole correspondence itself
+		// as we only support pairwise correspondences, we remove the whole correspondence itself
 		removeCorrespondence(element);
 	}
 
 	@Override
 	public void init(Collection<Resource> models) {
 
-
 		if (!canHandle(models)) {
-			throw new UnsupportedOperationException(); // only pairwise matches
-			// allowed
+			throw new UnsupportedOperationException();
 		}	
 
 		Iterator<Resource> it = models.iterator();
 		Resource modelA = it.next();
 		Resource modelB = it.next();
 
-
-		// create matching
-		createSymmetricDifference(modelA,  modelB);
-
-		// init unmatched
-		initUnmatched( modelA,  modelB);
-	}
-
-	@Override
-	public String getServiceID() {
-		return SERVICE_ID;
+		initUnmatched(modelA,  modelB);
 	}
 
 	public void init(ICorrespondences service, Resource resourceA, Resource resourceB) {
-
-		// initialization correct?
-		if (this.matching != null) {
-			if (this.matching.getEResourceA() != resourceA || this.matching.getEResourceB() != resourceB) {
-				throw new SiDiffRuntimeException(
-						"SymmetricDifferenceModelService cannot be re-initialized with different models.");
-			}
-			return;
-		}
-
-
-		// create matching
-		createSymmetricDifference(resourceA, resourceB);
-
-		// init unmatched
 		initUnmatched(resourceA, resourceB);
 
-		// set correspondences
+		// set correspondences (we assume exactly one corresponding element)
 		for (EObject matchedA : service.getElementsWithCorrespondences(resourceA)) {
-			// we assume exactly one corresponding element
 			EObject matchedB = service.getCorrespondences(matchedA).iterator().next();
 			addCorrespondence(matchedA, matchedB);
 		}
 	}
 
-	public void init(Difference difference) {
-
-		// initialization correct?
-		if (this.matching != null) {
-			if (this.matching.getEResourceA() != difference.getEResourceA()
-					|| this.matching.getEResourceB() != difference.getEResourceB()) {
-				throw new SiDiffRuntimeException(
-						"SymmetricDifferenceModelService cannot be re-initialized with different models.");
-			}
-			return;
-		}
-		
-		this.matching = difference;
-	}
-
-	private void createSymmetricDifference(Resource resourceA, Resource resourceB) {
-		this.matching = DifferenceFactory.eINSTANCE.createDifference();
-		this.matching.setUriModelA(resourceA.getURI().toString());
-		this.matching.setEResourceA(resourceA);
-		this.matching.setUriModelB(resourceB.getURI().toString());		
-		this.matching.setEResourceB(resourceB);
-	}
-
 	private void initUnmatched(Resource resourceA, Resource resourceB) {
+		
 		// add unmatchedA
 		for (Iterator<EObject> iterator = resourceA.getAllContents(); iterator.hasNext();) {
 			EObject obj = iterator.next();
-			matching.getUnmatchedA().add(obj);
+			difference.getUnmatchedA().add(obj);
 		}
 
 		// add unmatchedB
 		for (Iterator<EObject> iterator = resourceB.getAllContents(); iterator.hasNext();) {
 			EObject obj = iterator.next();
-			matching.getUnmatchedB().add(obj);
+			difference.getUnmatchedB().add(obj);
 		}
 	}
 
 	@Override
 	public void reset() {
-		this.matching = null;
+		this.difference = null;
 	}
 
 	@Override
-	public String getDescription() {
-		return "This is an `Difference` implementation of the CorrespondenceService. ";
+	public Optional<String> getDescription() {
+		return Optional.of("The ReVision difference implementation of the Correspondence service.");
 	}
 
 	@Override
 	public boolean canHandle(Collection<Resource> models) {
-		if(models.size() > 2)
+		if(models.size() > 2) {
 			return false;
+		}
 		return true;
 	}
-
 
 }

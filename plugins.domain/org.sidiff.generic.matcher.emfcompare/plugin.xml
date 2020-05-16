@@ -2,9 +2,10 @@
 <?eclipse version="3.4"?>
 <plugin>
    <extension
-         point="org.sidiff.revision.difference.matcher.engine">
-      <client
-            class="org.sidiff.generic.matcher.emfcompare.EMFCompareMatcherAdapter"></client>
+         point="org.sidiff.revision.difference.matcher.provider">
+      <matcher
+            class="org.sidiff.generic.matcher.emfcompare.EMFCompareMatcherAdapterProvider">
+      </matcher>
    </extension>
 
 </plugin>

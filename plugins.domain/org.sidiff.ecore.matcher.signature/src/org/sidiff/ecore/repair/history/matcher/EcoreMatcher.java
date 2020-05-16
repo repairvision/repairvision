@@ -1,7 +1,6 @@
 package org.sidiff.ecore.repair.history.matcher;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -20,7 +19,6 @@ import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.impl.EStringToStringMapEntryImpl;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EcoreUtil;
@@ -45,21 +43,6 @@ public class EcoreMatcher implements IMatcher {
 		this.allowsAmbiguousSignature = allowsAmbiguousSignature;
 	}
 	
-	@Override
-	public String getKey() {
-		return getClass().getName();
-	}
-	
-	@Override
-	public String getName() {
-		return "Ecore Matcher";
-	}
-	
-	@Override
-	public Set<String> getDocumentTypes() {
-		return Collections.singleton(EcorePackage.eNS_URI);
-	}
-
 	@Override
 	public void startMatching(Difference difference, Resource modelA, Resource modelB, Scope scope) {
 		

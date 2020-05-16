@@ -6,9 +6,9 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.MultiStatus;
 import org.eclipse.core.runtime.Status;
 import org.sidiff.common.utilities.emf.Scope;
-import org.sidiff.revision.difference.api.util.TechnicalDifferenceUtils;
+import org.sidiff.revision.difference.api.registry.DifferenceBuilderRegistry;
 import org.sidiff.revision.difference.derivation.ITechnicalDifferenceBuilder;
-import org.sidiff.revision.difference.matcher.IMatcher;
+import org.sidiff.revision.difference.matcher.IMatcherProvider;
 
 public class DifferenceSettings extends MatchingSettings {
 
@@ -24,15 +24,15 @@ public class DifferenceSettings extends MatchingSettings {
 	 */
 	public DifferenceSettings() {
 		super();
-		this.techBuilder = TechnicalDifferenceUtils.getGenericTechnicalDifferenceBuilder();
+		this.techBuilder = DifferenceBuilderRegistry.getGenericTechnicalDifferenceBuilder();
 	}
 
 	public DifferenceSettings(Set<String> documentTypes) {
-		this.techBuilder = TechnicalDifferenceUtils.getDefaultTechnicalDifferenceBuilder(documentTypes);
+		this.techBuilder = DifferenceBuilderRegistry.getDefaultTechnicalDifferenceBuilder(documentTypes);
 	}
 
-	public DifferenceSettings(Scope scope, IMatcher matcher, ITechnicalDifferenceBuilder techBuilder) {
-		super(scope, matcher);
+	public DifferenceSettings(Scope scope, IMatcherProvider matcherProvider, ITechnicalDifferenceBuilder techBuilder) {
+		super(scope, matcherProvider);
 		this.techBuilder = techBuilder;
 	}
 

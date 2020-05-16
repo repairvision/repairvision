@@ -15,7 +15,7 @@ import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.swt.widgets.Display;
 import org.sidiff.common.utilities.monitor.LogTable;
 import org.sidiff.common.utilities.ui.util.WorkbenchUtil;
-import org.sidiff.generic.matcher.uuid.UUIDMatcher;
+import org.sidiff.generic.matcher.uuid.UUIDMatcherProvider;
 import org.sidiff.history.analysis.tracing.InconsistencyTrace;
 import org.sidiff.historymodel.History;
 import org.sidiff.historymodel.Problem;
@@ -209,7 +209,7 @@ public class HistoryRepairApplication implements IRepairApplication<PEORepairJob
 	
 	public DifferenceSettings getMatchingSettings() {
 		DifferenceSettings settings = RepairPreferencePage.getMatchingSettings();
-		settings.setMatcher(new UUIDMatcher());
+		settings.setMatcher(new UUIDMatcherProvider());
 		settings.setTechBuilder(TechnicalDifferenceBuilderUtil.getGenericTechnicalDifferenceBuilder());
 		
 		return settings;

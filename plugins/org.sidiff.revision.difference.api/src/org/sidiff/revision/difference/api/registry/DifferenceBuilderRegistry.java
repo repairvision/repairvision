@@ -1,4 +1,4 @@
-package org.sidiff.revision.difference.api.util;
+package org.sidiff.revision.difference.api.registry;
 
 import java.io.File;
 import java.util.List;
@@ -11,14 +11,9 @@ import org.sidiff.revision.difference.derivation.ITechnicalDifferenceBuilder;
 import org.sidiff.revision.difference.derivation.util.TechnicalDifferenceBuilderUtil;
 
 /**
- * Utility functions which are made publicly available to any clients using the
- * SiLift framework. UI components of the SiLift IDE should, if required, also
- * use these utility functions, and not the internal functions of the respective
- * engines.
- * 
- * @author kehrer, mohrndorf, cpietsch
+ * Access to the registered difference builders.
  */
-public class TechnicalDifferenceUtils extends MatchingUtils{
+public class DifferenceBuilderRegistry extends MatcherRegistry{
 	
 	/**
 	 * Find all available technical difference builders matching the given
