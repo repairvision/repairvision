@@ -61,7 +61,7 @@ public class ConfigUtil {
 		for (Field field : configurable.getClass().getDeclaredFields()) {
 			if (field.isAnnotationPresent(annotation)) {
 				try {
-					boolean accessible = field.canAccess(configurable);
+					boolean accessible = field.isAccessible();
 					field.setAccessible(true);
 					field.set(configurable, value);
 					field.setAccessible(accessible);
