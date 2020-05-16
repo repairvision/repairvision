@@ -1,0 +1,14 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Module Settings
+Bundle-SymbolicName: org.sidiff.revision.configuration;singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Bundle-Vendor: University of Siegen
+Automatic-Module-Name: org.sidiff.revision.settings
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-ActivationPolicy: lazy
+Export-Package: org.sidiff.revision.configuration,
+ org.sidiff.revision.configuration.annotations,
+ org.sidiff.revision.configuration.impl;uses:="org.sidiff.revision.settings",
+ org.sidiff.revision.configuration.util
+Require-Bundle: org.junit
