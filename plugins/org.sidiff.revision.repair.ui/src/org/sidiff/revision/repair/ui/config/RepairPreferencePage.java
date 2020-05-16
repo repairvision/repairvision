@@ -32,14 +32,14 @@ import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 import org.sidiff.common.utilities.emf.DocumentType;
 import org.sidiff.common.utilities.ui.util.NameUtil;
-import org.sidiff.configuration.IConfigurable;
 import org.sidiff.history.revision.util.SettingsUtil;
-import org.sidiff.matcher.IMatcher;
-import org.sidiff.matcher.MatcherUtil;
+import org.sidiff.revision.difference.api.settings.DifferenceSettings;
+import org.sidiff.revision.difference.api.util.MatchingUtils;
+import org.sidiff.revision.difference.api.util.TechnicalDifferenceUtils;
 import org.sidiff.revision.difference.derivation.ITechnicalDifferenceBuilder;
-import org.sidiff.revision.difference.derivation.api.settings.DifferenceSettings;
-import org.sidiff.revision.difference.derivation.api.util.TechnicalDifferenceUtils;
 import org.sidiff.revision.difference.derivation.util.TechnicalDifferenceBuilderUtil;
+import org.sidiff.revision.difference.matcher.IConfigurableMatcher;
+import org.sidiff.revision.difference.matcher.IMatcher;
 import org.sidiff.revision.editrules.project.development.registry.WorkspaceRulebaseExtension;
 import org.sidiff.revision.editrules.project.development.registry.WorkspaceRulebaseRegistry;
 import org.sidiff.revision.editrules.project.registry.RulebaseExtension;
@@ -212,8 +212,8 @@ public class RepairPreferencePage extends PreferencePage implements IWorkbenchPr
 			config_container.setLayout(grid);
 		}
 		
-		if (matchingEngine instanceof IConfigurable) {
-			final IConfigurable configurableMatcher = (IConfigurable) matchingEngine;
+		if (matchingEngine instanceof IConfigurableMatcher) {
+			final IConfigurableMatcher configurableMatcher = (IConfigurableMatcher) matchingEngine;
 			
 			for (String option : configurableMatcher.getConfigurationOptions().keySet()) {
 
@@ -601,7 +601,7 @@ public class RepairPreferencePage extends PreferencePage implements IWorkbenchPr
 				documentType = newDocumentType;
 				
 				// Matcher:
-				setAvailableMatcher(MatcherUtil.getAvailableMatchers(getDoumentTypes()));
+				setAvailableMatcher(MatchingUtils.getAvailableMatchers(getDoumentTypes()));
 				
 				// Technical RevisionDifference Builder:
 				setAvailableTechnicalDifferenceBuilder(

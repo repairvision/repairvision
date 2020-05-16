@@ -15,7 +15,7 @@ import org.sidiff.common.utilities.monitor.LogTable;
 import org.sidiff.common.utilities.ui.util.InfoConsole;
 import org.sidiff.generic.matcher.uuid.UUIDResource;
 import org.sidiff.history.analysis.tracing.InconsistencyTrace;
-import org.sidiff.revision.difference.derivation.api.settings.DifferenceSettings;
+import org.sidiff.revision.difference.api.settings.DifferenceSettings;
 import org.sidiff.revision.repair.api.IRepairFacade;
 import org.sidiff.revision.repair.api.IRepairPlan;
 import org.sidiff.revision.repair.api.peo.PEORepairJob;

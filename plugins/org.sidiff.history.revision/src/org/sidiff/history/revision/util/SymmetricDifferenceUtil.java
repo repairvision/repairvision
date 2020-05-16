@@ -16,7 +16,6 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.sidiff.history.revision.IRevision;
-import org.sidiff.matcher.IMatcher;
 import org.sidiff.revision.difference.AddObject;
 import org.sidiff.revision.difference.AddReference;
 import org.sidiff.revision.difference.AttributeValueChange;
@@ -26,8 +25,9 @@ import org.sidiff.revision.difference.DifferenceFactory;
 import org.sidiff.revision.difference.DifferencePackage;
 import org.sidiff.revision.difference.RemoveObject;
 import org.sidiff.revision.difference.RemoveReference;
-import org.sidiff.revision.difference.derivation.api.TechnicalDifferenceFacade;
-import org.sidiff.revision.difference.derivation.api.settings.DifferenceSettings;
+import org.sidiff.revision.difference.api.TechnicalDifferenceFacade;
+import org.sidiff.revision.difference.api.settings.DifferenceSettings;
+import org.sidiff.revision.difference.matcher.IMatcher;
 import org.sidiff.revision.difference.util.DifferenceUtil;
 
 public class SymmetricDifferenceUtil {
@@ -39,11 +39,12 @@ public class SymmetricDifferenceUtil {
 		DifferenceSettings settings = new DifferenceSettings();
 		settings.setMatcher(matcher);
 
-		return TechnicalDifferenceFacade.deriveTechnicalDifference(modelA, modelB, settings);
+		
+		return TechnicalDifferenceFacade.difference(modelA, modelB, settings);
 	}
 
 	public static Difference calculateDifference(Resource modelA, Resource modelB, DifferenceSettings settings) {
-		return TechnicalDifferenceFacade.deriveTechnicalDifference(modelA, modelB, settings);
+		return TechnicalDifferenceFacade.difference(modelA, modelB, settings);
 	}
 
 	public static void saveDifference(Difference difference) {

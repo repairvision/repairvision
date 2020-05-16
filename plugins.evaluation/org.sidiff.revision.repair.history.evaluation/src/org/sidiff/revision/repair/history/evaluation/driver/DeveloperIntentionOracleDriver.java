@@ -7,7 +7,7 @@ import java.util.List;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.sidiff.history.analysis.tracing.InconsistencyTrace;
 import org.sidiff.history.revision.impl.Revision;
-import org.sidiff.revision.difference.derivation.api.settings.DifferenceSettings;
+import org.sidiff.revision.difference.api.settings.DifferenceSettings;
 import org.sidiff.revision.repair.api.IRepairPlan;
 import org.sidiff.revision.repair.api.util.ComplementMatching;
 import org.sidiff.revision.repair.api.util.RecognitionMatching;

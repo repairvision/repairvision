@@ -70,8 +70,6 @@ public class DifferenceItemProvider
 			addModelBPropertyDescriptor(object);
 			addUriModelAPropertyDescriptor(object);
 			addUriModelBPropertyDescriptor(object);
-			addUnmatchedAPropertyDescriptor(object);
-			addUnmatchedBPropertyDescriptor(object);
 			addEResourceAPropertyDescriptor(object);
 			addEResourceBPropertyDescriptor(object);
 		}
@@ -162,50 +160,6 @@ public class DifferenceItemProvider
 				 false,
 				 false,
 				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-				 null,
-				 null));
-	}
-
-	/**
-	 * This adds a property descriptor for the Unmatched A feature.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected void addUnmatchedAPropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_Difference_unmatchedA_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Difference_unmatchedA_feature", "_UI_Difference_type"),
-				 DifferencePackage.Literals.DIFFERENCE__UNMATCHED_A,
-				 true,
-				 false,
-				 true,
-				 null,
-				 null,
-				 null));
-	}
-
-	/**
-	 * This adds a property descriptor for the Unmatched B feature.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected void addUnmatchedBPropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_Difference_unmatchedB_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Difference_unmatchedB_feature", "_UI_Difference_type"),
-				 DifferencePackage.Literals.DIFFERENCE__UNMATCHED_B,
-				 true,
-				 false,
-				 true,
-				 null,
 				 null,
 				 null));
 	}

@@ -21,10 +21,10 @@ import org.eclipse.emf.ecore.resource.Resource;
  *   <li>{@link org.sidiff.revision.difference.Difference#getUriModelA <em>Uri Model A</em>}</li>
  *   <li>{@link org.sidiff.revision.difference.Difference#getUriModelB <em>Uri Model B</em>}</li>
  *   <li>{@link org.sidiff.revision.difference.Difference#getCorrespondences <em>Correspondences</em>}</li>
- *   <li>{@link org.sidiff.revision.difference.Difference#getUnmatchedA <em>Unmatched A</em>}</li>
- *   <li>{@link org.sidiff.revision.difference.Difference#getUnmatchedB <em>Unmatched B</em>}</li>
  *   <li>{@link org.sidiff.revision.difference.Difference#getEResourceA <em>EResource A</em>}</li>
  *   <li>{@link org.sidiff.revision.difference.Difference#getEResourceB <em>EResource B</em>}</li>
+ *   <li>{@link org.sidiff.revision.difference.Difference#getUnmatchedA <em>Unmatched A</em>}</li>
+ *   <li>{@link org.sidiff.revision.difference.Difference#getUnmatchedB <em>Unmatched B</em>}</li>
  * </ul>
  *
  * @see org.sidiff.revision.difference.DifferencePackage#getDifference()
@@ -123,30 +123,6 @@ public interface Difference extends EObject {
 	EList<Correspondence> getCorrespondences();
 
 	/**
-	 * Returns the value of the '<em><b>Unmatched A</b></em>' reference list.
-	 * The list contents are of type {@link org.eclipse.emf.ecore.EObject}.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Unmatched A</em>' reference list.
-	 * @see org.sidiff.revision.difference.DifferencePackage#getDifference_UnmatchedA()
-	 * @model ordered="false"
-	 * @generated
-	 */
-	EList<EObject> getUnmatchedA();
-
-	/**
-	 * Returns the value of the '<em><b>Unmatched B</b></em>' reference list.
-	 * The list contents are of type {@link org.eclipse.emf.ecore.EObject}.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Unmatched B</em>' reference list.
-	 * @see org.sidiff.revision.difference.DifferencePackage#getDifference_UnmatchedB()
-	 * @model ordered="false"
-	 * @generated
-	 */
-	EList<EObject> getUnmatchedB();
-
-	/**
 	 * Returns the value of the '<em><b>EResource A</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -191,6 +167,30 @@ public interface Difference extends EObject {
 	void setEResourceB(Resource value);
 
 	/**
+	 * Returns the value of the '<em><b>Unmatched A</b></em>' reference list.
+	 * The list contents are of type {@link org.eclipse.emf.ecore.EObject}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Unmatched A</em>' reference list.
+	 * @see org.sidiff.revision.difference.DifferencePackage#getDifference_UnmatchedA()
+	 * @model
+	 * @generated
+	 */
+	EList<EObject> getUnmatchedA();
+
+	/**
+	 * Returns the value of the '<em><b>Unmatched B</b></em>' reference list.
+	 * The list contents are of type {@link org.eclipse.emf.ecore.EObject}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Unmatched B</em>' reference list.
+	 * @see org.sidiff.revision.difference.DifferencePackage#getDifference_UnmatchedB()
+	 * @model
+	 * @generated
+	 */
+	EList<EObject> getUnmatchedB();
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @model
@@ -233,9 +233,33 @@ public interface Difference extends EObject {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @model objARequired="true" objBRequired="true"
+	 * @generated
+	 */
+	void addCorrespondence(EObject objA, EObject objB);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @model
 	 * @generated
 	 */
 	void removeCorrespondence(Correspondence correspondence);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model required="true"
+	 * @generated
+	 */
+	boolean isUnmatchedA(EObject objectInA);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model required="true"
+	 * @generated
+	 */
+	boolean isUnmatchedB(EObject objectInB);
 
 } // Difference

@@ -2,8 +2,6 @@ package org.sidiff.editrule.tools.recorder.handlers;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
@@ -20,14 +18,13 @@ import org.sidiff.common.utilities.emf.DocumentType;
 import org.sidiff.common.utilities.emf.EMFHandlerUtil;
 import org.sidiff.common.utilities.emf.Scope;
 import org.sidiff.common.utilities.ui.util.WorkbenchUtil;
-import org.sidiff.correspondences.ICorrespondences;
-import org.sidiff.correspondences.matchingmodel.MatchingModelCorrespondences;
-import org.sidiff.matcher.IMatcher;
-import org.sidiff.matcher.MatcherUtil;
 import org.sidiff.revision.difference.Correspondence;
 import org.sidiff.revision.difference.Difference;
+import org.sidiff.revision.difference.DifferenceFactory;
+import org.sidiff.revision.difference.api.util.MatchingUtils;
 import org.sidiff.revision.difference.derivation.GenericTechnicalDifferenceBuilder;
 import org.sidiff.revision.difference.derivation.ITechnicalDifferenceBuilder;
+import org.sidiff.revision.difference.matcher.IMatcher;
 import org.sidiff.revision.difference.util.DifferenceUtil;
 
 public class CreateDifferenceHandler extends AbstractHandler {
@@ -81,7 +78,7 @@ public class CreateDifferenceHandler extends AbstractHandler {
 	private List<IMatcher> askForMatcher(Set<String> documentType) {
 		return WorkbenchUtil.showSelections(
 				"Select Matching-Engine(s)", 
-				MatcherUtil.getAvailableMatchers(documentType), 
+				MatchingUtils.getAvailableMatchers(documentType), 
 				new ColumnLabelProvider() {
 					
 					@Override
@@ -92,23 +89,9 @@ public class CreateDifferenceHandler extends AbstractHandler {
 	}
 
 	private Difference createMatching(Resource modelA, Resource modelB, Scope scope, IMatcher matcher) {
-		matcher.reset();
-		
-		if (matcher.getCandidatesService() != null) {
-			matcher.getCandidatesService().reset();
-		}
-		
-		if (matcher.getCorrespondencesService() != null) {
-			matcher.getCorrespondencesService().reset();
-		}
-
-		Collection<Resource> models = Arrays.asList(new Resource[] { modelA, modelB });
-		matcher.startMatching(models, scope);
-		
-		ICorrespondences correspondences = matcher.getCorrespondencesService();
-		Difference matching = ((MatchingModelCorrespondences) correspondences).getDifference();
-		
-		return matching;
+		Difference difference = DifferenceFactory.eINSTANCE.createDifference();
+		matcher.startMatching(difference, modelA, modelB, scope);
+		return difference;
 	}
 	
 	private void iterativeMatching(Difference base, Difference subsequent) {

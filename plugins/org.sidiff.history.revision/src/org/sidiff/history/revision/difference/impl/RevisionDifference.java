@@ -1,6 +1,5 @@
 package org.sidiff.history.revision.difference.impl;
 
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
@@ -15,18 +14,17 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
-import org.sidiff.correspondences.ICorrespondences;
-import org.sidiff.correspondences.matchingmodel.MatchingModelCorrespondences;
 import org.sidiff.history.revision.IVersion;
 import org.sidiff.history.revision.difference.IRevisionDifference;
 import org.sidiff.history.revision.util.SymmetricDifferenceUtil;
-import org.sidiff.matcher.IMatcher;
 import org.sidiff.revision.difference.AttributeValueChange;
 import org.sidiff.revision.difference.Change;
 import org.sidiff.revision.difference.Correspondence;
 import org.sidiff.revision.difference.Difference;
+import org.sidiff.revision.difference.DifferenceFactory;
+import org.sidiff.revision.difference.api.settings.DifferenceSettings;
 import org.sidiff.revision.difference.derivation.ITechnicalDifferenceBuilder;
-import org.sidiff.revision.difference.derivation.api.settings.DifferenceSettings;
+import org.sidiff.revision.difference.matcher.IMatcher;
 
 public class RevisionDifference implements IRevisionDifference {
 
@@ -42,23 +40,12 @@ public class RevisionDifference implements IRevisionDifference {
 
 		// Calculate difference:
 		IMatcher matcher = settings.getMatcher();
-		matcher.reset();
 		
-		if (matcher.getCandidatesService() != null) {
-			matcher.getCandidatesService().reset();
-		}
-		
-		if (matcher.getCorrespondencesService() != null) {
-			matcher.getCorrespondencesService().reset();
-		}
-
-		Collection<Resource> models = Arrays.asList(new Resource[] { resourceA, resourceB });
-		matcher.startMatching(models, settings.getScope());
-		ICorrespondences correspondences = matcher.getCorrespondencesService();
-		Difference revisionDifference = ((MatchingModelCorrespondences) correspondences).getDifference();
+		Difference difference = DifferenceFactory.eINSTANCE.createDifference();
+		matcher.startMatching(difference, resourceA, resourceB, settings.getScope());
 
 		ITechnicalDifferenceBuilder tdBuilder = settings.getTechBuilder();
-		tdBuilder.deriveTechDiff(revisionDifference, settings.getScope());
+		tdBuilder.deriveTechDiff(difference, settings.getScope());
 
 		// TODO: Test/Fix this...
 //		TechnicalDifferenceBuilder techDiffBuilder = new TechnicalDifferenceBuilder();
@@ -71,10 +58,10 @@ public class RevisionDifference implements IRevisionDifference {
 		ResourceSet differenceRSS = new ResourceSetImpl();
 		Resource differenceResource = differenceRSS
 				.createResource(getDifferenceURI(resourceA.getURI(), resourceB.getURI()));
-		differenceResource.getContents().add(revisionDifference);
+		differenceResource.getContents().add(difference);
 
 		// Create difference indices:
-		init(revisionDifference);
+		init(difference);
 	}
 
 	protected URI getDifferenceURI(URI modelA, URI modelB) {

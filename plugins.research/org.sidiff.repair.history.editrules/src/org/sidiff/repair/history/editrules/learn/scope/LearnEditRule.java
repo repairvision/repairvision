@@ -1,6 +1,6 @@
 package org.sidiff.repair.history.editrules.learn.scope;
 
-import static org.sidiff.revision.difference.derivation.api.TechnicalDifferenceFacade.deriveTechnicalDifference;
+import static org.sidiff.revision.difference.api.TechnicalDifferenceFacade.difference;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -21,7 +21,7 @@ import org.sidiff.editrule.tools.recorder.filters.IReferenceFilter;
 import org.sidiff.editrule.tools.util.EditRuleUtil;
 import org.sidiff.editrule.tools.util.HenshinDiagramUtil;
 import org.sidiff.revision.difference.Difference;
-import org.sidiff.revision.difference.derivation.api.settings.DifferenceSettings;
+import org.sidiff.revision.difference.api.settings.DifferenceSettings;
 import org.sidiff.validation.constraint.api.util.Validation;
 import org.sidiff.validation.constraint.interpreter.IConstraint;
 import org.sidiff.validation.constraint.interpreter.scope.IScopeRecorder;
@@ -83,7 +83,7 @@ public class LearnEditRule {
 		// Calculate difference: Historical -> Resolved
 		this.matchingSettings = matchingSettings;
 		
-		historicalToResolved = deriveTechnicalDifference(modelHistorical, modelResolved, matchingSettings);
+		historicalToResolved = difference(modelHistorical, modelResolved, matchingSettings);
 		
 		this.navigation = new DifferenceNavigation(historicalToResolved);
 	}
@@ -97,8 +97,7 @@ public class LearnEditRule {
 	public DifferenceSlice learnByResolvedInconsistency(EObject invalidContext, IConstraint consistencyRule) {
 
 		// Calculate mapping from introduced model version to resolved model version:
-		Difference invalidToResolved = deriveTechnicalDifference(
-				invalidContext.eResource(), modelCurrent, matchingSettings);
+		Difference invalidToResolved = difference(invalidContext.eResource(), modelCurrent, matchingSettings);
 
 		// Search resolved context element:
 		EObject contextResolved = invalidToResolved.getCorrespondingObjectInB(invalidContext);

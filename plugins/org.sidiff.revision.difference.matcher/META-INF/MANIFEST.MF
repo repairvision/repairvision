@@ -1,0 +1,13 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: SiDiff Matching Service
+Bundle-SymbolicName: org.sidiff.revision.difference.matcher;singleton:=true
+Bundle-Version: 1.0.1.qualifier
+Bundle-Vendor: Software Engineering Group
+Export-Package: org.sidiff.revision.difference.matcher,
+ org.sidiff.revision.difference.matcher.util
+Require-Bundle: org.eclipse.core.runtime,
+ org.sidiff.common.utilities;visibility:=reexport,
+ org.sidiff.revision.difference
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Automatic-Module-Name: org.sidiff.matcher

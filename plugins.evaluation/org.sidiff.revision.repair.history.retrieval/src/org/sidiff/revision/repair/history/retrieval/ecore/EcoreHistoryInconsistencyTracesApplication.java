@@ -3,7 +3,6 @@ package org.sidiff.revision.repair.history.retrieval.ecore;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -29,7 +28,7 @@ import org.sidiff.historymodel.Problem;
 import org.sidiff.historymodel.Version;
 import org.sidiff.revision.difference.Correspondence;
 import org.sidiff.revision.difference.Difference;
-import org.sidiff.revision.difference.derivation.api.TechnicalDifferenceFacade;
+import org.sidiff.revision.difference.api.TechnicalDifferenceFacade;
 import org.sidiff.revision.repair.history.retrieval.metadata.HistoryMetadata;
 import org.sidiff.revision.repair.history.retrieval.metadata.VersionMetadata;
 import org.sidiff.revision.repair.history.retrieval.metadata.coevolution.CoevolutionDataSetMetadata;
@@ -266,11 +265,7 @@ public class EcoreHistoryInconsistencyTracesApplication implements IApplication 
 	}
 	
 	protected Difference generateMatching(Resource resourceA, Resource resourceB, EcoreHistorySettings settings) {
-		
-		Difference matching = TechnicalDifferenceFacade.match(
-				Arrays.asList(resourceA, resourceB), settings.getDifferenceSettings());
-
-		return matching;
+		return TechnicalDifferenceFacade.match(resourceA, resourceB, settings.getDifferenceSettings());
 	}
 	
 	protected void generateUUIDs(Difference matching) {

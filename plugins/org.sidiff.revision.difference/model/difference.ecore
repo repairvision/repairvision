@@ -18,8 +18,18 @@
     <eOperations name="addCorrespondence">
       <eParameters name="correspondence" eType="#//Correspondence"/>
     </eOperations>
+    <eOperations name="addCorrespondence">
+      <eParameters name="objA" lowerBound="1" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
+      <eParameters name="objB" lowerBound="1" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
+    </eOperations>
     <eOperations name="removeCorrespondence">
       <eParameters name="correspondence" eType="#//Correspondence"/>
+    </eOperations>
+    <eOperations name="isUnmatchedA" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
+      <eParameters name="objectInA" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
+    </eOperations>
+    <eOperations name="isUnmatchedB" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
+      <eParameters name="objectInB" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
     </eOperations>
     <eStructuralFeatures xsi:type="ecore:EReference" name="changes" upperBound="-1"
         eType="#//Change" containment="true"/>
@@ -31,16 +41,16 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="uriModelB" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="correspondences" ordered="false"
         upperBound="-1" eType="#//Correspondence" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="unmatchedA" ordered="false"
-        upperBound="-1" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="unmatchedB" ordered="false"
-        upperBound="-1" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="eResourceA" ordered="false"
         lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EResource"
         transient="true" derived="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="eResourceB" ordered="false"
         lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EResource"
         transient="true" derived="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="unmatchedA" upperBound="-1"
+        eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="unmatchedB" upperBound="-1"
+        eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Correspondence">
     <eStructuralFeatures xsi:type="ecore:EReference" name="matchedA" ordered="false"

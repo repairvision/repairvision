@@ -1,6 +1,5 @@
 package org.sidiff.history.analysis.tracing;
 
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 
@@ -21,8 +20,8 @@ import org.sidiff.historymodel.Problem;
 import org.sidiff.historymodel.Version;
 import org.sidiff.revision.difference.Correspondence;
 import org.sidiff.revision.difference.Difference;
-import org.sidiff.revision.difference.derivation.api.TechnicalDifferenceFacade;
-import org.sidiff.revision.difference.derivation.api.settings.DifferenceSettings;
+import org.sidiff.revision.difference.api.TechnicalDifferenceFacade;
+import org.sidiff.revision.difference.api.settings.DifferenceSettings;
 
 public class HistoryModelGenerator {
 	
@@ -140,7 +139,7 @@ public class HistoryModelGenerator {
 		Resource resourceA = versionA.getModel();
 		Resource resourceB = versionB.getModel();
 		
-		Difference matching = TechnicalDifferenceFacade.match(Arrays.asList(resourceA, resourceB), settings);
+		Difference matching = TechnicalDifferenceFacade.match(resourceA, resourceB, settings);
 
 		return matching;
 	}

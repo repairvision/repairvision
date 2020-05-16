@@ -19,7 +19,7 @@ import org.sidiff.generic.matcher.uuid.UUIDMatcher;
 import org.sidiff.history.analysis.tracing.InconsistencyTrace;
 import org.sidiff.historymodel.History;
 import org.sidiff.historymodel.Problem;
-import org.sidiff.revision.difference.derivation.api.settings.DifferenceSettings;
+import org.sidiff.revision.difference.api.settings.DifferenceSettings;
 import org.sidiff.revision.difference.derivation.util.TechnicalDifferenceBuilderUtil;
 import org.sidiff.revision.editrules.project.registry.util.RulebaseUtil;
 import org.sidiff.revision.repair.api.IRepairFacade;

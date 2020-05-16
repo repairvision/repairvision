@@ -20,7 +20,7 @@ import org.sidiff.history.revision.metamodel.IMetaModel;
 import org.sidiff.history.revision.metamodel.impl.MetaModel;
 import org.sidiff.revision.difference.Change;
 import org.sidiff.revision.difference.Difference;
-import org.sidiff.revision.difference.derivation.api.settings.DifferenceSettings;
+import org.sidiff.revision.difference.api.settings.DifferenceSettings;
 
 public class Revision implements IRevision {
 

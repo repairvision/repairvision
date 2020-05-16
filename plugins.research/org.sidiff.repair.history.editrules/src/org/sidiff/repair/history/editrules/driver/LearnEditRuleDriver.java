@@ -11,8 +11,8 @@ import org.sidiff.historymodel.History;
 import org.sidiff.repair.history.editrules.generator.EditRule;
 import org.sidiff.repair.history.editrules.learn.scope.LearnEditRule;
 import org.sidiff.revision.difference.Difference;
-import org.sidiff.revision.difference.derivation.api.TechnicalDifferenceFacade;
-import org.sidiff.revision.difference.derivation.api.settings.DifferenceSettings;
+import org.sidiff.revision.difference.api.TechnicalDifferenceFacade;
+import org.sidiff.revision.difference.api.settings.DifferenceSettings;
 import org.sidiff.validation.constraint.interpreter.IConstraint;
 import org.sidiff.validation.constraint.interpreter.scope.IScopeRecorder;
 import org.sidiff.validation.constraint.interpreter.scope.ScopeRecorder;
@@ -73,7 +73,7 @@ public class LearnEditRuleDriver {
 			Resource modelA, Resource modelB,
 			DifferenceSettings differenceSettings) {
 		
-		Difference difference = TechnicalDifferenceFacade.deriveTechnicalDifference(
+		Difference difference = TechnicalDifferenceFacade.difference(
 				modelA, modelB, differenceSettings);
 		return difference;
 	}

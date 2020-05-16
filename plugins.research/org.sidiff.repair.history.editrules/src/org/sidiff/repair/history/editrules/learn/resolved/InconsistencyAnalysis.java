@@ -12,8 +12,6 @@ import java.util.Stack;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.sidiff.common.utilities.java.JUtil;
-import org.sidiff.correspondences.CorrespondencesUtil;
-import org.sidiff.correspondences.matchingmodel.MatchingModelCorrespondences;
 import org.sidiff.generic.matcher.uuid.UUIDMatcher;
 import org.sidiff.history.analysis.tracing.InconsistencyTrace;
 import org.sidiff.history.revision.IRevision;
@@ -23,15 +21,15 @@ import org.sidiff.history.revision.util.SymmetricDifferenceUtil;
 import org.sidiff.historymodel.ChangeSet;
 import org.sidiff.historymodel.HistoryModelFactory;
 import org.sidiff.historymodel.Problem;
-import org.sidiff.matcher.IMatcher;
 import org.sidiff.revision.difference.AddReference;
 import org.sidiff.revision.difference.AttributeValueChange;
 import org.sidiff.revision.difference.Change;
 import org.sidiff.revision.difference.Correspondence;
 import org.sidiff.revision.difference.Difference;
 import org.sidiff.revision.difference.RemoveReference;
-import org.sidiff.revision.difference.derivation.api.TechnicalDifferenceFacade;
-import org.sidiff.revision.difference.derivation.api.settings.DifferenceSettings;
+import org.sidiff.revision.difference.api.TechnicalDifferenceFacade;
+import org.sidiff.revision.difference.api.settings.DifferenceSettings;
+import org.sidiff.revision.difference.matcher.IMatcher;
 import org.sidiff.validation.constraint.api.ValidationFacade;
 import org.sidiff.validation.constraint.api.util.RepairValidation;
 import org.sidiff.validation.constraint.api.util.Validation;
@@ -57,11 +55,8 @@ public class InconsistencyAnalysis {
 		
 		DifferenceSettings settings = new DifferenceSettings();
 		settings.setMatcher(matcher);
-		settings.setCorrespondencesService(
-				CorrespondencesUtil.getAvailableCorrespondencesService(
-						MatchingModelCorrespondences.SERVICE_ID));
 
-		return TechnicalDifferenceFacade.deriveTechnicalDifference(modelA, modelB, settings);
+		return TechnicalDifferenceFacade.difference(modelA, modelB, settings);
 	}
 	
 	public List<ChangeSet> getCausingChanges() {

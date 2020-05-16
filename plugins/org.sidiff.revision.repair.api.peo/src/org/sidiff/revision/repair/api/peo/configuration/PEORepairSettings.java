@@ -7,7 +7,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.henshin.model.Rule;
 import org.sidiff.common.utilities.emf.DocumentType;
-import org.sidiff.revision.difference.derivation.api.settings.DifferenceSettings;
+import org.sidiff.revision.difference.api.settings.DifferenceSettings;
 import org.sidiff.revision.repair.api.BasicRepairSettings;
 import org.sidiff.revision.repair.complement.peo.configuration.ComplementFinderSettings;
 import org.sidiff.validation.constraint.interpreter.IConstraint;

@@ -5,9 +5,10 @@ Bundle-SymbolicName: org.sidiff.ecore.matcher.signature;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Bundle-Activator: org.sidiff.ecore.repair.history.matcher.Activator
 Require-Bundle: org.eclipse.core.runtime,
- org.sidiff.matcher,
+ org.sidiff.revision.difference.matcher,
  org.eclipse.emf.ecore,
- org.sidiff.common.utilities
+ org.sidiff.common.utilities,
+ org.sidiff.revision.difference
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Automatic-Module-Name: org.sidiff.ecore.matcher.signature

@@ -24,7 +24,7 @@ import org.sidiff.history.revision.impl.Revision;
 import org.sidiff.historymodel.History;
 import org.sidiff.historymodel.Problem;
 import org.sidiff.historymodel.Version;
-import org.sidiff.revision.difference.derivation.api.settings.DifferenceSettings;
+import org.sidiff.revision.difference.api.settings.DifferenceSettings;
 import org.sidiff.validation.constraint.api.util.Validation;
 import org.sidiff.validation.constraint.interpreter.IConstraint;
 

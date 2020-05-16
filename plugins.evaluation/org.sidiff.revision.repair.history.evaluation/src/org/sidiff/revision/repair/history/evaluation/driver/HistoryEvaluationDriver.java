@@ -10,7 +10,7 @@ import org.sidiff.common.utilities.monitor.LogTable;
 import org.sidiff.common.utilities.monitor.LogUtil;
 import org.sidiff.common.utilities.ui.util.InfoConsole;
 import org.sidiff.history.analysis.tracing.InconsistencyTrace;
-import org.sidiff.revision.difference.derivation.api.settings.DifferenceSettings;
+import org.sidiff.revision.difference.api.settings.DifferenceSettings;
 import org.sidiff.revision.repair.api.IRepairFacade;
 import org.sidiff.revision.repair.api.peo.PEORepairJob;
 import org.sidiff.revision.repair.api.peo.configuration.PEORepairSettings;

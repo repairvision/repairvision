@@ -15,7 +15,7 @@ import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IViewPart;
 import org.sidiff.common.utilities.ui.util.WorkbenchUtil;
-import org.sidiff.revision.difference.derivation.api.settings.DifferenceSettings;
+import org.sidiff.revision.difference.api.settings.DifferenceSettings;
 import org.sidiff.revision.editrules.project.registry.util.RulebaseUtil;
 import org.sidiff.revision.repair.api.IRepairFacade;
 import org.sidiff.revision.repair.api.IRepairPlan;

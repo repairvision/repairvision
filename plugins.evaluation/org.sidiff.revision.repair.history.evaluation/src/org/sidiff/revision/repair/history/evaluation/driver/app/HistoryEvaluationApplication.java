@@ -15,10 +15,10 @@ import org.sidiff.common.utilities.emf.Scope;
 import org.sidiff.generic.matcher.uuid.UUIDMatcher;
 import org.sidiff.history.revision.util.SettingsUtil;
 import org.sidiff.historymodel.History;
-import org.sidiff.matcher.IMatcher;
+import org.sidiff.revision.difference.api.settings.DifferenceSettings;
 import org.sidiff.revision.difference.derivation.GenericTechnicalDifferenceBuilder;
 import org.sidiff.revision.difference.derivation.ITechnicalDifferenceBuilder;
-import org.sidiff.revision.difference.derivation.api.settings.DifferenceSettings;
+import org.sidiff.revision.difference.matcher.IMatcher;
 import org.sidiff.revision.editrules.project.registry.RulebaseRegistry;
 import org.sidiff.revision.editrules.project.registry.util.RulebaseUtil;
 import org.sidiff.revision.repair.api.IRepairFacade;
@@ -31,7 +31,7 @@ import org.sidiff.revision.repair.history.evaluation.driver.data.HistoryInfo;
 
 public class HistoryEvaluationApplication implements IApplication {
 	
-//	private static String MATCHER = "org.sidiff.matcher.id.xmiid.XMIIDMatcher";
+//	private static String MATCHER = "org.sidiff.revision.difference.matcher.id.xmiid.XMIIDMatcher";
 //	private static String DIFFERENCE_BUILDER = "org.sidiff.ecore.difference.technical.TechnicalDifferenceBuilderEcoreNoAnnotations";
 	
 	private static int START_WITH_VERSION = 0;

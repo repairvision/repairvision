@@ -24,7 +24,7 @@ import org.sidiff.common.utilities.ui.util.WorkbenchUtil;
 import org.sidiff.history.analysis.tracing.HistoryModelDatabase;
 import org.sidiff.history.analysis.validation.FOLValidator;
 import org.sidiff.integration.editor.util.ActiveModelEditorAccess;
-import org.sidiff.revision.difference.derivation.api.settings.DifferenceSettings;
+import org.sidiff.revision.difference.api.settings.DifferenceSettings;
 import org.sidiff.revision.editrules.project.registry.util.RulebaseUtil;
 import org.sidiff.revision.repair.api.IRepairFacade;
 import org.sidiff.revision.repair.api.IRepairPlan;

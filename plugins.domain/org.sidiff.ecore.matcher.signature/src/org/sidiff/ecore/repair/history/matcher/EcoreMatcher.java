@@ -1,7 +1,7 @@
 package org.sidiff.ecore.repair.history.matcher;
 
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -25,9 +25,11 @@ import org.eclipse.emf.ecore.impl.EStringToStringMapEntryImpl;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.sidiff.common.utilities.emf.Scope;
-import org.sidiff.matcher.BaseMatcher;
+import org.sidiff.revision.difference.Difference;
+import org.sidiff.revision.difference.matcher.IMatcher;
+import org.sidiff.revision.difference.matcher.util.MatcherUtil;
 
-public class EcoreMatcher extends BaseMatcher {
+public class EcoreMatcher implements IMatcher {
 	
 	private Set<Resource> resourceSetA = new HashSet<>();
 	
@@ -35,35 +37,6 @@ public class EcoreMatcher extends BaseMatcher {
 	
 	private boolean allowsAmbiguousSignature = false;
 	
-	@Override
-	public Set<String> getDocumentTypes() {
-		Set<String> docTypes = new HashSet<String>();
-		docTypes.add(EcorePackage.eNS_URI);
-		return docTypes;
-	}
-
-	@Override
-	protected void init(Collection<Resource> models, Scope scope) {
-		super.init(models, scope);	
-		
-		Iterator<Resource> iterator = getModels().iterator();
-		Resource resourceA = iterator.next();
-		Resource resourceB = iterator.next();
-		
-		if (scope.equals(Scope.RESOURCE_SET)) {
-			resourceSetA.addAll(resourceA.getResourceSet().getResources());
-			resourceSetB.addAll(resourceB.getResourceSet().getResources());
-		} else {
-			resourceSetA.add(resourceA);
-			resourceSetB.add(resourceB);
-		}
-	}	
-	
-	@Override
-	public boolean isResourceSetCapable() {
-		return true;
-	}
-
 	public boolean isAllowsAmbiguousSignature() {
 		return allowsAmbiguousSignature;
 	}
@@ -78,7 +51,26 @@ public class EcoreMatcher extends BaseMatcher {
 	}
 	
 	@Override
-	public void match() {
+	public String getName() {
+		return "Ecore Matcher";
+	}
+	
+	@Override
+	public Set<String> getDocumentTypes() {
+		return Collections.singleton(EcorePackage.eNS_URI);
+	}
+
+	@Override
+	public void startMatching(Difference difference, Resource modelA, Resource modelB, Scope scope) {
+		
+		if (scope.equals(Scope.RESOURCE_SET)) {
+			resourceSetA.addAll(modelA.getResourceSet().getResources());
+			resourceSetB.addAll(modelB.getResourceSet().getResources());
+		} else {
+			resourceSetA.add(modelA);
+			resourceSetB.add(modelB);
+		}
+
 		Map<String, List<EObject>> signatures = new HashMap<>();
 		List<EObject> unmatched;
 		List<EObject> ambiguous;
@@ -107,7 +99,8 @@ public class EcoreMatcher extends BaseMatcher {
 		handleAmbiguousSignature(signatures);
 		
 		// Convert signature match to correspondences:
-		createCorrespondences(signatures);
+		createCorrespondences(difference, signatures);
+		createUnmatched(difference);
 	}
 
 	protected void calculateSignatures(
@@ -567,7 +560,7 @@ public class EcoreMatcher extends BaseMatcher {
 		return false;
     }
 
-	protected void createCorrespondences(Map<String, List<EObject>> signatures) {
+	protected void createCorrespondences(Difference difference, Map<String, List<EObject>> signatures) {
 		for (Entry<String, List<EObject>> match : signatures.entrySet()) {
 			List<EObject> matched = match.getValue();
 			
@@ -576,21 +569,16 @@ public class EcoreMatcher extends BaseMatcher {
 				Resource resource1 = matched.get(1).eResource();
 				
 				if (resourceSetA.contains(resource0) && resourceSetB.contains(resource1)) {
-					getCorrespondencesService().addCorrespondence(matched.get(0), matched.get(1));
+					difference.addCorrespondence(matched.get(0), matched.get(1));
 				} else if (resourceSetA.contains(resource1) && resourceSetB.contains(resource0)) {
-					getCorrespondencesService().addCorrespondence(matched.get(1), matched.get(0));
+					difference.addCorrespondence(matched.get(1), matched.get(0));
 				}
 			}
 		}
 	}
-
-	@Override
-	public String getName() {
-		return "Ecore Matcher";
-	}
-
-	@Override
-	public String getDescription() {
-		return "Matcher for Ecore Models";
+	
+	protected void createUnmatched(Difference difference) {
+		MatcherUtil.createUnmatched(difference, resourceSetA);
+		MatcherUtil.createUnmatched(difference, resourceSetB);
 	}
 }

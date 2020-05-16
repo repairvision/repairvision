@@ -8,7 +8,7 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.sidiff.common.utilities.ui.util.WorkbenchUtil;
-import org.sidiff.revision.difference.derivation.api.settings.DifferenceSettings;
+import org.sidiff.revision.difference.api.settings.DifferenceSettings;
 import org.sidiff.revision.editrules.project.registry.RulebaseRegistry;
 import org.sidiff.revision.repair.api.IRepairSettings;
 import org.sidiff.revision.repair.api.RepairJob;

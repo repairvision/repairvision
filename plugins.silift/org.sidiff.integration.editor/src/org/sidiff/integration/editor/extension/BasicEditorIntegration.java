@@ -30,8 +30,6 @@ import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.FileEditorInput;
-import org.sidiff.common.logging.LogEvent;
-import org.sidiff.common.logging.LogUtil;
 import org.sidiff.common.utilities.emf.DocumentType;
 import org.sidiff.common.utilities.emf.EMFStorage;
 
@@ -200,7 +198,6 @@ public class BasicEditorIntegration extends AbstractEditorIntegration {
 							.getFileForLocation(Path.fromOSString(dest.getAbsolutePath()));
 					ifile.refreshLocal(IResource.DEPTH_INFINITE, new NullProgressMonitor());
 				} catch (Exception e) {
-					LogUtil.log(LogEvent.NOTICE, "Could not refresh file after file copy");
 				}
 			}
 			return EMFStorage.pathToUri(savePath + separator + mainDiagramUri.lastSegment());
@@ -208,7 +205,6 @@ public class BasicEditorIntegration extends AbstractEditorIntegration {
 			if (e instanceof FileNotFoundException) {
 				throw (FileNotFoundException) e;
 			}
-			LogUtil.log(LogEvent.NOTICE, e.getMessage());
 			throw new RuntimeException("Error copying diagram", e);
 		}
 	}
@@ -217,7 +213,6 @@ public class BasicEditorIntegration extends AbstractEditorIntegration {
 		try {
 			return EMFStorage.eLoad(uri).eResource();
 		} catch (Exception e) {
-			LogUtil.log(LogEvent.NOTICE, "Could not load diagram as resource");
 			return null;
 		}
 	}

@@ -2,11 +2,16 @@ package org.sidiff.integration.editor.sirius;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipFile;
 
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.emf.common.ui.URIEditorInput;
@@ -30,9 +35,6 @@ import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
-import org.sidiff.common.file.ZipUtil;
-import org.sidiff.common.logging.LogEvent;
-import org.sidiff.common.logging.LogUtil;
 import org.sidiff.common.utilities.emf.EMFStorage;
 import org.sidiff.integration.editor.extension.AbstractEditorIntegration;
 
@@ -91,7 +93,6 @@ public class SiriusEditorIntegration extends AbstractEditorIntegration {
 		} catch (Exception e) {
 			if (e instanceof FileNotFoundException)
 				throw (FileNotFoundException) e;
-			LogUtil.log(LogEvent.NOTICE, e.getMessage());
 			// TODO Exception-handling?
 			throw new RuntimeException("Error copying diagram", e);
 		}
@@ -122,7 +123,7 @@ public class SiriusEditorIntegration extends AbstractEditorIntegration {
 				return null;
 			String fileString = diagramURI.toString().substring(diagramURI.toString().indexOf(diagramURI.authority())+ diagramURI.authority().length()).replaceAll("\\\\", "/");
 			if (fileString.startsWith("/")) fileString=fileString.substring(1);
-			for (String s : ZipUtil.getEntries(authorityFile.getAbsolutePath())) {
+			for (String s : getEntries(authorityFile.getAbsolutePath())) {
 				if (s != null && s.equals(fileString)) return diagramURI;
 			}
 			return null;
@@ -130,6 +131,34 @@ public class SiriusEditorIntegration extends AbstractEditorIntegration {
 			return diagramURI;
 		}
 		return null;
+	}
+	
+	private List<String> getEntries(String zipFile) {
+		List<String> entries = new ArrayList<String>();
+		ZipFile file = null;
+		
+		try {
+			file = new ZipFile(zipFile);
+			Enumeration<?> enu = file.entries();
+
+			while (enu.hasMoreElements()) {
+				ZipEntry zipEntry = (ZipEntry) enu.nextElement();
+				String zipEntryName = zipEntry.getName();
+				entries.add(zipEntryName);
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			if (file != null) {
+				try {
+					file.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		
+		return entries;
 	}
 
 	@Override

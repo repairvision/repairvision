@@ -16,10 +16,10 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute difference.ecore#//Difference/uriModelA"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute difference.ecore#//Difference/uriModelB"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference difference.ecore#//Difference/correspondences"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference difference.ecore#//Difference/unmatchedA"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference difference.ecore#//Difference/unmatchedB"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute difference.ecore#//Difference/eResourceA"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute difference.ecore#//Difference/eResourceB"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference difference.ecore#//Difference/unmatchedA"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference difference.ecore#//Difference/unmatchedB"/>
       <genOperations ecoreOperation="difference.ecore#//Difference/getCorrespondingObjectInA">
         <genParameters ecoreParameter="difference.ecore#//Difference/getCorrespondingObjectInA/objectInB"/>
       </genOperations>
@@ -35,8 +35,18 @@
       <genOperations ecoreOperation="difference.ecore#//Difference/addCorrespondence">
         <genParameters ecoreParameter="difference.ecore#//Difference/addCorrespondence/correspondence"/>
       </genOperations>
+      <genOperations ecoreOperation="difference.ecore#//Difference/addCorrespondence.1">
+        <genParameters ecoreParameter="difference.ecore#//Difference/addCorrespondence.1/objA"/>
+        <genParameters ecoreParameter="difference.ecore#//Difference/addCorrespondence.1/objB"/>
+      </genOperations>
       <genOperations ecoreOperation="difference.ecore#//Difference/removeCorrespondence">
         <genParameters ecoreParameter="difference.ecore#//Difference/removeCorrespondence/correspondence"/>
+      </genOperations>
+      <genOperations ecoreOperation="difference.ecore#//Difference/isUnmatchedA">
+        <genParameters ecoreParameter="difference.ecore#//Difference/isUnmatchedA/objectInA"/>
+      </genOperations>
+      <genOperations ecoreOperation="difference.ecore#//Difference/isUnmatchedB">
+        <genParameters ecoreParameter="difference.ecore#//Difference/isUnmatchedB/objectInB"/>
       </genOperations>
     </genClasses>
     <genClasses ecoreClass="difference.ecore#//Correspondence">
