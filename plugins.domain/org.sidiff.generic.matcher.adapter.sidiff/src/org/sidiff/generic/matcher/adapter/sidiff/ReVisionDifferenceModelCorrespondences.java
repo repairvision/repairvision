@@ -136,11 +136,11 @@ public class ReVisionDifferenceModelCorrespondences extends AbstractCorresponden
 	public Collection<EObject> getElementsWithCorrespondences(Resource model) {
 		ArrayList<EObject> result = new ArrayList<EObject>();
 		
-		if (model == getDifference().getEResourceA()) {
+		if (model == getDifference().getModelA()) {
 			for (Correspondence correspondence : getDifference().getCorrespondences()) {
 				result.add(correspondence.getMatchedA());
 			}
-		} else if (model == getDifference().getEResourceB()) {
+		} else if (model == getDifference().getModelB()) {
 			for (Correspondence correspondence : getDifference().getCorrespondences()) {
 				result.add(correspondence.getMatchedB());
 			}
@@ -153,9 +153,9 @@ public class ReVisionDifferenceModelCorrespondences extends AbstractCorresponden
 	public Collection<EObject> getElementsWithoutCorrespondences(Resource model) {
 		ArrayList<EObject> result = new ArrayList<EObject>();
 
-		if (model == getDifference().getEResourceA()) {
+		if (model == getDifference().getModelA()) {
 			result.addAll(getDifference().getUnmatchedA());
-		} else if (model == getDifference().getEResourceB()) {
+		} else if (model == getDifference().getModelB()) {
 			result.addAll(getDifference().getUnmatchedB());
 		}
 

@@ -20,8 +20,9 @@ import org.sidiff.common.utilities.emf.Scope;
 import org.sidiff.common.utilities.ui.util.WorkbenchUtil;
 import org.sidiff.revision.difference.Correspondence;
 import org.sidiff.revision.difference.Difference;
-import org.sidiff.revision.difference.DifferenceFactory;
+import org.sidiff.revision.difference.api.DifferenceFacade;
 import org.sidiff.revision.difference.api.registry.MatcherRegistry;
+import org.sidiff.revision.difference.api.settings.MatchingSettings;
 import org.sidiff.revision.difference.derivation.GenericTechnicalDifferenceBuilder;
 import org.sidiff.revision.difference.derivation.ITechnicalDifferenceBuilder;
 import org.sidiff.revision.difference.matcher.IMatcherProvider;
@@ -89,9 +90,7 @@ public class CreateDifferenceHandler extends AbstractHandler {
 	}
 
 	private Difference createMatching(Resource modelA, Resource modelB, Scope scope, IMatcherProvider matcherProvider) {
-		Difference difference = DifferenceFactory.eINSTANCE.createDifference();
-		matcherProvider.createMatcher().startMatching(difference, modelA, modelB, scope);
-		return difference;
+		return DifferenceFacade.match(modelA, modelB, new MatchingSettings(scope, matcherProvider));
 	}
 	
 	private void iterativeMatching(Difference base, Difference subsequent) {

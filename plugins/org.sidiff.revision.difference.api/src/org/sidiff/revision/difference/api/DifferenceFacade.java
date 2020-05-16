@@ -17,6 +17,36 @@ public class DifferenceFacade {
 	public static String DIFFERENCE_FILE_EXTENSION = DifferenceUtil.FILE_EXTENSION;
 
 	/**
+	 * @param modelA The origin model.
+	 * @param modelB The modified model.
+	 * @return A empty difference.
+	 */
+	public static Difference create(Resource modelA, Resource modelB) {
+		Difference difference = DifferenceFactory.eINSTANCE.createDifference();
+		difference.setModelA(modelA);
+		difference.setModelB(modelB);
+		return difference;
+	}
+
+	/**
+	 * Calculates a matching between models.That means a Correspondence for each
+	 * preserved object between models.
+	 * 
+	 * @param modelA   The origin model.
+	 * @param modelB   The modified model.
+	 * @param settings Specifies the settings of the matching algorithm.
+	 * @return A {@link Matching} between the given models
+	 */
+	public static Difference match(Resource modelA, Resource modelB, MatchingSettings settings) {
+		IMatcherProvider matcherProvider = settings.getMatcher();
+	
+		Difference difference = create(modelA, modelB);
+		matcherProvider.createMatcher().startMatching(difference, modelA, modelB, settings.getScope());
+	
+		return difference;
+	}
+
+	/**
 	 * Calculates a matching between models and derives a technical
 	 * {@link Difference} between two models.
 	 * 
@@ -31,24 +61,6 @@ public class DifferenceFacade {
 		return deriveDifference(match(modelA, modelB, settings), settings);
 	}
 	
-	/**
-	 * Calculates a matching between models.That means a Correspondence for each
-	 * preserved object between models.
-	 * 
-	 * @param modelA   The origin model.
-	 * @param modelB   The modified model.
-	 * @param settings Specifies the settings of the matching algorithm.
-	 * @return A {@link Matching} between the given models
-	 */
-	public static Difference match(Resource modelA, Resource modelB, MatchingSettings settings) {
-		IMatcherProvider matcherProvider = settings.getMatcher();
-
-		Difference difference = DifferenceFactory.eINSTANCE.createDifference();
-		matcherProvider.createMatcher().startMatching(difference, modelA, modelB, settings.getScope());
-
-		return difference;
-	}
-
 	/**
 	 * Derives a technical {@link Difference} between two models.
 	 * 

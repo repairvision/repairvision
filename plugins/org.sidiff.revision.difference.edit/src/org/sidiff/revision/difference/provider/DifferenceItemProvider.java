@@ -66,14 +66,58 @@ public class DifferenceItemProvider
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
-			addModelAPropertyDescriptor(object);
-			addModelBPropertyDescriptor(object);
+			addUnmatchedAPropertyDescriptor(object);
+			addUnmatchedBPropertyDescriptor(object);
 			addUriModelAPropertyDescriptor(object);
 			addUriModelBPropertyDescriptor(object);
-			addEResourceAPropertyDescriptor(object);
-			addEResourceBPropertyDescriptor(object);
+			addModelAPropertyDescriptor(object);
+			addModelBPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
+	}
+
+	/**
+	 * This adds a property descriptor for the Unmatched A feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addUnmatchedAPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_Difference_unmatchedA_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_Difference_unmatchedA_feature", "_UI_Difference_type"),
+				 DifferencePackage.Literals.DIFFERENCE__UNMATCHED_A,
+				 true,
+				 false,
+				 true,
+				 null,
+				 null,
+				 null));
+	}
+
+	/**
+	 * This adds a property descriptor for the Unmatched B feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addUnmatchedBPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_Difference_unmatchedB_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_Difference_unmatchedB_feature", "_UI_Difference_type"),
+				 DifferencePackage.Literals.DIFFERENCE__UNMATCHED_B,
+				 true,
+				 false,
+				 true,
+				 null,
+				 null,
+				 null));
 	}
 
 	/**
@@ -165,50 +209,6 @@ public class DifferenceItemProvider
 	}
 
 	/**
-	 * This adds a property descriptor for the EResource A feature.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected void addEResourceAPropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_Difference_eResourceA_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Difference_eResourceA_feature", "_UI_Difference_type"),
-				 DifferencePackage.Literals.DIFFERENCE__ERESOURCE_A,
-				 true,
-				 false,
-				 false,
-				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-				 null,
-				 null));
-	}
-
-	/**
-	 * This adds a property descriptor for the EResource B feature.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected void addEResourceBPropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_Difference_eResourceB_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Difference_eResourceB_feature", "_UI_Difference_type"),
-				 DifferencePackage.Literals.DIFFERENCE__ERESOURCE_B,
-				 true,
-				 false,
-				 false,
-				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-				 null,
-				 null));
-	}
-
-	/**
 	 * This specifies how to implement {@link #getChildren} and is used to deduce an appropriate feature for an
 	 * {@link org.eclipse.emf.edit.command.AddCommand}, {@link org.eclipse.emf.edit.command.RemoveCommand} or
 	 * {@link org.eclipse.emf.edit.command.MoveCommand} in {@link #createCommand}.
@@ -282,12 +282,10 @@ public class DifferenceItemProvider
 		updateChildren(notification);
 
 		switch (notification.getFeatureID(Difference.class)) {
-			case DifferencePackage.DIFFERENCE__MODEL_A:
-			case DifferencePackage.DIFFERENCE__MODEL_B:
 			case DifferencePackage.DIFFERENCE__URI_MODEL_A:
 			case DifferencePackage.DIFFERENCE__URI_MODEL_B:
-			case DifferencePackage.DIFFERENCE__ERESOURCE_A:
-			case DifferencePackage.DIFFERENCE__ERESOURCE_B:
+			case DifferencePackage.DIFFERENCE__MODEL_A:
+			case DifferencePackage.DIFFERENCE__MODEL_B:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 				return;
 			case DifferencePackage.DIFFERENCE__CHANGES:

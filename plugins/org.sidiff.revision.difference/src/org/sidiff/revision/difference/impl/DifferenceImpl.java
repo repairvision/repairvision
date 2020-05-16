@@ -40,15 +40,13 @@ import org.sidiff.revision.difference.DifferencePackage;
  * </p>
  * <ul>
  *   <li>{@link org.sidiff.revision.difference.impl.DifferenceImpl#getChanges <em>Changes</em>}</li>
- *   <li>{@link org.sidiff.revision.difference.impl.DifferenceImpl#getModelA <em>Model A</em>}</li>
- *   <li>{@link org.sidiff.revision.difference.impl.DifferenceImpl#getModelB <em>Model B</em>}</li>
- *   <li>{@link org.sidiff.revision.difference.impl.DifferenceImpl#getUriModelA <em>Uri Model A</em>}</li>
- *   <li>{@link org.sidiff.revision.difference.impl.DifferenceImpl#getUriModelB <em>Uri Model B</em>}</li>
  *   <li>{@link org.sidiff.revision.difference.impl.DifferenceImpl#getCorrespondences <em>Correspondences</em>}</li>
- *   <li>{@link org.sidiff.revision.difference.impl.DifferenceImpl#getEResourceA <em>EResource A</em>}</li>
- *   <li>{@link org.sidiff.revision.difference.impl.DifferenceImpl#getEResourceB <em>EResource B</em>}</li>
  *   <li>{@link org.sidiff.revision.difference.impl.DifferenceImpl#getUnmatchedA <em>Unmatched A</em>}</li>
  *   <li>{@link org.sidiff.revision.difference.impl.DifferenceImpl#getUnmatchedB <em>Unmatched B</em>}</li>
+ *   <li>{@link org.sidiff.revision.difference.impl.DifferenceImpl#getUriModelA <em>Uri Model A</em>}</li>
+ *   <li>{@link org.sidiff.revision.difference.impl.DifferenceImpl#getUriModelB <em>Uri Model B</em>}</li>
+ *   <li>{@link org.sidiff.revision.difference.impl.DifferenceImpl#getModelA <em>Model A</em>}</li>
+ *   <li>{@link org.sidiff.revision.difference.impl.DifferenceImpl#getModelB <em>Model B</em>}</li>
  * </ul>
  *
  * @generated
@@ -80,24 +78,34 @@ public class DifferenceImpl extends EObjectImpl implements Difference {
 	protected EList<Change> changes;
 
 	/**
-	 * The default value of the '{@link #getModelA() <em>Model A</em>}' attribute.
-	 * <!-- begin-user-doc --> 
+	 * The cached value of the '{@link #getCorrespondences() <em>Correspondences</em>}' containment reference list.
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getModelA()
+	 * @see #getCorrespondences()
 	 * @generated
 	 * @ordered
 	 */
-	protected static final Resource MODEL_A_EDEFAULT = null;
+	protected EList<Correspondence> correspondences;
 
 	/**
-	 * The default value of the '{@link #getModelB() <em>Model B</em>}' attribute.
-	 * <!-- begin-user-doc --> 
+	 * The cached value of the '{@link #getUnmatchedA() <em>Unmatched A</em>}' reference list.
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getModelB()
+	 * @see #getUnmatchedA()
 	 * @generated
 	 * @ordered
 	 */
-	protected static final Resource MODEL_B_EDEFAULT = null;
+	protected EList<EObject> unmatchedA;
+
+	/**
+	 * The cached value of the '{@link #getUnmatchedB() <em>Unmatched B</em>}' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getUnmatchedB()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<EObject> unmatchedB;
 
 	/**
 	 * The default value of the '{@link #getUriModelA() <em>Uri Model A</em>}' attribute.
@@ -140,74 +148,44 @@ public class DifferenceImpl extends EObjectImpl implements Difference {
 	protected String uriModelB = URI_MODEL_B_EDEFAULT;
 
 	/**
-	 * The cached value of the '{@link #getCorrespondences() <em>Correspondences</em>}' containment reference list.
+	 * The default value of the '{@link #getModelA() <em>Model A</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getCorrespondences()
+	 * @see #getModelA()
 	 * @generated
 	 * @ordered
 	 */
-	protected EList<Correspondence> correspondences;
+	protected static final Resource MODEL_A_EDEFAULT = null;
 
 	/**
-	 * The default value of the '{@link #getEResourceA() <em>EResource A</em>}' attribute.
+	 * The cached value of the '{@link #getModelA() <em>Model A</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getEResourceA()
+	 * @see #getModelA()
 	 * @generated
 	 * @ordered
 	 */
-	protected static final Resource ERESOURCE_A_EDEFAULT = null;
+	protected Resource modelA = MODEL_A_EDEFAULT;
 
 	/**
-	 * The cached value of the '{@link #getEResourceA() <em>EResource A</em>}' attribute.
+	 * The default value of the '{@link #getModelB() <em>Model B</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getEResourceA()
+	 * @see #getModelB()
 	 * @generated
 	 * @ordered
 	 */
-	protected Resource eResourceA = ERESOURCE_A_EDEFAULT;
+	protected static final Resource MODEL_B_EDEFAULT = null;
 
 	/**
-	 * The default value of the '{@link #getEResourceB() <em>EResource B</em>}' attribute.
+	 * The cached value of the '{@link #getModelB() <em>Model B</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getEResourceB()
+	 * @see #getModelB()
 	 * @generated
 	 * @ordered
 	 */
-	protected static final Resource ERESOURCE_B_EDEFAULT = null;
-
-	/**
-	 * The cached value of the '{@link #getEResourceB() <em>EResource B</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getEResourceB()
-	 * @generated
-	 * @ordered
-	 */
-	protected Resource eResourceB = ERESOURCE_B_EDEFAULT;
-
-	/**
-	 * The cached value of the '{@link #getUnmatchedA() <em>Unmatched A</em>}' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getUnmatchedA()
-	 * @generated
-	 * @ordered
-	 */
-	protected EList<EObject> unmatchedA;
-
-	/**
-	 * The cached value of the '{@link #getUnmatchedB() <em>Unmatched B</em>}' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getUnmatchedB()
-	 * @generated
-	 * @ordered
-	 */
-	protected EList<EObject> unmatchedB;
+	protected Resource modelB = MODEL_B_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc --> 
@@ -242,26 +220,6 @@ public class DifferenceImpl extends EObjectImpl implements Difference {
 			changes = new EObjectContainmentEList<Change>(Change.class, this, DifferencePackage.DIFFERENCE__CHANGES);
 		}
 		return changes;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated NOT
-	 */
-	public Resource getModelA() {
-		return getEResourceA();
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated NOT
-	 */
-	public Resource getModelB() {
-		return getEResourceB();
 	}
 
 	/**
@@ -329,16 +287,16 @@ public class DifferenceImpl extends EObjectImpl implements Difference {
 	 * @generated NOT
 	 */
 	@Override
-	public Resource getEResourceA() {
-		if (eResourceA == null) {
+	public Resource getModelA() {
+		if (modelA == null) {
 
 			if (!getCorrespondences().isEmpty()) {
-				eResourceA = getCorrespondences().get(0).getMatchedA().eResource();
+				modelA = getCorrespondences().get(0).getMatchedA().eResource();
 			} else if (!getUnmatchedA().isEmpty()) {
-				eResourceA = getUnmatchedA().get(0).eResource();
+				modelA = getUnmatchedA().get(0).eResource();
 			}
 
-			if (eResourceA == null) {
+			if (modelA == null) {
 				URI modelURI = URI.createURI(getUriModelA());
 				if (modelURI.isRelative() && this.eResource() != null) {
 					modelURI = this.eResource().getURI().trimSegments(1).appendSegment(getUriModelA());
@@ -349,24 +307,11 @@ public class DifferenceImpl extends EObjectImpl implements Difference {
 				} else {
 					resourceSet = this.eResource().getResourceSet();
 				}
-				eResourceA = resourceSet.getResource(modelURI, true);
+				modelA = resourceSet.getResource(modelURI, true);
 			}
 		}
 
-		return eResourceA;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public void setEResourceA(Resource newEResourceA) {
-		Resource oldEResourceA = eResourceA;
-		eResourceA = newEResourceA;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, DifferencePackage.DIFFERENCE__ERESOURCE_A, oldEResourceA, eResourceA));
+		return modelA;
 	}
 
 	/**
@@ -375,16 +320,31 @@ public class DifferenceImpl extends EObjectImpl implements Difference {
 	 * @generated NOT
 	 */
 	@Override
-	public Resource getEResourceB() {
-		if (eResourceB == null) {
+	public void setModelA(Resource newModelA) {
+		Resource oldModelA = modelA;
+		modelA = newModelA;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, DifferencePackage.DIFFERENCE__MODEL_A, oldModelA, modelA));
+		
+		setUriModelA(getModelA().getURI().toString());
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	@Override
+	public Resource getModelB() {
+		if (modelB == null) {
 
 			if (!getCorrespondences().isEmpty()) {
-				eResourceB = getCorrespondences().get(0).getMatchedB().eResource();
+				modelB = getCorrespondences().get(0).getMatchedB().eResource();
 			} else if (!getUnmatchedB().isEmpty()) {
-				eResourceB = getUnmatchedB().get(0).eResource();
+				modelB = getUnmatchedB().get(0).eResource();
 			}
 
-			if (eResourceB == null) {
+			if (modelB == null) {
 				URI modelURI = URI.createURI(getUriModelB());
 				if (modelURI.isRelative() && this.eResource() != null) {
 					modelURI = this.eResource().getURI().trimSegments(1).appendSegment(getUriModelB());
@@ -395,24 +355,26 @@ public class DifferenceImpl extends EObjectImpl implements Difference {
 				} else {
 					resourceSet = this.eResource().getResourceSet();
 				}
-				eResourceB = resourceSet.getResource(modelURI, true);
+				modelB = resourceSet.getResource(modelURI, true);
 			}
 		}
 
-		return eResourceB;
+		return modelB;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT
 	 */
 	@Override
-	public void setEResourceB(Resource newEResourceB) {
-		Resource oldEResourceB = eResourceB;
-		eResourceB = newEResourceB;
+	public void setModelB(Resource newModelB) {
+		Resource oldModelB = modelB;
+		modelB = newModelB;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, DifferencePackage.DIFFERENCE__ERESOURCE_B, oldEResourceB, eResourceB));
+			eNotify(new ENotificationImpl(this, Notification.SET, DifferencePackage.DIFFERENCE__MODEL_B, oldModelB, modelB));
+		
+		setUriModelB(getModelB().getURI().toString());
 	}
 
 	/**
@@ -576,24 +538,20 @@ public class DifferenceImpl extends EObjectImpl implements Difference {
 		switch (featureID) {
 			case DifferencePackage.DIFFERENCE__CHANGES:
 				return getChanges();
-			case DifferencePackage.DIFFERENCE__MODEL_A:
-				return getModelA();
-			case DifferencePackage.DIFFERENCE__MODEL_B:
-				return getModelB();
-			case DifferencePackage.DIFFERENCE__URI_MODEL_A:
-				return getUriModelA();
-			case DifferencePackage.DIFFERENCE__URI_MODEL_B:
-				return getUriModelB();
 			case DifferencePackage.DIFFERENCE__CORRESPONDENCES:
 				return getCorrespondences();
-			case DifferencePackage.DIFFERENCE__ERESOURCE_A:
-				return getEResourceA();
-			case DifferencePackage.DIFFERENCE__ERESOURCE_B:
-				return getEResourceB();
 			case DifferencePackage.DIFFERENCE__UNMATCHED_A:
 				return getUnmatchedA();
 			case DifferencePackage.DIFFERENCE__UNMATCHED_B:
 				return getUnmatchedB();
+			case DifferencePackage.DIFFERENCE__URI_MODEL_A:
+				return getUriModelA();
+			case DifferencePackage.DIFFERENCE__URI_MODEL_B:
+				return getUriModelB();
+			case DifferencePackage.DIFFERENCE__MODEL_A:
+				return getModelA();
+			case DifferencePackage.DIFFERENCE__MODEL_B:
+				return getModelB();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -611,21 +569,9 @@ public class DifferenceImpl extends EObjectImpl implements Difference {
 				getChanges().clear();
 				getChanges().addAll((Collection<? extends Change>)newValue);
 				return;
-			case DifferencePackage.DIFFERENCE__URI_MODEL_A:
-				setUriModelA((String)newValue);
-				return;
-			case DifferencePackage.DIFFERENCE__URI_MODEL_B:
-				setUriModelB((String)newValue);
-				return;
 			case DifferencePackage.DIFFERENCE__CORRESPONDENCES:
 				getCorrespondences().clear();
 				getCorrespondences().addAll((Collection<? extends Correspondence>)newValue);
-				return;
-			case DifferencePackage.DIFFERENCE__ERESOURCE_A:
-				setEResourceA((Resource)newValue);
-				return;
-			case DifferencePackage.DIFFERENCE__ERESOURCE_B:
-				setEResourceB((Resource)newValue);
 				return;
 			case DifferencePackage.DIFFERENCE__UNMATCHED_A:
 				getUnmatchedA().clear();
@@ -634,6 +580,18 @@ public class DifferenceImpl extends EObjectImpl implements Difference {
 			case DifferencePackage.DIFFERENCE__UNMATCHED_B:
 				getUnmatchedB().clear();
 				getUnmatchedB().addAll((Collection<? extends EObject>)newValue);
+				return;
+			case DifferencePackage.DIFFERENCE__URI_MODEL_A:
+				setUriModelA((String)newValue);
+				return;
+			case DifferencePackage.DIFFERENCE__URI_MODEL_B:
+				setUriModelB((String)newValue);
+				return;
+			case DifferencePackage.DIFFERENCE__MODEL_A:
+				setModelA((Resource)newValue);
+				return;
+			case DifferencePackage.DIFFERENCE__MODEL_B:
+				setModelB((Resource)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -650,26 +608,26 @@ public class DifferenceImpl extends EObjectImpl implements Difference {
 			case DifferencePackage.DIFFERENCE__CHANGES:
 				getChanges().clear();
 				return;
-			case DifferencePackage.DIFFERENCE__URI_MODEL_A:
-				setUriModelA(URI_MODEL_A_EDEFAULT);
-				return;
-			case DifferencePackage.DIFFERENCE__URI_MODEL_B:
-				setUriModelB(URI_MODEL_B_EDEFAULT);
-				return;
 			case DifferencePackage.DIFFERENCE__CORRESPONDENCES:
 				getCorrespondences().clear();
-				return;
-			case DifferencePackage.DIFFERENCE__ERESOURCE_A:
-				setEResourceA(ERESOURCE_A_EDEFAULT);
-				return;
-			case DifferencePackage.DIFFERENCE__ERESOURCE_B:
-				setEResourceB(ERESOURCE_B_EDEFAULT);
 				return;
 			case DifferencePackage.DIFFERENCE__UNMATCHED_A:
 				getUnmatchedA().clear();
 				return;
 			case DifferencePackage.DIFFERENCE__UNMATCHED_B:
 				getUnmatchedB().clear();
+				return;
+			case DifferencePackage.DIFFERENCE__URI_MODEL_A:
+				setUriModelA(URI_MODEL_A_EDEFAULT);
+				return;
+			case DifferencePackage.DIFFERENCE__URI_MODEL_B:
+				setUriModelB(URI_MODEL_B_EDEFAULT);
+				return;
+			case DifferencePackage.DIFFERENCE__MODEL_A:
+				setModelA(MODEL_A_EDEFAULT);
+				return;
+			case DifferencePackage.DIFFERENCE__MODEL_B:
+				setModelB(MODEL_B_EDEFAULT);
 				return;
 		}
 		super.eUnset(featureID);
@@ -685,24 +643,20 @@ public class DifferenceImpl extends EObjectImpl implements Difference {
 		switch (featureID) {
 			case DifferencePackage.DIFFERENCE__CHANGES:
 				return changes != null && !changes.isEmpty();
-			case DifferencePackage.DIFFERENCE__MODEL_A:
-				return MODEL_A_EDEFAULT == null ? getModelA() != null : !MODEL_A_EDEFAULT.equals(getModelA());
-			case DifferencePackage.DIFFERENCE__MODEL_B:
-				return MODEL_B_EDEFAULT == null ? getModelB() != null : !MODEL_B_EDEFAULT.equals(getModelB());
-			case DifferencePackage.DIFFERENCE__URI_MODEL_A:
-				return URI_MODEL_A_EDEFAULT == null ? uriModelA != null : !URI_MODEL_A_EDEFAULT.equals(uriModelA);
-			case DifferencePackage.DIFFERENCE__URI_MODEL_B:
-				return URI_MODEL_B_EDEFAULT == null ? uriModelB != null : !URI_MODEL_B_EDEFAULT.equals(uriModelB);
 			case DifferencePackage.DIFFERENCE__CORRESPONDENCES:
 				return correspondences != null && !correspondences.isEmpty();
-			case DifferencePackage.DIFFERENCE__ERESOURCE_A:
-				return ERESOURCE_A_EDEFAULT == null ? eResourceA != null : !ERESOURCE_A_EDEFAULT.equals(eResourceA);
-			case DifferencePackage.DIFFERENCE__ERESOURCE_B:
-				return ERESOURCE_B_EDEFAULT == null ? eResourceB != null : !ERESOURCE_B_EDEFAULT.equals(eResourceB);
 			case DifferencePackage.DIFFERENCE__UNMATCHED_A:
 				return unmatchedA != null && !unmatchedA.isEmpty();
 			case DifferencePackage.DIFFERENCE__UNMATCHED_B:
 				return unmatchedB != null && !unmatchedB.isEmpty();
+			case DifferencePackage.DIFFERENCE__URI_MODEL_A:
+				return URI_MODEL_A_EDEFAULT == null ? uriModelA != null : !URI_MODEL_A_EDEFAULT.equals(uriModelA);
+			case DifferencePackage.DIFFERENCE__URI_MODEL_B:
+				return URI_MODEL_B_EDEFAULT == null ? uriModelB != null : !URI_MODEL_B_EDEFAULT.equals(uriModelB);
+			case DifferencePackage.DIFFERENCE__MODEL_A:
+				return MODEL_A_EDEFAULT == null ? modelA != null : !MODEL_A_EDEFAULT.equals(modelA);
+			case DifferencePackage.DIFFERENCE__MODEL_B:
+				return MODEL_B_EDEFAULT == null ? modelB != null : !MODEL_B_EDEFAULT.equals(modelB);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -721,10 +675,10 @@ public class DifferenceImpl extends EObjectImpl implements Difference {
 		result.append(uriModelA);
 		result.append(", uriModelB: ");
 		result.append(uriModelB);
-		result.append(", eResourceA: ");
-		result.append(eResourceA);
-		result.append(", eResourceB: ");
-		result.append(eResourceB);
+		result.append(", modelA: ");
+		result.append(modelA);
+		result.append(", modelB: ");
+		result.append(modelB);
 		result.append(')');
 		return result.toString();
 	}

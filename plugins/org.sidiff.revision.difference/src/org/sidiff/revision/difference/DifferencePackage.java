@@ -75,67 +75,13 @@ public interface DifferencePackage extends EPackage {
 	int DIFFERENCE__CHANGES = 0;
 
 	/**
-	 * The feature id for the '<em><b>Model A</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DIFFERENCE__MODEL_A = 1;
-
-	/**
-	 * The feature id for the '<em><b>Model B</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DIFFERENCE__MODEL_B = 2;
-
-	/**
-	 * The feature id for the '<em><b>Uri Model A</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DIFFERENCE__URI_MODEL_A = 3;
-
-	/**
-	 * The feature id for the '<em><b>Uri Model B</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DIFFERENCE__URI_MODEL_B = 4;
-
-	/**
 	 * The feature id for the '<em><b>Correspondences</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int DIFFERENCE__CORRESPONDENCES = 5;
-
-	/**
-	 * The feature id for the '<em><b>EResource A</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DIFFERENCE__ERESOURCE_A = 6;
-
-	/**
-	 * The feature id for the '<em><b>EResource B</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DIFFERENCE__ERESOURCE_B = 7;
+	int DIFFERENCE__CORRESPONDENCES = 1;
 
 	/**
 	 * The feature id for the '<em><b>Unmatched A</b></em>' reference list.
@@ -144,7 +90,7 @@ public interface DifferencePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DIFFERENCE__UNMATCHED_A = 8;
+	int DIFFERENCE__UNMATCHED_A = 2;
 
 	/**
 	 * The feature id for the '<em><b>Unmatched B</b></em>' reference list.
@@ -153,7 +99,43 @@ public interface DifferencePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DIFFERENCE__UNMATCHED_B = 9;
+	int DIFFERENCE__UNMATCHED_B = 3;
+
+	/**
+	 * The feature id for the '<em><b>Uri Model A</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DIFFERENCE__URI_MODEL_A = 4;
+
+	/**
+	 * The feature id for the '<em><b>Uri Model B</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DIFFERENCE__URI_MODEL_B = 5;
+
+	/**
+	 * The feature id for the '<em><b>Model A</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DIFFERENCE__MODEL_A = 6;
+
+	/**
+	 * The feature id for the '<em><b>Model B</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DIFFERENCE__MODEL_B = 7;
 
 	/**
 	 * The number of structural features of the '<em>Difference</em>' class.
@@ -162,7 +144,7 @@ public interface DifferencePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DIFFERENCE_FEATURE_COUNT = 10;
+	int DIFFERENCE_FEATURE_COUNT = 8;
 
 	/**
 	 * The meta object id for the '{@link org.sidiff.revision.difference.impl.CorrespondenceImpl <em>Correspondence</em>}' class.
@@ -437,28 +419,6 @@ public interface DifferencePackage extends EPackage {
 	EReference getDifference_Changes();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.sidiff.revision.difference.Difference#getModelA <em>Model A</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Model A</em>'.
-	 * @see org.sidiff.revision.difference.Difference#getModelA()
-	 * @see #getDifference()
-	 * @generated
-	 */
-	EAttribute getDifference_ModelA();
-
-	/**
-	 * Returns the meta object for the attribute '{@link org.sidiff.revision.difference.Difference#getModelB <em>Model B</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Model B</em>'.
-	 * @see org.sidiff.revision.difference.Difference#getModelB()
-	 * @see #getDifference()
-	 * @generated
-	 */
-	EAttribute getDifference_ModelB();
-
-	/**
 	 * Returns the meta object for the attribute '{@link org.sidiff.revision.difference.Difference#getUriModelA <em>Uri Model A</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -481,6 +441,28 @@ public interface DifferencePackage extends EPackage {
 	EAttribute getDifference_UriModelB();
 
 	/**
+	 * Returns the meta object for the attribute '{@link org.sidiff.revision.difference.Difference#getModelA <em>Model A</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Model A</em>'.
+	 * @see org.sidiff.revision.difference.Difference#getModelA()
+	 * @see #getDifference()
+	 * @generated
+	 */
+	EAttribute getDifference_ModelA();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.sidiff.revision.difference.Difference#getModelB <em>Model B</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Model B</em>'.
+	 * @see org.sidiff.revision.difference.Difference#getModelB()
+	 * @see #getDifference()
+	 * @generated
+	 */
+	EAttribute getDifference_ModelB();
+
+	/**
 	 * Returns the meta object for the containment reference list '{@link org.sidiff.revision.difference.Difference#getCorrespondences <em>Correspondences</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -490,28 +472,6 @@ public interface DifferencePackage extends EPackage {
 	 * @generated
 	 */
 	EReference getDifference_Correspondences();
-
-	/**
-	 * Returns the meta object for the attribute '{@link org.sidiff.revision.difference.Difference#getEResourceA <em>EResource A</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>EResource A</em>'.
-	 * @see org.sidiff.revision.difference.Difference#getEResourceA()
-	 * @see #getDifference()
-	 * @generated
-	 */
-	EAttribute getDifference_EResourceA();
-
-	/**
-	 * Returns the meta object for the attribute '{@link org.sidiff.revision.difference.Difference#getEResourceB <em>EResource B</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>EResource B</em>'.
-	 * @see org.sidiff.revision.difference.Difference#getEResourceB()
-	 * @see #getDifference()
-	 * @generated
-	 */
-	EAttribute getDifference_EResourceB();
 
 	/**
 	 * Returns the meta object for the reference list '{@link org.sidiff.revision.difference.Difference#getUnmatchedA <em>Unmatched A</em>}'.
@@ -789,22 +749,6 @@ public interface DifferencePackage extends EPackage {
 		EReference DIFFERENCE__CHANGES = eINSTANCE.getDifference_Changes();
 
 		/**
-		 * The meta object literal for the '<em><b>Model A</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute DIFFERENCE__MODEL_A = eINSTANCE.getDifference_ModelA();
-
-		/**
-		 * The meta object literal for the '<em><b>Model B</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute DIFFERENCE__MODEL_B = eINSTANCE.getDifference_ModelB();
-
-		/**
 		 * The meta object literal for the '<em><b>Uri Model A</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -821,28 +765,28 @@ public interface DifferencePackage extends EPackage {
 		EAttribute DIFFERENCE__URI_MODEL_B = eINSTANCE.getDifference_UriModelB();
 
 		/**
+		 * The meta object literal for the '<em><b>Model A</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute DIFFERENCE__MODEL_A = eINSTANCE.getDifference_ModelA();
+
+		/**
+		 * The meta object literal for the '<em><b>Model B</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute DIFFERENCE__MODEL_B = eINSTANCE.getDifference_ModelB();
+
+		/**
 		 * The meta object literal for the '<em><b>Correspondences</b></em>' containment reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
 		EReference DIFFERENCE__CORRESPONDENCES = eINSTANCE.getDifference_Correspondences();
-
-		/**
-		 * The meta object literal for the '<em><b>EResource A</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute DIFFERENCE__ERESOURCE_A = eINSTANCE.getDifference_EResourceA();
-
-		/**
-		 * The meta object literal for the '<em><b>EResource B</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute DIFFERENCE__ERESOURCE_B = eINSTANCE.getDifference_EResourceB();
 
 		/**
 		 * The meta object literal for the '<em><b>Unmatched A</b></em>' reference list feature.

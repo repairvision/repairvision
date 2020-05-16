@@ -33,24 +33,20 @@
     </eOperations>
     <eStructuralFeatures xsi:type="ecore:EReference" name="changes" upperBound="-1"
         eType="#//Change" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="modelA" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EResource"
-        changeable="false" volatile="true" transient="true" derived="true"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="modelB" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EResource"
-        changeable="false" volatile="true" transient="true" derived="true"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="uriModelA" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="uriModelB" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="correspondences" ordered="false"
         upperBound="-1" eType="#//Correspondence" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="eResourceA" ordered="false"
-        lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EResource"
-        transient="true" derived="true"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="eResourceB" ordered="false"
-        lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EResource"
-        transient="true" derived="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="unmatchedA" upperBound="-1"
         eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="unmatchedB" upperBound="-1"
         eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="uriModelA" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="uriModelB" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="modelA" ordered="false"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EResource"
+        transient="true" derived="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="modelB" ordered="false"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EResource"
+        transient="true" derived="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Correspondence">
     <eStructuralFeatures xsi:type="ecore:EReference" name="matchedA" ordered="false"

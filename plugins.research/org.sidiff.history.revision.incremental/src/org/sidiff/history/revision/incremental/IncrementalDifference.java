@@ -23,6 +23,7 @@ import org.sidiff.revision.difference.Change;
 import org.sidiff.revision.difference.Correspondence;
 import org.sidiff.revision.difference.RemoveObject;
 import org.sidiff.revision.difference.RemoveReference;
+import org.sidiff.revision.difference.api.DifferenceFacade;
 import org.sidiff.revision.difference.Difference;
 import org.sidiff.revision.difference.DifferenceFactory;
 
@@ -51,9 +52,7 @@ public class IncrementalDifference {
 		this.elementsA = new HashSet<>();
 		this.elementsB = new HashSet<>();
 
-		this.difference = DifferenceFactory.eINSTANCE.createDifference();
-		this.difference.setEResourceA(resourceA);
-		this.difference.setEResourceB(resourceB);
+		this.difference = DifferenceFacade.create(resourceA, resourceB); 
 	}
 	
 	public Difference getSymmetricDifference() {
