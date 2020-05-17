@@ -1,14 +1,13 @@
 package org.sidiff.revision.repair.complement.construction;
 
-import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.getChangingAttributes;
-import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.getLHS;
-import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.getRHS;
-import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.getRemoteAttribute;
-import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.isCreationEdge;
-import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.isCreationNode;
-import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.isDeletionEdge;
-import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.isDeletionNode;
-import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.isPreservedNode;
+import static org.sidiff.common.utilities.henshin.HenshinRuleAnalysisUtil.getLHS;
+import static org.sidiff.common.utilities.henshin.HenshinRuleAnalysisUtil.getRHS;
+import static org.sidiff.common.utilities.henshin.HenshinRuleAnalysisUtil.getRemoteAttribute;
+import static org.sidiff.common.utilities.henshin.HenshinRuleAnalysisUtil.isCreationEdge;
+import static org.sidiff.common.utilities.henshin.HenshinRuleAnalysisUtil.isCreationNode;
+import static org.sidiff.common.utilities.henshin.HenshinRuleAnalysisUtil.isDeletionEdge;
+import static org.sidiff.common.utilities.henshin.HenshinRuleAnalysisUtil.isDeletionNode;
+import static org.sidiff.common.utilities.henshin.HenshinRuleAnalysisUtil.isPreservedNode;
 
 import java.util.Collection;
 import java.util.List;
@@ -27,6 +26,7 @@ import org.eclipse.emf.henshin.model.Parameter;
 import org.eclipse.emf.henshin.model.ParameterKind;
 import org.eclipse.emf.henshin.model.Rule;
 import org.sidiff.common.utilities.emf.ModelingUtil;
+import org.sidiff.common.utilities.henshin.HenshinChangesUtil;
 import org.sidiff.common.utilities.java.JUtil;
 import org.sidiff.graphpattern.attributes.JavaSciptParser;
 import org.sidiff.revision.editrules.recognition.match.RecognitionAttributeMatch;
@@ -418,7 +418,7 @@ public class ComplementConstructor {
 				&& lhsComplementNode.getIncoming().isEmpty()
 				&& rhsComplementNode.getOutgoing().isEmpty() 
 				&& rhsComplementNode.getIncoming().isEmpty()
-				&& getChangingAttributes(lhsComplementNode, rhsComplementNode).isEmpty();
+				&& HenshinChangesUtil.getChangingAttributes(lhsComplementNode).isEmpty();
 	}
 	
 	protected boolean hasChange(Rule rule) {
@@ -442,7 +442,7 @@ public class ComplementConstructor {
 		// Has attribute value changes:
 		for (Node node : rule.getRhs().getNodes()) {
 			for (Attribute attribute : node.getAttributes()) {
-				Attribute remoteAttribute = getRemoteAttribute(attribute);
+				Attribute remoteAttribute = getRemoteAttribute(rule.getMappings(), attribute);
 				
 				if (remoteAttribute == null) {
 					return true;

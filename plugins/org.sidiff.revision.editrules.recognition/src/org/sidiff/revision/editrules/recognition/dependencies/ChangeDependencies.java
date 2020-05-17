@@ -1,9 +1,9 @@
 package org.sidiff.revision.editrules.recognition.dependencies;
 
-import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.getLHSMinusRHSEdges;
-import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.getRHSMinusLHSEdges;
-import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.isCreationNode;
-import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.isDeletionNode;
+import static org.sidiff.common.utilities.henshin.HenshinRuleAnalysisUtil.getCreationEdges;
+import static org.sidiff.common.utilities.henshin.HenshinRuleAnalysisUtil.getDeletionEdges;
+import static org.sidiff.common.utilities.henshin.HenshinRuleAnalysisUtil.isCreationNode;
+import static org.sidiff.common.utilities.henshin.HenshinRuleAnalysisUtil.isDeletionNode;
 
 import java.util.HashMap;
 import java.util.List;
@@ -18,8 +18,9 @@ import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.GraphElement;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
-import org.sidiff.common.henshin.view.AttributePair;
-import org.sidiff.common.utilities.henshin.ChangePatternUtil;
+import org.sidiff.common.utilities.henshin.HenshinChangesUtil;
+import org.sidiff.common.utilities.henshin.HenshinRuleAnalysisUtil;
+import org.sidiff.common.utilities.henshin.pairs.AttributePair;
 import org.sidiff.graphpattern.DependencyEdge;
 import org.sidiff.graphpattern.DependencyNode;
 import org.sidiff.graphpattern.GraphPattern;
@@ -94,7 +95,7 @@ public class ChangeDependencies {
 	private void createRemoveChangeDependencies() {
 		
 		// edit rule LHS \ RHS <<delete>> node:
-		List<Edge> deletionEdges =  getLHSMinusRHSEdges(editRule);
+		List<Edge> deletionEdges =  getDeletionEdges(editRule);
 		
 		// A: Every << delete >> node + container/containment edges forms a dependency conjunction:
 		for (Edge containmentEdge : deletionEdges) {
@@ -179,7 +180,7 @@ public class ChangeDependencies {
 	private void createAddChangeDependencies() {
 		
 		// edit rule RHS \ LHS (added):
-		List<Edge> creationEdges = getRHSMinusLHSEdges(editRule);
+		List<Edge> creationEdges = getCreationEdges(editRule);
 		
 		// A: Every << create >> node + container/containment references forms a dependency conjunction:
 		for (Edge containmentEdge : creationEdges) {
@@ -268,7 +269,7 @@ public class ChangeDependencies {
 		
 		// edit rule attribute: value1->value2:
 		for (Node lhsNode : editRule.getLhs().getNodes()) {
-			for (AttributePair attribute : ChangePatternUtil.getChangingAttributes(lhsNode)) {
+			for (AttributePair attribute : HenshinChangesUtil.getChangingAttributes(lhsNode)) {
 				createDependencyNode(attribute.getRhsAttribute());
 			}
 		}
@@ -333,7 +334,7 @@ public class ChangeDependencies {
 	private NodePattern getRecognitionChange(Attribute rhsAttribute) {
 		for (ChangePatternAttributeValueChange attribute : 
 			recognitionPattern.getNodeTrace().get(
-					ChangePatternUtil.tryLHS(rhsAttribute.getNode())).getAttributeChanges()) {
+					HenshinRuleAnalysisUtil.tryLHS(rhsAttribute.getNode())).getAttributeChanges()) {
 			
 			if (attribute.getAttribute().getRhsAttribute() == rhsAttribute) {
 				return attribute.getChangeNodePattern();

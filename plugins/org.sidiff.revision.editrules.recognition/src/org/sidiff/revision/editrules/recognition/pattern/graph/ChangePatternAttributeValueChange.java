@@ -3,7 +3,7 @@ package org.sidiff.revision.editrules.recognition.pattern.graph;
 import java.util.Iterator;
 
 import org.eclipse.emf.ecore.EObject;
-import org.sidiff.common.henshin.view.AttributePair;
+import org.sidiff.common.utilities.henshin.pairs.AttributePair;
 import org.sidiff.graphpattern.EdgePattern;
 import org.sidiff.graphpattern.GraphpatternFactory;
 import org.sidiff.revision.difference.AttributeValueChange;

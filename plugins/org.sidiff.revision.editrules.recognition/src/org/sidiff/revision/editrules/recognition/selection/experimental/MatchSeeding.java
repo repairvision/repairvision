@@ -5,7 +5,7 @@ import org.eclipse.emf.henshin.model.Attribute;
 import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.GraphElement;
 import org.eclipse.emf.henshin.model.Node;
-import org.sidiff.common.utilities.henshin.ChangePatternUtil;
+import org.sidiff.common.utilities.henshin.HenshinRuleAnalysisUtil;
 import org.sidiff.graphpattern.NodePattern;
 import org.sidiff.revision.difference.Change;
 import org.sidiff.revision.editrules.recognition.impact.ImpactScope;
@@ -46,7 +46,7 @@ public class MatchSeeding implements IMatchSelector {
 					scopeNode = ((Attribute) scopeGraphElement).getNode();
 				}
 				
-				scopeNode = ChangePatternUtil.tryLHS(scopeNode);
+				scopeNode = HenshinRuleAnalysisUtil.tryLHS(scopeNode);
 				
 				for (EObject scopeObj : scope.get(scopeGraphElement)) {
 					seed(scopeNode, scopeObj);

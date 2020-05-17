@@ -12,7 +12,7 @@ import org.eclipse.emf.henshin.model.Attribute;
 import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.GraphElement;
 import org.eclipse.emf.henshin.model.Node;
-import org.sidiff.common.utilities.henshin.ChangePatternUtil;
+import org.sidiff.common.utilities.henshin.HenshinRuleAnalysisUtil;
 import org.sidiff.graphpattern.NodePattern;
 import org.sidiff.revision.editrules.recognition.pattern.RecognitionPattern;
 import org.sidiff.revision.editrules.recognition.pattern.domain.Domain;
@@ -52,7 +52,7 @@ public class ImpactScopeConstraint {
 				NodePattern repairTargetContext = recognitionPattern.getEdgeTrace().get(change).getEdgePatternB().getTarget();
 				addScopeToDomain(Domain.get(repairTargetContext), scope);
 			} else if (change instanceof Attribute) {
-				Node node = ChangePatternUtil.tryLHS(((Attribute) change).getNode());
+				Node node = HenshinRuleAnalysisUtil.tryLHS(((Attribute) change).getNode());
 				NodePattern repairContext = recognitionPattern.getNodeTrace().get(node).getNodePatternB();
 				addScopeToDomain(Domain.get(repairContext), scope);
 			}

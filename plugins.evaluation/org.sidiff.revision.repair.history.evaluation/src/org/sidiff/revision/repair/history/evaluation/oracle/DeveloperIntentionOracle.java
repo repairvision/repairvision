@@ -15,7 +15,7 @@ import org.eclipse.emf.henshin.model.Attribute;
 import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.GraphElement;
 import org.eclipse.emf.henshin.model.Node;
-import org.sidiff.common.utilities.henshin.ChangePatternUtil;
+import org.sidiff.common.utilities.henshin.HenshinRuleAnalysisUtil;
 import org.sidiff.graphpattern.attributes.JavaSciptParser;
 import org.sidiff.history.revision.IRevision;
 import org.sidiff.revision.difference.AddObject;
@@ -88,7 +88,7 @@ public class DeveloperIntentionOracle {
 			}
 			
 			if (repairAction instanceof Edge) {
-				Node sourceNode = ChangePatternUtil.tryLHS(((Edge) repairAction).getSource());
+				Node sourceNode = HenshinRuleAnalysisUtil.tryLHS(((Edge) repairAction).getSource());
 				
 				if (sourceNode.getGraph().isLhs()) {
 					for (EObject match : (Iterable<EObject>) () -> editRuleMatching.getMatches(sourceNode)) {

@@ -15,7 +15,7 @@ import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Display;
-import org.sidiff.common.utilities.henshin.ChangePatternUtil;
+import org.sidiff.common.utilities.henshin.HenshinRuleAnalysisUtil;
 import org.sidiff.revision.repair.ui.Activator;
 import org.sidiff.revision.repair.ui.provider.IHighlightableElement;
 
@@ -104,7 +104,7 @@ public class ParameterValueInputItem implements IItemProvider, IParameterInput, 
 				}
 				
 				if (attributeTarget != null) {
-					domain = this.parameter.getRepairPlan().getComplementDomain(ChangePatternUtil.tryLHS(attributeTarget));
+					domain = this.parameter.getRepairPlan().getComplementDomain(HenshinRuleAnalysisUtil.tryLHS(attributeTarget));
 				}
 			}
 			

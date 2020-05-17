@@ -24,7 +24,7 @@ import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.henshin.model.Attribute;
 import org.eclipse.emf.henshin.model.Node;
-import org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx;
+import org.sidiff.common.utilities.henshin.HenshinRuleAnalysisUtil;
 import org.sidiff.completion.ui.codebricks.Brick;
 import org.sidiff.completion.ui.codebricks.Codebrick;
 import org.sidiff.completion.ui.codebricks.Codebricks;
@@ -316,7 +316,7 @@ public class CodebricksGenerator {
 			if (graphElement instanceof Node) {
 				Node eoNode = (Node) graphElement;
 				
-				if (!HenshinRuleAnalysisUtilEx.isCreationNode(eoNode)) {
+				if (!HenshinRuleAnalysisUtil.isCreationNode(eoNode)) {
 					String name = eoNode.getName();
 					
 					// Check if parameter already exists:

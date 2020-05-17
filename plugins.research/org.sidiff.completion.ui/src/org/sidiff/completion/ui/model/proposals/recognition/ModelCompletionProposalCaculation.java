@@ -8,7 +8,7 @@ import org.eclipse.emf.henshin.interpreter.Match;
 import org.eclipse.emf.henshin.model.Attribute;
 import org.eclipse.emf.henshin.model.GraphElement;
 import org.eclipse.emf.henshin.model.Rule;
-import org.sidiff.common.utilities.henshin.ChangePatternUtil;
+import org.sidiff.common.utilities.henshin.HenshinChangesUtil;
 import org.sidiff.completion.ui.model.proposals.ModelCompletionProposal;
 import org.sidiff.revision.editrules.recognition.impact.ImpactScope;
 import org.sidiff.revision.repair.complement.construction.ComplementRule;
@@ -39,8 +39,8 @@ public class ModelCompletionProposalCaculation {
 		this.impact = impact;
 		this.complementFinderEngine = complementFinderEngine;
 		
-		List<GraphElement> changes = ChangePatternUtil.getPotentialChanges(editRule);
-		List<Attribute> settingAttributes = ChangePatternUtil.getSettingAttributes(editRule);
+		List<GraphElement> changes = HenshinChangesUtil.getPotentialChanges(editRule);
+		List<Attribute> settingAttributes = HenshinChangesUtil.getSettingAttributes(editRule);
 		
 		// Filter edit-rules by impact (sub-rule -> historical changes, complement-rule -> changes on current model):
 		this.historicalImpactScope = new ImpactScope(changes, impact.getHistoricalImpactAnalysis());

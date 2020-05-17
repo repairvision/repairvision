@@ -9,7 +9,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.henshin.model.Attribute;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.swt.graphics.Image;
-import org.sidiff.common.utilities.henshin.ChangePatternUtil;
+import org.sidiff.common.utilities.henshin.HenshinRuleAnalysisUtil;
 import org.sidiff.revision.repair.ui.Activator;
 
 public class ActionAttributeItem extends ActionItem {
@@ -42,7 +42,7 @@ public class ActionAttributeItem extends ActionItem {
 		
 		List<Object> values = new ArrayList<>();
 		
-		for (EObject match : getChangeSetItem().getDomain(ChangePatternUtil.tryLHS(containingNode))) {
+		for (EObject match : getChangeSetItem().getDomain(HenshinRuleAnalysisUtil.tryLHS(containingNode))) {
 			Object value = match.eGet(changeAttribute.getType());
 			values.add(match);
 			
@@ -58,6 +58,6 @@ public class ActionAttributeItem extends ActionItem {
 	public Iterator<? extends EObject> getModelElements() {
 		Attribute changeAttribute = (Attribute) changeAction;
 		Node containingNode = changeAttribute.getNode();
-		return Arrays.asList(getChangeSetItem().getDomain(ChangePatternUtil.tryLHS(containingNode))).iterator();
+		return Arrays.asList(getChangeSetItem().getDomain(HenshinRuleAnalysisUtil.tryLHS(containingNode))).iterator();
 	}
 }

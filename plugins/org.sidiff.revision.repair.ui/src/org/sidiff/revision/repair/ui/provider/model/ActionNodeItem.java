@@ -6,8 +6,7 @@ import java.util.Iterator;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.swt.graphics.Image;
-import org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx;
-import org.sidiff.common.utilities.henshin.ChangePatternUtil;
+import org.sidiff.common.utilities.henshin.HenshinRuleAnalysisUtil;
 import org.sidiff.revision.repair.ui.Activator;
 
 public class ActionNodeItem extends ActionItem {
@@ -19,12 +18,12 @@ public class ActionNodeItem extends ActionItem {
 	protected static Image IMG_PRESERVE_OBJECT = Activator.getImageDescriptor("icons/preserve_object.gif").createImage();
 	
 	public ActionNodeItem(Object parent, Node changeNode) {
-		super(parent, ChangePatternUtil.tryLHS(changeNode));
+		super(parent, HenshinRuleAnalysisUtil.tryLHS(changeNode));
 	}
 	
 	@Override
 	public Image getImage() {
-		if (HenshinRuleAnalysisUtilEx.isPreservedNode((Node) changeAction)) {
+		if (HenshinRuleAnalysisUtil.isPreservedNode((Node) changeAction)) {
 			return IMG_PRESERVE_OBJECT;
 		} else {
 			if (changeAction.getGraph().isLhs()) {

@@ -2,24 +2,19 @@ package org.sidiff.repair.history.editrules.learn.scope;
 
 import static org.sidiff.revision.difference.api.DifferenceFacade.difference;
 
-import java.io.IOException;
-import java.util.Collections;
 import java.util.Set;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.henshin.model.Module;
-import org.eclipse.swt.widgets.Display;
 import org.sidiff.common.utilities.ui.util.WorkbenchUtil;
 import org.sidiff.editrule.tools.recorder.DifferenceToEditRule;
 import org.sidiff.editrule.tools.recorder.TransformationSetup;
 import org.sidiff.editrule.tools.recorder.filters.IAttributeFilter;
 import org.sidiff.editrule.tools.recorder.filters.IReferenceFilter;
-import org.sidiff.editrule.tools.util.EditRuleUtil;
-import org.sidiff.editrule.tools.util.HenshinDiagramUtil;
+import org.sidiff.editrule.tools.recorder.util.HenshinDiagramUtil;
 import org.sidiff.revision.difference.Difference;
 import org.sidiff.revision.difference.api.settings.DifferenceSettings;
 import org.sidiff.validation.constraint.api.util.Validation;
@@ -218,30 +213,7 @@ public class LearnEditRule {
 	public static void saveEditRule(Module editRule, URI eoURI, boolean showDiagram, boolean showMessage) {
 		
 		if (editRule != null) {
-			editRule.getImports().addAll(EditRuleUtil.getImports(editRule));
-			
-			Resource eoRes = new ResourceSetImpl().createResource(eoURI);
-			eoRes.getContents().add(editRule);
-
-			try {
-				eoRes.save(Collections.emptyMap());
-				Resource diagramResource = HenshinDiagramUtil.createDiagram(editRule);
-				
-				if (showDiagram && HenshinDiagramUtil.maxNodeCount(editRule, 100)) {
-					Display.getDefault().asyncExec(new Runnable() {
-						@Override
-						public void run() {
-							HenshinDiagramUtil.openDiagram(diagramResource);
-						}
-					});
-				}
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-
-			if (showMessage) {
-				WorkbenchUtil.showMessage("Edit-Rule saved:\n\n" + eoURI.toPlatformString(true));
-			}
+			HenshinDiagramUtil.saveDiagram(editRule, eoURI, showDiagram, showMessage);
 		} else {
 			if (showMessage) {
 				WorkbenchUtil.showError("Could not transform this difference to an edit-rule.");

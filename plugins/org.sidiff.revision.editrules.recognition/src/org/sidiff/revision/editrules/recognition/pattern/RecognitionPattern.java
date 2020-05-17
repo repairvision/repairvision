@@ -11,8 +11,7 @@ import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.NestedCondition;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
-import org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx;
-import org.sidiff.common.utilities.henshin.ChangePatternUtil;
+import org.sidiff.common.utilities.henshin.HenshinRuleAnalysisUtil;
 import org.sidiff.graphpattern.GraphPattern;
 import org.sidiff.graphpattern.NodePattern;
 import org.sidiff.revision.editrules.recognition.dependencies.ChangeDependencies;
@@ -96,14 +95,14 @@ public class RecognitionPattern {
 		}
 		
 		// Nodes: <<create>>:
-		for (Node createNode : HenshinRuleAnalysisUtilEx.getRHSMinusLHSNodes(editRule)) {
+		for (Node createNode : HenshinRuleAnalysisUtil.getCreationNodes(editRule)) {
 			addEditRuleNode(new ActionNode(createNode.getAction().getType(), actionGraph, createNode, nodeTrace));
 		}
 		
 		// Nodes: <<require>>:
 		for (NestedCondition pac : editRule.getLhs().getPACs()) {
 			for(Node requireNode : pac.getConclusion().getNodes()) {
-				if (ChangePatternUtil.getLHS(requireNode) == null) {
+				if (HenshinRuleAnalysisUtil.getLHS(requireNode) == null) {
 					
 					// NOTE: Handle <<require>> nodes as <<preserve>> nodes:
 					addEditRuleNode(new ActionNode(Action.Type.PRESERVE, actionGraph, requireNode, nodeTrace));
@@ -119,14 +118,14 @@ public class RecognitionPattern {
 		}
 		
 		// Edges: <<create>>:
-		for (Edge createEdge : HenshinRuleAnalysisUtilEx.getRHSMinusLHSEdges(editRule)) {
+		for (Edge createEdge : HenshinRuleAnalysisUtil.getCreationEdges(editRule)) {
 			addEditRuleEdge(new ActionEdge(createEdge.getAction().getType(),actionGraph, createEdge, nodeTrace, edgeTrace));
 		}
 		
 		// Edges: <<require>>:
 		for (NestedCondition pac : editRule.getLhs().getPACs()) {
 			for(Edge requireEdge : pac.getConclusion().getEdges()) {
-				if (ChangePatternUtil.getLHS(requireEdge) == null) {
+				if (HenshinRuleAnalysisUtil.getLHS(requireEdge) == null) {
 					
 					// NOTE: Handle <<require>> edges as <<preserve>> edges:
 					addEditRuleEdge(new ActionEdge(Action.Type.PRESERVE, actionGraph, requireEdge, nodeTrace, edgeTrace));

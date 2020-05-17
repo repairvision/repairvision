@@ -8,7 +8,7 @@ import org.eclipse.emf.henshin.model.Action;
 import org.eclipse.emf.henshin.model.Action.Type;
 import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.Node;
-import org.sidiff.common.utilities.henshin.ChangePatternUtil;
+import org.sidiff.common.utilities.henshin.HenshinRuleAnalysisUtil;
 import org.sidiff.graphpattern.EdgePattern;
 import org.sidiff.graphpattern.GraphpatternFactory;
 import org.sidiff.revision.editrules.recognition.pattern.domain.Domain;
@@ -39,8 +39,8 @@ public class ActionEdge extends ActionGraphElement {
 		
 		// create action-edge:
 		this.action = action;
-		this.source = nodeTrace.get(ChangePatternUtil.tryLHS(editRuleEdge.getSource()));
-		this.target = nodeTrace.get(ChangePatternUtil.tryLHS(editRuleEdge.getTarget()));
+		this.source = nodeTrace.get(HenshinRuleAnalysisUtil.tryLHS(editRuleEdge.getSource()));
+		this.target = nodeTrace.get(HenshinRuleAnalysisUtil.tryLHS(editRuleEdge.getTarget()));
 		
 		// update trace:
 		edgeTrace.put(editRuleEdge, this);

@@ -1,13 +1,10 @@
 package org.sidiff.revision.repair.complement.util;
 
-import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.copyAttribute;
-import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.copyEdge;
-import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.copyNode;
-import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.getLHS;
-import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.getRHS;
-import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.getRemoteAttribute;
-import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.getRemoteNode;
-import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.isRHSNode;
+import static org.sidiff.common.utilities.henshin.HenshinRuleAnalysisUtil.getLHS;
+import static org.sidiff.common.utilities.henshin.HenshinRuleAnalysisUtil.getRHS;
+import static org.sidiff.common.utilities.henshin.HenshinRuleAnalysisUtil.getRemoteAttribute;
+import static org.sidiff.common.utilities.henshin.HenshinRuleAnalysisUtil.getRemoteNode;
+import static org.sidiff.common.utilities.henshin.HenshinRuleAnalysisUtil.isRHSNode;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -25,6 +22,7 @@ import org.eclipse.emf.henshin.model.MappingList;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Parameter;
 import org.eclipse.emf.henshin.model.Rule;
+import org.sidiff.common.utilities.henshin.HenshinRuleEditUtil;
 import org.sidiff.revision.editrules.recognition.match.RecognitionActionMatch;
 import org.sidiff.revision.editrules.recognition.match.RecognitionAttributeMatch;
 import org.sidiff.revision.editrules.recognition.match.RecognitionEdgeMatch;
@@ -185,7 +183,7 @@ public class ComplementUtil {
 		MappingList mappings = rule.getMappings();
 		
 		// attribute value change x -> y:
-		Attribute remoteAttribute = getRemoteAttribute(attribute);
+		Attribute remoteAttribute = getRemoteAttribute(mappings, attribute);
 		
 		if (remoteAttribute != null) {
 			remoteAttribute.getNode().getAttributes().remove(remoteAttribute);
@@ -195,7 +193,7 @@ public class ComplementUtil {
 		Node remoteNode = getRemoteNode(mappings, node);
 		assert (remoteNode != null);
 		
-		copyAttribute(remoteNode, attribute);
+		HenshinRuleEditUtil.copyAttribute(remoteNode, attribute);
 	}
 
 	/**
@@ -216,7 +214,7 @@ public class ComplementUtil {
 			remoteTarget = makePreserve(edge.getTarget(), false);
 		}
 
-		return copyEdge(edge, remoteSource, remoteTarget);
+		return HenshinRuleEditUtil.copyEdge(edge, remoteSource, remoteTarget);
 	}
 
 	/**
@@ -230,12 +228,12 @@ public class ComplementUtil {
 		Rule rule = node.getGraph().getRule();
 
 		if (isRHSNode(node)) {
-			Node copiedNode = copyNode(rule.getLhs(), node, attributes);
+			Node copiedNode = HenshinRuleEditUtil.copyNode(rule.getLhs(), node, attributes);
 			Mapping mapping = HenshinFactory.eINSTANCE.createMapping(copiedNode, node);
 			rule.getMappings().add(mapping);
 			return copiedNode;
 		} else {
-			Node copiedNode = copyNode(rule.getRhs(), node, attributes);
+			Node copiedNode = HenshinRuleEditUtil.copyNode(rule.getRhs(), node, attributes);
 			Mapping mapping = HenshinFactory.eINSTANCE.createMapping(node, copiedNode);
 			rule.getMappings().add(mapping);
 			return copiedNode;

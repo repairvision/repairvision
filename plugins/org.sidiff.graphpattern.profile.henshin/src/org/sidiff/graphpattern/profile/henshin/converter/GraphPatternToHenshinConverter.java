@@ -35,7 +35,6 @@ import org.eclipse.emf.henshin.model.ParameterKind;
 import org.eclipse.emf.henshin.model.ParameterMapping;
 import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.emf.henshin.model.resource.HenshinResource;
-import org.sidiff.common.henshin.INamingConventions;
 import org.sidiff.graphpattern.AttributePattern;
 import org.sidiff.graphpattern.EdgePattern;
 import org.sidiff.graphpattern.GraphElement;
@@ -209,7 +208,7 @@ public class GraphPatternToHenshinConverter {
 		
 		// create main unit:
 		this.unit = createMainUnit();
-		unit.setName(INamingConventions.MAIN_UNIT);
+		unit.setName(editOperation.getName());
 		module.getUnits().add(unit);
 		
 		// Convert rules:

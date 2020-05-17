@@ -13,7 +13,7 @@ import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Parameter;
 import org.eclipse.emf.henshin.model.ParameterKind;
 import org.eclipse.emf.henshin.model.Rule;
-import org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx;
+import org.sidiff.common.utilities.henshin.HenshinRuleAnalysisUtil;
 import org.sidiff.revision.difference.Change;
 import org.sidiff.revision.editrules.recognition.match.RecognitionEdgeMatch;
 import org.sidiff.revision.editrules.recognition.match.RecognitionMatch;
@@ -78,8 +78,8 @@ public class RepairPlan implements IRepairPlan {
 		
 		List<EObject[]> recognitionDomain = new ArrayList<>(1);
 		
-		Node lhsNode = node.getGraph().isLhs() ? node : HenshinRuleAnalysisUtilEx.getLHS(node);
-		Node rhsNode = node.getGraph().isRhs() ? node : HenshinRuleAnalysisUtilEx.getRHS(node);
+		Node lhsNode = node.getGraph().isLhs() ? node : HenshinRuleAnalysisUtil.getLHS(node);
+		Node rhsNode = node.getGraph().isRhs() ? node : HenshinRuleAnalysisUtil.getRHS(node);
 		
 		for (RecognitionMatch recognitionMatch : complementRule.getRecognitionMatch()) {
 			

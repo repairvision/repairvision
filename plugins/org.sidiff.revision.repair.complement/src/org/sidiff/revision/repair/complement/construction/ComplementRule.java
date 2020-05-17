@@ -1,9 +1,9 @@
 package org.sidiff.revision.repair.complement.construction;
 
-import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.getLHS;
-import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.getRHS;
-import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.isRHSEdge;
-import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.isRHSNode;
+import static org.sidiff.common.utilities.henshin.HenshinRuleAnalysisUtil.getLHS;
+import static org.sidiff.common.utilities.henshin.HenshinRuleAnalysisUtil.getRHS;
+import static org.sidiff.common.utilities.henshin.HenshinRuleAnalysisUtil.isRHSEdge;
+import static org.sidiff.common.utilities.henshin.HenshinRuleAnalysisUtil.isRHSNode;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -25,7 +25,8 @@ import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Parameter;
 import org.eclipse.emf.henshin.model.Rule;
-import org.sidiff.common.utilities.henshin.ChangePatternUtil;
+import org.sidiff.common.utilities.henshin.HenshinChangesUtil;
+import org.sidiff.common.utilities.henshin.HenshinRuleAnalysisUtil;
 import org.sidiff.revision.difference.Change;
 import org.sidiff.revision.editrules.recognition.match.RecognitionActionMatch;
 import org.sidiff.revision.editrules.recognition.match.RecognitionMatch;
@@ -94,7 +95,7 @@ public class ComplementRule {
 			
 			// NOTE: Allow the overwriting of already initially set attributes:
 			//       (for complete recognized edit rules)
-			List<Attribute> settingAttributes = ChangePatternUtil.getSettingAttributes(recognizedRule);
+			List<Attribute> settingAttributes = HenshinChangesUtil.getSettingAttributes(recognizedRule);
 			
 			if ((getComplementingChanges().size() - settingAttributes.size()) == 0) {
 				recognizedChanges.addAll(settingAttributes);
@@ -119,7 +120,7 @@ public class ComplementRule {
 	public List<GraphElement> getComplementingChanges() {
 		
 		if (complementingChanges == null) {
-			complementingChanges = ChangePatternUtil.getPotentialChanges(complementRule);
+			complementingChanges = HenshinChangesUtil.getPotentialChanges(complementRule);
 		}
 		
 		return complementingChanges;
@@ -133,13 +134,13 @@ public class ComplementRule {
 		
 		for (GraphElement graphElement : getComplementingChanges()) {
 			if (graphElement instanceof Edge) {
-				Node source = ChangePatternUtil.getLHS(((Edge) graphElement).getSource());
+				Node source = HenshinRuleAnalysisUtil.getLHS(((Edge) graphElement).getSource());
 				
 				if (source != null) {
 					boundaryComplementingChanges.add(graphElement);
 				}
 			} else if (graphElement instanceof Attribute) {
-				Node container = ChangePatternUtil.getLHS(((Attribute) graphElement).getNode());
+				Node container = HenshinRuleAnalysisUtil.getLHS(((Attribute) graphElement).getNode());
 				
 				if (container != null) {
 					boundaryComplementingChanges.add(graphElement);

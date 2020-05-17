@@ -6,7 +6,7 @@ import java.util.List;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.henshin.model.GraphElement;
 import org.eclipse.emf.henshin.model.Node;
-import org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx;
+import org.sidiff.common.utilities.henshin.HenshinRuleAnalysisUtil;
 import org.sidiff.common.utilities.java.JUtil;
 import org.sidiff.revision.repair.api.IRepairPlan;
 
@@ -25,7 +25,7 @@ public class RecognitionMatching implements IMatching {
 	
 	@Override
 	public Iterator<EObject> getMatches(Node node) {
-		Node lhsNode = HenshinRuleAnalysisUtilEx.getLHS(node);
+		Node lhsNode = HenshinRuleAnalysisUtil.getLHS(node);
 		
 		if (lhsNode != null) {
 			return repair.getRecognitionDomain(lhsNode).stream()

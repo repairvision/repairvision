@@ -1,12 +1,5 @@
 package org.sidiff.editrule.tools.recorder;
 
-import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.createCreateEdge;
-import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.createCreateNode;
-import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.createDeleteEdge;
-import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.createDeleteNode;
-import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.createPreservedEdge;
-import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.createPreservedNode;
-
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -29,9 +22,8 @@ import org.eclipse.emf.henshin.model.Parameter;
 import org.eclipse.emf.henshin.model.ParameterMapping;
 import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.emf.henshin.model.SequentialUnit;
-import org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx;
-import org.sidiff.common.henshin.INamingConventions;
-import org.sidiff.common.henshin.view.NodePair;
+import org.sidiff.common.utilities.henshin.HenshinRuleEditUtil;
+import org.sidiff.common.utilities.henshin.pairs.NodePair;
 import org.sidiff.revision.difference.AddObject;
 import org.sidiff.revision.difference.AddReference;
 import org.sidiff.revision.difference.AttributeValueChange;
@@ -78,7 +70,7 @@ public class DifferenceToEditRule {
 			node.getAttributes().remove(node.getAttribute(type));
 			
 			// Create new attribute:
-			HenshinRuleAnalysisUtilEx.createCreateAttribute(node, type, value.toString());
+			HenshinRuleEditUtil.createCreateAttribute(node, type, value.toString());
 		}
 	}
 
@@ -89,7 +81,7 @@ public class DifferenceToEditRule {
 		module.setName(trafoSetup.getEditRuleName());
 		
 		SequentialUnit mainUnit = HenshinFactory.eINSTANCE.createSequentialUnit();
-		mainUnit.setName(INamingConventions.MAIN_UNIT);
+		mainUnit.setName(trafoSetup.getEditRuleName());
 		module.getUnits().add(mainUnit);
 		
 		Rule editrule = HenshinFactory.eINSTANCE.createRule(trafoSetup.getEditRuleName());
@@ -117,7 +109,7 @@ public class DifferenceToEditRule {
 		// Preserve nodes:
 		for (Correspondence correspondence : correspondences) {
 			if (filter(correspondence)) {
-				NodePair preserveNode = createPreservedNode(
+				NodePair preserveNode = HenshinRuleEditUtil.createPreservedNode(
 						editrule, getName(correspondence, names), correspondence.getMatchedA().eClass());
 				traceA2LHS.put(correspondence.getMatchedA(), preserveNode.getLhsNode());
 				traceB2RHS.put(correspondence.getMatchedB(), preserveNode.getRhsNode());
@@ -194,7 +186,7 @@ public class DifferenceToEditRule {
 	private void convertRemoveObject(RemoveObject removeObject, Rule editrule, Set<String> names) {
 		
 		if (filter(removeObject)) {
-			Node removeNode = createDeleteNode(
+			Node removeNode = HenshinRuleEditUtil.createDeleteNode(
 					getName(removeObject.getObj(), names), 
 					removeObject.getObj().eClass(), 
 					editrule);
@@ -217,7 +209,7 @@ public class DifferenceToEditRule {
 			SequentialUnit mainUnit, Rule editrule, Set<String> names) {
 		
 		if (filter(addObject)) {
-			Node addNode = createCreateNode(
+			Node addNode = HenshinRuleEditUtil.createCreateNode(
 					getName(addObject.getObj(), names), 
 					addObject.getObj().eClass(), 
 					editrule);
@@ -300,7 +292,7 @@ public class DifferenceToEditRule {
 			// Create edges only once:
 			if ((srcNode != null) && (tgtNode != null)) {
 				if (!isEdgeContained(srcNode, tgtNode, rmvRef.getType())) {
-					createDeleteEdge(srcNode, tgtNode, rmvRef.getType(), editrule);
+					HenshinRuleEditUtil.createDeleteEdge(srcNode, tgtNode, rmvRef.getType(), editrule);
 				}
 			} else {
 				System.err.println("Missing Context Node: " + rmvRef);
@@ -329,7 +321,7 @@ public class DifferenceToEditRule {
 			// Create edges only once:
 			if ((srcNode != null) && (tgtNode != null)) {
 				if (!isEdgeContained(srcNode, tgtNode, addRef.getType())) {
-					createCreateEdge(srcNode, tgtNode, addRef.getType());
+					HenshinRuleEditUtil.createCreateEdge(srcNode, tgtNode, addRef.getType());
 				}
 			} else {
 				System.err.println("Missing Context Node: " + addRef);
@@ -382,7 +374,7 @@ public class DifferenceToEditRule {
 										if ((tgtNodeLHS != null) && (tgtNodeRHS != null)) {
 											if (!isEdgeContained(srcNodeLHS, tgtNodeLHS, refType)
 													&& !isEdgeContained(srcNodeRHS, tgtNodeRHS, refType)) {
-												createPreservedEdge(editrule, srcNode, tgtNode, refType);
+												HenshinRuleEditUtil.createPreservedEdge(editrule, srcNode, tgtNode, refType);
 											}
 										} else {
 											System.err.println("Missing Context Node: " + objATarget + ", " + objBTarget);

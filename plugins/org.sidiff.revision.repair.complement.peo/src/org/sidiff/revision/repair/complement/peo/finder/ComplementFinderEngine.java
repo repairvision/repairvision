@@ -1,6 +1,6 @@
 package org.sidiff.revision.repair.complement.peo.finder;
 
-import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.getLHS;
+import static org.sidiff.common.utilities.henshin.HenshinRuleAnalysisUtil.getLHS;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -18,7 +18,7 @@ import org.eclipse.emf.henshin.model.GraphElement;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Parameter;
 import org.eclipse.emf.henshin.model.Rule;
-import org.sidiff.common.utilities.henshin.ChangePatternUtil;
+import org.sidiff.common.utilities.henshin.HenshinRuleAnalysisUtil;
 import org.sidiff.common.utilities.monitor.LogTime;
 import org.sidiff.history.revision.IRevision;
 import org.sidiff.revision.editrules.recognition.RecognitionEngine;
@@ -235,7 +235,7 @@ public class ComplementFinderEngine {
 				EObject repairScopeElement = currentImpactScope.get(graphElement).get(0);
 				
 				if (graphElement instanceof Edge) {
-					Node source = ChangePatternUtil.getLHS(((Edge) graphElement).getSource());
+					Node source = HenshinRuleAnalysisUtil.getLHS(((Edge) graphElement).getSource());
 					
 					if (source != null) {
 						if ((repairContext == null) && (repairContextElement == null)) {
@@ -250,7 +250,7 @@ public class ComplementFinderEngine {
 						}
 					}
 				} else if (graphElement instanceof Attribute) {
-					Node container = ChangePatternUtil.getLHS(((Attribute) graphElement).getNode());
+					Node container = HenshinRuleAnalysisUtil.getLHS(((Attribute) graphElement).getNode());
 					
 					if (container != null) {
 						if ((repairContext == null) && (repairContextElement == null)) {

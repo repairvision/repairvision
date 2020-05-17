@@ -9,7 +9,7 @@ import java.util.Set;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.henshin.model.Node;
-import org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx;
+import org.sidiff.common.utilities.henshin.HenshinRuleAnalysisUtil;
 import org.sidiff.graphpattern.EdgePattern;
 import org.sidiff.graphpattern.GraphPattern;
 import org.sidiff.graphpattern.NodePattern;
@@ -39,7 +39,7 @@ public class RevisionGraph {
 	 * @return <code>true</code> if the type is abstract, interface or a creation node.
 	 */
 	public static boolean isStrictMatchingType(Node node) {
-		return !(node.getType().isAbstract() || node.getType().isInterface()) && HenshinRuleAnalysisUtilEx.isCreationNode(node);
+		return !(node.getType().isAbstract() || node.getType().isInterface()) && HenshinRuleAnalysisUtil.isCreationNode(node);
 	}
 
 	/**

@@ -12,9 +12,9 @@ import org.eclipse.emf.henshin.model.Action;
 import org.eclipse.emf.henshin.model.Action.Type;
 import org.eclipse.emf.henshin.model.Attribute;
 import org.eclipse.emf.henshin.model.Node;
-import org.sidiff.common.henshin.view.AttributePair;
 import org.sidiff.common.utilities.emf.MetaModelUtil;
-import org.sidiff.common.utilities.henshin.ChangePatternUtil;
+import org.sidiff.common.utilities.henshin.HenshinChangesUtil;
+import org.sidiff.common.utilities.henshin.pairs.AttributePair;
 import org.sidiff.graphpattern.AttributePattern;
 import org.sidiff.graphpattern.EdgePattern;
 import org.sidiff.graphpattern.GraphpatternFactory;
@@ -73,7 +73,7 @@ public class ActionNode extends ActionGraphElement  {
 		this.nodePatternB.setType(editRuleNode.getType());
 		
 		// B attributes:
-		for (Attribute requiredAttribute : ChangePatternUtil.getPreservedAttributes(editRuleNode)) {
+		for (Attribute requiredAttribute : HenshinChangesUtil.getPreservedAttributes(editRuleNode)) {
 			AttributePattern attributePattern = GraphpatternFactory.eINSTANCE.createAttributePattern();
 			attributePattern.setNode(nodePatternB);
 			attributePattern.setType(requiredAttribute.getType());
@@ -115,7 +115,7 @@ public class ActionNode extends ActionGraphElement  {
 		
 		// Create attribute value change pattern:
 		// Content check: value1->value2
-		for (AttributePair attribute : ChangePatternUtil.getChangingAttributes(editRuleNode)) {
+		for (AttributePair attribute : HenshinChangesUtil.getChangingAttributes(editRuleNode)) {
 			if (attributeChanges == null) {
 				attributeChanges = new ArrayList<>(5);
 			}

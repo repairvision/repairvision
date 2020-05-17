@@ -1,7 +1,6 @@
 package org.sidiff.revision.repair.complement.peo.impact;
 
-import static org.sidiff.common.henshin.HenshinRuleAnalysisUtilEx.getLHS;
-import static org.sidiff.common.utilities.henshin.ChangePatternUtil.tryLHS;
+import static org.sidiff.common.utilities.henshin.HenshinRuleAnalysisUtil.getLHS;
 
 import java.util.Collection;
 import java.util.List;
@@ -15,6 +14,7 @@ import org.eclipse.emf.henshin.model.Attribute;
 import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.GraphElement;
 import org.eclipse.emf.henshin.model.Node;
+import org.sidiff.common.utilities.henshin.HenshinRuleAnalysisUtil;
 import org.sidiff.revision.editrules.recognition.match.RecognitionAttributeMatch;
 import org.sidiff.revision.editrules.recognition.match.RecognitionEdgeMatch;
 import org.sidiff.revision.editrules.recognition.match.RecognitionMatch;
@@ -123,7 +123,7 @@ public class GraphActionImpactUtil {
 				EReference referenceType = ((Edge) change).getType();
 				
 				// Get the context object of the edge:
-				Node sourceContextNode = tryLHS(((Edge) change).getSource());
+				Node sourceContextNode = HenshinRuleAnalysisUtil.tryLHS(((Edge) change).getSource());
 				EObject sourceContextObject = getMatch(sourceContextNode, match);
 				
 				if (sourceContextObject != null) {
@@ -164,7 +164,7 @@ public class GraphActionImpactUtil {
 				EAttribute attributeType = ((Attribute) change).getType();
 				
 				// Get the context object of the edge:
-				Node contextNode = tryLHS(((Attribute) change).getNode());
+				Node contextNode = HenshinRuleAnalysisUtil.tryLHS(((Attribute) change).getNode());
 				EObject contextObject = getMatch(contextNode, match);
 				
 				if (contextObject != null) {
@@ -202,15 +202,15 @@ public class GraphActionImpactUtil {
 			} else if (match instanceof RecognitionEdgeMatch) {
 				Edge edge = ((RecognitionEdgeMatch) match).getEdge();
 				
-				if (tryLHS(edge.getSource()) == node) {
+				if (HenshinRuleAnalysisUtil.tryLHS(edge.getSource()) == node) {
 					return ((RecognitionEdgeMatch) match).getSrcModelBElement();
-				} else if (tryLHS(edge.getTarget()) == node) {
+				} else if (HenshinRuleAnalysisUtil.tryLHS(edge.getTarget()) == node) {
 					return ((RecognitionEdgeMatch) match).getTgtModelBElement();
 				}
 			} else if (match instanceof RecognitionAttributeMatch) {
 				Attribute attribute = ((RecognitionAttributeMatch) match).getAttribute();
 				
-				if (tryLHS(attribute.getNode()) == node) {
+				if (HenshinRuleAnalysisUtil.tryLHS(attribute.getNode()) == node) {
 					return ((RecognitionAttributeMatch) match).getObject();
 				}
 			}

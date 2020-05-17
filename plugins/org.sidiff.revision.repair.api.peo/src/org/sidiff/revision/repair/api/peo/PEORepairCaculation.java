@@ -8,7 +8,7 @@ import org.eclipse.emf.henshin.interpreter.Match;
 import org.eclipse.emf.henshin.model.Attribute;
 import org.eclipse.emf.henshin.model.GraphElement;
 import org.eclipse.emf.henshin.model.Rule;
-import org.sidiff.common.utilities.henshin.ChangePatternUtil;
+import org.sidiff.common.utilities.henshin.HenshinChangesUtil;
 import org.sidiff.common.utilities.monitor.LogTime;
 import org.sidiff.history.revision.IRevision;
 import org.sidiff.history.revision.util.SymmetricDifferenceUtil;
@@ -54,8 +54,8 @@ public class PEORepairCaculation {
 		}
 		
 		// TODO: Implement RuleInfo:
-		List<GraphElement> changes = ChangePatternUtil.getPotentialChanges(editRule);
-		List<Attribute> settingAttributes = ChangePatternUtil.getSettingAttributes(editRule);
+		List<GraphElement> changes = HenshinChangesUtil.getPotentialChanges(editRule);
+		List<Attribute> settingAttributes = HenshinChangesUtil.getSettingAttributes(editRule);
 		
 		// Filter edit-rules by impact (sub-rule -> negative, complement-rule -> positive):
 		this.positiveImpactScope = new ImpactScope(changes, impact.getCurrentImpactAnalysis());

@@ -1,13 +1,11 @@
 package org.sidiff.revision.repair.complement.peo.finder.henshin;
 
-import static org.sidiff.common.henshin.HenshinMultiRuleAnalysis.isBoundaryNode;
-import static org.sidiff.common.henshin.HenshinMultiRuleAnalysis.isEmbeddedNode;
-
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.henshin.interpreter.Match;
 import org.eclipse.emf.henshin.model.NestedCondition;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
+import org.sidiff.common.utilities.henshin.HenshinRuleAnalysisUtil;
 
 /**
  * Sorts a set of Henshin rules by its structure. This will optimize the
@@ -89,7 +87,7 @@ public class HenshinRuleStructureSorting {
 		for (int i = 0; i < nodes.size(); ++i) {
 			Node node = nodes.get(i);
 			
-			if (isEmbeddedNode(multiRule, node)) {
+			if (HenshinRuleAnalysisUtil.getRemoteNode(multiRule.getMultiMappings(), node) != null) {
 				nodes.move(0, i);
 				++embeddedOffset;
 			}
@@ -98,8 +96,8 @@ public class HenshinRuleStructureSorting {
 		// Get all boundary nodes as start nodes:
 		for (int i = embeddedOffset; i < nodes.size(); ++i) {
 			Node node = nodes.get(i);
-			
-			if (isBoundaryNode(multiRule, node)) {
+
+			if (HenshinRuleAnalysisUtil.isBoundaryNode(multiRule.getMultiMappings(), node)) {
 				nodes.move(embeddedOffset + boundaryOffset, i);
 				++boundaryOffset;
 			}

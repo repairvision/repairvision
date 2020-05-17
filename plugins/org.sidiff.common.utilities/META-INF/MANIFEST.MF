@@ -5,8 +5,10 @@ Bundle-SymbolicName: org.sidiff.common.utilities;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Bundle-ClassPath: .,
  commons-csv-1.4/commons-csv-1.4.jar
-Export-Package: org.sidiff.common.utilities.emf,
+Export-Package: org.apache.commons.csv,
+ org.sidiff.common.utilities.emf,
  org.sidiff.common.utilities.henshin,
+ org.sidiff.common.utilities.henshin.pairs,
  org.sidiff.common.utilities.java,
  org.sidiff.common.utilities.monitor,
  org.sidiff.common.utilities.ui.util,
@@ -16,9 +18,9 @@ Require-Bundle: org.eclipse.emf.transaction,
  org.eclipse.sirius.diagram.ui,
  org.eclipse.ui.console,
  org.eclipse.ui.workbench,
- org.sidiff.common.henshin,
  org.eclipse.emf.edit.ui;visibility:=reexport,
  org.eclipse.core.filesystem,
- org.eclipse.ui.ide
+ org.eclipse.ui.ide,
+ org.eclipse.emf.henshin.model;visibility:=reexport
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Automatic-Module-Name: org.sidiff.consistency.common
