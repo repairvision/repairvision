@@ -23,7 +23,7 @@ import org.eclipse.swt.widgets.Display;
 import org.sidiff.common.utilities.ui.util.WorkbenchUtil;
 import org.sidiff.history.analysis.tracing.HistoryModelDatabase;
 import org.sidiff.history.analysis.validation.FOLValidator;
-import org.sidiff.integration.editor.util.ActiveModelEditorAccess;
+import org.sidiff.integration.editor.access.ActiveModelEditorAccess;
 import org.sidiff.revision.difference.api.settings.DifferenceSettings;
 import org.sidiff.revision.editrules.project.registry.util.RulebaseUtil;
 import org.sidiff.revision.repair.api.IRepairFacade;
@@ -94,14 +94,18 @@ public class IntegratedRepairApplication extends EMFResourceRepairApplication<PE
 				});
 				
 				// Search inconsistencies:
-				validations = ValidationFacade.validate(
-						getModelB().getAllContents(), 
-						getConstraints());
-				
-				// Update UI:
-				Display.getDefault().syncExec(() -> {
-					fireResultChangeListener();
-				});
+				if (getModelB() != null) {
+					validations = ValidationFacade.validate(
+							getModelB().getAllContents(), 
+							getConstraints());
+					
+					// Update UI:
+					Display.getDefault().syncExec(() -> {
+						fireResultChangeListener();
+					});
+				} else {
+					WorkbenchUtil.showError("No model element is selected.");
+				}
 				
 				return Status.OK_STATUS;
 			}

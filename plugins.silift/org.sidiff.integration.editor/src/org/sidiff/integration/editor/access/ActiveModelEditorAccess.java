@@ -1,4 +1,4 @@
-package org.sidiff.integration.editor.util;
+package org.sidiff.integration.editor.access;
 
 import org.eclipse.ui.PlatformUI;
 

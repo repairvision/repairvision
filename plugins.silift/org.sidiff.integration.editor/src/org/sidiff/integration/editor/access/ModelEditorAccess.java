@@ -1,26 +1,21 @@
-package org.sidiff.integration.editor.util;
+package org.sidiff.integration.editor.access;
 
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import org.eclipse.core.resources.IFile;
-import org.eclipse.core.runtime.IAdaptable;
-import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.jface.viewers.ISelection;
-import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.FileEditorInput;
-import org.sidiff.integration.editor.access.DefaultEditorIntegration;
-import org.sidiff.integration.editor.access.IntegrationEditorAccess;
+import org.sidiff.integration.editor.extension.DefaultEditorIntegration;
 import org.sidiff.integration.editor.extension.IEditorIntegration;
+import org.sidiff.integration.editor.registry.IntegrationEditorRegistry;
 
 /**
  * Creates a snapshot of the currently active model editor.
@@ -52,36 +47,19 @@ public class ModelEditorAccess {
 			return;
 		}
 		
-		// check for editor integration extension (supported models):
-		for (IEditorIntegration editorIntegration : IntegrationEditorAccess.getInstance().getIntegrationEditors()) {
+		// check for editor integration extension:
+		for (IEditorIntegration editorIntegration : IntegrationEditorRegistry.getInstance().getIntegrationEditors()) {
 			try {
-				EditingDomain editingDomain = editorIntegration.getEditingDomain(editor);
-				
-				if (editingDomain != null) {
-					for (Resource resource : editingDomain.getResourceSet().getResources()) {
-						if (editorIntegration.supportsModel(resource.getURI())) {
+				if (editorIntegration.supports(editor)) {
+					EditingDomain editingDomain = editorIntegration.getEditingDomain(editor);
+					
+					if (editingDomain != null) {
+						if (!editingDomain.getResourceSet().getResources().isEmpty()) {
 							this.editorIntegration = editorIntegration;
-							this.modelResource = resource;
+							this.modelResource = editorIntegration.getSelectedResource(editor);
 							this.editingDomain = editingDomain;
 							return;
 						}
-					}
-				}
-			} catch (Exception e) {
-			}
-		}
-		
-		// check for editor integration extension:
-		for (IEditorIntegration editorIntegration : IntegrationEditorAccess.getInstance().getIntegrationEditors()) {
-			try {
-				EditingDomain editingDomain = editorIntegration.getEditingDomain(editor);
-				
-				if (editingDomain != null) {
-					if (!editingDomain.getResourceSet().getResources().isEmpty()) {
-						this.editorIntegration = editorIntegration;
-						this.modelResource = editingDomain.getResourceSet().getResources().get(0);
-						this.editingDomain = editingDomain;
-						return;
 					}
 				}
 			} catch (Exception e) {
@@ -99,14 +77,6 @@ public class ModelEditorAccess {
 							this.editorIntegration = null;
 							this.modelResource = resource;
 							this.editingDomain = editingDomain;
-							
-							if (modelResource != null) {
-								try {
-									this.editorIntegration = DefaultEditorIntegration.getInstance(modelResource.getURI());
-								} catch (Exception e) {
-								}
-							}
-							
 							return;
 						}
 					}
@@ -129,7 +99,7 @@ public class ModelEditorAccess {
 					
 					if (modelResource != null) {
 						try {
-							this.editorIntegration = DefaultEditorIntegration.getInstance(modelResource.getURI());
+							this.editorIntegration = DefaultEditorIntegration.getInstance();
 						} catch (Exception e) {
 						}
 					}
@@ -185,32 +155,7 @@ public class ModelEditorAccess {
 		if (editorIntegration != null) {
 			return editorIntegration.getSelectedDomainElements(getEditorSelection());
 		} else {
-			return getSelectedDomainElements(getEditorSelection());
+			return DefaultEditorIntegration.getInstance().getSelectedDomainElements(getEditorSelection());
 		}
-	}
-	
-	private List<EObject> getSelectedDomainElements(ISelection selection) {
-		
-		// https://wiki.eclipse.org/Papyrus/Papyrus_Developer_Guide/How_To_Code_Examples#How_to_Get_the_Current_Selection_from_Java_code
-		// https://wiki.eclipse.org/Papyrus/Papyrus_Developer_Guide/How_To_Code_Examples#How_to_adapt_a_Graphical_Object_to_underlying_Domain_.28UML.29
-		if ((selection != null) && !selection.isEmpty() && (selection instanceof IStructuredSelection)) {
-			List<EObject> selected = new ArrayList<EObject>();
-
-			for (Object selectedObject : ((IStructuredSelection) selection).toArray()) {
-				EObject element = null;
-				
-				if (selectedObject instanceof IAdaptable) {
-					element = ((IAdaptable) selectedObject).getAdapter(EObject.class);
-				}
-				if (element == null) {
-					element = Platform.getAdapterManager().getAdapter(selectedObject, EObject.class);
-				}
-				if (element != null) {
-					selected.add(element);
-				}
-			}
-			return selected;
-		}
-		return Collections.emptyList();
 	}
 }

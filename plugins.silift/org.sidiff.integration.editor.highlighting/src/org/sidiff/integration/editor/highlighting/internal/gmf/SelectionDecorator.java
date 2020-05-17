@@ -1,6 +1,5 @@
 package org.sidiff.integration.editor.highlighting.internal.gmf;
 
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -26,7 +25,6 @@ import org.eclipse.gmf.runtime.notation.Node;
 import org.eclipse.gmf.runtime.notation.NotationPackage;
 import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.swt.graphics.Color;
-import org.sidiff.integration.editor.access.IntegrationEditorAccess;
 
 public class SelectionDecorator extends AbstractDecorator {
 
@@ -152,23 +150,20 @@ public class SelectionDecorator extends AbstractDecorator {
 	}
 	
 	private boolean selectionContains(EObject viewDataElement){
-		Collection<EObject> viewDataElements = IntegrationEditorAccess.getInstance().getHighlightableElements(viewDataElement);
 		
-		if(viewDataElements != null && !viewDataElements.isEmpty()){
+		if(viewDataElement != null){
 			for(EObject selected : controller.getSelected()){
-				for (EObject element : viewDataElements){
-					if ((selected.eResource() != null) && (element.eResource() != null)) {
-						String fragmentA = EcoreUtil.getURI(selected).fragment();
-						String fragmentB = EcoreUtil.getURI(element).fragment();
-						
-						if (fragmentA.equals(fragmentB)){
-							return true;
-						}					
-					}
-				}			
+				if ((selected.eResource() != null) && (viewDataElement.eResource() != null)) {
+					String fragmentA = EcoreUtil.getURI(selected).fragment();
+					String fragmentB = EcoreUtil.getURI(viewDataElement).fragment();
+
+					if (fragmentA.equals(fragmentB)){
+						return true;
+					}					
+				}
 			}
 		}
-			
+
 		return false;
 	}
 }

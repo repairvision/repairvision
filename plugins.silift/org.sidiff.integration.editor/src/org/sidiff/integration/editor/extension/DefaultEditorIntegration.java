@@ -12,51 +12,22 @@ import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.domain.IEditingDomainProvider;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.ui.IEditorDescriptor;
 import org.eclipse.ui.IEditorPart;
-import org.eclipse.ui.PlatformUI;
 
-public abstract class AbstractEditorIntegration implements IEditorIntegration {
+public class DefaultEditorIntegration implements IEditorIntegration {
 
-	protected final String defaultEditorId, diagramEditorId;
-	private Boolean defaultEditorPresent = null, diagramEditorPresent = null;
+	private static DefaultEditorIntegration instances;
 
-	public AbstractEditorIntegration(String defaultEditorId, String diagramEditorId) {
-		super();
-		this.defaultEditorId = defaultEditorId;
-		this.diagramEditorId = diagramEditorId;
+	public static DefaultEditorIntegration getInstance() {
+		if(instances == null) {
+			instances = new DefaultEditorIntegration();
+		}
+		return instances;
 	}
-
+	
 	@Override
-	public String getDefaultEditorID() {
-		return defaultEditorId;
-	}
-
-	@Override
-	public String getDiagramEditorID() {
-		return diagramEditorId;
-	}
-
-	@Override
-	public boolean isDefaultEditorPresent() {
-		if (defaultEditorPresent == null)
-			defaultEditorPresent = isEditorPresent(defaultEditorId);
-		return defaultEditorPresent;
-	}
-
-	@Override
-	public boolean isDiagramEditorPresent() {
-		if (diagramEditorPresent == null)
-			diagramEditorPresent = isEditorPresent(diagramEditorId);
-		return diagramEditorPresent;
-	}
-
-	private static boolean isEditorPresent(String editorId) {
-		if (editorId == null || editorId.isEmpty())
-			return false;
-		IEditorDescriptor descriptor = (IEditorDescriptor) PlatformUI
-				.getWorkbench().getEditorRegistry().findEditor(editorId);
-		return (descriptor != null);
+	public boolean supports(IEditorPart editorPart) {
+		return editorPart instanceof IEditingDomainProvider;
 	}
 
 	@Override
@@ -65,16 +36,19 @@ public abstract class AbstractEditorIntegration implements IEditorIntegration {
 			IEditingDomainProvider editor = (IEditingDomainProvider) editorPart;
 			return editor.getEditingDomain();
 		}
-		throw new UnsupportedOperationException("editorPart does not implement IEditingDomainProvider");
+		return null;
 	}
-
+	
 	@Override
-	public Resource getResource(IEditorPart editorPart) {
-		if (editorPart instanceof IEditingDomainProvider) {
-			IEditingDomainProvider editor = (IEditingDomainProvider) editorPart;
-			return editor.getEditingDomain().getResourceSet().getResources().get(0);
+	public Resource getSelectedResource(IEditorPart editorPart) {
+		ISelection selection = editorPart.getSite().getSelectionProvider().getSelection();
+		List<EObject> selectedModelElements = getSelectedDomainElements(selection);
+		
+		if (!selectedModelElements.isEmpty()) {
+			return selectedModelElements.get(0).eResource();
 		}
-		throw new UnsupportedOperationException("editorPart does not implement IEditingDomainProvider");
+		
+		return null;
 	}
 	
 	@Override

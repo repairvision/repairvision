@@ -15,6 +15,7 @@ import org.eclipse.emf.transaction.util.TransactionUtil;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.sirius.business.api.dialect.command.RefreshRepresentationsCommand;
+import org.eclipse.sirius.diagram.ui.edit.api.part.AbstractBorderedDiagramElementEditPart;
 import org.eclipse.sirius.diagram.ui.internal.edit.parts.DNodeListEditPart;
 import org.eclipse.sirius.diagram.ui.tools.api.editor.DDiagramEditor;
 import org.eclipse.sirius.viewpoint.DRepresentation;
@@ -93,7 +94,7 @@ public class SiriusUtil {
 			for (Iterator<Object> iterator = ((StructuredSelection) selection).iterator(); iterator.hasNext();) {
 				Object remoteSelectedElement = (Object) iterator.next();
 
-				if (remoteSelectedElement instanceof DNodeListEditPart) {
+				if (remoteSelectedElement instanceof AbstractBorderedDiagramElementEditPart) {
 					newSelections.add(getSemanticElement((DNodeListEditPart) remoteSelectedElement));
 				} else { 	
 					newSelections.add(remoteSelectedElement);
@@ -106,8 +107,8 @@ public class SiriusUtil {
 		return Collections.emptyList();
 	}
 
-	public static EObject getSemanticElement(DNodeListEditPart element) {
-		return ((DNodeListEditPart) element).resolveDiagramElement().getTarget();
+	public static EObject getSemanticElement(AbstractBorderedDiagramElementEditPart element) {
+		return ((AbstractBorderedDiagramElementEditPart) element).resolveDiagramElement().getTarget();
 	}
 
 	public static void refreshActiveEditor() {

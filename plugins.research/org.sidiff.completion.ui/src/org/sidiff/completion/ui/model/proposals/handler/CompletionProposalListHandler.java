@@ -9,7 +9,7 @@ import org.eclipse.emf.henshin.model.Rule;
 import org.sidiff.common.utilities.emf.DocumentType;
 import org.sidiff.completion.ui.model.proposals.recognition.ModelCompletionProposalGenerator;
 import org.sidiff.completion.ui.proposals.CompletionProposalList;
-import org.sidiff.integration.editor.util.ActiveModelEditorAccess;
+import org.sidiff.integration.editor.access.ActiveModelEditorAccess;
 import org.sidiff.revision.editrules.project.registry.RulebaseRegistry;
 import org.sidiff.revision.editrules.project.registry.util.RulebaseUtil;
 
