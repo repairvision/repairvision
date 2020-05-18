@@ -29,11 +29,11 @@ import org.sidiff.common.utilities.ui.util.WorkbenchUtil;
 import org.sidiff.history.analysis.tracing.InconsistencyTrace;
 import org.sidiff.historymodel.History;
 import org.sidiff.historymodel.Problem;
-import org.sidiff.integration.editor.highlighting.EditorHighlighting;
-import org.sidiff.integration.editor.highlighting.ISelectionHighlightingAdapter;
 import org.sidiff.revision.repair.api.RepairJob;
 import org.sidiff.revision.repair.ui.controls.basic.BasicRepairViewerUI;
 import org.sidiff.revision.repair.ui.controls.basic.ModelDropWidget;
+import org.sidiff.revision.ui.editors.highlighting.EditorHighlighting;
+import org.sidiff.revision.ui.editors.highlighting.ISelectionHighlightingAdapter;
 import org.sidiff.validation.constraint.interpreter.ui.widgets.ValidationWidget;
 
 public class HistoryRepairUI extends BasicRepairViewerUI<HistoryRepairApplication> {

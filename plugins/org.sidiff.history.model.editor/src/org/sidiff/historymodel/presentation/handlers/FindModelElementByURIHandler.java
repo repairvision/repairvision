@@ -15,7 +15,7 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.handlers.HandlerUtil;
 import org.sidiff.common.utilities.emf.EMFStorage;
 import org.sidiff.common.utilities.ui.util.WorkbenchUtil;
-import org.sidiff.integration.editor.highlighting.EditorHighlighting;
+import org.sidiff.revision.ui.editors.highlighting.EditorHighlighting;
 
 public class FindModelElementByURIHandler extends AbstractHandler {
 

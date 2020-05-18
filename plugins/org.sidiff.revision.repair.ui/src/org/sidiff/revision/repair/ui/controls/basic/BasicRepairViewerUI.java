@@ -28,8 +28,6 @@ import org.eclipse.ui.dialogs.PreferencesUtil;
 import org.eclipse.ui.part.DrillDownAdapter;
 import org.sidiff.common.utilities.emf.EMFStorage;
 import org.sidiff.common.utilities.ui.util.WorkbenchUtil;
-import org.sidiff.integration.editor.highlighting.EditorHighlighting;
-import org.sidiff.integration.editor.highlighting.ISelectionHighlightingAdapter;
 import org.sidiff.revision.repair.api.IRepairPlan;
 import org.sidiff.revision.repair.api.RepairJob;
 import org.sidiff.revision.repair.ui.Activator;
@@ -41,6 +39,8 @@ import org.sidiff.revision.repair.ui.provider.RepairLabelProvider;
 import org.sidiff.revision.repair.ui.provider.model.IParameterInput;
 import org.sidiff.revision.repair.ui.provider.model.ParameterItem;
 import org.sidiff.revision.repair.ui.provider.model.RepairPlanItem;
+import org.sidiff.revision.ui.editors.highlighting.EditorHighlighting;
+import org.sidiff.revision.ui.editors.highlighting.ISelectionHighlightingAdapter;
 
 public class BasicRepairViewerUI<A extends IRepairApplication<?, ?>> extends BasicRepairUI<A> {
 

@@ -18,10 +18,10 @@ import org.sidiff.completion.ui.proposals.CompletionProposalList;
 import org.sidiff.graphpattern.profile.henshin_extension.RuleExtension;
 import org.sidiff.history.revision.IRevision;
 import org.sidiff.history.revision.impl.Revision;
-import org.sidiff.integration.editor.access.ActiveModelEditorAccess;
 import org.sidiff.revision.difference.api.settings.DifferenceSettings;
 import org.sidiff.revision.repair.complement.peo.finder.ComplementFinderEngine;
 import org.sidiff.revision.repair.ui.config.RepairPreferencePage;
+import org.sidiff.revision.ui.editors.integration.access.ActiveModelEditorAccess;
 import org.sidiff.validation.constraint.impact.ImpactAnalyzes;
 
 public class ModelCompletionProposalGenerator {

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         id="org.sidiff.revision.ui.editors.highlighting.internal.gmf.DecoratorProvider"
+         name="ReVision Selection Decorator"
+         point="org.eclipse.gmf.runtime.diagram.ui.decoratorProviders">
+      <decoratorProvider
+            class="org.sidiff.revision.ui.editors.highlighting.internal.gmf.DecoratorProvider">
+         <Priority
+               name="Lowest">
+         </Priority>
+         <object
+               class="org.eclipse.gmf.runtime.notation.View(org.eclipse.gmf.runtime.notation)"
+               id="NODE">
+         </object>
+         <context
+               decoratorTargets="NODE">
+         </context>
+      </decoratorProvider>
+   </extension>
+</plugin>

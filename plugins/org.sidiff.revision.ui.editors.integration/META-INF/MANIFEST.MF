@@ -1,0 +1,17 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: ReVision Editor Integration
+Bundle-SymbolicName: org.sidiff.revision.ui.editors.integration;singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Bundle-Vendor: Software Engineering Group, University of Siegen
+Require-Bundle: org.eclipse.core.resources,
+ org.eclipse.core.runtime,
+ org.eclipse.emf.ecore.xmi,
+ org.eclipse.ui.ide,
+ org.sidiff.common.utilities
+Export-Package: org.sidiff.revision.ui.editors.integration.access,
+ org.sidiff.revision.ui.editors.integration.extension;uses:="org.eclipse.emf.common.util,org.eclipse.emf.ecore.resource",
+ org.sidiff.revision.ui.editors.integration.registry;uses:="org.eclipse.emf.ecore.resource"
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-ActivationPolicy: lazy
+Automatic-Module-Name: org.sidiff.integration.editor
