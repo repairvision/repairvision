@@ -12,7 +12,7 @@ public class Activator implements BundleActivator {
 
 	private static Logger log;
 	
-	public static BundleContext getContext() {
+	static BundleContext getContext() {
 		return context;
 	}
 	

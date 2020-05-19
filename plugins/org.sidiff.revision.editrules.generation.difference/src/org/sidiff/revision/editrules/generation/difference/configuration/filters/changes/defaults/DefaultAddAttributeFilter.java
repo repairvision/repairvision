@@ -11,6 +11,7 @@ import org.sidiff.revision.editrules.generation.difference.Activator;
 import org.sidiff.revision.editrules.generation.difference.configuration.filters.DefaultFilter;
 import org.sidiff.revision.editrules.generation.difference.configuration.filters.FilterConfiguration;
 import org.sidiff.revision.editrules.generation.difference.configuration.filters.changes.IAddAttributeFilter;
+import org.sidiff.revision.editrules.generation.difference.util.DifferenceToEditRuleUtil;
 
 public class DefaultAddAttributeFilter extends DefaultFilter implements IAddAttributeFilter {
 
@@ -24,7 +25,7 @@ public class DefaultAddAttributeFilter extends DefaultFilter implements IAddAttr
 			Object value = obj.eGet(type);
 			
 			if (!EMFMetaAccess.isUnconsideredStructualFeature(type)) {
-				if ((type.getDefaultValue() != null) && !type.getDefaultValue().equals(value)) {
+				if (!DifferenceToEditRuleUtil.isDefaultValue(type, value)) {
 					if (!getFilters().getAttributeFilter().filter(obj, value, type)) {
 						return false;
 					}

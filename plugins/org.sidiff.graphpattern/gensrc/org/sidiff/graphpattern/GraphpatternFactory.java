@@ -49,7 +49,7 @@ public interface GraphpatternFactory extends EFactory {
 	 * @return a new object of class '<em>Node Pattern</em>'.
 	 * @generated NOT
 	 */
-	NodePattern createNodePattern(String name, EClass type, Stereotype... stereotypes);
+	NodePattern createNodePattern(GraphPattern graph, String name, EClass type, Stereotype... stereotypes);
 
 	/**
 	 * Returns a new object of class '<em>Edge Pattern</em>'.

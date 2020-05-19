@@ -154,12 +154,13 @@ public class GraphpatternFactoryImpl extends EFactoryImpl implements Graphpatter
 	 * @generated NOT
 	 */
 	@Override
-	public NodePattern createNodePattern(String name, EClass type, Stereotype... stereotypes) {
+	public NodePattern createNodePattern(GraphPattern graph, String name, EClass type, Stereotype... stereotypes) {
 		NodePattern node = createNodePattern();
 		node.setName(name);
 		node.setType(type);
 		node.getStereotypes().addAll(Arrays.asList(stereotypes));
 		
+		graph.getNodes().add(node);
 		return node;
 	}
 

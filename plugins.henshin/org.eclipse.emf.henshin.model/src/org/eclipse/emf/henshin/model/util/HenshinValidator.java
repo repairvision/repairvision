@@ -171,72 +171,72 @@ public class HenshinValidator extends EObjectValidator {
 	protected boolean validate(int classifierID, Object value, DiagnosticChain diagnostics,
 			Map<Object, Object> context) {
 		switch (classifierID) {
-		case HenshinPackage.MODEL_ELEMENT:
-			return validateModelElement((ModelElement) value, diagnostics, context);
-		case HenshinPackage.ANNOTATION:
-			return validateAnnotation((Annotation) value, diagnostics, context);
-		case HenshinPackage.NAMED_ELEMENT:
-			return validateNamedElement((NamedElement) value, diagnostics, context);
-		case HenshinPackage.GRAPH_ELEMENT:
-			return validateGraphElement((GraphElement) value, diagnostics, context);
-		case HenshinPackage.MODULE:
-			return validateModule((Module) value, diagnostics, context);
-		case HenshinPackage.UNIT:
-			return validateUnit((Unit) value, diagnostics, context);
-		case HenshinPackage.RULE:
-			return validateRule((Rule) value, diagnostics, context);
-		case HenshinPackage.PARAMETER:
-			return validateParameter((Parameter) value, diagnostics, context);
-		case HenshinPackage.PARAMETER_MAPPING:
-			return validateParameterMapping((ParameterMapping) value, diagnostics, context);
-		case HenshinPackage.GRAPH:
-			return validateGraph((Graph) value, diagnostics, context);
-		case HenshinPackage.NODE:
-			return validateNode((Node) value, diagnostics, context);
-		case HenshinPackage.EDGE:
-			return validateEdge((Edge) value, diagnostics, context);
-		case HenshinPackage.ATTRIBUTE:
-			return validateAttribute((Attribute) value, diagnostics, context);
-		case HenshinPackage.ATTRIBUTE_CONDITION:
-			return validateAttributeCondition((AttributeCondition) value, diagnostics, context);
-		case HenshinPackage.MAPPING:
-			return validateMapping((Mapping) value, diagnostics, context);
-		case HenshinPackage.UNARY_UNIT:
-			return validateUnaryUnit((UnaryUnit) value, diagnostics, context);
-		case HenshinPackage.MULTI_UNIT:
-			return validateMultiUnit((MultiUnit) value, diagnostics, context);
-		case HenshinPackage.INDEPENDENT_UNIT:
-			return validateIndependentUnit((IndependentUnit) value, diagnostics, context);
-		case HenshinPackage.SEQUENTIAL_UNIT:
-			return validateSequentialUnit((SequentialUnit) value, diagnostics, context);
-		case HenshinPackage.CONDITIONAL_UNIT:
-			return validateConditionalUnit((ConditionalUnit) value, diagnostics, context);
-		case HenshinPackage.PRIORITY_UNIT:
-			return validatePriorityUnit((PriorityUnit) value, diagnostics, context);
-		case HenshinPackage.ITERATED_UNIT:
-			return validateIteratedUnit((IteratedUnit) value, diagnostics, context);
-		case HenshinPackage.LOOP_UNIT:
-			return validateLoopUnit((LoopUnit) value, diagnostics, context);
-		case HenshinPackage.FORMULA:
-			return validateFormula((Formula) value, diagnostics, context);
-		case HenshinPackage.NESTED_CONDITION:
-			return validateNestedCondition((NestedCondition) value, diagnostics, context);
-		case HenshinPackage.UNARY_FORMULA:
-			return validateUnaryFormula((UnaryFormula) value, diagnostics, context);
-		case HenshinPackage.BINARY_FORMULA:
-			return validateBinaryFormula((BinaryFormula) value, diagnostics, context);
-		case HenshinPackage.AND:
-			return validateAnd((And) value, diagnostics, context);
-		case HenshinPackage.OR:
-			return validateOr((Or) value, diagnostics, context);
-		case HenshinPackage.XOR:
-			return validateXor((Xor) value, diagnostics, context);
-		case HenshinPackage.NOT:
-			return validateNot((Not) value, diagnostics, context);
-		case HenshinPackage.PARAMETER_KIND:
-			return validateParameterKind((ParameterKind) value, diagnostics, context);
-		case HenshinPackage.ACTION:
-			return validateAction((Action) value, diagnostics, context);
+//		case HenshinPackage.MODEL_ELEMENT:
+//			return validateModelElement((ModelElement) value, diagnostics, context);
+//		case HenshinPackage.ANNOTATION:
+//			return validateAnnotation((Annotation) value, diagnostics, context);
+//		case HenshinPackage.NAMED_ELEMENT:
+//			return validateNamedElement((NamedElement) value, diagnostics, context);
+//		case HenshinPackage.GRAPH_ELEMENT:
+//			return validateGraphElement((GraphElement) value, diagnostics, context);
+//		case HenshinPackage.MODULE:
+//			return validateModule((Module) value, diagnostics, context);
+//		case HenshinPackage.UNIT:
+//			return validateUnit((Unit) value, diagnostics, context);
+//		case HenshinPackage.RULE:
+//			return validateRule((Rule) value, diagnostics, context);
+//		case HenshinPackage.PARAMETER:
+//			return validateParameter((Parameter) value, diagnostics, context);
+//		case HenshinPackage.PARAMETER_MAPPING:
+//			return validateParameterMapping((ParameterMapping) value, diagnostics, context);
+//		case HenshinPackage.GRAPH:
+//			return validateGraph((Graph) value, diagnostics, context);
+//		case HenshinPackage.NODE:
+//			return validateNode((Node) value, diagnostics, context);
+//		case HenshinPackage.EDGE:
+//			return validateEdge((Edge) value, diagnostics, context);
+//		case HenshinPackage.ATTRIBUTE:
+//			return validateAttribute((Attribute) value, diagnostics, context);
+//		case HenshinPackage.ATTRIBUTE_CONDITION:
+//			return validateAttributeCondition((AttributeCondition) value, diagnostics, context);
+//		case HenshinPackage.MAPPING:
+//			return validateMapping((Mapping) value, diagnostics, context);
+//		case HenshinPackage.UNARY_UNIT:
+//			return validateUnaryUnit((UnaryUnit) value, diagnostics, context);
+//		case HenshinPackage.MULTI_UNIT:
+//			return validateMultiUnit((MultiUnit) value, diagnostics, context);
+//		case HenshinPackage.INDEPENDENT_UNIT:
+//			return validateIndependentUnit((IndependentUnit) value, diagnostics, context);
+//		case HenshinPackage.SEQUENTIAL_UNIT:
+//			return validateSequentialUnit((SequentialUnit) value, diagnostics, context);
+//		case HenshinPackage.CONDITIONAL_UNIT:
+//			return validateConditionalUnit((ConditionalUnit) value, diagnostics, context);
+//		case HenshinPackage.PRIORITY_UNIT:
+//			return validatePriorityUnit((PriorityUnit) value, diagnostics, context);
+//		case HenshinPackage.ITERATED_UNIT:
+//			return validateIteratedUnit((IteratedUnit) value, diagnostics, context);
+//		case HenshinPackage.LOOP_UNIT:
+//			return validateLoopUnit((LoopUnit) value, diagnostics, context);
+//		case HenshinPackage.FORMULA:
+//			return validateFormula((Formula) value, diagnostics, context);
+//		case HenshinPackage.NESTED_CONDITION:
+//			return validateNestedCondition((NestedCondition) value, diagnostics, context);
+//		case HenshinPackage.UNARY_FORMULA:
+//			return validateUnaryFormula((UnaryFormula) value, diagnostics, context);
+//		case HenshinPackage.BINARY_FORMULA:
+//			return validateBinaryFormula((BinaryFormula) value, diagnostics, context);
+//		case HenshinPackage.AND:
+//			return validateAnd((And) value, diagnostics, context);
+//		case HenshinPackage.OR:
+//			return validateOr((Or) value, diagnostics, context);
+//		case HenshinPackage.XOR:
+//			return validateXor((Xor) value, diagnostics, context);
+//		case HenshinPackage.NOT:
+//			return validateNot((Not) value, diagnostics, context);
+//		case HenshinPackage.PARAMETER_KIND:
+//			return validateParameterKind((ParameterKind) value, diagnostics, context);
+//		case HenshinPackage.ACTION:
+//			return validateAction((Action) value, diagnostics, context);
 		default:
 			return true;
 		}

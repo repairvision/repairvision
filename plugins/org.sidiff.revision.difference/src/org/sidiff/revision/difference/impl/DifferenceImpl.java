@@ -191,12 +191,10 @@ public class DifferenceImpl extends EObjectImpl implements Difference {
 	 * <!-- begin-user-doc --> 
 	 * <!-- end-user-doc -->
 	 * 
-	 * @generated NOT
+	 * @generated
 	 */
 	protected DifferenceImpl() {
 		super();
-
-		initCorrespondenceIndex();
 	}
 
 	/**
@@ -410,7 +408,7 @@ public class DifferenceImpl extends EObjectImpl implements Difference {
 	 * @generated NOT
 	 */
 	public EObject getCorrespondingObjectInA(EObject objectInB) {
-		Correspondence correspondence = correspondencesB.get(objectInB);
+		Correspondence correspondence = getCorrespondencesB().get(objectInB);
 		
 		if (correspondence != null) {
 			return correspondence.getMatchedA();
@@ -426,7 +424,7 @@ public class DifferenceImpl extends EObjectImpl implements Difference {
 	 * @generated NOT
 	 */
 	public EObject getCorrespondingObjectInB(EObject objectInA) {
-		Correspondence correspondence = correspondencesA.get(objectInA);
+		Correspondence correspondence = getCorrespondencesA().get(objectInA);
 		
 		if (correspondence != null) {
 			return correspondence.getMatchedB();
@@ -442,7 +440,7 @@ public class DifferenceImpl extends EObjectImpl implements Difference {
 	 * @generated NOT
 	 */
 	public Correspondence getCorrespondenceOfModelA(EObject objectInA) {
-		return correspondencesA.get(objectInA);
+		return getCorrespondencesA().get(objectInA);
 	}
 
 	/**
@@ -451,7 +449,7 @@ public class DifferenceImpl extends EObjectImpl implements Difference {
 	 * @generated NOT
 	 */
 	public Correspondence getCorrespondenceOfModelB(EObject objectInB) {
-		return correspondencesB.get(objectInB);
+		return getCorrespondencesB().get(objectInB);
 	}
 
 	/**
@@ -462,8 +460,8 @@ public class DifferenceImpl extends EObjectImpl implements Difference {
 	public void addCorrespondence(Correspondence correspondence) {
 		
 		this.getCorrespondences().add(correspondence);
-		this.correspondencesA.put(correspondence.getMatchedA(), correspondence);
-		this.correspondencesB.put(correspondence.getMatchedB(), correspondence);
+		this.getCorrespondencesA().put(correspondence.getMatchedA(), correspondence);
+		this.getCorrespondencesB().put(correspondence.getMatchedB(), correspondence);
 
 	}
 
@@ -488,8 +486,8 @@ public class DifferenceImpl extends EObjectImpl implements Difference {
 	public void removeCorrespondence(Correspondence correspondence) {
 		
 		this.getCorrespondences().remove(correspondence);
-		this.correspondencesA.remove(correspondence.getMatchedA());
-		this.correspondencesB.remove(correspondence.getMatchedB());
+		this.getCorrespondencesA().remove(correspondence.getMatchedA());
+		this.getCorrespondencesB().remove(correspondence.getMatchedB());
 	}
 
 	/**
@@ -683,9 +681,40 @@ public class DifferenceImpl extends EObjectImpl implements Difference {
 		return result.toString();
 	}
 
-	private void initCorrespondenceIndex() {
-		correspondencesA = new HashMap<EObject, Correspondence>();
-		correspondencesB = new HashMap<EObject, Correspondence>();
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	private Map<EObject, Correspondence> getCorrespondencesA() {
+		
+		if (correspondencesA == null) {
+			correspondencesA = new HashMap<EObject, Correspondence>();
+			
+			for (Correspondence correspondence : getCorrespondences()) {
+				correspondencesA.put(correspondence.getMatchedA(), correspondence);
+			}
+		}
+		
+		return correspondencesA;
+	}
+	
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	private Map<EObject, Correspondence> getCorrespondencesB() {
+		
+		if (correspondencesB == null) {
+			correspondencesB = new HashMap<EObject, Correspondence>();
+			
+			for (Correspondence correspondence : getCorrespondences()) {
+				correspondencesB.put(correspondence.getMatchedB(), correspondence);
+			}
+		}
+		
+		return correspondencesB;
 	}
 	
 } // DifferenceImpl

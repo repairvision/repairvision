@@ -6,7 +6,6 @@ import java.util.logging.Level;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
-import org.sidiff.common.utilities.emf.EMFMetaAccess;
 import org.sidiff.revision.editrules.generation.difference.Activator;
 import org.sidiff.revision.editrules.generation.difference.configuration.filters.DefaultFilter;
 import org.sidiff.revision.editrules.generation.difference.configuration.filters.FilterConfiguration;
@@ -23,12 +22,8 @@ public class DefaultRemoveAttributeFilter extends DefaultFilter implements IRemo
 		if (notNull(obj, type)) {
 			Object value = obj.eGet(type);
 			
-			if (!EMFMetaAccess.isUnconsideredStructualFeature(type)) {
-				if (value != type.getDefaultValue()) {
-					if (!getFilters().getAttributeFilter().filter(obj, value, type)) {
-						return false;
-					}
-				}
+			if (!getFilters().getAttributeFilter().filter(obj, value, type)) {
+				return false;
 			}
 		}  else {
 			if (Activator.getLog().isLoggable(Level.INFO)) {

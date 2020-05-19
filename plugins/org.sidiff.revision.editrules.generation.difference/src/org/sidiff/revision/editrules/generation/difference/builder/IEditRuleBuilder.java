@@ -67,9 +67,9 @@ public interface IEditRuleBuilder<Rule, Node, Edge, Attribute> {
 	
 	int sizeNodes();
 	
-	int sizeEdge();
+	int sizeEdges();
 	
-	int sizeAttribute();
+	int sizeAttributes();
 	
 	Resource createResource(URI folder, String fileNameWithoutExtension);
 	

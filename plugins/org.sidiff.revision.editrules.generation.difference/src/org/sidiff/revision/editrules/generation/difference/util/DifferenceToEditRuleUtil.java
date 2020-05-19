@@ -6,12 +6,28 @@ import java.util.Collections;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.sidiff.common.utilities.ui.util.WorkbenchUtil;
 import org.sidiff.revision.editrules.generation.difference.DifferenceToEditRule;
 import org.sidiff.revision.editrules.generation.difference.builder.IEditRuleBuilder;
 
 public class DifferenceToEditRuleUtil {
+	
+	public static String convertToString(EAttribute type, Object value) {
+		if (value == null) {
+			return "null";
+		} else if (type.getEAttributeType() == EcorePackage.eINSTANCE.getEString()) {
+			return "\"" + value + "\"";
+		} else {
+			return value.toString();
+		}
+	}
+	
+	public static boolean isDefaultValue(EAttribute type, Object value) {
+		return (type.getDefaultValue() == value)
+				|| ((type.getDefaultValue() != null) && type.getDefaultValue().equals(value));
+	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public static boolean addAttribute(

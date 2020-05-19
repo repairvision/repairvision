@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="ASCII"?>
+<difference:Difference xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:difference="http://www.sidiff.org/revision/difference/1.0" uriModelA="platform:/resource/uml.example.vod/tests/test01/modelA/model.ecore" uriModelB="platform:/resource/uml.example.vod/tests/test01/modelB/model.ecore">
+  <changes xsi:type="difference:RemoveObject">
+    <obj href="modelA/model.ecore#//X/a/@eGenericType"/>
+  </changes>
+  <changes xsi:type="difference:RemoveReference">
+    <src href="modelA/model.ecore#//X/a/@eGenericType"/>
+    <tgt href="http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
+    <type href="http://www.eclipse.org/emf/2002/Ecore#//EGenericType/eClassifier"/>
+  </changes>
+  <changes xsi:type="difference:RemoveObject">
+    <obj href="modelA/model.ecore#//Y"/>
+  </changes>
+  <changes xsi:type="difference:RemoveReference">
+    <src href="modelA/model.ecore#//Y"/>
+    <tgt href="modelA/model.ecore#/"/>
+    <type href="http://www.eclipse.org/emf/2002/Ecore#//EClassifier/ePackage"/>
+  </changes>
+  <changes xsi:type="difference:AddObject">
+    <obj href="modelB/model.ecore#//X/T"/>
+  </changes>
+  <changes xsi:type="difference:AddObject">
+    <obj href="modelB/model.ecore#//X/a/@eGenericType"/>
+  </changes>
+  <changes xsi:type="difference:AddReference">
+    <src href="modelB/model.ecore#//X/a/@eGenericType"/>
+    <tgt href="modelB/model.ecore#//X/a/@eGenericType/@eTypeArguments.0"/>
+    <type href="http://www.eclipse.org/emf/2002/Ecore#//EGenericType/eTypeArguments"/>
+  </changes>
+  <changes xsi:type="difference:AddReference">
+    <src href="modelB/model.ecore#//X/a/@eGenericType"/>
+    <tgt href="modelB/model.ecore#//X"/>
+    <type href="http://www.eclipse.org/emf/2002/Ecore#//EGenericType/eClassifier"/>
+  </changes>
+  <changes xsi:type="difference:AddObject">
+    <obj href="modelB/model.ecore#//X/a/@eGenericType/@eTypeArguments.0"/>
+  </changes>
+  <changes xsi:type="difference:AddReference">
+    <src href="modelB/model.ecore#//X/a/@eGenericType/@eTypeArguments.0"/>
+    <tgt href="modelB/model.ecore#//X/T"/>
+    <type href="http://www.eclipse.org/emf/2002/Ecore#//EGenericType/eTypeParameter"/>
+  </changes>
+  <changes xsi:type="difference:AddReference">
+    <src href="modelB/model.ecore#//X"/>
+    <tgt href="modelB/model.ecore#//X/T"/>
+    <type href="http://www.eclipse.org/emf/2002/Ecore#//EClassifier/eTypeParameters"/>
+  </changes>
+  <changes xsi:type="difference:RemoveReference">
+    <src href="modelA/model.ecore#//X/a"/>
+    <tgt href="http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
+    <type href="http://www.eclipse.org/emf/2002/Ecore#//ETypedElement/eType"/>
+  </changes>
+  <changes xsi:type="difference:AddReference">
+    <src href="modelB/model.ecore#//X/a"/>
+    <tgt href="modelB/model.ecore#//X"/>
+    <type href="http://www.eclipse.org/emf/2002/Ecore#//ETypedElement/eType"/>
+  </changes>
+  <changes xsi:type="difference:RemoveReference">
+    <src href="modelA/model.ecore#//X/a"/>
+    <tgt href="modelA/model.ecore#//X/a/@eGenericType"/>
+    <type href="http://www.eclipse.org/emf/2002/Ecore#//ETypedElement/eGenericType"/>
+  </changes>
+  <changes xsi:type="difference:AddReference">
+    <src href="modelB/model.ecore#//X/a"/>
+    <tgt href="modelB/model.ecore#//X/a/@eGenericType"/>
+    <type href="http://www.eclipse.org/emf/2002/Ecore#//ETypedElement/eGenericType"/>
+  </changes>
+  <changes xsi:type="difference:RemoveReference">
+    <src href="modelA/model.ecore#/"/>
+    <type href="http://www.eclipse.org/emf/2002/Ecore#//EPackage/eFactoryInstance"/>
+  </changes>
+  <changes xsi:type="difference:AddReference">
+    <src href="modelB/model.ecore#/"/>
+    <type href="http://www.eclipse.org/emf/2002/Ecore#//EPackage/eFactoryInstance"/>
+  </changes>
+  <changes xsi:type="difference:RemoveReference">
+    <src href="modelA/model.ecore#/"/>
+    <tgt href="modelA/model.ecore#//Y"/>
+    <type href="http://www.eclipse.org/emf/2002/Ecore#//EPackage/eClassifiers"/>
+  </changes>
+  <correspondences>
+    <matchedA href="modelA/model.ecore#//X"/>
+    <matchedB href="modelB/model.ecore#//X"/>
+  </correspondences>
+  <correspondences>
+    <matchedA href="modelA/model.ecore#//X/a"/>
+    <matchedB href="modelB/model.ecore#//X/a"/>
+  </correspondences>
+  <correspondences>
+    <matchedA href="modelA/model.ecore#/"/>
+    <matchedB href="modelB/model.ecore#/"/>
+  </correspondences>
+  <unmatchedA href="modelA/model.ecore#//X/a/@eGenericType"/>
+  <unmatchedA href="modelA/model.ecore#//Y"/>
+  <unmatchedB href="modelB/model.ecore#//X/T"/>
+  <unmatchedB href="modelB/model.ecore#//X/a/@eGenericType"/>
+  <unmatchedB href="modelB/model.ecore#//X/a/@eGenericType/@eTypeArguments.0"/>
+</difference:Difference>

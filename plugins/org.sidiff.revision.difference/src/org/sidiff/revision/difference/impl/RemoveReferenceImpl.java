@@ -277,4 +277,14 @@ public class RemoveReferenceImpl extends ChangeImpl implements RemoveReference {
 		return super.eIsSet(featureID);
 	}
 
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	@Override
+	public String toString() {
+		return "RemoveReferenceImpl [src=" + src + ", tgt=" + tgt + ", type=" + type + "]";
+	}
+
 } //RemoveReferenceImpl

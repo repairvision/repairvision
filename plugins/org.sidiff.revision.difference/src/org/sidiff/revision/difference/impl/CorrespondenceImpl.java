@@ -215,4 +215,14 @@ public class CorrespondenceImpl extends EObjectImpl implements Correspondence {
 		return super.eIsSet(featureID);
 	}
 
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	@Override
+	public String toString() {
+		return "CorrespondenceImpl [matchedA=" + matchedA + ", matchedB=" + matchedB + "]";
+	}
+
 } //CorrespondenceImpl

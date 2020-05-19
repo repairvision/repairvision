@@ -14,12 +14,7 @@ public class DefaultAttributeFilter extends DefaultFilter implements IAttributeF
 
 	@Override
 	public boolean filter(EObject object, Object value, EAttribute type) {
-		
-		if (!getFilters().getObjectFilter().filter(object)) {
-			return true;
-		}
-		
-		return false;
+		return getFilters().getObjectFilter().filter(object);
 	}
 
 }

@@ -11,7 +11,7 @@ public class EcoreSignatureMatcherProvider implements IMatcherProvider {
 
 	@Override
 	public String getKey() {
-		return getClass().getName();
+		return EcoreSignatureMatcher.class.getName();
 	}
 	
 	@Override

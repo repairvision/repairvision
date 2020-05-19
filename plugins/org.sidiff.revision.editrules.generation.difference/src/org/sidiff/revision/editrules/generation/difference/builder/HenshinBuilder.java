@@ -1,10 +1,13 @@
 package org.sidiff.revision.editrules.generation.difference.builder;
 
+import static org.sidiff.revision.editrules.generation.difference.util.DifferenceToEditRuleUtil.convertToString;
+
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashSet;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Set;
 
 import org.eclipse.core.commands.ExecutionException;
@@ -25,7 +28,6 @@ import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
-import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
@@ -74,7 +76,6 @@ public class HenshinBuilder implements IEditRuleBuilder<Rule, Node, Edge, Attrib
 	
 	@Override
 	public Rule createEditRule(String name) {
-
 		this.module = HenshinFactory.eINSTANCE.createModule();
 		module.setName(name);
 
@@ -266,20 +267,22 @@ public class HenshinBuilder implements IEditRuleBuilder<Rule, Node, Edge, Attrib
 	}
 
 	@Override
-	public int sizeEdge() {
+	public int sizeEdges() {
 		return editrule.getLhs().getEdges().size() + editrule.getRhs().getEdges().size() ;
 	}
 
 	@Override
-	public int sizeAttribute() {
-		return (int) (editrule.getLhs().getNodes().stream().map(Node::getAttributes).count()
-				+ editrule.getRhs().getNodes().stream().map(Node::getAttributes).count());
+	public int sizeAttributes() {
+		return (editrule.getLhs().getNodes().stream().map(Node::getAttributes).mapToInt(List::size).sum()
+				+ editrule.getRhs().getNodes().stream().map(Node::getAttributes).mapToInt(List::size).sum());
 	}
 
 	@Override
 	public Resource createResource(URI folder, String fileNameWithoutExtension) {
 		URI uri = folder.appendSegment(fileNameWithoutExtension).appendFileExtension("henshin");
-		return new ResourceSetImpl().createResource(uri);
+		Resource resource = new ResourceSetImpl().createResource(uri);
+		resource.getContents().add(module);
+		return resource;
 	}
 	
 	@Override
@@ -369,12 +372,5 @@ public class HenshinBuilder implements IEditRuleBuilder<Rule, Node, Edge, Attrib
 			e.printStackTrace();
 		}
 	}
-
-	private String convertToString(EAttribute type, Object value) {
-		if (type.getEAttributeType() == EcorePackage.eINSTANCE.getEString()) {
-			return "\"" + value + "\"";
-		} else {
-			return value.toString();
-		}
-	}
+	
 }

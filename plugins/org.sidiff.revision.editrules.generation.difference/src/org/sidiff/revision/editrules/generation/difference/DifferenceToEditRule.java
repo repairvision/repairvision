@@ -37,11 +37,11 @@ public class DifferenceToEditRule<Rule, Node, Edge, Attibute> {
 	private Set<String> names;
 	
 	public DifferenceToEditRule(
-			IEditRuleBuilder<Rule, Node, Edge, Attibute> language, 
+			IEditRuleBuilder<Rule, Node, Edge, Attibute> builder, 
 			TransformationConfiguration transformationConfiguration) {
 		
 		this.config = transformationConfiguration;
-		this.builder = language;
+		this.builder = builder;
 	}
 	
 	public Map<EObject, Node> getTraceModelAtoLHS() {
@@ -168,14 +168,14 @@ public class DifferenceToEditRule<Rule, Node, Edge, Attibute> {
 	
 	private void convertRemoveAttributes() {
 		for (RemoveObject removeObject : config.getDifference().getChangesRemoveObject()) {
-			Node createNode = traceB2RHS.get(removeObject.getObj());
+			Node removeNode = traceA2LHS.get(removeObject.getObj());
 			
-			if (createNode != null) {
+			if (removeNode != null) {
 				for (EAttribute eAttribute : removeObject.getObj().eClass().getEAllAttributes()) {
 					Object attValue = removeObject.getObj().eGet(eAttribute);
 					
-					if (!config.getFilters().getAddAttributeFilter().filter(removeObject.getObj(), eAttribute)) {
-						convertToDeleteAttribute(createNode, eAttribute, attValue);
+					if (!config.getFilters().getRemoveAttributeFilter().filter(removeObject.getObj(), eAttribute)) {
+						convertToDeleteAttribute(removeNode, eAttribute, attValue);
 					}
 				}
 			}
@@ -188,7 +188,7 @@ public class DifferenceToEditRule<Rule, Node, Edge, Attibute> {
 	
 	private void convertAddObjects() {
 		for (AddObject addObject : config.getDifference().getChangesAddObject()) {
-			if (config.getFilters().getAddObjectFilter().filter(addObject)) {
+			if (!config.getFilters().getAddObjectFilter().filter(addObject)) {
 				convertToCreateNode(addObject);
 			}
 		}
@@ -234,17 +234,21 @@ public class DifferenceToEditRule<Rule, Node, Edge, Attibute> {
 		Node tgtNode = traceA2LHS.get(rmvRef.getTgt());
 
 		if (srcNode == null) {
-			Pair<Node> srcPreserveNode = builder.createPreservedNode(getName(rmvRef.getSrc()), rmvRef.getSrc().eClass());
-			traceA2LHS.put(rmvRef.getSrc(), srcPreserveNode.getLhs());
-			traceB2RHS.put(rmvRef.getSrc(), srcPreserveNode.getRhs()); // if the element is in a common resource (e.g. EMF registry)
-			srcNode = srcPreserveNode.getLhs();
+			if (!config.getFilters().getObjectFilter().filter(rmvRef.getSrc())) {
+				Pair<Node> srcPreserveNode = builder.createPreservedNode(getName(rmvRef.getSrc()), rmvRef.getSrc().eClass());
+				traceA2LHS.put(rmvRef.getSrc(), srcPreserveNode.getLhs());
+				traceB2RHS.put(rmvRef.getSrc(), srcPreserveNode.getRhs()); // if the element is in a common resource (e.g. EMF registry)
+				srcNode = srcPreserveNode.getLhs();
+			}
 		}
 
 		if (tgtNode == null) {
-			Pair<Node> tgtPreserveNode = builder.createPreservedNode(getName(rmvRef.getTgt()), rmvRef.getTgt().eClass());
-			traceA2LHS.put(rmvRef.getTgt(), tgtPreserveNode.getLhs());
-			traceB2RHS.put(rmvRef.getTgt(), tgtPreserveNode.getRhs()); // if the element is in a common resource (e.g. EMF registry)
-			tgtNode = tgtPreserveNode.getLhs();
+			if (!config.getFilters().getObjectFilter().filter(rmvRef.getTgt())) {
+				Pair<Node> tgtPreserveNode = builder.createPreservedNode(getName(rmvRef.getTgt()), rmvRef.getTgt().eClass());
+				traceA2LHS.put(rmvRef.getTgt(), tgtPreserveNode.getLhs());
+				traceB2RHS.put(rmvRef.getTgt(), tgtPreserveNode.getRhs()); // if the element is in a common resource (e.g. EMF registry)
+				tgtNode = tgtPreserveNode.getLhs();
+			}
 		}
 
 		if ((srcNode != null) && (tgtNode != null)) {
@@ -258,7 +262,7 @@ public class DifferenceToEditRule<Rule, Node, Edge, Attibute> {
 	
 	private void convertAddReferences() {
 		for (AddReference addReference : config.getDifference().getChangesAddReference()) {
-			if (config.getFilters().getAddReferenceFilter().filter(addReference)) {
+			if (!config.getFilters().getAddReferenceFilter().filter(addReference)) {
 				convertToCreateEdge(addReference);
 			}
 		}
@@ -269,17 +273,21 @@ public class DifferenceToEditRule<Rule, Node, Edge, Attibute> {
 		Node tgtNode = traceB2RHS.get(addRef.getTgt());
 
 		if (srcNode == null) {
-			Pair<Node> srcPreserveNode = builder.createPreservedNode(getName(addRef.getSrc()), addRef.getSrc().eClass());
-			traceA2LHS.put(addRef.getSrc(), srcPreserveNode.getLhs()); // if the element is in a common resource (e.g. EMF registry)
-			traceB2RHS.put(addRef.getSrc(), srcPreserveNode.getRhs());
-			srcNode = srcPreserveNode.getRhs();
+			if (!config.getFilters().getObjectFilter().filter(addRef.getSrc())) {
+				Pair<Node> srcPreserveNode = builder.createPreservedNode(getName(addRef.getSrc()), addRef.getSrc().eClass());
+				traceA2LHS.put(addRef.getSrc(), srcPreserveNode.getLhs()); // if the element is in a common resource (e.g. EMF registry)
+				traceB2RHS.put(addRef.getSrc(), srcPreserveNode.getRhs());
+				srcNode = srcPreserveNode.getRhs();
+			}
 		}
 
 		if (tgtNode == null) {
-			Pair<Node> tgtPreserveNode = builder.createPreservedNode(getName(addRef.getTgt()), addRef.getTgt().eClass());
-			traceA2LHS.put(addRef.getTgt(), tgtPreserveNode.getLhs()); // if the element is in a common resource (e.g. EMF registry)
-			traceB2RHS.put(addRef.getTgt(), tgtPreserveNode.getRhs());
-			tgtNode = tgtPreserveNode.getRhs();
+			if (!config.getFilters().getObjectFilter().filter(addRef.getTgt())) {
+				Pair<Node> tgtPreserveNode = builder.createPreservedNode(getName(addRef.getTgt()), addRef.getTgt().eClass());
+				traceA2LHS.put(addRef.getTgt(), tgtPreserveNode.getLhs()); // if the element is in a common resource (e.g. EMF registry)
+				traceB2RHS.put(addRef.getTgt(), tgtPreserveNode.getRhs());
+				tgtNode = tgtPreserveNode.getRhs();
+			}
 		}
 
 		if ((srcNode != null) && (tgtNode != null)) {
@@ -306,10 +314,6 @@ public class DifferenceToEditRule<Rule, Node, Edge, Attibute> {
 						if (!config.getFilters().getCorrespondenceReferenceFilter().filter(source, refType, target)) {
 							EObject objBTarget = target.getMatchedB();
 							convertToPreserveEdge(objASource, objBSource, refType, objATarget, objBTarget);
-						}
-					} else {
-						if (Activator.getLog().isLoggable(Level.WARNING)) {
-							Activator.getLog().log(Level.WARNING, "Missing Context Node: " + target);
 						}
 					}
 				}

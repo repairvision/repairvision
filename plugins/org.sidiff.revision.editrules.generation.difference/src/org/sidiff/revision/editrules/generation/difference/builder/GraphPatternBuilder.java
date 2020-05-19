@@ -3,9 +3,11 @@ package org.sidiff.revision.editrules.generation.difference.builder;
 import static org.sidiff.graphpattern.profile.henshin.HenshinStereotypes.create;
 import static org.sidiff.graphpattern.profile.henshin.HenshinStereotypes.delete;
 import static org.sidiff.graphpattern.profile.henshin.HenshinStereotypes.preserve;
+import static org.sidiff.revision.editrules.generation.difference.util.DifferenceToEditRuleUtil.convertToString;
 
 import java.io.IOException;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.eclipse.core.runtime.NullProgressMonitor;
@@ -14,7 +16,6 @@ import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
-import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.sidiff.common.utilities.emf.EMFStorage;
@@ -81,7 +82,7 @@ public class GraphPatternBuilder implements IEditRuleBuilder<GraphPattern, NodeP
 
 	@Override
 	public NodePattern createDeleteNode(String name, EClass type) {
-		return factory.createNodePattern(name, type, delete);
+		return factory.createNodePattern(editrule, name, type, delete);
 	}
 
 	@Override
@@ -96,7 +97,7 @@ public class GraphPatternBuilder implements IEditRuleBuilder<GraphPattern, NodeP
 
 	@Override
 	public NodePattern createCreateNode(String name, EClass type) {
-		return factory.createNodePattern(name, type, create);
+		return factory.createNodePattern(editrule, name, type, create);
 	}
 
 	@Override
@@ -111,7 +112,7 @@ public class GraphPatternBuilder implements IEditRuleBuilder<GraphPattern, NodeP
 
 	@Override
 	public Pair<NodePattern> createPreservedNode(String name, EClass type) {
-		NodePattern node = factory.createNodePattern(name, type, preserve);
+		NodePattern node = factory.createNodePattern(editrule, name, type, preserve);
 		return new Pair<NodePattern>(node, node);
 	}
 
@@ -195,25 +196,28 @@ public class GraphPatternBuilder implements IEditRuleBuilder<GraphPattern, NodeP
 	}
 
 	@Override
-	public int sizeEdge() {
-		return (int) editrule.getNodes().stream().map(NodePattern::getOutgoings).count();
+	public int sizeEdges() {
+		return editrule.getNodes().stream().map(NodePattern::getOutgoings).mapToInt(List::size).sum();
 	}
 
 	@Override
-	public int sizeAttribute() {
-		return (int) editrule.getNodes().stream().map(NodePattern::getAttributes).count();
+	public int sizeAttributes() {
+		return editrule.getNodes().stream().map(NodePattern::getAttributes).mapToInt(List::size).sum();
 	}
 
 	@Override
 	public Resource createResource(URI folder, String fileNameWithoutExtension) {
 		URI uri = folder.appendSegment(fileNameWithoutExtension).appendFileExtension(GraphPatternConstants.FILE_EXTENSION);
-		return new ResourceSetImpl().createResource(uri);
+		Resource resource = new ResourceSetImpl().createResource(uri);
+		resource.getContents().add(bundle);
+		return resource;
 	}
 
 	@Override
 	public URI createRepresentation() {
 		try {
 			ModelDiagramCreator modelDiagramCreator = new ModelDiagramCreator(bundle, new NullProgressMonitor());
+			modelDiagramCreator.createRepresentations(new NullProgressMonitor());
 			return modelDiagramCreator.getDiagramFile();
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -228,14 +232,6 @@ public class GraphPatternBuilder implements IEditRuleBuilder<GraphPattern, NodeP
 			WorkbenchUtil.openEditor(EMFStorage.uriToPath(diagram));
 		} catch (Exception e) {
 			e.printStackTrace();
-		}
-	}
-
-	private String convertToString(EAttribute type, Object value) {
-		if (type.getEAttributeType() == EcorePackage.eINSTANCE.getEString()) {
-			return "\"" + value + "\"";
-		} else {
-			return value.toString();
 		}
 	}
 }
