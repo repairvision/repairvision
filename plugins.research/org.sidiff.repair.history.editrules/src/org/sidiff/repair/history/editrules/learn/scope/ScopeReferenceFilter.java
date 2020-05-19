@@ -2,7 +2,7 @@ package org.sidiff.repair.history.editrules.learn.scope;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
-import org.sidiff.editrule.tools.recorder.filters.IReferenceFilter;
+import org.sidiff.revision.editrules.generation.difference.configuration.filters.model.IReferenceFilter;
 import org.sidiff.validation.constraint.interpreter.scope.IScopeRecorder;
 import org.sidiff.validation.constraint.interpreter.scope.ReferenceScope;
 
@@ -15,7 +15,7 @@ public class ScopeReferenceFilter implements IReferenceFilter {
 	}
 	
 	@Override
-	public boolean filter(EObject source, EObject target, EReference type) {
+	public boolean filter(EObject source, EReference type, EObject target) {
 		
 		for (ReferenceScope reference : scope.getOutgoings(source)) {
 			if (reference.getType().equals(type) && reference.getTarget().equals(target)) {

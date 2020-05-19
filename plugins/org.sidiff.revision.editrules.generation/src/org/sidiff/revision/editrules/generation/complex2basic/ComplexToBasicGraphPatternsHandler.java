@@ -38,7 +38,7 @@ public class ComplexToBasicGraphPatternsHandler extends AbstractHandler {
 						if (bundle.eResource().getURI().lastSegment().matches(".*?\\.basic.*?\\.graphpattern")) {
 							basicPatternsBundle = bundle;
 							
-							if (WorkbenchUtil.showQuestion("Clear basic pattern bundle?")) {
+							if (WorkbenchUtil.askQuestion("Clear basic pattern bundle?")) {
 								basicPatternsBundle.getPatterns().clear();
 							}
 						} else {

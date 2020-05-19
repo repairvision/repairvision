@@ -8,15 +8,21 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.henshin.model.Attribute;
+import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.Module;
+import org.eclipse.emf.henshin.model.Node;
+import org.eclipse.emf.henshin.model.Rule;
 import org.sidiff.common.utilities.ui.util.WorkbenchUtil;
-import org.sidiff.editrule.tools.recorder.DifferenceToEditRule;
-import org.sidiff.editrule.tools.recorder.TransformationSetup;
-import org.sidiff.editrule.tools.recorder.filters.IAttributeFilter;
-import org.sidiff.editrule.tools.recorder.filters.IReferenceFilter;
-import org.sidiff.editrule.tools.recorder.util.HenshinDiagramUtil;
 import org.sidiff.revision.difference.Difference;
 import org.sidiff.revision.difference.api.settings.DifferenceSettings;
+import org.sidiff.revision.editrules.generation.difference.DifferenceToEditRule;
+import org.sidiff.revision.editrules.generation.difference.builder.HenshinBuilder;
+import org.sidiff.revision.editrules.generation.difference.configuration.SymmetricModelDifference;
+import org.sidiff.revision.editrules.generation.difference.configuration.TransformationConfiguration;
+import org.sidiff.revision.editrules.generation.difference.configuration.filters.model.IAttributeFilter;
+import org.sidiff.revision.editrules.generation.difference.configuration.filters.model.IReferenceFilter;
+import org.sidiff.revision.editrules.generation.difference.util.DifferenceToEditRuleUtil;
 import org.sidiff.validation.constraint.api.util.Validation;
 import org.sidiff.validation.constraint.interpreter.IConstraint;
 import org.sidiff.validation.constraint.interpreter.scope.IScopeRecorder;
@@ -58,6 +64,11 @@ public class LearnEditRule {
 	 * The slicing algorithm.
 	 */
 	protected DifferenceSlicer slicer;
+	
+	/**
+	 * Graph transformation language binding.
+	 */
+	protected HenshinBuilder language = new HenshinBuilder();
 	
 	public LearnEditRule(Difference historicalToResolved) {
 		
@@ -123,9 +134,9 @@ public class LearnEditRule {
 		
 		return learnByConsistentChange( 
 				scopeResolved.getScope(),
-				IReferenceFilter.DUMMY, IAttributeFilter.DUMMY,
+				IReferenceFilter.FILTER_NONE, IAttributeFilter.FILTER_ALL,
 				scopeResolved.getScope(),
-				IReferenceFilter.DUMMY, IAttributeFilter.DUMMY);
+				IReferenceFilter.FILTER_NONE, IAttributeFilter.FILTER_ALL);
 	}
 	
 	/**
@@ -187,33 +198,28 @@ public class LearnEditRule {
 		return validation.getRule().getName();
 	}
 	
-	public static URI generateURI(String editRuleName, Resource relativeToResource) {
-		return relativeToResource.getURI().trimSegments(1)
-				.appendSegment(editRuleName + "_execute")
-				.appendFileExtension("henshin");
+	public static URI getFolder(Resource resource) {
+		return resource.getURI().trimSegments(1);
 	}
 	
-	public static URI generateURI(String workspacePath, String editRuleName) {
-		return URI.createPlatformResourceURI(workspacePath, true)
-				.appendSegment(editRuleName + "_execute")
-				.appendFileExtension("henshin");
+	public static URI getFolder(String workspacePath) {
+		return URI.createPlatformResourceURI(workspacePath, true);
 	}
 	
-	public static Module generateEditRule(String ruleName, DifferenceSlice differenceSlice) {
+	public Module generateEditRule(String ruleName, DifferenceSlice differenceSlice) {
+		SymmetricModelDifference difference = new SymmetricModelDifference(
+				historicalToResolved, differenceSlice.getCorrespondences(), differenceSlice.getChanges());
 		
-		TransformationSetup trafoSetup = new TransformationSetup();
-		trafoSetup.setChanges(differenceSlice.getChanges());
-		trafoSetup.setCorrespondences(differenceSlice.getCorrespondences());
-		trafoSetup.setEditRuleName(ruleName);
-		
-		DifferenceToEditRule editRuleRecorder = new DifferenceToEditRule(trafoSetup);
-		return editRuleRecorder.getEditRule();
+		TransformationConfiguration trafoSetup = new TransformationConfiguration(ruleName, difference);
+		DifferenceToEditRule<Rule, Node, Edge, Attribute> editRuleRecorder 
+			= new DifferenceToEditRule<Rule, Node, Edge, Attribute>(language, trafoSetup);
+		return editRuleRecorder.transform().getModule();
 	}
 	
-	public static void saveEditRule(Module editRule, URI eoURI, boolean showDiagram, boolean showMessage) {
+	public void saveEditRule(Rule editRule, URI folder, String nameWithoutFileExtension, boolean showDiagram, boolean showMessage) {
 		
 		if (editRule != null) {
-			HenshinDiagramUtil.saveDiagram(editRule, eoURI, showDiagram, showMessage);
+			DifferenceToEditRuleUtil.saveEditRule(language, folder, nameWithoutFileExtension, showDiagram, showMessage, 150);
 		} else {
 			if (showMessage) {
 				WorkbenchUtil.showError("Could not transform this difference to an edit-rule.");

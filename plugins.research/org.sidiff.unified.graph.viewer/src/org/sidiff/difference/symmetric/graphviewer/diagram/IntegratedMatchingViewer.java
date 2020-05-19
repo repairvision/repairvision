@@ -698,7 +698,7 @@ public class IntegratedMatchingViewer extends ViewPart implements ISelectionProv
 
 			@Override
 			public void run() {
-				if (WorkbenchUtil.showQuestion("Delete " + Arrays.toString(selection) + "?")) {
+				if (WorkbenchUtil.askQuestion("Delete " + Arrays.toString(selection) + "?")) {
 					Set<Resource> changed = new HashSet<>();
 					
 					for (Object selected : selection) {

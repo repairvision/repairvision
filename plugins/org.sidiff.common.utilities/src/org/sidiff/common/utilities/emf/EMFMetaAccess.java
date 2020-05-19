@@ -16,13 +16,9 @@ public class EMFMetaAccess {
 	 *         comparison; <code>false</code> otherwise;
 	 */
 	public static boolean isUnconsideredStructualFeature(EStructuralFeature structualFeatureType) {
-		if ((structualFeatureType.isChangeable() == false)
+		return ((structualFeatureType.isChangeable() == false)
 				|| (structualFeatureType.isDerived() == true)
-				|| (structualFeatureType.isTransient() == true)) {
-			return true;
-		} else {
-			return false;
-		}
+				|| (structualFeatureType.isTransient() == true));
 	}
 	
 	/**

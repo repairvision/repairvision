@@ -6,17 +6,15 @@ import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.henshin.model.Attribute;
 import org.eclipse.emf.henshin.model.Edge;
-import org.eclipse.emf.henshin.model.Formula;
 import org.eclipse.emf.henshin.model.Graph;
 import org.eclipse.emf.henshin.model.HenshinFactory;
 import org.eclipse.emf.henshin.model.Mapping;
 import org.eclipse.emf.henshin.model.Module;
-import org.eclipse.emf.henshin.model.NestedCondition;
 import org.eclipse.emf.henshin.model.Node;
-import org.eclipse.emf.henshin.model.Not;
 import org.eclipse.emf.henshin.model.Parameter;
 import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.emf.henshin.model.Unit;
+import org.sidiff.common.utilities.henshin.pairs.AttributePair;
 import org.sidiff.common.utilities.henshin.pairs.EdgePair;
 import org.sidiff.common.utilities.henshin.pairs.NodePair;
 
@@ -32,13 +30,11 @@ public class HenshinRuleEditUtil {
 	 * @return The new created Node.
 	 */
 	public static Node copyNode(Graph graph, Node node, boolean attributes) {
-		// Now create new Node:
 		Node newNode = HenshinFactory.eINSTANCE.createNode();
 		newNode.setGraph(graph);
 		newNode.setType(node.getType());
 		newNode.setName(node.getName());
 	
-		// Copy attributes
 		if (attributes) {
 			for (Attribute attribute : node.getAttributes()) {
 				copyAttribute(newNode, attribute);
@@ -93,9 +89,6 @@ public class HenshinRuleEditUtil {
 	 * @return The copied edge.
 	 */
 	public static Edge copyEdge(Edge edge, Node src, Node tgt) {
-	
-		assert (src.getGraph() == tgt.getGraph()) : "Source and target node of the edge have to be in the same graph";
-	
 		Edge newEdge = HenshinFactory.eINSTANCE.createEdge();
 		newEdge.setIndex(edge.getIndex());
 		newEdge.setSource(src);
@@ -127,69 +120,62 @@ public class HenshinRuleEditUtil {
 	 * Create a new node inside a given graph.
 	 * 
 	 * @param graph The graph which will contain the node.
+	 * @param name The name of the node.
 	 * @param type  The type of the node.
 	 * @return The new created Node.
 	 */
-	public static Node createNode(Graph graph, EClass type) {
+	public static Node createNode(Graph graph, String name, EClass type) {
 		// Now create new Node:
 		Node newNode = HenshinFactory.eINSTANCE.createNode();
 		newNode.setGraph(graph);
 		newNode.setType(type);
-		newNode.setName("");
+		newNode.setName(name);
 		return newNode;
 	}
 
 	/**
-	 * Creates a NAC/PAC edge between two nodes within a rule.
+	 * Creates an edge between two nodes within a rule.
 	 * 
-	 * @param from Source node of the new edge.
-	 * @param to   The target node of the new edge.
-	 * @param type Edge type.
-	 * @param rule The new created edge.
+	 * @param source Source node of the new edge.
+	 * @param target The target node of the new edge.
+	 * @param type   Edge type.
+	 * @param rule   The new created edge.
 	 */
-	public static Edge createEdge(Node from, Node to, EReference type, Graph graph) {
-		Edge edge = HenshinFactory.eINSTANCE.createEdge(from, to, type);
+	public static Edge createEdge(Graph graph, Node source, EReference type, Node target) {
+		Edge edge = HenshinFactory.eINSTANCE.createEdge(source, target, type);
 		graph.getEdges().add(edge);
 		return edge;
+	}
+	
+	/**
+	 * Creates an attribute between two nodes within a rule.
+	 * 
+	 * @param container The node containing the attribute.
+	 * @param type      The attributes type.
+	 * @param value     The assigned value of the attribute
+	 * @return The new created attribute.
+	 */
+	public static Attribute createAttribute(Node container, EAttribute type, String value) {
+		return HenshinFactory.eINSTANCE.createAttribute(container, type, value);
 	}
 
 	/**
 	 * Creates a << preserve >> edge for the given rule. Expecting one source and
 	 * one target NodePair
 	 * 
-	 * @param rule the Henshin rule.
-	 * @param src  the source nodes of the new edge.
-	 * @param tgt  the target nodes of the new edge.
-	 * @param type the type of the new edge.
+	 * @param rule   the Henshin rule.
+	 * @param source the source nodes of the new edge.
+	 * @param target the target nodes of the new edge.
+	 * @param type   the type of the new edge.
 	 */
-	public static EdgePair createPreservedEdge(Rule rule, NodePair src, NodePair tgt, EReference type) {
-		Edge lhsEdge = HenshinFactory.eINSTANCE.createEdge(src.getLhsNode(), tgt.getLhsNode(), type);
+	public static EdgePair createPreservedEdge(Rule rule, NodePair source, EReference type, NodePair target) {
+		Edge lhsEdge = HenshinFactory.eINSTANCE.createEdge(source.getLhsNode(), target.getLhsNode(), type);
 		lhsEdge.setGraph(rule.getLhs());
 	
-		Edge rhsEdge = HenshinFactory.eINSTANCE.createEdge(src.getRhsNode(), tgt.getRhsNode(), type);
+		Edge rhsEdge = HenshinFactory.eINSTANCE.createEdge(source.getRhsNode(), target.getRhsNode(), type);
 		rhsEdge.setGraph(rule.getRhs());
 	
 		return new EdgePair(lhsEdge, rhsEdge);
-	}
-
-	/**
-	 * Creates a << preserve >> node with an String ("attrValue") attribute.
-	 * 
-	 * @param rule               the Henshin rule.
-	 * @param name               the name of new the node.
-	 * @param nodeType           the type of new the node.
-	 * @param attrType           the type of the new attribute.
-	 * @param attrValue          the attribute value.
-	 * @param attributeOnlyInLHS set this to true if the attribute shall only be
-	 *                           created in LHS.
-	 * @return
-	 */
-	public static NodePair createPreservedNodeWithAttribute(Rule rule, String name, EClass nodeType,
-			EAttribute attrType, String attrValue, Boolean attributeOnlyInLHS) {
-		NodePair res = createPreservedNode(rule, name, nodeType);
-		createPreservedAttribute(res, attrType, "\"" + attrValue + "\"", attributeOnlyInLHS);
-	
-		return res;
 	}
 
 	/**
@@ -224,187 +210,11 @@ public class HenshinRuleEditUtil {
 	 * @param node      the node of the new attribute.
 	 * @param type      the type of the new attribute.
 	 * @param value     the value of the new attribute.
-	 * @param onlyInLHS set this to true if the attribute shall only be created in
-	 *                  LHS
 	 */
-	public static void createPreservedAttribute(NodePair node, EAttribute type, String value, Boolean onlyInLHS) {
-		HenshinFactory.eINSTANCE.createAttribute(node.getLhsNode(), type, value);
-		// We do not need RHS.
-		// HenshinFactory.eINSTANCE.createAttribute(node.getRhsNode(), type, value);
-	
-		if (!onlyInLHS) {
-			// Actually we do need RHS, otherwise the attribute will be a
-			// <<delete>>, not a <<preserved>> one.
-			HenshinFactory.eINSTANCE.createAttribute(node.getRhsNode(), type, value);
-		}
-	
-	}
-
-	/**
-	 * Creates a << create >> node.
-	 * 
-	 * @param graph the graph under which the node should be created.
-	 * @param name  the name of the new node.
-	 * @param type  the type of the new node.
-	 * @return the new node.
-	 */
-	public static Node createCreateNode(Graph graph, String name, EClass type) {
-	
-		Node newNode = HenshinFactory.eINSTANCE.createNode(graph, type, name);
-		newNode.setName(name); // only required because of a bug in factory method createNode: name will not be
-								// set.
-	
-		return newNode;
-	}
-
-	/**
-	 * Creates a << create >> node.
-	 * 
-	 * @param name the name of the new node.
-	 * @param type the type of the new node.
-	 * @param rule the rule under which the node should be created.
-	 * @return the new node.
-	 */
-	public static Node createCreateNode(String name, EClass type, Rule rule) {
-	
-		Node newNode = HenshinFactory.eINSTANCE.createNode(rule.getRhs(), type, name);
-		newNode.setName(name); // only required because of a bug in factory method createNode: name will not be
-								// set.
-	
-		return newNode;
-	}
-
-	/**
-	 * Creates a << create >> edge between nodes and automatically for its opposite
-	 * EReference.
-	 * 
-	 * @param from the source node.
-	 * @param to   the target node.
-	 * @param eRef the EReference.
-	 */
-	public static void createCreateEdge(Node from, Node to, EReference eRef) {
-	
-		HenshinFactory.eINSTANCE.createEdge(from, to, eRef);
-	
-		if (eRef.getEOpposite() != null) {
-			HenshinFactory.eINSTANCE.createEdge(to, from, eRef.getEOpposite());
-		}
-	}
-
-	/**
-	 * Creates a << create >> attribute under a node and sets a name for the
-	 * attribute value placeholder.
-	 * 
-	 * @param node  the node which should be given the attribute.
-	 * @param type  the type of the attribute.
-	 * @param value the name for the attribute value placeholder.
-	 */
-	public static void createCreateAttribute(Node node, EAttribute type, String value) {
-		HenshinFactory.eINSTANCE.createAttribute(node, type, value);
-	}
-
-	/**
-	 * Creates a << delete >> node in the LHS of a given rule.
-	 * 
-	 * @param name the name of the << delete >> node.
-	 * @param type the type of the << delete >> node.
-	 * @param rule the rule in which the << delete >> node will be created.
-	 * @return the << delete >> node.
-	 */
-	public static Node createDeleteNode(String name, EClass type, Rule rule) {
-	
-		Node deleteNode = HenshinFactory.eINSTANCE.createNode(rule.getLhs(), type, name);
-		deleteNode.setName(name); // only required because of a bug in factory method createNode: name will not be
-									// set.
-	
-		return deleteNode;
-	}
-
-	/**
-	 * Creates a << delete >> edge between two nodes within a rule.
-	 * 
-	 * @param from the context node.
-	 * @param to   the target node.
-	 * @param eRef the used EReference.
-	 * @param rule the rule under which the nodes lie.
-	 */
-	public static void createDeleteEdge(Node from, Node to, EReference eRef, Rule rule) {
-	
-		Edge edge = HenshinFactory.eINSTANCE.createEdge(from, to, eRef);
-		rule.getLhs().getEdges().add(edge);
-	
-		if (eRef.getEOpposite() != null) {
-			Edge eOppositeEdge = HenshinFactory.eINSTANCE.createEdge(to, from, eRef.getEOpposite());
-			rule.getLhs().getEdges().add(eOppositeEdge);
-		}
-	
-	}
-
-	/**
-	 * Creates a << forbid >> node under a rule
-	 * 
-	 * @param rule the rule which shall contain the forbid node.
-	 * @param type the type of the forbid node.
-	 * @return the created Not-Object
-	 */
-	public static Node createForbidNode(Rule rule, EClass type) {
-	
-		// FIXME This method requires a differentiation of Formulas like Not, And, Or,
-		// Xor..
-	
-		Formula formula = rule.getLhs().getFormula();
-		NestedCondition nestedCondition = null;
-		Not not = null;
-	
-		// check if there is already a Not and a NestedCondition
-		if (formula != null) {
-			not = (Not) formula; // formula is a not actually
-			Formula childFormula = not.getChild();
-			if (childFormula != null) {
-				nestedCondition = (NestedCondition) childFormula;
-			}
-		}
-		// else create new Not, Graph and NestedCondition
-		else {
-			not = HenshinFactory.eINSTANCE.createNot();
-			Graph newGraph = HenshinFactory.eINSTANCE.createGraph();
-			newGraph.setName("graph");
-			nestedCondition = HenshinFactory.eINSTANCE.createNestedCondition();
-			nestedCondition.setConclusion(newGraph);
-		}
-	
-		// Now create new <<forbid>> Node
-		Node newNode = HenshinFactory.eINSTANCE.createNode();
-		newNode.setType(type);
-		newNode.setGraph(nestedCondition.getConclusion());
-		newNode.setName("");
-	
-		nestedCondition.getConclusion().getNodes().add(newNode);
-		not.setChild(nestedCondition);
-		rule.getLhs().setFormula(not);
-	
-		return newNode;
-	}
-
-	/**
-	 * Creates a << forbid >> edge between two nodes within a rule.
-	 * 
-	 * @param from the context node.
-	 * @param to   the target node.
-	 * @param eRef the used EReference.
-	 * @param rule the rule under which the nodes lie.
-	 */
-	public static Edge createForbidEdge(Node from, Node to, EReference eRef, Rule rule) {
-	
-		Edge edge = HenshinFactory.eINSTANCE.createEdge(from, to, eRef);
-	
-		if (rule.getLhs().getFormula() instanceof Not) {
-			Not not = (Not) rule.getLhs().getFormula();
-			NestedCondition nestedCond = (NestedCondition) not.getChild();
-			nestedCond.getConclusion().getEdges().add(edge);
-		}
-	
-		return edge;
+	public static AttributePair createPreservedAttribute(NodePair node, EAttribute type, String value) {
+		Attribute lhsAttribute = HenshinFactory.eINSTANCE.createAttribute(node.getLhsNode(), type, value);
+		Attribute rhsAttribute = HenshinFactory.eINSTANCE.createAttribute(node.getRhsNode(), type, value);
+		return new AttributePair(lhsAttribute, rhsAttribute);
 	}
 
 	/**
@@ -438,8 +248,7 @@ public class HenshinRuleEditUtil {
 	 * @param module      the module which shall contain the new rule.
 	 * @return the rule.
 	 */
-	public static Rule createRule(String name, String description, Boolean activated, Module module) {
-	
+	public static Rule createRule(Module module, String name, String description, Boolean activated) {
 		Rule rule = HenshinFactory.eINSTANCE.createRule();
 		rule.setName(name);
 		rule.setDescription(description);

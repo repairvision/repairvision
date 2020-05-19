@@ -230,7 +230,7 @@ public class WorkbenchUtil {
 		return ms;
 	}
 	
-	public static boolean showQuestion(String question) {
+	public static boolean askQuestion(String question) {
 		Boolean[] result = new Boolean[1];
 		
 		Display.getDefault().syncExec(new Runnable() {

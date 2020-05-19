@@ -41,7 +41,7 @@ public class DecomposingEditRulesHandler extends AbstractHandler {
 				throw new ExecutionException("Missing Bundle");
 			} else {
 				// Clean up existing sub graphs:
-				if (WorkbenchUtil.showQuestion("Clear existing decompositions from bundle?")) {
+				if (WorkbenchUtil.askQuestion("Clear existing decompositions from bundle?")) {
 					for (Pattern complexEditRulePattern : complexEditRulesBundle.getPatterns()) {
 						complexEditRulePattern.getAllGraphPatterns().forEach(graph -> {
 							graph.getSubgraphs().forEach(DecomposingEditRulesUtil::clearSubGraphElements);

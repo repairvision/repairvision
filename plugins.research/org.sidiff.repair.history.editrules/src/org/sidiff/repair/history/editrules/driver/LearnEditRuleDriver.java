@@ -61,8 +61,8 @@ public class LearnEditRuleDriver {
 			EditRule editRule = new EditRule(
 					editRuleName, historicalToResolved, 
 					historicalFragment, resolvedFragment);
-			URI uri = LearnEditRule.generateURI(editRuleName, history.eResource());
-			editRule.saveEditRule(uri, true);
+			URI folder = LearnEditRule.getFolder(history.eResource());
+			editRule.saveEditRule(folder, editRuleName, true);
 		} else {
 			WorkbenchUtil.showError("Inconsistency trace could not be found!");
 		}

@@ -9,14 +9,13 @@ import java.util.NoSuchElementException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
-import org.sidiff.common.utilities.emf.DocumentType;
 import org.sidiff.repair.history.editrules.learn.scope.LearnEditRule;
 import org.sidiff.repair.history.editrules.util.IterableHistory;
 import org.sidiff.revision.difference.Change;
 import org.sidiff.revision.difference.Difference;
 import org.sidiff.revision.difference.api.DifferenceFacade;
-import org.sidiff.revision.difference.api.registry.MatcherRegistry;
 import org.sidiff.revision.difference.api.registry.DifferenceBuilderRegistry;
+import org.sidiff.revision.difference.api.registry.MatcherRegistry;
 import org.sidiff.revision.difference.api.settings.DifferenceSettings;
 import org.sidiff.validation.constraint.api.ValidationFacade;
 import org.sidiff.validation.constraint.api.util.RequiredValidation;
@@ -290,7 +289,7 @@ public class EditRuleGenerator {
 		System.out.println();
 		System.out.println(editRule.getFragmentB());
 
-		editRule.saveEditRule(LearnEditRule.generateURI(project + "/" + folder, editRule.getName()), false);
+		editRule.saveEditRule(LearnEditRule.getFolder(project + "/" + folder) , editRule.getName(), false);
 	}
 	
 	@Override

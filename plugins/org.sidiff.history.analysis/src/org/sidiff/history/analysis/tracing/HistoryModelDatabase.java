@@ -69,7 +69,7 @@ public class HistoryModelDatabase {
 			}
 			
 			// Append new versions from repository:
-			if ((inconsistentHistoryVersion == null) && WorkbenchUtil.showQuestion("Update history log?")) {
+			if ((inconsistentHistoryVersion == null) && WorkbenchUtil.askQuestion("Update history log?")) {
 				Iterator<IModelVersion> revisions = repository.getModelVersions(inconsistentModelVersion);
 				int latestHistoryVersionIndex = history.getVersions().size() - 1;
 				Version latestHistoryVersion = history.getVersions().get(latestHistoryVersionIndex);

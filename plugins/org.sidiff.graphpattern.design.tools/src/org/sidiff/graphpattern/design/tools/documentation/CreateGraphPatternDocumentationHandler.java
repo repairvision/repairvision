@@ -22,9 +22,9 @@ public class CreateGraphPatternDocumentationHandler extends AbstractHandler {
 
 		if (graphPatternBundle != null) {
 			GraphPatternDocumentationCreator creator = new GraphPatternDocumentationCreator(
-					WorkbenchUtil.showQuestion("Simplify/Merge tree nodes that contain just one child node?"),
-					WorkbenchUtil.showQuestion("Generate diagrams?"), 
-					WorkbenchUtil.showQuestion("Embed SVG into HTML?"));
+					WorkbenchUtil.askQuestion("Simplify/Merge tree nodes that contain just one child node?"),
+					WorkbenchUtil.askQuestion("Generate diagrams?"), 
+					WorkbenchUtil.askQuestion("Embed SVG into HTML?"));
 			
 			ISelection selection = HandlerUtil.getCurrentSelection(event);
 			IResource resource = ((IResource) ((StructuredSelection) selection).getFirstElement());

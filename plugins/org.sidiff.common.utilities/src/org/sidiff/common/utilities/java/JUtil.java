@@ -93,4 +93,13 @@ public class JUtil {
 		Iterable<T> iterable = () -> resultingStream.iterator();
 		return iterable;
 	}
+	
+	public static boolean notNull(Object... objects) {
+		for (Object object : objects) {
+			if (object == null) {
+				return false;
+			}
+		}
+		return true;
+	}
 }

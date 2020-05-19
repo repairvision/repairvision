@@ -50,7 +50,7 @@ public class FindModelElementByURIHandler extends AbstractHandler {
 									platformModelElementURI.trimFragment().toString(), false)
 									.appendFragment(platformModelElementURI.fragment()).toString();
 							
-							if (WorkbenchUtil.showQuestion("Convert to: " + platformModelElementURIString + "?")) {
+							if (WorkbenchUtil.askQuestion("Convert to: " + platformModelElementURIString + "?")) {
 								modelElementURIString = platformModelElementURIString;
 							}
 						}

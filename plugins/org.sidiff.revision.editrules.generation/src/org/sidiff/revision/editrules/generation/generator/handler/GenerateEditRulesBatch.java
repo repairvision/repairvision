@@ -73,7 +73,7 @@ public class GenerateEditRulesBatch extends AbstractHandler {
 			if (EditRuleGenerator.hasRelocationEdge(patternBundle)) {
 				generator = new EditRuleGenerator(false);
 			} else {
-				generator = new EditRuleGenerator(WorkbenchUtil.showQuestion("Initialize Relocation Edges?"));
+				generator = new EditRuleGenerator(WorkbenchUtil.askQuestion("Initialize Relocation Edges?"));
 			}
 			
 			generator.generateEditRules(selection, patternBundle, editRulesURI);

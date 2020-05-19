@@ -6,9 +6,10 @@ import java.util.Set;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
-import org.sidiff.editrule.tools.recorder.filters.IAttributeFilter;
-import org.sidiff.editrule.tools.recorder.filters.IObjectFilter;
-import org.sidiff.editrule.tools.recorder.filters.IReferenceFilter;
+import org.sidiff.revision.editrules.generation.difference.configuration.filters.FilterConfiguration;
+import org.sidiff.revision.editrules.generation.difference.configuration.filters.model.IAttributeFilter;
+import org.sidiff.revision.editrules.generation.difference.configuration.filters.model.IObjectFilter;
+import org.sidiff.revision.editrules.generation.difference.configuration.filters.model.IReferenceFilter;
 
 public class DifferenceSlicingCriterion {
 
@@ -22,11 +23,7 @@ public class DifferenceSlicingCriterion {
 	
 	// Historical Model Filter //
 
-	protected IObjectFilter historicalObjectFilter = IObjectFilter.DUMMY;
-	
-	protected IReferenceFilter historicalReferenceFilter = IReferenceFilter.DUMMY;
-	
-	protected IAttributeFilter historicalAttributeFilter = IAttributeFilter.DUMMY;
+	protected FilterConfiguration historicalFilters = new FilterConfiguration();
 
 	// Revised Model //
 
@@ -38,11 +35,7 @@ public class DifferenceSlicingCriterion {
 
 	// Revised Model Filter //
 	
-	protected IObjectFilter revisedObjectFilter = IObjectFilter.DUMMY;
-	
-	protected IReferenceFilter revisedReferenceFilter = IReferenceFilter.DUMMY;
-	
-	protected IAttributeFilter revisedAttributeFilter = IAttributeFilter.DUMMY;
+	protected FilterConfiguration revisedFilters = new FilterConfiguration();
 
 	// Meta-Model Filter //
 
@@ -101,27 +94,27 @@ public class DifferenceSlicingCriterion {
 	}
 
 	public IObjectFilter getHistoricalObjectFilter() {
-		return historicalObjectFilter;
+		return historicalFilters.getObjectFilter();
 	}
 
 	public void setHistoricalObjectFilter(IObjectFilter historicalObjectFilter) {
-		this.historicalObjectFilter = historicalObjectFilter;
+		this.historicalFilters.setObjectFilter(historicalObjectFilter);
 	}
 
 	public IReferenceFilter getHistoricalReferenceFilter() {
-		return historicalReferenceFilter;
+		return historicalFilters.getReferenceFilter();
 	}
 
 	public void setHistoricalReferenceFilter(IReferenceFilter historicalReferenceFilter) {
-		this.historicalReferenceFilter = historicalReferenceFilter;
+		this.historicalFilters.setReferenceFilter(historicalReferenceFilter);
 	}
 
 	public IAttributeFilter getHistoricalAttributeFilter() {
-		return historicalAttributeFilter;
+		return historicalFilters.getAttributeFilter();
 	}
 
 	public void setHistoricalAttributeFilter(IAttributeFilter historicalAttributeFilter) {
-		this.historicalAttributeFilter = historicalAttributeFilter;
+		this.historicalFilters.setAttributeFilter(historicalAttributeFilter);
 	}
 
 	public Set<EObject> getRevisedFragment() {
@@ -141,27 +134,27 @@ public class DifferenceSlicingCriterion {
 	}
 
 	public IObjectFilter getRevisedObjectFilter() {
-		return revisedObjectFilter;
+		return revisedFilters.getObjectFilter();
 	}
 
 	public void setRevisedObjectFilter(IObjectFilter revisedObjectFilter) {
-		this.revisedObjectFilter = revisedObjectFilter;
+		this.revisedFilters.setObjectFilter(revisedObjectFilter);
 	}
 
 	public IReferenceFilter getRevisedReferenceFilter() {
-		return revisedReferenceFilter;
+		return revisedFilters.getReferenceFilter();
 	}
 
 	public void setRevisedReferenceFilter(IReferenceFilter revisedReferenceFilter) {
-		this.revisedReferenceFilter = revisedReferenceFilter;
+		this.revisedFilters.setReferenceFilter(revisedReferenceFilter);
 	}
 
 	public IAttributeFilter getRevisedAttributeFilter() {
-		return revisedAttributeFilter;
+		return revisedFilters.getAttributeFilter();
 	}
 
 	public void setRevisedAttributeFilter(IAttributeFilter revisedAttributeFilter) {
-		this.revisedAttributeFilter = revisedAttributeFilter;
+		this.revisedFilters.setAttributeFilter(revisedAttributeFilter);
 	}
 
 	public Set<EClass> getClassBlacklist() {

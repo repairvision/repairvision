@@ -1,0 +1,22 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Symmetric Difference to Edit Rule Converter
+Bundle-SymbolicName: org.sidiff.revision.editrules.generation.difference;singleton:=true
+Bundle-Version: 1.0.2.qualifier
+Bundle-Vendor: Software Engineering Group
+Export-Package: org.sidiff.revision.editrules.generation.difference,
+ org.sidiff.revision.editrules.generation.difference.builder,
+ org.sidiff.revision.editrules.generation.difference.configuration,
+ org.sidiff.revision.editrules.generation.difference.configuration.filters,
+ org.sidiff.revision.editrules.generation.difference.configuration.filters.changes,
+ org.sidiff.revision.editrules.generation.difference.configuration.filters.changes.defaults,
+ org.sidiff.revision.editrules.generation.difference.configuration.filters.model,
+ org.sidiff.revision.editrules.generation.difference.configuration.filters.model.defauls,
+ org.sidiff.revision.editrules.generation.difference.handlers,
+ org.sidiff.revision.editrules.generation.difference.util
+Require-Bundle: org.eclipse.emf.henshin.diagram,
+ org.eclipse.gmf.runtime.diagram.core,
+ org.sidiff.revision.difference.api
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Automatic-Module-Name: org.sidiff.editrules.tools.recorder
+Bundle-Activator: org.sidiff.revision.editrules.generation.difference.Activator

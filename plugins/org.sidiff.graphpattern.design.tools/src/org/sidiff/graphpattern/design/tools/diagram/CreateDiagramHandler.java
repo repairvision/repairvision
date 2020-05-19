@@ -39,7 +39,7 @@ public class CreateDiagramHandler extends AbstractHandler  {
 			IProgressMonitor monitor = new NullProgressMonitor();
 			
 			// new diagram:
-			createDiagram((EObject) selected, WorkbenchUtil.showQuestion("Open diagram editors?"), monitor);
+			createDiagram((EObject) selected, WorkbenchUtil.askQuestion("Open diagram editors?"), monitor);
 		}
 		
 		return null;

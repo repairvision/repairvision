@@ -41,7 +41,7 @@ public class HenshinToGraphPatternConverterHandler extends AbstractHandler {
 								URI.createPlatformResourceURI(platformPath, true), true);
 						Module module = (Module) moduleRes.getContents().get(0);
 						
-						boolean convertActions = WorkbenchUtil.showQuestion("Convert Henshin Actions?");
+						boolean convertActions = WorkbenchUtil.askQuestion("Convert Henshin Actions?");
 						
 						ResourceSet patternRSS = new ResourceSetImpl();
 						Resource patternRes = patternRSS.createResource(
