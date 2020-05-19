@@ -60,16 +60,16 @@ public class DifferenceToEditRuleUtil {
 			Resource resource = builder.createResource(folder, fileNameWithoutExtension);
 			
 			resource.save(Collections.emptyMap());
-			Resource diagramResource = builder.createRepresentation();
+			URI diagramURI = builder.createRepresentation();
 			
 			if (openRepresentation) {
 				int nodeSize = builder.sizeNodes();
 				
 				if (nodeSize <= maxRepresentaionSize) {
-					builder.openRepresentation(diagramResource);
+					builder.openRepresentation(diagramURI);
 				} else {
 					if (showMessages && WorkbenchUtil.askQuestion("The diagram has " + nodeSize + " nodes. Open it anyway?")) {
-						builder.openRepresentation(diagramResource);
+						builder.openRepresentation(diagramURI);
 					}
 				}
 			}

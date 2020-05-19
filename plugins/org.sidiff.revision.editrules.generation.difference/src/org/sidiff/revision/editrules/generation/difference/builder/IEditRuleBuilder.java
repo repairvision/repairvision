@@ -17,6 +17,8 @@ import org.sidiff.revision.editrules.generation.difference.util.Pair;
  */
 public interface IEditRuleBuilder<Rule, Node, Edge, Attribute> {
 
+	String getBuilderName();
+	
 	Rule createEditRule(String name);
 	
 	void finalizeEditRule();
@@ -71,8 +73,8 @@ public interface IEditRuleBuilder<Rule, Node, Edge, Attribute> {
 	
 	Resource createResource(URI folder, String fileNameWithoutExtension);
 	
-	Resource createRepresentation();
+	URI createRepresentation();
 	
-	void openRepresentation(Resource diagramResource);
+	void openRepresentation(URI diagram);
 
 }

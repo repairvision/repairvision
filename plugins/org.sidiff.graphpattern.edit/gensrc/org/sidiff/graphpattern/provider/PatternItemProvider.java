@@ -183,12 +183,12 @@ public class PatternItemProvider
 		newChildDescriptors.add
 			(createChildParameter
 				(GraphpatternPackage.Literals.PATTERN__PATTERNS,
-				 GraphpatternFactory.eINSTANCE.createBundle()));
+				 GraphpatternFactory.eINSTANCE.createPattern()));
 
 		newChildDescriptors.add
 			(createChildParameter
 				(GraphpatternPackage.Literals.PATTERN__PATTERNS,
-				 GraphpatternFactory.eINSTANCE.createPattern()));
+				 GraphpatternFactory.eINSTANCE.createBundle()));
 	}
 
 }

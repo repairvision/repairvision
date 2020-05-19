@@ -2,6 +2,7 @@
  */
 package org.sidiff.graphpattern.impl;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
 import java.util.Iterator;
 
@@ -206,6 +207,23 @@ public class GraphPatternImpl extends PatternElementImpl implements GraphPattern
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	@Override
+	public NodePattern getNode(String name) {
+		
+		for (NodePattern node : getNodes()) {
+			if (node.getName().equals(name)) {
+				return node;
+			}
+		}
+		
+		return null;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -346,6 +364,20 @@ public class GraphPatternImpl extends PatternElementImpl implements GraphPattern
 				return subgraphs != null && !subgraphs.isEmpty();
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
+		switch (operationID) {
+			case GraphpatternPackage.GRAPH_PATTERN___GET_NODE__STRING:
+				return getNode((String)arguments.get(0));
+		}
+		return super.eInvoke(operationID, arguments);
 	}
 
 	/**

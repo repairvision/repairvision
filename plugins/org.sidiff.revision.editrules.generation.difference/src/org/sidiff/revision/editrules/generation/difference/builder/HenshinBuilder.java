@@ -51,12 +51,12 @@ import org.eclipse.gmf.runtime.common.core.command.CommandResult;
 import org.eclipse.gmf.runtime.diagram.core.services.ViewService;
 import org.eclipse.gmf.runtime.emf.commands.core.command.AbstractTransactionalCommand;
 import org.eclipse.gmf.runtime.notation.Diagram;
-import org.eclipse.ui.PartInitException;
 import org.sidiff.common.utilities.emf.EMFStorage;
 import org.sidiff.common.utilities.henshin.HenshinRuleEditUtil;
 import org.sidiff.common.utilities.henshin.pairs.AttributePair;
 import org.sidiff.common.utilities.henshin.pairs.EdgePair;
 import org.sidiff.common.utilities.henshin.pairs.NodePair;
+import org.sidiff.common.utilities.ui.util.WorkbenchUtil;
 import org.sidiff.revision.editrules.generation.difference.util.Pair;
 
 public class HenshinBuilder implements IEditRuleBuilder<Rule, Node, Edge, Attribute> {
@@ -68,17 +68,21 @@ public class HenshinBuilder implements IEditRuleBuilder<Rule, Node, Edge, Attrib
 	private Rule editrule;
 	
 	@Override
+	public String getBuilderName() {
+		return "Henshin";
+	}
+	
+	@Override
 	public Rule createEditRule(String name) {
 
-		// Create rule container:
-		module = HenshinFactory.eINSTANCE.createModule();
+		this.module = HenshinFactory.eINSTANCE.createModule();
 		module.setName(name);
 
-		mainUnit = HenshinFactory.eINSTANCE.createSequentialUnit();
+		this.mainUnit = HenshinFactory.eINSTANCE.createSequentialUnit();
 		mainUnit.setName(name);
 		module.getUnits().add(mainUnit);
 
-		editrule = HenshinFactory.eINSTANCE.createRule(name);
+		this.editrule = HenshinFactory.eINSTANCE.createRule(name);
 		module.getUnits().add(editrule);
 		mainUnit.getSubUnits().add(editrule);
 
@@ -87,9 +91,21 @@ public class HenshinBuilder implements IEditRuleBuilder<Rule, Node, Edge, Attrib
 	
 	@Override
 	public void finalizeEditRule() {
-		editrule.getModule().getImports().addAll(getImports(editrule.getModule()));
+		editrule.getModule().getImports().addAll(getImports());
 	}
 	
+	private Set<EPackage> getImports() {
+		Set<EPackage> imports = new HashSet<>();
+		
+		editrule.eAllContents().forEachRemaining(element -> {
+			if (element instanceof Node) {
+				imports.add(((Node) element).getType().getEPackage());
+			}
+		});
+		
+		return imports;
+	}
+
 	private void createInputParameter(String name) {
 		Parameter ruleAddNodeParameter = HenshinFactory.eINSTANCE.createParameter(name);
 		ruleAddNodeParameter.setKind(ParameterKind.IN);
@@ -131,6 +147,11 @@ public class HenshinBuilder implements IEditRuleBuilder<Rule, Node, Edge, Attrib
 	}
 
 	@Override
+	public Attribute createDeleteAttribute(Node node, EAttribute type, Object value) {
+		return HenshinRuleEditUtil.createAttribute(node, type, convertToString(type, value));
+	}
+
+	@Override
 	public Node createCreateNode(String name, EClass type) {
 		Node createNode = HenshinRuleEditUtil.createNode(editrule.getRhs(), name, type);
 		createOutputParameter(name);
@@ -145,13 +166,6 @@ public class HenshinBuilder implements IEditRuleBuilder<Rule, Node, Edge, Attrib
 	@Override
 	public Attribute createCreateAttribute(Node node, EAttribute type, Object value) {
 		return HenshinRuleEditUtil.createAttribute(node, type, convertToString(type, value));
-	}
-
-	@Override
-	public Pair<Attribute> createAttributeValueChange(Pair<Node> node, EAttribute type, Object valueA, Object valueB) {
-		Attribute attributeA = HenshinRuleEditUtil.createAttribute(node.getLhs(), type, convertToString(type, valueA));
-		Attribute attributeB = HenshinRuleEditUtil.createAttribute(node.getRhs(), type, convertToString(type, valueB));
-		return new Pair<Attribute>(attributeA, attributeB);
 	}
 
 	@Override
@@ -177,16 +191,18 @@ public class HenshinBuilder implements IEditRuleBuilder<Rule, Node, Edge, Attrib
 	}
 	
 	@Override
-	public Attribute createDeleteAttribute(Node node, EAttribute type, Object value) {
-		return HenshinRuleEditUtil.createAttribute(node, type, convertToString(type, value));
-	}
-
-	@Override
 	public Pair<Attribute> createPreserveAttribute(Pair<Node> node, EAttribute type, Object value) {
 		AttributePair preserveAttribute = HenshinRuleEditUtil.createPreservedAttribute(new NodePair(
 				node.getLhs(), node.getRhs()), type, convertToString(type, value));
 		
 		return new Pair<Attribute>(preserveAttribute.getLhsAttribute(), preserveAttribute.getRhsAttribute()); 
+	}
+
+	@Override
+	public Pair<Attribute> createAttributeValueChange(Pair<Node> node, EAttribute type, Object valueA, Object valueB) {
+		Attribute attributeA = HenshinRuleEditUtil.createAttribute(node.getLhs(), type, convertToString(type, valueA));
+		Attribute attributeB = HenshinRuleEditUtil.createAttribute(node.getRhs(), type, convertToString(type, valueB));
+		return new Pair<Attribute>(attributeA, attributeB);
 	}
 
 	@Override
@@ -267,7 +283,7 @@ public class HenshinBuilder implements IEditRuleBuilder<Rule, Node, Edge, Attrib
 	}
 	
 	@Override
-	public Resource createRepresentation() {
+	public URI createRepresentation() {
 		Module module = editrule.getModule();
 		TransactionalEditingDomain editingDomain = TransactionUtil.getEditingDomain(module);
 		
@@ -342,26 +358,14 @@ public class HenshinBuilder implements IEditRuleBuilder<Rule, Node, Edge, Attrib
 			HenshinDiagramEditorPlugin.getInstance().logError("Save operation failed for: " + diagramModelURI, e); //$NON-NLS-1$
 		}
 		
-		return diagramResource;
-	}
-	
-	private Set<EPackage> getImports(Module editRule) {
-		Set<EPackage> imports = new HashSet<>();
-		
-		editRule.eAllContents().forEachRemaining(element -> {
-			if (element instanceof Node) {
-				imports.add(((Node) element).getType().getEPackage());
-			}
-		});
-		
-		return imports;
+		return diagramResource.getURI();
 	}
 	
 	@Override
-	public void openRepresentation(Resource diagramResource) {
+	public void openRepresentation(URI diagram) {
 		try {
-			HenshinDiagramEditorUtil.openDiagram(diagramResource);
-		} catch (PartInitException e) {
+			WorkbenchUtil.openEditor(EMFStorage.uriToPath(diagram));
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}

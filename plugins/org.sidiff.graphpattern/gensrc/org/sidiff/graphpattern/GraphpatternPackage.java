@@ -415,13 +415,22 @@ public interface GraphpatternPackage extends EPackage {
 	int GRAPH_PATTERN_FEATURE_COUNT = PATTERN_ELEMENT_FEATURE_COUNT + 4;
 
 	/**
+	 * The operation id for the '<em>Get Node</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GRAPH_PATTERN___GET_NODE__STRING = PATTERN_ELEMENT_OPERATION_COUNT + 0;
+
+	/**
 	 * The number of operations of the '<em>Graph Pattern</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int GRAPH_PATTERN_OPERATION_COUNT = PATTERN_ELEMENT_OPERATION_COUNT + 0;
+	int GRAPH_PATTERN_OPERATION_COUNT = PATTERN_ELEMENT_OPERATION_COUNT + 1;
 
 	/**
 	 * The feature id for the '<em><b>Stereotypes</b></em>' reference list.
@@ -2021,6 +2030,16 @@ public interface GraphpatternPackage extends EPackage {
 	EReference getGraphPattern_Subgraphs();
 
 	/**
+	 * Returns the meta object for the '{@link org.sidiff.graphpattern.GraphPattern#getNode(java.lang.String) <em>Get Node</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Node</em>' operation.
+	 * @see org.sidiff.graphpattern.GraphPattern#getNode(java.lang.String)
+	 * @generated
+	 */
+	EOperation getGraphPattern__GetNode__String();
+
+	/**
 	 * Returns the meta object for class '{@link org.sidiff.graphpattern.NodePattern <em>Node Pattern</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3222,6 +3241,14 @@ public interface GraphpatternPackage extends EPackage {
 		 * @generated
 		 */
 		EReference GRAPH_PATTERN__SUBGRAPHS = eINSTANCE.getGraphPattern_Subgraphs();
+
+		/**
+		 * The meta object literal for the '<em><b>Get Node</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation GRAPH_PATTERN___GET_NODE__STRING = eINSTANCE.getGraphPattern__GetNode__String();
 
 		/**
 		 * The meta object literal for the '{@link org.sidiff.graphpattern.impl.NodePatternImpl <em>Node Pattern</em>}' class.

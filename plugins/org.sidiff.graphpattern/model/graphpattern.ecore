@@ -11,6 +11,9 @@
     <details key="validationDelegates" value="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot"/>
   </eAnnotations>
   <eClassifiers xsi:type="ecore:EClass" name="GraphPattern" eSuperTypes="#//PatternElement">
+    <eOperations name="getNode" eType="#//NodePattern">
+      <eParameters name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eOperations>
     <eStructuralFeatures xsi:type="ecore:EReference" name="nodes" upperBound="-1"
         eType="#//NodePattern" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="pattern" lowerBound="1"

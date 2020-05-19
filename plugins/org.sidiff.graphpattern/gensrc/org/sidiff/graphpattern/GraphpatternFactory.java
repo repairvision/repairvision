@@ -2,7 +2,10 @@
  */
 package org.sidiff.graphpattern;
 
+import org.eclipse.emf.ecore.EAttribute;
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EFactory;
+import org.eclipse.emf.ecore.EReference;
 
 /**
  * <!-- begin-user-doc -->
@@ -38,6 +41,15 @@ public interface GraphpatternFactory extends EFactory {
 	 * @generated
 	 */
 	NodePattern createNodePattern();
+	
+	/**
+	 * Returns a new object of class '<em>Node Pattern</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Node Pattern</em>'.
+	 * @generated NOT
+	 */
+	NodePattern createNodePattern(String name, EClass type, Stereotype... stereotypes);
 
 	/**
 	 * Returns a new object of class '<em>Edge Pattern</em>'.
@@ -47,6 +59,15 @@ public interface GraphpatternFactory extends EFactory {
 	 * @generated
 	 */
 	EdgePattern createEdgePattern();
+	
+	/**
+	 * Returns a new object of class '<em>Edge Pattern</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Edge Pattern</em>'.
+	 * @generated NOT
+	 */
+	EdgePattern createEdgePattern(NodePattern source, EReference type, NodePattern target, Stereotype... stereotypes);
 
 	/**
 	 * Returns a new object of class '<em>Attribute Pattern</em>'.
@@ -56,6 +77,15 @@ public interface GraphpatternFactory extends EFactory {
 	 * @generated
 	 */
 	AttributePattern createAttributePattern();
+	
+	/**
+	 * Returns a new object of class '<em>Attribute Pattern</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Attribute Pattern</em>'.
+	 * @generated NOT
+	 */
+	AttributePattern createAttributePattern(NodePattern node, EAttribute type, String value, Stereotype... stereotypes);
 
 	/**
 	 * Returns a new object of class '<em>Bundle</em>'.

@@ -15,6 +15,8 @@ import org.sidiff.graphpattern.GraphPattern;
 import org.sidiff.graphpattern.NodePattern;
 
 public class GraphPatternUtil {
+	
+	public static final String FILE_EXTENSION = GraphPatternConstants.FILE_EXTENSION;
 
 	/**
 	 * @param nodesA A set of nodes.

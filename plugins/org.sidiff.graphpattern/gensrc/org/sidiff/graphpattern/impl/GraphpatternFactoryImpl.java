@@ -2,10 +2,14 @@
  */
 package org.sidiff.graphpattern.impl;
 
+import java.util.Arrays;
+
+import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
 import org.sidiff.graphpattern.Assignment;
@@ -143,6 +147,21 @@ public class GraphpatternFactoryImpl extends EFactoryImpl implements Graphpatter
 		NodePatternImpl nodePattern = new NodePatternImpl();
 		return nodePattern;
 	}
+	
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	@Override
+	public NodePattern createNodePattern(String name, EClass type, Stereotype... stereotypes) {
+		NodePattern node = createNodePattern();
+		node.setName(name);
+		node.setType(type);
+		node.getStereotypes().addAll(Arrays.asList(stereotypes));
+		
+		return node;
+	}
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -154,6 +173,22 @@ public class GraphpatternFactoryImpl extends EFactoryImpl implements Graphpatter
 		EdgePatternImpl edgePattern = new EdgePatternImpl();
 		return edgePattern;
 	}
+	
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	@Override
+	public EdgePattern createEdgePattern(NodePattern source, EReference type, NodePattern target, Stereotype... stereotypes) {
+		EdgePattern edge = createEdgePattern();
+		edge.setSource(source);
+		edge.setTarget(target);
+		edge.setType(type);
+		edge.getStereotypes().addAll(Arrays.asList(stereotypes));
+		
+		return edge;
+	}
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -164,6 +199,22 @@ public class GraphpatternFactoryImpl extends EFactoryImpl implements Graphpatter
 	public AttributePattern createAttributePattern() {
 		AttributePatternImpl attributePattern = new AttributePatternImpl();
 		return attributePattern;
+	}
+	
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	@Override
+	public AttributePattern createAttributePattern(NodePattern node, EAttribute type, String value, Stereotype... stereotypes) {
+		AttributePattern attribute = createAttributePattern();
+		attribute.setNode(node);
+		attribute.setType(type);
+		attribute.setValue(value);
+		attribute.getStereotypes().addAll(Arrays.asList(stereotypes));
+		
+		return attribute;
 	}
 
 	/**
