@@ -1,16 +1,19 @@
 package org.sidiff.generic.matcher.adapter.sidiff;
 
+import java.util.Collections;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.sidiff.common.emf.access.EMFModelAccess;
 import org.sidiff.common.extension.IExtension.Description;
 import org.sidiff.common.utilities.emf.DocumentType;
+import org.sidiff.revision.difference.matcher.IConfigurableMatcherProvider;
 import org.sidiff.revision.difference.matcher.IMatcher;
 import org.sidiff.revision.difference.matcher.IMatcherProvider;
 
-public class SiDiffMatcherProviderAdapter implements IMatcherProvider {
+public class SiDiffMatcherProviderAdapter implements IMatcherProvider, IConfigurableMatcherProvider {
 
 	private IConfigurationElement sidiffMatcherExtension;
 	
@@ -26,6 +29,8 @@ public class SiDiffMatcherProviderAdapter implements IMatcherProvider {
 	
 	private Set<String> documentTypes;
 	
+	private Map<String, Object> configuration;
+	
 	public SiDiffMatcherProviderAdapter(IConfigurationElement matcherExtension) {
 		this.sidiffMatcherExtension = matcherExtension;
 		
@@ -37,6 +42,10 @@ public class SiDiffMatcherProviderAdapter implements IMatcherProvider {
 		this.name = "[SiDiff] " + sidiffName;
 		this.sidiffDocumentTypes = sidiffMatcher.getDocumentTypes();
 		this.documentTypes = new HashSet<>(sidiffDocumentTypes);
+		
+		if (sidiffMatcher.getConfiguration() != null) {
+			this.configuration = sidiffMatcher.getConfiguration().getOptions();
+		}
 		
 		if (documentTypes.remove(EMFModelAccess.GENERIC_DOCUMENT_TYPE)) {
 			documentTypes.add(DocumentType.GENERIC_DOCUMENT_TYPE);
@@ -64,7 +73,7 @@ public class SiDiffMatcherProviderAdapter implements IMatcherProvider {
 
 	@Override
 	public Set<String> getDocumentTypes() {
-		return documentTypes;
+		return Collections.unmodifiableSet(documentTypes);
 	}
 	
 	public Set<String> getSiDiffDocumentTypes() {
@@ -78,6 +87,17 @@ public class SiDiffMatcherProviderAdapter implements IMatcherProvider {
 
 	private org.sidiff.matcher.IMatcher createSiDiffMatcher() {
 		Description<org.sidiff.matcher.IMatcher> description = org.sidiff.matcher.IMatcher.DESCRIPTION;
-		return description.createExecutableExtension(sidiffMatcherExtension).get();
+		org.sidiff.matcher.IMatcher sidiffMatcher = description.createExecutableExtension(sidiffMatcherExtension).get();
+		
+		if (configuration != null) {
+			sidiffMatcher.getConfiguration().setOptions(configuration);
+		}
+		
+		return sidiffMatcher;
+	}
+
+	@Override
+	public Map<String, Object> getConfiguration() {
+		return Collections.unmodifiableMap(configuration);
 	}
 }

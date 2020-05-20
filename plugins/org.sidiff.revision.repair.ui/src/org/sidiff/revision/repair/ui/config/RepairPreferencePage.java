@@ -37,7 +37,7 @@ import org.sidiff.revision.difference.api.registry.DifferenceBuilderRegistry;
 import org.sidiff.revision.difference.api.registry.MatcherRegistry;
 import org.sidiff.revision.difference.api.settings.DifferenceSettings;
 import org.sidiff.revision.difference.builder.IDifferenceBuilderProvider;
-import org.sidiff.revision.difference.matcher.IConfigurableMatcher;
+import org.sidiff.revision.difference.matcher.IConfigurableMatcherProvider;
 import org.sidiff.revision.difference.matcher.IMatcherProvider;
 import org.sidiff.revision.editrules.project.development.registry.WorkspaceRulebaseExtension;
 import org.sidiff.revision.editrules.project.development.registry.WorkspaceRulebaseRegistry;
@@ -211,18 +211,18 @@ public class RepairPreferencePage extends PreferencePage implements IWorkbenchPr
 			config_container.setLayout(grid);
 		}
 		
-		if (matchingEngine instanceof IConfigurableMatcher) {
-			final IConfigurableMatcher configurableMatcher = (IConfigurableMatcher) matchingEngine;
+		if (matchingEngine instanceof IConfigurableMatcherProvider) {
+			final IConfigurableMatcherProvider configurableMatcherProvider = (IConfigurableMatcherProvider) matchingEngine;
 			
-			for (String option : configurableMatcher.getConfigurationOptions().keySet()) {
+			for (String option : configurableMatcherProvider.getConfiguration().keySet()) {
 
 				final String key = option;
 
 				// Use a checkbox for boolean values:
-				if (configurableMatcher.getConfigurationOptions().get(option) instanceof Boolean) {
+				if (configurableMatcherProvider.getConfiguration().get(option) instanceof Boolean) {
 					final Button button = new Button(config_container, SWT.CHECK);
 					button.setText(NameUtil.beautifyName(option));
-					button.setSelection((Boolean) configurableMatcher.getConfigurationOptions().get(option));
+					button.setSelection((Boolean) configurableMatcherProvider.getConfiguration().get(option));
 					
 					// Update selection:
 					button.addSelectionListener(new SelectionAdapter() {
@@ -230,9 +230,9 @@ public class RepairPreferencePage extends PreferencePage implements IWorkbenchPr
 						@Override
 						public void widgetSelected(SelectionEvent e) {
 							if (button.getSelection()) {
-								configurableMatcher.setConfigurationOption(key, true);
+								configurableMatcherProvider.setConfiguration(key, true);
 							} else {
-								configurableMatcher.setConfigurationOption(key, false);
+								configurableMatcherProvider.setConfiguration(key, false);
 							}
 						}
 					});
