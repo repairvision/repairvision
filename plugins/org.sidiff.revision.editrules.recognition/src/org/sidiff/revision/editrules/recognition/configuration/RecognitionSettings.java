@@ -1,24 +1,24 @@
 package org.sidiff.revision.editrules.recognition.configuration;
 
-public class RecognitionEngineSettings {
+public class RecognitionSettings {
 
-	private RecognitionEngineMonitor monitor = new RecognitionEngineMonitor();
+	private RecognitionLogger logger = new RecognitionLogger();
 
 	private int minimumSolutionSize = 1;
 
 	/**
 	 * @return The recognition engine logging monitor.
 	 */
-	public RecognitionEngineMonitor getMonitor() {
-		return monitor;
+	public RecognitionLogger getLogger() {
+		return logger;
 	}
 
 	/**
-	 * @param monitor
+	 * @param logger
 	 *            The recognition engine logging monitor.
 	 */
-	public void setMonitor(RecognitionEngineMonitor monitor) {
-		this.monitor = monitor;
+	public void setLogger(RecognitionLogger logger) {
+		this.logger = logger;
 	}
 
 	/**

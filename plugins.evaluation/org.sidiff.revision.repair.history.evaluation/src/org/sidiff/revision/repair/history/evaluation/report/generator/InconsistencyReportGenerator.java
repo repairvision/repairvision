@@ -11,10 +11,10 @@ import java.util.stream.Collectors;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
-import org.sidiff.common.utilities.monitor.LogTable;
-import org.sidiff.common.utilities.monitor.LogUtil;
 import org.sidiff.historymodel.History;
 import org.sidiff.historymodel.Problem;
+import org.sidiff.revision.common.logging.table.LogTable;
+import org.sidiff.revision.common.logging.util.LogUtil;
 import org.sidiff.revision.repair.history.evaluation.EvaluationDataSets;
 import org.sidiff.validation.constraint.interpreter.IConstraint;
 import org.sidiff.validation.constraint.project.registry.ConstraintLibraryExtension;

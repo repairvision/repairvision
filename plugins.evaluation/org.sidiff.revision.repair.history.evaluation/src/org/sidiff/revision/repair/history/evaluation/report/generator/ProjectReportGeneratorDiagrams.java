@@ -1,8 +1,8 @@
 package org.sidiff.revision.repair.history.evaluation.report.generator;
 
-import static org.sidiff.common.utilities.monitor.LogUtil.avg;
-import static org.sidiff.common.utilities.monitor.LogUtil.merge;
-import static org.sidiff.common.utilities.monitor.LogUtil.round;
+import static org.sidiff.revision.common.logging.util.LogUtil.avg;
+import static org.sidiff.revision.common.logging.util.LogUtil.merge;
+import static org.sidiff.revision.common.logging.util.LogUtil.round;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -12,7 +12,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
-import org.sidiff.common.utilities.monitor.LogTable;
+import org.sidiff.revision.common.logging.table.LogTable;
 import org.sidiff.revision.repair.history.evaluation.EvaluationDataSets;
 import org.sidiff.revision.repair.history.evaluation.report.HistoryLog;
 import org.sidiff.revision.repair.history.evaluation.report.InconsistenciesLog;

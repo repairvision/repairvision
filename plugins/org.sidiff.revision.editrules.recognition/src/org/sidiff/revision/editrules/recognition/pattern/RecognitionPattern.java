@@ -14,6 +14,7 @@ import org.eclipse.emf.henshin.model.Rule;
 import org.sidiff.common.utilities.henshin.HenshinRuleAnalysisUtil;
 import org.sidiff.graphpattern.GraphPattern;
 import org.sidiff.graphpattern.NodePattern;
+import org.sidiff.revision.editrules.recognition.configuration.RecognitionLogger;
 import org.sidiff.revision.editrules.recognition.dependencies.ChangeDependencies;
 import org.sidiff.revision.editrules.recognition.pattern.graph.ActionAttributeConstraint;
 import org.sidiff.revision.editrules.recognition.pattern.graph.ActionAttributeConstraintConstant;
@@ -41,15 +42,18 @@ public class RecognitionPattern {
 	
 	protected Map<NodePattern, ChangePattern> changePatterns = new LinkedHashMap<>();
 	
+	protected RecognitionLogger logger;
+	
 	/**
 	 * @param editRule
 	 *            The edit rule.
 	 * @param recognitionPattern
 	 *            Empty graph pattern.
 	 */
-	public RecognitionPattern(Rule editRule, GraphPattern recognitionPattern) {
+	public RecognitionPattern(Rule editRule, GraphPattern recognitionPattern, RecognitionLogger logger) {
 		this.editRule = editRule;
 		this.recognitionPattern = recognitionPattern; 
+		this.logger = logger;
 
 		// Generate recognition pattern:
 		generateRecognitionPattern();
@@ -80,7 +84,7 @@ public class RecognitionPattern {
 		
 		// Nodes: <<delete>> / <<preserve>>:
 		for (Node lhsNode : editRule.getLhs().getNodes()) {
-			ActionNode node = new ActionNode(lhsNode.getAction().getType(), actionGraph, lhsNode, nodeTrace);
+			ActionNode node = new ActionNode(lhsNode.getAction().getType(), actionGraph, lhsNode, nodeTrace, logger);
 			addEditRuleNode(node);
 			
 			for (Attribute attribute : lhsNode.getAttributes()) {
@@ -96,7 +100,7 @@ public class RecognitionPattern {
 		
 		// Nodes: <<create>>:
 		for (Node createNode : HenshinRuleAnalysisUtil.getCreationNodes(editRule)) {
-			addEditRuleNode(new ActionNode(createNode.getAction().getType(), actionGraph, createNode, nodeTrace));
+			addEditRuleNode(new ActionNode(createNode.getAction().getType(), actionGraph, createNode, nodeTrace, logger));
 		}
 		
 		// Nodes: <<require>>:
@@ -105,7 +109,7 @@ public class RecognitionPattern {
 				if (HenshinRuleAnalysisUtil.getLHS(requireNode) == null) {
 					
 					// NOTE: Handle <<require>> nodes as <<preserve>> nodes:
-					addEditRuleNode(new ActionNode(Action.Type.PRESERVE, actionGraph, requireNode, nodeTrace));
+					addEditRuleNode(new ActionNode(Action.Type.PRESERVE, actionGraph, requireNode, nodeTrace, logger));
 				}
 			}
 		}

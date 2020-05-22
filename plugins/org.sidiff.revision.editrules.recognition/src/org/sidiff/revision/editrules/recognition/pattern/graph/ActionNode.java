@@ -21,10 +21,10 @@ import org.sidiff.graphpattern.GraphpatternFactory;
 import org.sidiff.graphpattern.NodePattern;
 import org.sidiff.revision.difference.Correspondence;
 import org.sidiff.revision.difference.DifferencePackage;
+import org.sidiff.revision.editrules.recognition.configuration.RecognitionLogger;
 import org.sidiff.revision.editrules.recognition.pattern.domain.Domain;
 import org.sidiff.revision.editrules.recognition.pattern.domain.Domain.SelectionType;
 import org.sidiff.revision.editrules.recognition.pattern.graph.path.MatchingPath;
-import org.sidiff.revision.editrules.recognition.util.debug.DebugUtil;
 
 public class ActionNode extends ActionGraphElement  {
 	
@@ -56,9 +56,21 @@ public class ActionNode extends ActionGraphElement  {
 	
 	protected NodePattern nodePatternB;
 	
-	public ActionNode(Action.Type action, ActionGraph actionGraph, Node editRuleNode, Map<Node, ActionNode> nodeTrace) {
+	// Evaluation logging:
+	
+	protected RecognitionLogger logger;
+	
+	public ActionNode(
+			Action.Type action,
+			ActionGraph actionGraph,
+			Node editRuleNode,
+			Map<Node, ActionNode> nodeTrace,
+			RecognitionLogger logger) {
+		
+		
 		this.action = action;
 		this.editRuleNode = editRuleNode;
+		this.logger = logger;
 		
 		// Update trace:
 		nodeTrace.put(editRuleNode, this);
@@ -193,7 +205,7 @@ public class ActionNode extends ActionGraphElement  {
 	}
 	
 	private boolean addMatchContextA(EObject matchA, boolean test) {
-		if (DebugUtil.ACTIVE) DebugUtil.printEvaluationStepContextA(this, matchA);
+		if (logger.isStepwise()) logger.logEvaluationStepContextA(this, matchA);
 		
 		// TODO: Do a full matching of preserve/delete sub-patterns!
 		
@@ -257,7 +269,7 @@ public class ActionNode extends ActionGraphElement  {
 	}
 	
 	private boolean addMatchContextB(EObject matchB, boolean test) {
-		if (DebugUtil.ACTIVE) DebugUtil.printEvaluationStepContextB(this, matchB);
+		if (logger.isStepwise()) logger.logEvaluationStepContextB(this, matchB);
 		
 		// Add match for model B:
 		if (nodePatternB != null) {
@@ -394,7 +406,7 @@ public class ActionNode extends ActionGraphElement  {
 	}
 	
 	public void searchPaths(ChangePattern selected, MatchingPath path) {
-		if (DebugUtil.ACTIVE) DebugUtil.printEvaluationStep(this);
+		if (logger.isStepwise()) logger.logEvaluationStep(this);
 		
 		// evaluate object-change:
 		if ((change != null) && (change != selected)) {

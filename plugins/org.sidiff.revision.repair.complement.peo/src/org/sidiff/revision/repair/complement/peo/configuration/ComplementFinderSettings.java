@@ -1,26 +1,26 @@
 package org.sidiff.revision.repair.complement.peo.configuration;
 
-import org.sidiff.revision.editrules.recognition.configuration.RecognitionEngineSettings;
+import org.sidiff.revision.editrules.recognition.configuration.RecognitionSettings;
 
 public class ComplementFinderSettings {
 
-	private ComplementFinderMonitor monitor = new ComplementFinderMonitor();
+	private ComplementFinderLogger logger = new ComplementFinderLogger();
 	
-	private RecognitionEngineSettings recognitionEngineSettings = new RecognitionEngineSettings();
+	private RecognitionSettings recognitionSettings = new RecognitionSettings();
 	
-	public ComplementFinderMonitor getMonitor() {
-		return monitor;
+	public ComplementFinderLogger getLogger() {
+		return logger;
 	}
 	
-	public void setMonitor(ComplementFinderMonitor monitor) {
-		this.monitor = monitor;
+	public void setMonitor(ComplementFinderLogger monitor) {
+		this.logger = monitor;
 	}
 	
-	public RecognitionEngineSettings getRecognitionEngineSettings() {
-		return recognitionEngineSettings;
+	public RecognitionSettings getRecognitionEngineSettings() {
+		return recognitionSettings;
 	}
 	
-	public void setRecognitionEngineSettings(RecognitionEngineSettings recognitionEngineSettings) {
-		this.recognitionEngineSettings = recognitionEngineSettings;
+	public void setRecognitionEngineSettings(RecognitionSettings recognitionSettings) {
+		this.recognitionSettings = recognitionSettings;
 	}
 }

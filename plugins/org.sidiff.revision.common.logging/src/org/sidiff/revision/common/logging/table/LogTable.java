@@ -1,4 +1,4 @@
-package org.sidiff.common.utilities.monitor;
+package org.sidiff.revision.common.logging.table;
 
 import java.io.File;
 import java.io.FileReader;

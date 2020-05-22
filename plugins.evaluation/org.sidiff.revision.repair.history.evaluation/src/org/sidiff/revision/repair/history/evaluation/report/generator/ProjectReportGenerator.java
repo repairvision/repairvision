@@ -1,18 +1,18 @@
 package org.sidiff.revision.repair.history.evaluation.report.generator;
 
-import static org.sidiff.common.utilities.monitor.LogUtil.NA;
-import static org.sidiff.common.utilities.monitor.LogUtil.assertPositive;
-import static org.sidiff.common.utilities.monitor.LogUtil.avg;
-import static org.sidiff.common.utilities.monitor.LogUtil.convertToLatex;
-import static org.sidiff.common.utilities.monitor.LogUtil.convertToLatexHeader;
-import static org.sidiff.common.utilities.monitor.LogUtil.count;
-import static org.sidiff.common.utilities.monitor.LogUtil.max;
-import static org.sidiff.common.utilities.monitor.LogUtil.median;
-import static org.sidiff.common.utilities.monitor.LogUtil.merge;
-import static org.sidiff.common.utilities.monitor.LogUtil.min;
-import static org.sidiff.common.utilities.monitor.LogUtil.round;
-import static org.sidiff.common.utilities.monitor.LogUtil.sum;
-import static org.sidiff.common.utilities.monitor.LogUtil.test;
+import static org.sidiff.revision.common.logging.util.LogUtil.NA;
+import static org.sidiff.revision.common.logging.util.LogUtil.assertPositive;
+import static org.sidiff.revision.common.logging.util.LogUtil.avg;
+import static org.sidiff.revision.common.logging.util.LogUtil.convertToLatex;
+import static org.sidiff.revision.common.logging.util.LogUtil.convertToLatexHeader;
+import static org.sidiff.revision.common.logging.util.LogUtil.count;
+import static org.sidiff.revision.common.logging.util.LogUtil.max;
+import static org.sidiff.revision.common.logging.util.LogUtil.median;
+import static org.sidiff.revision.common.logging.util.LogUtil.merge;
+import static org.sidiff.revision.common.logging.util.LogUtil.min;
+import static org.sidiff.revision.common.logging.util.LogUtil.round;
+import static org.sidiff.revision.common.logging.util.LogUtil.sum;
+import static org.sidiff.revision.common.logging.util.LogUtil.test;
 
 import java.io.File;
 import java.io.IOException;
@@ -25,10 +25,10 @@ import java.util.Map.Entry;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import org.sidiff.common.utilities.monitor.LogTable;
-import org.sidiff.common.utilities.monitor.LogUtil;
 import org.sidiff.historymodel.History;
 import org.sidiff.historymodel.Problem;
+import org.sidiff.revision.common.logging.table.LogTable;
+import org.sidiff.revision.common.logging.util.LogUtil;
 import org.sidiff.revision.repair.history.evaluation.EvaluationDataSets;
 import org.sidiff.revision.repair.history.evaluation.report.HistoryLog;
 import org.sidiff.revision.repair.history.evaluation.report.InconsistenciesLog;

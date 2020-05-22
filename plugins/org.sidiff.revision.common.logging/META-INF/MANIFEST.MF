@@ -1,0 +1,17 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: ReVision Logging
+Bundle-SymbolicName: org.sidiff.revision.common.logging;singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Bundle-ClassPath: .,
+ commons-csv-1.4/commons-csv-1.4.jar
+Bundle-Activator: org.sidiff.revision.common.logging.Activator
+Require-Bundle: org.eclipse.core.runtime,
+ org.sidiff.common.utilities
+Automatic-Module-Name: org.sidiff.revision.common.logging
+Bundle-ActivationPolicy: lazy
+Export-Package: org.apache.commons.csv,
+ org.sidiff.revision.common.logging,
+ org.sidiff.revision.common.logging.table,
+ org.sidiff.revision.common.logging.util
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8

@@ -19,8 +19,8 @@ import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Parameter;
 import org.eclipse.emf.henshin.model.Rule;
 import org.sidiff.common.utilities.henshin.HenshinRuleAnalysisUtil;
-import org.sidiff.common.utilities.monitor.LogTime;
 import org.sidiff.history.revision.IRevision;
+import org.sidiff.revision.common.logging.util.LogTime;
 import org.sidiff.revision.editrules.recognition.RecognitionEngine;
 import org.sidiff.revision.editrules.recognition.impact.ImpactScope;
 import org.sidiff.revision.editrules.recognition.match.RecognitionAttributeMatch;
@@ -98,14 +98,12 @@ public class ComplementFinderEngine {
 	public void start() {
 		this.partialEditRuleRecognizer = new RecognitionEngine();
 		this.partialEditRuleRecognizer.initialize(revision);
-		this.partialEditRuleRecognizer.start();
 		
 		this.complementConstructor = new ComplementConstructor();
 		this.engine = new ComplementEngine(!useCustomHenshinNodeSorting);
 	}
 
 	public void finish() {
-		this.partialEditRuleRecognizer.finish();
 		this.engine.clearCache();
 		this.engine.shutdown();
 	}

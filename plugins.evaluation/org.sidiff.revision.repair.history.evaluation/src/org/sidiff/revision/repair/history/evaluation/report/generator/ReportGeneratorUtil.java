@@ -1,12 +1,12 @@
 package org.sidiff.revision.repair.history.evaluation.report.generator;
 
-import static org.sidiff.common.utilities.monitor.LogUtil.NA;
+import static org.sidiff.revision.common.logging.util.LogUtil.NA;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import org.sidiff.common.utilities.monitor.LogTable;
-import org.sidiff.common.utilities.monitor.LogTable.Row;
+import org.sidiff.revision.common.logging.table.LogTable;
+import org.sidiff.revision.common.logging.table.LogTable.Row;
 import org.sidiff.revision.repair.history.evaluation.report.InconsistenciesLog;
 
 public class ReportGeneratorUtil {

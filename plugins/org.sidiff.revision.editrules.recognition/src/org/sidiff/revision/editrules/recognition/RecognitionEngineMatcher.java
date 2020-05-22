@@ -4,9 +4,10 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-import org.sidiff.common.utilities.monitor.LogTime;
 import org.sidiff.graphpattern.NodePattern;
-import org.sidiff.revision.editrules.recognition.configuration.RecognitionEngineSettings;
+import org.sidiff.revision.common.logging.util.LogTime;
+import org.sidiff.revision.editrules.recognition.configuration.RecognitionLogger;
+import org.sidiff.revision.editrules.recognition.configuration.RecognitionSettings;
 import org.sidiff.revision.editrules.recognition.dependencies.DependencyEvaluation;
 import org.sidiff.revision.editrules.recognition.impact.ImpactScope;
 import org.sidiff.revision.editrules.recognition.impact.ImpactScopeConstraint;
@@ -20,7 +21,6 @@ import org.sidiff.revision.editrules.recognition.pattern.graph.ChangePattern;
 import org.sidiff.revision.editrules.recognition.selection.IMatchSelector;
 import org.sidiff.revision.editrules.recognition.selection.MatchSelector;
 import org.sidiff.revision.editrules.recognition.solver.PartialCSPSolver;
-import org.sidiff.revision.editrules.recognition.util.debug.DebugUtil;
 import org.sidiff.revision.editrules.recognition.util.debug.IRecognitionPatternSerializer;
 
 public class RecognitionEngineMatcher implements IRecognitionEngineMatcher {
@@ -35,8 +35,8 @@ public class RecognitionEngineMatcher implements IRecognitionEngineMatcher {
 	
 	protected DependencyEvaluation dependencies;
 	
-	protected RecognitionEngineSettings settings;
-
+	protected RecognitionSettings settings;
+	
 	protected IRecognitionPatternSerializer recognitionPatternSerializer = new IRecognitionPatternSerializer() {
 		public void saveRecognitionRule() {}
 	};
@@ -44,7 +44,8 @@ public class RecognitionEngineMatcher implements IRecognitionEngineMatcher {
 	public RecognitionEngineMatcher(
 			RecognitionEngine engine,
 			RecognitionPattern recognitionPattern,
-			RecognitionMatchCreator matchCreator) {
+			RecognitionMatchCreator matchCreator,
+			RecognitionLogger logger) {
 		
 		this.engine = engine;
 		this.recognitionPattern = recognitionPattern;
@@ -64,7 +65,8 @@ public class RecognitionEngineMatcher implements IRecognitionEngineMatcher {
 				dependencies,
 				ImpactScopeConstraint.DUMMY,
 				ImpactScopeConstraint.DUMMY,
-				ImpactScopeConstraint.DUMMY);
+				ImpactScopeConstraint.DUMMY,
+				logger);
 		
 		matchGenerator.start();
 	}
@@ -75,39 +77,27 @@ public class RecognitionEngineMatcher implements IRecognitionEngineMatcher {
 			ImpactScope resolvingScope,
 			ImpactScope overwriteScope,
 			ImpactScope introducingScope,
-			RecognitionEngineSettings settings) {
+			RecognitionSettings settings) {
 		
 		this.recognitionPattern = recognitionPattern;
 		this.settings = settings;
-		
-		// Log domain size:
-		int domainSize = 0;
-		
-		for (NodePattern changeNode : recognitionPattern.getChangeNodePatterns()) {
-			domainSize += Domain.get(changeNode).size();
-		}
-		
-		if ((settings != null) && (settings.getMonitor().isLogging())) {
-			settings.getMonitor().logChangeCount(domainSize);
-			settings.getMonitor().logChangeActionCount(recognitionPattern.getChangeNodePatterns().size());
-		}
 		
 		// Create Repair-Scope-Constraint:
 		ImpactScopeConstraint resolvingScopeConstraint = new ImpactScopeConstraint(resolvingScope, recognitionPattern);
 		ImpactScopeConstraint overwriteScopeConstraint = new ImpactScopeConstraint(overwriteScope, recognitionPattern);
 		ImpactScopeConstraint introducingScopeConstraint = new ImpactScopeConstraint(introducingScope, recognitionPattern);
-		
+
 		// Create Change-Dependency-Constraint: 
 		dependencies = new DependencyEvaluation(recognitionPattern.getGraphPattern());
-		
+
 		// Create Structural-Matcher:
 		matchSelector = new MatchSelector(recognitionPattern);
-		
+
 		// TODO[EXPERIMENTAL]: Seed initial domains by impact:
 //		MatchSeeding matchSeeding = new MatchSeeding(recognitionPattern);
 //		matchSeeding.seed(resolvingScope, overwriteScope);
 //		matchSelector = matchSeeding;	// Remove old selector!
-		
+
 		// Create CSP-Matcher:
 		matchGenerator = new PartialCSPSolver();
 		matchGenerator.initialize(
@@ -117,10 +107,11 @@ public class RecognitionEngineMatcher implements IRecognitionEngineMatcher {
 				dependencies,
 				resolvingScopeConstraint,
 				overwriteScopeConstraint,
-				introducingScopeConstraint);
+				introducingScopeConstraint,
+				settings.getLogger());
 		matchGenerator.setMinimumSolutionSize(settings.getMinimumSolutionSize());
 	}
-	
+
 	@Override
 	public RecognitionEngine getEngine() {
 		return engine;
@@ -129,20 +120,36 @@ public class RecognitionEngineMatcher implements IRecognitionEngineMatcher {
 	@Override
 	public List<RecognitionMatching> recognizeEditRule() {
 		
-		DebugUtil.printEditRule(recognitionPattern.getEditRule());
+		if (isLogging()) {
+			settings.getLogger().logEditRule(recognitionPattern.getEditRule());
+			settings.getLogger().logChangeCount(getDomainSize(recognitionPattern));
+			settings.getLogger().logChangeActionCount(recognitionPattern.getChangeNodePatterns().size());
+		}
 		
 		LogTime matchingTimer = new LogTime();
 		matchGenerator.start();
 		matchingTimer.stop();
+
+		if (isLogging()) {
+			settings.getLogger().logRecognitionTime(matchingTimer);
+			settings.getLogger().logMatchingTime(matchingTimer);
+		}
+
+		return matchGenerator.getResults();
+	}
+	
+	private boolean isLogging() {
+		return (settings != null) && (settings.getLogger().isDebugging());
+	}
+	
+	private int getDomainSize(RecognitionPattern recognitionPattern) {
+		int domainSize = 0;
 		
-		DebugUtil.printRecognitionTime(matchingTimer);
-		
-		// Report matching:
-		if ((settings != null) && (settings.getMonitor().isLogging())) {
-			settings.getMonitor().logMatchingTime(matchingTimer);
+		for (NodePattern changeNode : recognitionPattern.getChangeNodePatterns()) {
+			domainSize += Domain.get(changeNode).size();
 		}
 		
-		return matchGenerator.getResults();
+		return domainSize;
 	}
 
 	@Override

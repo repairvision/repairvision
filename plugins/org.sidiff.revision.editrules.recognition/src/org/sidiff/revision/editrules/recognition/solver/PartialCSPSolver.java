@@ -15,11 +15,11 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EcoreFactory;
 import org.sidiff.common.utilities.java.JUtil;
-import org.sidiff.common.utilities.monitor.LogTime;
 import org.sidiff.graphpattern.DependencyNode;
 import org.sidiff.graphpattern.NodePattern;
 import org.sidiff.revision.difference.DifferencePackage;
 import org.sidiff.revision.editrules.recognition.IMatching;
+import org.sidiff.revision.editrules.recognition.configuration.RecognitionLogger;
 import org.sidiff.revision.editrules.recognition.dependencies.DependencyEvaluation;
 import org.sidiff.revision.editrules.recognition.impact.ImpactScopeConstraint;
 import org.sidiff.revision.editrules.recognition.match.RecognitionMatching;
@@ -28,7 +28,6 @@ import org.sidiff.revision.editrules.recognition.pattern.domain.Domain;
 import org.sidiff.revision.editrules.recognition.pattern.domain.Domain.SelectionType;
 import org.sidiff.revision.editrules.recognition.selection.IMatchSelector;
 import org.sidiff.revision.editrules.recognition.solver.util.Stack;
-import org.sidiff.revision.editrules.recognition.util.debug.DebugUtil;
 
 /**
  * Concrete implementation of {@link IMatchGenerator}. Iterates through all
@@ -144,6 +143,10 @@ public class PartialCSPSolver {
 	private ImpactScopeConstraint overwriteScope;
 	
 	private ImpactScopeConstraint introducingScope;
+	
+	// -------------------------------------------------
+	
+	private RecognitionLogger logger;
 
 	// -------------------------------------------------
 	// Main Algorithm:
@@ -255,7 +258,8 @@ public class PartialCSPSolver {
 			DependencyEvaluation dependencies,
 			ImpactScopeConstraint resolvingScope,
 			ImpactScopeConstraint overwriteScope,
-			ImpactScopeConstraint introducingScope) {
+			ImpactScopeConstraint introducingScope,
+			RecognitionLogger logger) {
 
 		// evaluation:
 		this.variableNodes = variableNodes;
@@ -267,6 +271,8 @@ public class PartialCSPSolver {
 		this.resolvingScope = resolvingScope;
 		this.overwriteScope = overwriteScope;
 		this.introducingScope = introducingScope;
+		
+		this.logger = logger;
 
 		assignments = new Stack<EObject>(variableNodes.size());
 		assigned = new HashSet<>();
@@ -310,14 +316,12 @@ public class PartialCSPSolver {
 	private void findAssignments() {
 		assignments.reset();
 
-		LogTime matchingTimer = new LogTime();
-
 		expandAssignment(0);
 
-		matchingTimer.stop();
-		DebugUtil.printMatchingTime(matchingTimer);
-		DebugUtil.printFalsePositives(falsePositives);
-		DebugUtil.printFoundMatchings(matchings.size());
+		if (logger.isDebugging()) {
+			logger.logFalsePositives(falsePositives);
+			logger.logFoundMatchings(matchings.size());
+		}
 	}
 
 	private int pickAndAppendVariable() {

@@ -1,6 +1,6 @@
 package org.sidiff.revision.repair.history.evaluation.report;
 
-import org.sidiff.common.utilities.monitor.LogTable;
+import org.sidiff.revision.common.logging.table.LogTable;
 
 public abstract class AbstractLog extends LogTable {
 	

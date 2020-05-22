@@ -11,10 +11,10 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.henshin.model.Parameter;
 import org.eclipse.emf.henshin.model.Rule;
 import org.sidiff.common.utilities.java.JUtil;
-import org.sidiff.common.utilities.monitor.LogTable;
 import org.sidiff.common.utilities.ui.util.InfoConsole;
 import org.sidiff.generic.matcher.uuid.UUIDResource;
 import org.sidiff.history.analysis.tracing.InconsistencyTrace;
+import org.sidiff.revision.common.logging.table.LogTable;
 import org.sidiff.revision.difference.api.settings.DifferenceSettings;
 import org.sidiff.revision.repair.api.IRepairFacade;
 import org.sidiff.revision.repair.api.IRepairPlan;
@@ -23,9 +23,9 @@ import org.sidiff.revision.repair.api.peo.configuration.PEORepairSettings;
 import org.sidiff.revision.repair.history.evaluation.driver.DeveloperIntentionOracleDriver.HistoricalObservable;
 import org.sidiff.revision.repair.history.evaluation.driver.data.HistoryInfo;
 import org.sidiff.revision.repair.history.evaluation.report.InconsistenciesLog;
-import org.sidiff.revision.repair.history.evaluation.report.monitor.ComplementFinderLogMonitor;
-import org.sidiff.revision.repair.history.evaluation.report.monitor.PEORepairLogMonitor;
-import org.sidiff.revision.repair.history.evaluation.report.monitor.RecognitionEngineLogMonitor;
+import org.sidiff.revision.repair.history.evaluation.report.logger.ComplementFinderTableLogger;
+import org.sidiff.revision.repair.history.evaluation.report.logger.PEORepairTableLogger;
+import org.sidiff.revision.repair.history.evaluation.report.logger.RecognitionTableLogger;
 import org.sidiff.validation.constraint.api.ValidationFacade;
 import org.sidiff.validation.constraint.api.util.RepairValidation;
 import org.sidiff.validation.constraint.api.util.ScopeValidation;
@@ -65,9 +65,9 @@ public class InconsistencyEvaluationDriver {
 		settings.setValidateDifference(validateDifference);
 		
 		// Setup logging:
-		settings.setLogger(new PEORepairLogMonitor(inconsistencies));
-		settings.getComplementFinderSettings().setMonitor(new ComplementFinderLogMonitor(inconsistencies));
-		settings.getComplementFinderSettings().getRecognitionEngineSettings().setMonitor(new RecognitionEngineLogMonitor(runtimeComplexityLog));
+		settings.setLogger(new PEORepairTableLogger(inconsistencies));
+		settings.getComplementFinderSettings().setMonitor(new ComplementFinderTableLogger(inconsistencies));
+		settings.getComplementFinderSettings().getRecognitionEngineSettings().setLogger(new RecognitionTableLogger(runtimeComplexityLog));
 		
 		PEORepairJob repairJob = repairFacade.getRepairs(
 				repaired.getModelHistorical(), repaired.getModelCurrent(), settings);

@@ -1,4 +1,4 @@
-package org.sidiff.common.utilities.monitor;
+package org.sidiff.revision.common.logging.util;
 
 public class LogTime {
 	

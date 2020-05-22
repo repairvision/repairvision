@@ -6,46 +6,26 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map.Entry;
 
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.henshin.model.Action.Type;
 import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.Node;
-import org.eclipse.emf.henshin.model.Rule;
-import org.sidiff.common.utilities.monitor.LogTime;
 import org.sidiff.graphpattern.NodePattern;
 import org.sidiff.revision.editrules.recognition.pattern.RecognitionPattern;
+import org.sidiff.revision.editrules.recognition.pattern.domain.Domain;
 import org.sidiff.revision.editrules.recognition.pattern.domain.Domain.SelectionType;
 import org.sidiff.revision.editrules.recognition.pattern.graph.ActionEdge;
 import org.sidiff.revision.editrules.recognition.pattern.graph.ActionNode;
 
 public class DebugUtil {
 
-	public static boolean ACTIVE = true;
-	
-	public static boolean EVALUATION = true;
-	
-	public static boolean MATCHING = false;
-
-	public static void print(String text) {
-		if (ACTIVE) {
-			System.out.println(text);
-		}
-	}
-
-	// public static void print() {
-	// if (true) {
-	//
-	// }
-	// }
-	
 	public static Edit2RecognitionPatterns getSelectedDomains(Object obj, String... fieldNamesToRecognitionPattern) {
 		return getDomains(obj, new SelectionType[] {SelectionType.RESTRICTED}, fieldNamesToRecognitionPattern);
 	}
-	
+
 	public static Edit2RecognitionPatterns getDomains(Object obj, String... fieldNamesToRecognitionPattern) {
 		return getDomains(obj, new SelectionType[0], fieldNamesToRecognitionPattern);
 	}
-	
+
 	public static Edit2RecognitionPatterns getDomains(Object obj, SelectionType[] filter, String... fieldNamesToRecognitionPattern) {
 		RecognitionPattern pattern = (RecognitionPattern) jGet(obj, fieldNamesToRecognitionPattern);
 		Edit2RecognitionPatterns matching = new Edit2RecognitionPatterns();
@@ -99,7 +79,7 @@ public class DebugUtil {
 		
 		return matching;
 	}
-	
+
 	public static Object jGet(Object obj, String[] fieldNames) {
 		try {
 			Field field = obj.getClass().getDeclaredField(fieldNames[0]);
@@ -116,11 +96,11 @@ public class DebugUtil {
 		
 		return null;
 	}
-	
+
 	public static String jHashCode(Object obj) {
 		return "@" + Integer.toHexString(obj.hashCode());
 	}
-	
+
 	public static List<NodePatternWithDomain> getDomains(List<NodePattern> nodes, SelectionType[] filter) {
 		List<NodePatternWithDomain> domains = new ArrayList<>();
 		
@@ -133,54 +113,38 @@ public class DebugUtil {
 		return domains;
 	}
 
-	public static void printEditRule(Rule editRule) {
-		if (EVALUATION) {
-			print("Re.Vision[Edit Rule Matching]: " + editRule.getName());
+	public static String printSelections(List<NodePattern> nodes) {
+		StringBuffer print = new StringBuffer();
+		
+		for (NodePattern node : nodes) {
+			print.append("Node@" + Integer.toHexString(node.hashCode()) + ": " + node.getName());
+			print.append(", Type: " + node.getType().getName() + ":\n");
+			print.append(printSelection(node, "  "));
+			print.append("\n");
 		}
+		
+		return print.toString();
 	}
 
-	public static void printRecognitionTime(LogTime matchingTime) {
-		if (EVALUATION) {
-			print("Re.Vision[Recognition Time]: " + matchingTime + "ms");
-		}
-	}
-	
-	public static void printMatchingTime(LogTime matchingTime) {
-		if (EVALUATION) {
-			print("Re.Vision[Matching Time]: " + matchingTime + "ms");
-		}
-	}
-	
-	public static void printFalsePositives(int falsePositives) {
-		if (EVALUATION) {
-			print("Re.Vision[False Positives]: " + falsePositives);
-		}
-	}
-	
-	public static void printFoundMatchings(int matchings) {
-		if (EVALUATION) {
-			print("Re.Vision[Matchings Found]: " + matchings);
-		}
+	public static String printSelection(NodePattern node) {
+		return printSelection(node, "");
 	}
 
-	public static void printEvaluationStepContextB(ActionNode node, EObject matchB) {
-		if (MATCHING) {
-			System.out.println("    B:" + node);
-			System.out.println("        Match: " + matchB);
-		}
+	public static String printSelection(NodePattern node, String indent) {
+		StringBuffer selectionPrint = new StringBuffer();
+		Domain.get(node).iterator()
+		.forEachRemaining(selection -> {selectionPrint.append(indent 
+				+ "[" + Domain.get(node).get(selection) + "] " 
+				+ removeBundleNames(selection) + "\n");});
+		return selectionPrint.toString();
 	}
 
-	public static void printEvaluationStepContextA(ActionNode actionNode, EObject matchA) {
-		if (MATCHING) {
-			System.out.println("    A:" + actionNode);
-			System.out.println("        Match: " + matchA);
-
-		}
+	public static String removeBundleNames(Object obj) {
+		String name = obj.toString();
+		name = name.replaceFirst("org\\.sidiff\\.consistency\\.graphpattern\\.impl\\.", "");
+		name = name.replaceFirst("org\\.eclipse\\.uml2\\.uml\\.internal\\.impl\\.", "");
+		name = name.replaceFirst("org\\.sidiff\\.revision\\.difference\\.impl\\.", "");
+		return name;
 	}
 
-	public static void printEvaluationStep(ActionNode actionNode) {
-		if (MATCHING) {
-			System.out.println("Evaluation Step: " + actionNode);
-		}
-	}
 }

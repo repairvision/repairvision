@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.emf.henshin.model.Rule;
-import org.sidiff.common.utilities.monitor.LogTime;
+import org.sidiff.revision.common.logging.util.LogTime;
 import org.sidiff.revision.editrules.recognition.RecognitionEngine;
 import org.sidiff.revision.editrules.recognition.RecognitionEngineMatcher;
 import org.sidiff.revision.editrules.recognition.impact.ImpactScope;
@@ -58,8 +58,8 @@ public class ComplementFinder {
 		recognitionTimer.stop();
 		
 		// Report:
-		if (settings.getMonitor().isLogging()) {
-			settings.getMonitor().logRecognitionTime(recognitionTimer);
+		if (settings.getLogger().isLogging()) {
+			settings.getLogger().logRecognitionTime(recognitionTimer);
 		}
 
 		//// Complement Construction ////

@@ -1,4 +1,4 @@
-package org.sidiff.common.utilities.monitor;
+package org.sidiff.revision.common.logging.util;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -7,6 +7,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.function.Predicate;
+
+import org.sidiff.revision.common.logging.table.LogTable;
+import org.sidiff.revision.common.logging.table.StringAdapter;
 
 public class LogUtil {
 	
@@ -40,6 +43,14 @@ public class LogUtil {
 			return fixme;
 		}
 	};
+	
+	public static String getTime(LogTime time) {
+		if (time.getTime() > -1) {
+			return time.getTime() + "ms";
+		} else {
+			return "n.a.";
+		}
+	}
 
 	public static void appendTime(LogTable log, String name, LogTime timer) {
 		List<Object> matchingTimerSumAll = log.getColumn(name);
