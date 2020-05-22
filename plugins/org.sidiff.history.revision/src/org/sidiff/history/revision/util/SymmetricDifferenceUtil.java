@@ -82,7 +82,7 @@ public class SymmetricDifferenceUtil {
 				modelB.trimFileExtension().appendFileExtension(DifferenceUtil.FILE_EXTENSION).lastSegment());
 	}
 	
-	public static boolean validateChange(Change change) {
+	public static boolean isResolvableChange(Change change) {
 		
 		if (change instanceof AddObject) {
 			return isResolvable(((AddObject) change).getObj());

@@ -19,7 +19,7 @@ public class PEORepairSettings extends BasicRepairSettings {
 	/**
 	 * Monitor for the repair process.
 	 */
-	private PEORepairMonitor monitor = new PEORepairMonitor();
+	private PEORepairLogger logger = new PEORepairLogger();
 	
 	/**
 	 * All edit-rules which are to be investigated for partial executions.
@@ -32,9 +32,9 @@ public class PEORepairSettings extends BasicRepairSettings {
 	private DifferenceSettings differenceSettings;
 	
 	/**
-	 * Store generated recognition rules.
+	 * Check for broken changes e.g. null-references or unresolvable proxies.
 	 */
-	private boolean saveRecognitionRules = false;
+	private boolean validateDifferenceChanges = false;
 	
 	/**
 	 * The consistency rules for the model validation.
@@ -47,7 +47,7 @@ public class PEORepairSettings extends BasicRepairSettings {
 	private Iterable<EObject> validationScope; 
 	
 	/**
-	 * Settings of the complement finde.
+	 * Settings of the complement finder.
 	 */
 	private ComplementFinderSettings complementFinderSettings = new ComplementFinderSettings();
 
@@ -58,12 +58,12 @@ public class PEORepairSettings extends BasicRepairSettings {
 		this.differenceSettings = differenceSettings;
 	}
 	
-	public PEORepairMonitor getMonitor() {
-		return monitor;
+	public PEORepairLogger getLogger() {
+		return logger;
 	}
 	
-	public void setMonitor(PEORepairMonitor monitor) {
-		this.monitor = monitor;
+	public void setLogger(PEORepairLogger monitor) {
+		this.logger = monitor;
 	}
 	
 	public Collection<Rule> getEditRules() {
@@ -81,13 +81,13 @@ public class PEORepairSettings extends BasicRepairSettings {
 	public void setDifferenceSettings(DifferenceSettings differenceSettings) {
 		this.differenceSettings = differenceSettings;
 	}
-
-	public boolean saveRecognitionRules() {
-		return saveRecognitionRules;
+	
+	public boolean isValidateDifferenceChanges() {
+		return validateDifferenceChanges;
 	}
 
-	public void setSaveRecognitionRules(boolean saveRecognitionRules) {
-		this.saveRecognitionRules = saveRecognitionRules;
+	public void setValidateDifferenceChanges(boolean validateDifferenceChanges) {
+		this.validateDifferenceChanges = validateDifferenceChanges;
 	}
 	
 	public List<IConstraint> getConsistencyRules() {

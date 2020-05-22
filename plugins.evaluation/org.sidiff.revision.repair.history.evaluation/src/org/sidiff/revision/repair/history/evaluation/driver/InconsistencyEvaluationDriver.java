@@ -65,7 +65,7 @@ public class InconsistencyEvaluationDriver {
 		settings.setValidateDifference(validateDifference);
 		
 		// Setup logging:
-		settings.setMonitor(new PEORepairLogMonitor(inconsistencies));
+		settings.setLogger(new PEORepairLogMonitor(inconsistencies));
 		settings.getComplementFinderSettings().setMonitor(new ComplementFinderLogMonitor(inconsistencies));
 		settings.getComplementFinderSettings().getRecognitionEngineSettings().setMonitor(new RecognitionEngineLogMonitor(runtimeComplexityLog));
 		

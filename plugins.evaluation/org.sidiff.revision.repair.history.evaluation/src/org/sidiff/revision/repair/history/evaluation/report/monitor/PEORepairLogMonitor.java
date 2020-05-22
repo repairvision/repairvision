@@ -1,17 +1,19 @@
 package org.sidiff.revision.repair.history.evaluation.report.monitor;
 
+import java.util.logging.Level;
+
 import org.sidiff.common.utilities.monitor.LogTable;
 import org.sidiff.common.utilities.monitor.LogTime;
-import org.sidiff.revision.repair.api.peo.configuration.PEORepairMonitor;
+import org.sidiff.revision.repair.api.peo.configuration.PEORepairLogger;
 import org.sidiff.revision.repair.history.evaluation.report.InconsistenciesLog;
 
-public class PEORepairLogMonitor extends PEORepairMonitor {
+public class PEORepairLogMonitor extends PEORepairLogger {
 
 	private LogTable repairLog;
 	
 	public PEORepairLogMonitor(LogTable repairLog) {
 		this.repairLog = repairLog;
-		setLogging(true);
+		getLogger().setLevel(Level.ALL);
 	}
 
 	@Override

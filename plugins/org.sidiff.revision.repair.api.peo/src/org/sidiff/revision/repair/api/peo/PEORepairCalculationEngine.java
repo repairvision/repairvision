@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.logging.Level;
 
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.henshin.interpreter.EGraph;
@@ -37,16 +38,18 @@ public class PEORepairCalculationEngine {
 		diffTimer.stop();
 		
 		// Report:
-		if (settings.getMonitor().isLogging()) {
-			settings.getMonitor().logDifferenceTime(diffTimer);
-			settings.getMonitor().logChangeCount(revision.getDifference().getChanges().size());
+		if (settings.getLogger().isDebugging()) {
+			settings.getLogger().logDifferenceTime(diffTimer);
+			settings.getLogger().logChangeCount(revision.getDifference().getChanges().size());
 		}
 
 		if (settings.saveDifference()) {
 			try {
 				revision.getDifference().getSymmetricDifference().eResource().save(Collections.EMPTY_MAP);
 			} catch (IOException e) {
-//				e.printStackTrace();
+				if (settings.getLogger().isLogging()) {
+					settings.getLogger().log(Level.SEVERE, "Problems occured during difference serialization.", e);
+				}
 			}
 		}
 			
@@ -70,10 +73,10 @@ public class PEORepairCalculationEngine {
 		valiationTimer.stop();
 
 		// Report:
-		if (settings.getMonitor().isLogging()) {
-			settings.getMonitor().logValidationTime(valiationTimer);
-			settings.getMonitor().logInconsistencyCount(impact.getValidations().size());
-			settings.getMonitor().logEditRuleCount(settings.getEditRules().size());
+		if (settings.getLogger().isDebugging()) {
+			settings.getLogger().logValidationTime(valiationTimer);
+			settings.getLogger().logInconsistencyCount(impact.getValidations().size());
+			settings.getLogger().logEditRuleCount(settings.getEditRules().size());
 		}
 
 		// Henshin graph:
@@ -87,13 +90,12 @@ public class PEORepairCalculationEngine {
 		
 		LogTime complementMatchingTimer = new LogTime();
 		int potentialEditRules = 0;
-		int complementingEditRules = 0;
+		int complementingOperationCount = 0;
 		int repairCount = 0;
 		
 		for (Rule editRule : settings.getEditRules()) {
-//			if (editRule.getName().contains("Create: Accessor Operation for Structural Feature")) {
-//				System.out.println(editRule.getName());
-//			}
+			
+			// BREAKPOINT CONDITION: editRule.getName().contains("The name of the edit rule")
 			
 			PEORepairCaculation repairCaculation = createRepairCalculation(editRule, impact, revision, complementFinderEngine);
 			
@@ -103,7 +105,7 @@ public class PEORepairCalculationEngine {
 				
 				// Evaluation:
 				++potentialEditRules;
-				complementingEditRules += repairsForEditRule.size();
+				complementingOperationCount += repairsForEditRule.size();
 				repairCount += repairCaculation.getRepairCount();
 			}
 		}
@@ -111,11 +113,11 @@ public class PEORepairCalculationEngine {
 		complementFinderEngine.finish();
 		
 		// Report:
-		if (settings.getMonitor().isLogging()) {
-			settings.getMonitor().logComplementMatchingTime(complementMatchingTimer);
-			settings.getMonitor().logPotentialEditRuleCount(potentialEditRules);
-			settings.getMonitor().logComplementOperationCount(complementingEditRules);
-			settings.getMonitor().logComplementMatchingCount(repairCount);
+		if (settings.getLogger().isDebugging()) {
+			settings.getLogger().logComplementMatchingTime(complementMatchingTimer);
+			settings.getLogger().logPotentialEditRuleCount(potentialEditRules);
+			settings.getLogger().logComplementOperationCount(complementingOperationCount);
+			settings.getLogger().logComplementMatchingCount(repairCount);
 		}
 		
 		// Create repair job:

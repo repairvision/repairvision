@@ -123,7 +123,6 @@ public class RuleSelectionRepairApplication extends EclipseResourceRepairApplica
 				repairSettings = new PEORepairSettings(
 						Collections.singletonList(inconsistency.getContext()), editRules, settings);
 				repairSettings.setConsistencyRules(Collections.singletonList(inconsistency.getRule()));
-				repairSettings.setSaveRecognitionRules(debugging);
 				repairSettings.setSaveDifference(true);
 				
 				if (debugging) {
