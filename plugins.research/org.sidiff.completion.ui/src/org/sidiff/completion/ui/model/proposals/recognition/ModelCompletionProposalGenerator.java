@@ -112,7 +112,7 @@ public class ModelCompletionProposalGenerator {
 		EGraph graphCurrentModel = new EGraphImpl(getCurrentModel());
 		
 		// Calculate proposals:
-		ComplementFinderEngine complementFinderEngine = new ComplementFinderEngine(revision, null, graphCurrentModel);
+		ComplementFinderEngine complementFinderEngine = new ComplementFinderEngine(null, graphCurrentModel);
 		complementFinderEngine.start();
 		
 		List<ModelCompletionProposalCluster> propsalClusters = new ArrayList<>();
@@ -121,7 +121,7 @@ public class ModelCompletionProposalGenerator {
 		sortEditRules(getEditRules());
 		
 		for (Rule editRule : getEditRules()) {
-			ModelCompletionProposalCaculation proposalCaculation = new ModelCompletionProposalCaculation(editRule, impactAnalyzes, complementFinderEngine);
+			ModelCompletionProposalCaculation proposalCaculation = new ModelCompletionProposalCaculation(editRule, revision, impactAnalyzes, complementFinderEngine);
 			
 //			if (editRule.getName().contains("Create: TransitionWithCallEventTriggerAndOperationInClass")) {
 //				System.out.println("ModelCompletionProposalGenerator.calculateProposals()");

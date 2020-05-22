@@ -10,6 +10,8 @@ import org.eclipse.emf.henshin.model.GraphElement;
 import org.eclipse.emf.henshin.model.Rule;
 import org.sidiff.common.utilities.henshin.HenshinChangesUtil;
 import org.sidiff.completion.ui.model.proposals.ModelCompletionProposal;
+import org.sidiff.history.revision.IRevision;
+import org.sidiff.revision.editrules.recognition.configuration.RecognitionSettings;
 import org.sidiff.revision.editrules.recognition.impact.ImpactScope;
 import org.sidiff.revision.repair.complement.construction.ComplementRule;
 import org.sidiff.revision.repair.complement.peo.configuration.ComplementFinderSettings;
@@ -33,7 +35,7 @@ public class ModelCompletionProposalCaculation {
 	
 	protected ComplementFinder complementFinder;
 	
-	public ModelCompletionProposalCaculation(Rule editRule, ImpactAnalyzes impact, ComplementFinderEngine complementFinderEngine) {
+	public ModelCompletionProposalCaculation(Rule editRule, IRevision revision, ImpactAnalyzes impact, ComplementFinderEngine complementFinderEngine) {
 		
 		this.editRule = editRule;
 		this.impact = impact;
@@ -50,9 +52,16 @@ public class ModelCompletionProposalCaculation {
 		
 		// Create complement finder:
 		if (isPotentialProposal()) {
-			complementFinder = complementFinderEngine.createComplementFinder(
-					editRule, impact, currentImpactScope, overwriteImpactScope, 
-					historicalImpactScope, new ComplementFinderSettings());
+			ComplementFinderSettings complementFinderSettings = new ComplementFinderSettings();
+			RecognitionSettings recognitionSettings = complementFinderSettings.getRecognitionEngineSettings();
+			recognitionSettings.setEditRule(editRule);
+			recognitionSettings.setRevision(revision);
+			recognitionSettings.setImpact(impact);
+			recognitionSettings.setScopeModelA(historicalImpactScope);
+			recognitionSettings.setScopeModelB(currentImpactScope);
+			recognitionSettings.setOverwriteScope(overwriteImpactScope);
+			
+			complementFinder = complementFinderEngine.createComplementFinder(complementFinderSettings);
 		}
 	}
 	

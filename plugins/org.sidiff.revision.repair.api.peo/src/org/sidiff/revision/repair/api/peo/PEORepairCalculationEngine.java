@@ -83,7 +83,7 @@ public class PEORepairCalculationEngine {
 		EGraph graphModelB = new EGraphImpl(revision.getVersionB().getTargetResource());
 		
 		// Calculate repairs:
-		ComplementFinderEngine complementFinderEngine = new ComplementFinderEngine(revision, impact, graphModelB);
+		ComplementFinderEngine complementFinderEngine = new ComplementFinderEngine(impact, graphModelB);
 		complementFinderEngine.start();
 		
 		List<IRepairPlan> repairs = new ArrayList<>();

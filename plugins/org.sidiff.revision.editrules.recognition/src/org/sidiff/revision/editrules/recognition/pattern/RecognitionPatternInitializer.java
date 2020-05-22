@@ -12,19 +12,19 @@ import org.sidiff.revision.editrules.recognition.revision.RevisionGraph;
 
 public class RecognitionPatternInitializer {
 
-	public static void initializeRecognitionPattern(RecognitionPattern recognitionPattern,  RevisionGraph matchingHelper) {
+	public static void initializeRecognitionPattern(RecognitionPattern recognitionPattern,  RevisionGraph revisionGraph) {
 		
 		// Initialization as command -> support for graph patterns from editors:
 		TransactionalEditingDomain editingDomain = TransactionUtil.getEditingDomain(recognitionPattern.getGraphPattern());
 
 		if (editingDomain == null) {
-			internal_initializeRecognitionPattern(recognitionPattern, matchingHelper);
+			internal_initializeRecognitionPattern(recognitionPattern, revisionGraph);
 		} else {
 			editingDomain.getCommandStack().execute(new RecordingCommand(editingDomain) {
 
 				@Override
 				protected void doExecute() {
-					internal_initializeRecognitionPattern(recognitionPattern, matchingHelper);
+					internal_initializeRecognitionPattern(recognitionPattern, revisionGraph);
 				}
 
 				@Override
@@ -36,9 +36,9 @@ public class RecognitionPatternInitializer {
 		}
 	}
 	
-	private static void internal_initializeRecognitionPattern(RecognitionPattern recognitionPattern, RevisionGraph matchingHelper) {
-		initializeDomains(recognitionPattern, matchingHelper);
-		initializeChangePatterns(recognitionPattern, matchingHelper);
+	private static void internal_initializeRecognitionPattern(RecognitionPattern recognitionPattern, RevisionGraph revisionGraph) {
+		initializeDomains(recognitionPattern, revisionGraph);
+		initializeChangePatterns(recognitionPattern, revisionGraph);
 	}
 	
 	private static void initializeDomains(RecognitionPattern recognitionPattern, RevisionGraph matchingHelper) {
@@ -56,12 +56,12 @@ public class RecognitionPatternInitializer {
 		domain.initialize(matchingHelper);
 	}
 	
-	private static void initializeChangePatterns(RecognitionPattern recognitionPattern, RevisionGraph matchingHelper) {
+	private static void initializeChangePatterns(RecognitionPattern recognitionPattern, RevisionGraph revisionGraph) {
 		
 		for (NodePattern changeNodePattern : recognitionPattern.getChangeNodePatterns()) {
 			ChangePattern changePattern = recognitionPattern.getChangePattern(changeNodePattern);
 			
-			for (EObject change : matchingHelper.getRevision().getDifference().getChangeDomain(
+			for (EObject change : revisionGraph.getRevision().getDifference().getChangeDomain(
 					changePattern.getChangeType(), changePattern.getMetaModelType())) {
 				
 				if (change instanceof Change) {

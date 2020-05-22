@@ -1,79 +1,64 @@
-package org.sidiff.revision.editrules.recognition;
+package org.sidiff.revision.editrules.recognition.impl;
 
 import org.eclipse.emf.henshin.model.Rule;
 import org.sidiff.graphpattern.GraphPattern;
 import org.sidiff.graphpattern.GraphpatternFactory;
 import org.sidiff.history.revision.IRevision;
-import org.sidiff.revision.difference.Difference;
+import org.sidiff.revision.editrules.recognition.IRecognitionEngineProvider;
 import org.sidiff.revision.editrules.recognition.configuration.RecognitionLogger;
 import org.sidiff.revision.editrules.recognition.configuration.RecognitionSettings;
-import org.sidiff.revision.editrules.recognition.impact.ImpactScope;
 import org.sidiff.revision.editrules.recognition.match.util.RecognitionMatchCreator;
 import org.sidiff.revision.editrules.recognition.pattern.RecognitionPattern;
 import org.sidiff.revision.editrules.recognition.revision.RevisionGraph;
 import org.sidiff.revision.editrules.recognition.util.debug.DebugUtil;
-import org.sidiff.validation.constraint.impact.ImpactAnalyzes;
 
 /**
  * @author Manuel Ohrndorf
  */
-public class RecognitionEngine implements IRecognitionEngine {
-	
-	protected Difference difference;
-	
-	protected RevisionGraph matchingHelper;
+public class RecognitionEngineProvider implements IRecognitionEngineProvider {
 	
 	@Override
-	public void initialize(IRevision revision) {
-		matchingHelper = new RevisionGraph(revision);
-	}
-	
-	@Override
-	public RecognitionEngineMatcher createMatcher(
-			Rule editRule,
-			ImpactAnalyzes impact,
-			ImpactScope resolvingScope,
-			ImpactScope overwriteScope,
-			ImpactScope introducingScope,
-			RecognitionSettings settings) {
+	public RecognitionEngine createMatcher(RecognitionSettings settings) {
 		
 		// Create recognition pattern:
-		RecognitionPattern recognitionPattern = createRecognitionPattern(editRule, settings.getLogger());
+		RecognitionPattern recognitionPattern = createRecognitionPattern(settings.getEditRule(), settings.getLogger());
 		
 		// Initialize change domains:
-		recognitionPattern.initialize(matchingHelper);
+		recognitionPattern.initialize(new RevisionGraph(settings.getRevision()));
 		
 		if (settings.getLogger().isStepwise()) {
 			settings.getLogger().logDomainInitialization(DebugUtil.printSelections(recognitionPattern.getChangeNodePatterns()));
 		}
 		
 		// Create matcher:
-		return new RecognitionEngineMatcher(
+		return new RecognitionEngine(
 				recognitionPattern,
-				new RecognitionMatchCreator(recognitionPattern, matchingHelper.getRevision(), impact),
-				resolvingScope, 
-				overwriteScope,
-				introducingScope,
+				new RecognitionMatchCreator(recognitionPattern, settings.getRevision(), settings.getImpact()),
+				settings.getScopeModelB(), 
+				settings.getOverwriteScope(),
+				settings.getScopeModelA(),
 				settings);
 	}
 
-	@Override
-	public RecognitionEngineMatcher createMatcher(Rule editRule) {
+	/**
+	 * @return A recognition engine without impact analysis, e.g., for debugging or testing.
+	 */
+	public RecognitionEngine createMatcher(Rule editRule, IRevision revision) {
 		RecognitionLogger logger = new RecognitionLogger();
 		
 		// Create recognition pattern:
 		RecognitionPattern recognitionPattern = createRecognitionPattern(editRule, logger);
 		
 		// Initialize change domains:
-		recognitionPattern.initialize(matchingHelper);
+		recognitionPattern.initialize(new RevisionGraph(revision));
 		
 		if (logger.isStepwise()) {
 			logger.logDomainInitialization(DebugUtil.printSelections(recognitionPattern.getChangeNodePatterns()));
 		}
 		
 		// Create matcher:
-		return new RecognitionEngineMatcher(this, recognitionPattern,
-				new RecognitionMatchCreator(recognitionPattern, matchingHelper.getRevision()), logger);
+		return new RecognitionEngine(this, recognitionPattern,
+				new RecognitionMatchCreator(recognitionPattern, revision), logger);
 	}
 	
 	private RecognitionPattern createRecognitionPattern(Rule editRule, RecognitionLogger logger) {

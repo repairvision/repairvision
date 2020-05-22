@@ -1,4 +1,4 @@
-package org.sidiff.revision.editrules.recognition;
+package org.sidiff.revision.editrules.recognition.impl;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.sidiff.graphpattern.NodePattern;
 import org.sidiff.revision.common.logging.util.LogTime;
+import org.sidiff.revision.editrules.recognition.IRecognitionEngine;
 import org.sidiff.revision.editrules.recognition.configuration.RecognitionLogger;
 import org.sidiff.revision.editrules.recognition.configuration.RecognitionSettings;
 import org.sidiff.revision.editrules.recognition.dependencies.DependencyEvaluation;
@@ -23,9 +24,9 @@ import org.sidiff.revision.editrules.recognition.selection.MatchSelector;
 import org.sidiff.revision.editrules.recognition.solver.PartialCSPSolver;
 import org.sidiff.revision.editrules.recognition.util.debug.IRecognitionPatternSerializer;
 
-public class RecognitionEngineMatcher implements IRecognitionEngineMatcher {
+public class RecognitionEngine implements IRecognitionEngine {
 
-	protected RecognitionEngine engine;
+	protected RecognitionEngineProvider engine;
 	
 	protected RecognitionPattern recognitionPattern; 
 	
@@ -41,8 +42,8 @@ public class RecognitionEngineMatcher implements IRecognitionEngineMatcher {
 		public void saveRecognitionRule() {}
 	};
 	
-	public RecognitionEngineMatcher(
-			RecognitionEngine engine,
+	public RecognitionEngine(
+			RecognitionEngineProvider engine,
 			RecognitionPattern recognitionPattern,
 			RecognitionMatchCreator matchCreator,
 			RecognitionLogger logger) {
@@ -71,7 +72,7 @@ public class RecognitionEngineMatcher implements IRecognitionEngineMatcher {
 		matchGenerator.start();
 	}
 	
-	public RecognitionEngineMatcher(
+	public RecognitionEngine(
 			RecognitionPattern recognitionPattern,
 			RecognitionMatchCreator matchCreator,
 			ImpactScope resolvingScope,
@@ -112,8 +113,7 @@ public class RecognitionEngineMatcher implements IRecognitionEngineMatcher {
 		matchGenerator.setMinimumSolutionSize(settings.getMinimumSolutionSize());
 	}
 
-	@Override
-	public RecognitionEngine getEngine() {
+	public RecognitionEngineProvider getEngine() {
 		return engine;
 	}
 	
@@ -152,22 +152,18 @@ public class RecognitionEngineMatcher implements IRecognitionEngineMatcher {
 		return domainSize;
 	}
 
-	@Override
 	public Collection<ChangePattern> getAllChanges() {
 		return Collections.unmodifiableCollection(recognitionPattern.getChangePatternTrace().values());
 	}
 
-	@Override
 	public String getEditRuleName() {
 		return recognitionPattern.getEditRule().getName();
 	}
 
-	@Override
 	public Collection<ActionNode> getEditRuleNodes() {
 		return Collections.unmodifiableCollection(recognitionPattern.getNodeTrace().values());
 	}
 
-	@Override
 	public Collection<ActionEdge> getEditRuleEdges() {
 		return Collections.unmodifiableCollection(recognitionPattern.getEdgeTrace().values());
 	}

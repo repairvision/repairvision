@@ -23,7 +23,6 @@ import org.sidiff.revision.difference.Change;
 import org.sidiff.revision.difference.RemoveObject;
 import org.sidiff.revision.difference.RemoveReference;
 import org.sidiff.revision.difference.DifferencePackage;
-import org.sidiff.revision.editrules.recognition.IMatching;
 import org.sidiff.revision.editrules.recognition.match.RecognitionAttributeMatch;
 import org.sidiff.revision.editrules.recognition.match.RecognitionEdgeMatch;
 import org.sidiff.revision.editrules.recognition.match.RecognitionMatching;
@@ -36,6 +35,7 @@ import org.sidiff.revision.editrules.recognition.pattern.graph.ChangePatternAddR
 import org.sidiff.revision.editrules.recognition.pattern.graph.ChangePatternAttributeValueChange;
 import org.sidiff.revision.editrules.recognition.pattern.graph.ChangePatternRemoveObject;
 import org.sidiff.revision.editrules.recognition.pattern.graph.ChangePatternRemoveReference;
+import org.sidiff.revision.editrules.recognition.solver.IMatching;
 import org.sidiff.validation.constraint.impact.ImpactAnalyzes;
 
 public class RecognitionMatchCreator {

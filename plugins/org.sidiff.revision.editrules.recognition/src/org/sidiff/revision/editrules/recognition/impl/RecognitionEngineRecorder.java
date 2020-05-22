@@ -1,4 +1,4 @@
-package org.sidiff.revision.editrules.recognition;
+package org.sidiff.revision.editrules.recognition.impl;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -22,7 +22,7 @@ public class RecognitionEngineRecorder {
 		String getName();
 	}
 	
-	private RecognitionEngineMatcher recognitionEngineMatcher;
+	private RecognitionEngine recognitionEngine;
 	
 	private MatchSelectorMonitor matchSelectorMonitor;
 	
@@ -31,9 +31,9 @@ public class RecognitionEngineRecorder {
 	 */
 	private boolean saveRecognitionRule;
 	
-	public RecognitionEngineRecorder(RecognitionEngineMatcher recognitionEngineMatcher) {
-		this.recognitionEngineMatcher = recognitionEngineMatcher;
-		this.matchSelectorMonitor = new MatchSelectorMonitor(recognitionEngineMatcher.matchSelector);
+	public RecognitionEngineRecorder(RecognitionEngine recognitionEngine) {
+		this.recognitionEngine = recognitionEngine;
+		this.matchSelectorMonitor = new MatchSelectorMonitor(recognitionEngine.matchSelector);
 	}
 
 	private IChangeTag remaining = new IChangeTag() {
@@ -69,29 +69,29 @@ public class RecognitionEngineRecorder {
 		Iterator<Variable> variableSet = null;
 		
 		if (tag == remaining) {
-			variableSet = recognitionEngineMatcher.matchGenerator.getRemainingVariables();
+			variableSet = recognitionEngine.matchGenerator.getRemainingVariables();
 		}
 		
 		else if (tag == removed) {
-			variableSet = recognitionEngineMatcher.matchGenerator.getRemovedVariables();
+			variableSet = recognitionEngine.matchGenerator.getRemovedVariables();
 		}
 		
 		else if (tag == depending) {
-			variableSet = recognitionEngineMatcher.matchGenerator.getDependingVariables();
+			variableSet = recognitionEngine.matchGenerator.getDependingVariables();
 		}
 		
 		else if (tag == sub) {
-			variableSet = recognitionEngineMatcher.matchGenerator.getSubVariables();
+			variableSet = recognitionEngine.matchGenerator.getSubVariables();
 		}
 		
-		Map<NodePattern, ChangePattern> changePattern = recognitionEngineMatcher.recognitionPattern.getChangePatternTrace();
+		Map<NodePattern, ChangePattern> changePattern = recognitionEngine.recognitionPattern.getChangePatternTrace();
 		variableSet.forEachRemaining(variable -> changes.add(changePattern.get(variable.node)));
 
 		return changes;
 	}
 	
-	public RecognitionEngineMatcher getRecognitionEngineMatcher() {
-		return recognitionEngineMatcher;
+	public RecognitionEngine getRecognitionEngineMatcher() {
+		return recognitionEngine;
 	}
 	
 	public boolean isMatchingPathRecording() {
@@ -114,15 +114,15 @@ public class RecognitionEngineRecorder {
 		this.saveRecognitionRule = saveRecognitionRule;
 		
 		if (saveRecognitionRule) {
-			recognitionEngineMatcher.recognitionPatternSerializer = new IRecognitionPatternSerializer() {
+			recognitionEngine.recognitionPatternSerializer = new IRecognitionPatternSerializer() {
 				public void saveRecognitionRule() {
 					GraphPatternUtil.saveGraphPattern(getRecognitionRuleURI(
-							recognitionEngineMatcher.recognitionPattern.getEditRule().eResource().getURI(), GraphPatternConstants.FILE_EXTENSION),
-							recognitionEngineMatcher.recognitionPattern.getGraphPattern());
+							recognitionEngine.recognitionPattern.getEditRule().eResource().getURI(), GraphPatternConstants.FILE_EXTENSION),
+							recognitionEngine.recognitionPattern.getGraphPattern());
 				}
 			};
 		} else {
-			recognitionEngineMatcher.recognitionPatternSerializer = new IRecognitionPatternSerializer() {
+			recognitionEngine.recognitionPatternSerializer = new IRecognitionPatternSerializer() {
 				public void saveRecognitionRule() {}
 			};
 		}

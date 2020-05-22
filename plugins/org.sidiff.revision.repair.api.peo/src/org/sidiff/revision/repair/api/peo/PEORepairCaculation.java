@@ -13,6 +13,7 @@ import org.sidiff.history.revision.IRevision;
 import org.sidiff.history.revision.util.SymmetricDifferenceUtil;
 import org.sidiff.revision.common.logging.util.LogTime;
 import org.sidiff.revision.difference.Change;
+import org.sidiff.revision.editrules.recognition.configuration.RecognitionSettings;
 import org.sidiff.revision.editrules.recognition.impact.ImpactScope;
 import org.sidiff.revision.repair.api.IRepairPlan;
 import org.sidiff.revision.repair.api.peo.configuration.PEORepairSettings;
@@ -67,9 +68,15 @@ public class PEORepairCaculation {
 		
 		// Create complement finder:
 		if (isPotentialRepair()) {
-			complementFinder = complementFinderEngine.createComplementFinder(
-					editRule, impact, positiveImpactScope, overwriteImpactScope, 
-					negativeImpactScope, settings.getComplementFinderSettings());
+			RecognitionSettings recognitionSettings = settings.getComplementFinderSettings().getRecognitionEngineSettings();
+			recognitionSettings.setEditRule(editRule);
+			recognitionSettings.setRevision(revision);
+			recognitionSettings.setImpact(impact);
+			recognitionSettings.setScopeModelA(negativeImpactScope);
+			recognitionSettings.setScopeModelB(positiveImpactScope);
+			recognitionSettings.setOverwriteScope(overwriteImpactScope);
+			
+			complementFinder = complementFinderEngine.createComplementFinder(settings.getComplementFinderSettings());
 		}
 	}
 	

@@ -1,4 +1,4 @@
-package org.sidiff.revision.editrules.recognition;
+package org.sidiff.revision.editrules.recognition.solver;
 
 import java.util.Collection;
 import java.util.Iterator;

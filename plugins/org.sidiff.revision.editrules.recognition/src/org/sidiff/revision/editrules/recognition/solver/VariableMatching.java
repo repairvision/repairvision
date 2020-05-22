@@ -9,7 +9,6 @@ import java.util.NoSuchElementException;
 import org.eclipse.emf.ecore.EObject;
 import org.sidiff.common.utilities.java.StringPrinter;
 import org.sidiff.graphpattern.NodePattern;
-import org.sidiff.revision.editrules.recognition.IMatching;
 
 public class VariableMatching implements IMatching {
 

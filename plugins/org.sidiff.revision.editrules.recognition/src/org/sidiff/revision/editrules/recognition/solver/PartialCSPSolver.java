@@ -18,7 +18,6 @@ import org.sidiff.common.utilities.java.JUtil;
 import org.sidiff.graphpattern.DependencyNode;
 import org.sidiff.graphpattern.NodePattern;
 import org.sidiff.revision.difference.DifferencePackage;
-import org.sidiff.revision.editrules.recognition.IMatching;
 import org.sidiff.revision.editrules.recognition.configuration.RecognitionLogger;
 import org.sidiff.revision.editrules.recognition.dependencies.DependencyEvaluation;
 import org.sidiff.revision.editrules.recognition.impact.ImpactScopeConstraint;

@@ -3,21 +3,21 @@ Bundle-ManifestVersion: 2
 Bundle-Name: Partial Edit-Rule Recognition
 Bundle-SymbolicName: org.sidiff.revision.editrules.recognition;singleton:=true
 Bundle-Version: 0.0.1.qualifier
-Bundle-Activator: org.sidiff.revision.editrules.recognition.Activator
 Export-Package: org.sidiff.revision.editrules.recognition,
  org.sidiff.revision.editrules.recognition.configuration,
  org.sidiff.revision.editrules.recognition.impact,
+ org.sidiff.revision.editrules.recognition.impl,
  org.sidiff.revision.editrules.recognition.match,
  org.sidiff.revision.editrules.recognition.pattern.domain,
  org.sidiff.revision.editrules.recognition.pattern.graph,
  org.sidiff.revision.editrules.recognition.revision
 Require-Bundle: org.eclipse.emf.transaction,
  org.sidiff.common.utilities,
- org.sidiff.revision.difference,
  org.sidiff.graphpattern,
  org.sidiff.history.revision,
- org.sidiff.validation.constraint.impact;visibility:=reexport,
- org.sidiff.revision.common.logging
+ org.sidiff.revision.common.logging,
+ org.sidiff.revision.difference,
+ org.sidiff.validation.constraint.impact;visibility:=reexport
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Automatic-Module-Name: org.sidiff.editrule.recognition
 Bundle-ActivationPolicy: lazy

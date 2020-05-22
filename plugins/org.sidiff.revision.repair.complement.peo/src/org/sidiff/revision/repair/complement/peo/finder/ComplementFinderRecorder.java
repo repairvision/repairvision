@@ -1,13 +1,14 @@
 package org.sidiff.revision.repair.complement.peo.finder;
 
-import org.sidiff.revision.editrules.recognition.RecognitionEngineRecorder;
+import org.sidiff.revision.editrules.recognition.impl.RecognitionEngine;
+import org.sidiff.revision.editrules.recognition.impl.RecognitionEngineRecorder;
 
 public class ComplementFinderRecorder extends RecognitionEngineRecorder {
 	
 	private ComplementFinder complementFinder;
 	
 	public ComplementFinderRecorder(ComplementFinder complementFinder) {
-		super(complementFinder.recognitionMatcher);
+		super((RecognitionEngine) complementFinder.recognitionMatcher);
 		this.complementFinder = complementFinder;
 	}
 	

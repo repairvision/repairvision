@@ -5,42 +5,27 @@ import java.util.List;
 
 import org.eclipse.emf.henshin.model.Rule;
 import org.sidiff.revision.common.logging.util.LogTime;
-import org.sidiff.revision.editrules.recognition.RecognitionEngine;
-import org.sidiff.revision.editrules.recognition.RecognitionEngineMatcher;
-import org.sidiff.revision.editrules.recognition.impact.ImpactScope;
+import org.sidiff.revision.editrules.recognition.IRecognitionEngineProvider;
+import org.sidiff.revision.editrules.recognition.IRecognitionEngine;
 import org.sidiff.revision.editrules.recognition.match.RecognitionMatching;
 import org.sidiff.revision.repair.complement.construction.ComplementRule;
 import org.sidiff.revision.repair.complement.peo.configuration.ComplementFinderSettings;
-import org.sidiff.validation.constraint.impact.ImpactAnalyzes;
 
 public class ComplementFinder {
 	
 	protected ComplementFinderEngine engine;
 	
-	protected Rule editRule;
-	
 	protected ComplementFinderSettings settings;
 	
-	protected RecognitionEngineMatcher recognitionMatcher;
+	protected IRecognitionEngine recognitionMatcher;
 	
-	public ComplementFinder(ComplementFinderEngine engine, Rule editRule, ImpactAnalyzes impact,
-			ImpactScope resolvingScope, ImpactScope overwriteScope, ImpactScope introducingScope,
-			ComplementFinderSettings settings) {
-		
+	public ComplementFinder(ComplementFinderEngine engine, ComplementFinderSettings settings) {
 		this.engine = engine;
-		this.editRule = editRule;
 		this.settings = settings;
 		
 		// Create recognition rule:
-		RecognitionEngine recognitionEngine = engine.getRecognitionEngine();
-		
-		this.recognitionMatcher = recognitionEngine.createMatcher(
-				editRule,
-				impact,
-				resolvingScope, 
-				overwriteScope, 
-				introducingScope,
-				settings.getRecognitionEngineSettings());
+		IRecognitionEngineProvider recognitionEngineProvider = engine.getRecognitionEngine();
+		this.recognitionMatcher = recognitionEngineProvider.createMatcher(settings.getRecognitionEngineSettings());
 	}
 
 	/**
@@ -65,6 +50,7 @@ public class ComplementFinder {
 		//// Complement Construction ////
 
 		List<ComplementRule> complements = new ArrayList<>(); 
+		Rule editRule = settings.getRecognitionEngineSettings().getEditRule();
 
 		// Find partially executed edit-operations:
 		for (RecognitionMatching recognitionMatch : recognitionMatchings) {

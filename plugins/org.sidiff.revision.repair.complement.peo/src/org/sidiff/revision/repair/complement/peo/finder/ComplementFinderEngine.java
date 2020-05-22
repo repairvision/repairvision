@@ -17,12 +17,12 @@ import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.GraphElement;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Parameter;
-import org.eclipse.emf.henshin.model.Rule;
 import org.sidiff.common.utilities.henshin.HenshinRuleAnalysisUtil;
 import org.sidiff.history.revision.IRevision;
 import org.sidiff.revision.common.logging.util.LogTime;
-import org.sidiff.revision.editrules.recognition.RecognitionEngine;
+import org.sidiff.revision.editrules.recognition.IRecognitionEngineProvider;
 import org.sidiff.revision.editrules.recognition.impact.ImpactScope;
+import org.sidiff.revision.editrules.recognition.impl.RecognitionEngineProvider;
 import org.sidiff.revision.editrules.recognition.match.RecognitionAttributeMatch;
 import org.sidiff.revision.editrules.recognition.match.RecognitionEdgeMatch;
 import org.sidiff.revision.editrules.recognition.match.RecognitionMatch;
@@ -49,56 +49,40 @@ public class ComplementFinderEngine {
 	/**
 	 * Derives the (Henshin) complement rule based on a CPEO.
 	 */
-	protected ComplementConstructor complementConstructor;
+	private ComplementConstructor complementConstructor;
 	
 	/**
 	 * The (Henshin) engine which applies the rules.
 	 */
-	protected EngineImpl engine;
+	private EngineImpl engine;
 	
 	/**
 	 * Optimize Henshin CSP search plan by custom sorting of nodes to be matched:
 	 */
-	protected boolean useCustomHenshinNodeSorting = true;
-	
-	/**
-	 * The revision which introduces an inconsistency.
-	 */
-	protected IRevision revision;
+	private boolean useCustomHenshinNodeSorting = true;
 	
 	/**
 	 * Inconsistency impact analysis.
 	 */
-	protected ImpactAnalyzes impact;
+	private ImpactAnalyzes impact;
 
 	/**
 	 * The working graph, i.e. the actual version of the model.
 	 */
-	protected EGraph graphModelB;
+	private EGraph graphModelB;
 	
 	/**
 	 * Partial edit-rule recognition matcher.
 	 */
-	protected RecognitionEngine partialEditRuleRecognizer;
+	private IRecognitionEngineProvider recognitionEngineProvider;
 
-	/**
-	 * @param modelAResource
-	 *            The historic model.
-	 * @param modelBResource
-	 *            The actual model.
-	 * @param difference
-	 *            The difference between model A and B.
-	 */
-	public ComplementFinderEngine(IRevision revision, ImpactAnalyzes impact, EGraph graphModelB) {
-		this.revision = revision;
+	public ComplementFinderEngine(ImpactAnalyzes impact, EGraph graphModelB) {
 		this.impact = impact;
 		this.graphModelB = graphModelB;
 	}
 	
 	public void start() {
-		this.partialEditRuleRecognizer = new RecognitionEngine();
-		this.partialEditRuleRecognizer.initialize(revision);
-		
+		this.recognitionEngineProvider = new RecognitionEngineProvider();
 		this.complementConstructor = new ComplementConstructor();
 		this.engine = new ComplementEngine(!useCustomHenshinNodeSorting);
 	}
@@ -108,14 +92,12 @@ public class ComplementFinderEngine {
 		this.engine.shutdown();
 	}
 	
-	public RecognitionEngine getRecognitionEngine() {
-		return partialEditRuleRecognizer;
+	public IRecognitionEngineProvider getRecognitionEngine() {
+		return recognitionEngineProvider;
 	}
 	
-	public ComplementFinder createComplementFinder(Rule editRule, ImpactAnalyzes impact, ImpactScope resolvingScope,
-			ImpactScope overwriteScope, ImpactScope introducingScope, ComplementFinderSettings settings) {
-
-		return new ComplementFinder(this, editRule, impact, resolvingScope, overwriteScope, introducingScope, settings);
+	public ComplementFinder createComplementFinder(ComplementFinderSettings settings) {
+		return new ComplementFinder(this,  settings);
 	}
 	
 	public List<Match> findComplementMatches(ComplementRule complementRule) {
