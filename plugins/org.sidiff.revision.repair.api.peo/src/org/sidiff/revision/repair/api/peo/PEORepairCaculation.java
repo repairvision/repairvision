@@ -47,7 +47,7 @@ public class PEORepairCaculation {
 		this.complementFinderEngine = complementFinderEngine;
 		
 		// Validate difference:
-		if (settings.isValidateDifferenceChanges()) {
+		if (settings.isValidateDifference()) {
 			for (Change change : revision.getDifference().getSymmetricDifference().getChanges()) {
 				if (!SymmetricDifferenceUtil.isResolvableChange(change)) {
 					settings.getLogger().logChangeValidation(change, "Unresolvable change: " + change);

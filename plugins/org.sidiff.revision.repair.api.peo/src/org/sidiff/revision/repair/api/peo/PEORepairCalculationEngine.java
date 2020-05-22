@@ -43,7 +43,7 @@ public class PEORepairCalculationEngine {
 			settings.getLogger().logChangeCount(revision.getDifference().getChanges().size());
 		}
 
-		if (settings.saveDifference()) {
+		if (settings.isSaveDifference()) {
 			try {
 				revision.getDifference().getSymmetricDifference().eResource().save(Collections.EMPTY_MAP);
 			} catch (IOException e) {

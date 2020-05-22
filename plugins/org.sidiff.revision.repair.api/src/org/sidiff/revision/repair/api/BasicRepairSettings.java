@@ -13,7 +13,7 @@ public class BasicRepairSettings implements IRepairSettings {
 	private boolean validateDifference = false;
 
 	@Override
-	public boolean saveDifference() {
+	public boolean isSaveDifference() {
 		return saveDifference;
 	}
 
@@ -23,7 +23,7 @@ public class BasicRepairSettings implements IRepairSettings {
 	}
 
 	@Override
-	public boolean validateDifference() {
+	public boolean isValidateDifference() {
 		return validateDifference;
 	}
 

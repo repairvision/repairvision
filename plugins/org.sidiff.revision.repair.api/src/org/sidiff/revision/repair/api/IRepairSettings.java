@@ -7,11 +7,11 @@ package org.sidiff.revision.repair.api;
  */
 public interface IRepairSettings {
 
-	boolean saveDifference();
+	boolean isSaveDifference();
 	
 	void setSaveDifference(boolean saveDifference);
 	
-	boolean validateDifference();
+	boolean isValidateDifference();
 	
 	void setValidateDifference(boolean validateDifference);
 	

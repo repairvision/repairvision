@@ -32,11 +32,6 @@ public class PEORepairSettings extends BasicRepairSettings {
 	private DifferenceSettings differenceSettings;
 	
 	/**
-	 * Check for broken changes e.g. null-references or unresolvable proxies.
-	 */
-	private boolean validateDifferenceChanges = false;
-	
-	/**
 	 * The consistency rules for the model validation.
 	 */
 	private List<IConstraint> consistencyRules;
@@ -80,14 +75,6 @@ public class PEORepairSettings extends BasicRepairSettings {
 
 	public void setDifferenceSettings(DifferenceSettings differenceSettings) {
 		this.differenceSettings = differenceSettings;
-	}
-	
-	public boolean isValidateDifferenceChanges() {
-		return validateDifferenceChanges;
-	}
-
-	public void setValidateDifferenceChanges(boolean validateDifferenceChanges) {
-		this.validateDifferenceChanges = validateDifferenceChanges;
 	}
 	
 	public List<IConstraint> getConsistencyRules() {
