@@ -104,10 +104,11 @@ public abstract class EclipseResourceRepairApplication<J extends RepairJob<?>, F
 	}
 
 	protected void populateSettings() {
-		if (getModelA() != null) {
-			RepairPreferencePage.populateSettings(getModelA());
-		} else if (getModelB() != null) {
+		if (getModelB() != null) {
+			// NOTE: Model A can be the 'empty model'
 			RepairPreferencePage.populateSettings(getModelB());
+		} else if (getModelA() != null) {
+			RepairPreferencePage.populateSettings(getModelA());
 		}
 	}
 	
