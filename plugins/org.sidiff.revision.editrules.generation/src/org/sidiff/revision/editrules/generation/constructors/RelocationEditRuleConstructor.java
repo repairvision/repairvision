@@ -21,7 +21,8 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
-import org.sidiff.common.utilities.emf.EMFMetaAccess;
+import org.sidiff.common.utilities.emf.DocumentType;
+import org.sidiff.common.utilities.emf.MetaModelUtil;
 import org.sidiff.graphpattern.AttributePattern;
 import org.sidiff.graphpattern.Bundle;
 import org.sidiff.graphpattern.EdgePattern;
@@ -375,8 +376,8 @@ public class RelocationEditRuleConstructor implements IEditRuleConstructor {
 
 		if (potentialMatches != null) {
 			for (EdgePattern potentialMatch : potentialMatches) {
-				boolean sourceMatch = EMFMetaAccess.isAssignableTo(source, potentialMatch.getSource().getType());
-				boolean targetMatch = EMFMetaAccess.isAssignableTo(target, potentialMatch.getTarget().getType());
+				boolean sourceMatch = MetaModelUtil.isAssignableTo(source, potentialMatch.getSource().getType());
+				boolean targetMatch = MetaModelUtil.isAssignableTo(target, potentialMatch.getTarget().getType());
 
 				if (sourceMatch && targetMatch) {
 					return true;
@@ -431,7 +432,7 @@ public class RelocationEditRuleConstructor implements IEditRuleConstructor {
 					EClass eClass = (EClass) eClassifier;
 
 					for (EReference eReference : eClass.getEReferences()) {
-						if (!EMFMetaAccess.isUnconsideredStructualFeature(eReference)) {
+						if (!DocumentType.isUnconsideredStructualFeature(eReference)) {
 
 							// Create new relocation edge pattern:
 							GraphPattern relocationEdge = GraphpatternFactory.eINSTANCE.createGraphPattern();

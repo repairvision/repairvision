@@ -8,6 +8,7 @@ import java.util.Set;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
 import org.eclipse.emf.ecore.resource.Resource;
 
@@ -141,5 +142,18 @@ public class DocumentType {
 	 */
 	public static Set<String> getAvailableDocumentTypes() {
 		return Collections.unmodifiableSet(EcorePlugin.getEPackageNsURIToGenModelLocationMap(false).keySet());
+	}
+
+	/**
+	 * Matches attributes which are not changeable, derived or transient.
+	 * 
+	 * @param structualFeatureType The attribute to test.
+	 * @return <code>true</code> if the not changeable, derived or transient;
+	 *         <code>false</code> otherwise;
+	 */
+	public static boolean isUnconsideredStructualFeature(EStructuralFeature structualFeatureType) {
+		return ((structualFeatureType.isChangeable() == false)
+				|| (structualFeatureType.isDerived() == true)
+				|| (structualFeatureType.isTransient() == true));
 	}
 }

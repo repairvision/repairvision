@@ -27,6 +27,19 @@ public class MetaModelUtil {
 	public static boolean isAssignableTo(EClass a, EClass b) {
 		return a.equals(b) || b.equals(EcorePackage.eINSTANCE.getEObject()) || a.getEAllSuperTypes().contains(b);
 	}
+	
+	/**
+	 * Is class A assignable to class B or vice versa.
+	 * 
+	 * @param a
+	 *            Class A
+	 * @param b
+	 *            Class B
+	 * @return <code>true</code> if A is assignable to B or B is assignable to A; <code>false</code> otherwise.
+	 */
+	public static boolean assignable(EClass a, EClass b) {
+		return isAssignableTo(a, b) || isAssignableTo(b, a);
+	}
 
 	/**
 	 * @param packages All packages to be searched.

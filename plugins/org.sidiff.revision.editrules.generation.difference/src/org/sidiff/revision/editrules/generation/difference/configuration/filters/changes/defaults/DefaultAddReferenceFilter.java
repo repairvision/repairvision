@@ -4,7 +4,7 @@ import static org.sidiff.common.utilities.java.JUtil.notNull;
 
 import java.util.logging.Level;
 
-import org.sidiff.common.utilities.emf.EMFMetaAccess;
+import org.sidiff.common.utilities.emf.DocumentType;
 import org.sidiff.revision.difference.AddReference;
 import org.sidiff.revision.editrules.generation.difference.Activator;
 import org.sidiff.revision.editrules.generation.difference.configuration.filters.DefaultFilter;
@@ -20,7 +20,7 @@ public class DefaultAddReferenceFilter extends DefaultFilter implements IAddRefe
 	@Override
 	public boolean filter(AddReference change) {
 		if (notNull(change.getSrc(), change.getTgt(), change.getType())) {
-			if (!EMFMetaAccess.isUnconsideredStructualFeature(change.getType())) {
+			if (!DocumentType.isUnconsideredStructualFeature(change.getType())) {
 				if (!getFilters().getReferenceFilter().filter(change.getSrc(), change.getType(), change.getTgt())) {
 					return false;
 				}

@@ -2,7 +2,8 @@ package org.sidiff.revision.editrules.generation.difference.configuration.filter
 
 import java.util.logging.Level;
 import static org.sidiff.common.utilities.java.JUtil.notNull;
-import org.sidiff.common.utilities.emf.EMFMetaAccess;
+
+import org.sidiff.common.utilities.emf.DocumentType;
 import org.sidiff.revision.difference.RemoveReference;
 import org.sidiff.revision.editrules.generation.difference.Activator;
 import org.sidiff.revision.editrules.generation.difference.configuration.filters.DefaultFilter;
@@ -18,7 +19,7 @@ public class DefaultRemoveReferenceFilter extends DefaultFilter implements IRemo
 	@Override
 	public boolean filter(RemoveReference change) {
 		if (notNull(change.getSrc(), change.getTgt(), change.getType())) {
-			if (!EMFMetaAccess.isUnconsideredStructualFeature(change.getType())) {
+			if (!DocumentType.isUnconsideredStructualFeature(change.getType())) {
 				if (!getFilters().getReferenceFilter().filter(change.getSrc(), change.getType(), change.getTgt())) {
 					return false;
 				}

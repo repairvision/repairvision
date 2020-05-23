@@ -6,7 +6,7 @@ import java.util.logging.Level;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
-import org.sidiff.common.utilities.emf.EMFMetaAccess;
+import org.sidiff.common.utilities.emf.DocumentType;
 import org.sidiff.revision.editrules.generation.difference.Activator;
 import org.sidiff.revision.editrules.generation.difference.configuration.filters.DefaultFilter;
 import org.sidiff.revision.editrules.generation.difference.configuration.filters.FilterConfiguration;
@@ -24,7 +24,7 @@ public class DefaultAddAttributeFilter extends DefaultFilter implements IAddAttr
 		if (notNull(obj, type)) {
 			Object value = obj.eGet(type);
 			
-			if (!EMFMetaAccess.isUnconsideredStructualFeature(type)) {
+			if (!DocumentType.isUnconsideredStructualFeature(type)) {
 				if (!DifferenceToEditRuleUtil.isDefaultValue(type, value)) {
 					if (!getFilters().getAttributeFilter().filter(obj, value, type)) {
 						return false;
