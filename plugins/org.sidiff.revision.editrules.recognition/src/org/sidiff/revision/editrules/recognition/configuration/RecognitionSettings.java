@@ -1,6 +1,11 @@
 package org.sidiff.revision.editrules.recognition.configuration;
 
+import java.util.List;
+
+import org.eclipse.emf.henshin.model.Attribute;
+import org.eclipse.emf.henshin.model.GraphElement;
 import org.eclipse.emf.henshin.model.Rule;
+import org.sidiff.common.utilities.henshin.HenshinChangesUtil;
 import org.sidiff.history.revision.IRevision;
 import org.sidiff.revision.editrules.recognition.impact.ImpactScope;
 import org.sidiff.validation.constraint.impact.ImpactAnalyzes;
@@ -15,13 +20,19 @@ public class RecognitionSettings {
 	
 	private Rule editRule;
 	
-	private ImpactAnalyzes impact;
+	private ImpactAnalyzes impactAnalyzes;
 	
-	private ImpactScope scopeModelA;
+	// Indexed scopes:
 	
-	private ImpactScope scopeModelB;
+	protected ImpactScope scopeModelA;
 	
-	private ImpactScope overwriteScope;
+	protected ImpactScope scopeModelB;
+	
+	protected ImpactScope overwriteScope;
+
+	public boolean hasPotentialImpact() {
+		return !scopeModelA.isEmpty() && !scopeModelB.isEmpty();
+	}
 
 	/**
 	 * @return The recognition engine logging monitor.
@@ -69,36 +80,37 @@ public class RecognitionSettings {
 		this.editRule = editRule;
 	}
 
-	public ImpactAnalyzes getImpact() {
-		return impact;
+	public ImpactAnalyzes getImpactAnalyzes() {
+		return impactAnalyzes;
 	}
 
-	public void setImpact(ImpactAnalyzes impact) {
-		this.impact = impact;
+	public void setImpactAnalyzes(ImpactAnalyzes impact) {
+		this.impactAnalyzes = impact;
+		
+		if (editRule == null) {
+			throw new RuntimeException("Edit rule needs to be set prior to the impact analyzes!");
+		}
+		
+		// TODO: Implement RuleInfo:
+		List<GraphElement> changes = HenshinChangesUtil.getPotentialChanges(editRule);
+		List<Attribute> settingAttributes = HenshinChangesUtil.getSettingAttributes(editRule);
+	
+		// Filter edit-rules by impact (sub-rule -> negative, complement-rule -> positive):
+		this.scopeModelA = new ImpactScope(changes, impact.getCurrentImpactAnalysis());
+		this.scopeModelB = new ImpactScope(changes, impact.getHistoricalImpactAnalysis());
+		this.overwriteScope = new ImpactScope(settingAttributes, impact.getCurrentImpactAnalysis());
 	}
 
 	public ImpactScope getScopeModelB() {
 		return scopeModelB;
 	}
 
-	public void setScopeModelB(ImpactScope resolvingScope) {
-		this.scopeModelB = resolvingScope;
-	}
-
 	public ImpactScope getOverwriteScope() {
 		return overwriteScope;
 	}
 
-	public void setOverwriteScope(ImpactScope overwriteScope) {
-		this.overwriteScope = overwriteScope;
-	}
-
 	public ImpactScope getScopeModelA() {
 		return scopeModelA;
-	}
-
-	public void setScopeModelA(ImpactScope introducingScope) {
-		this.scopeModelA = introducingScope;
 	}
 	
 }

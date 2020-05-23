@@ -19,6 +19,7 @@ import org.sidiff.graphpattern.profile.henshin_extension.RuleExtension;
 import org.sidiff.history.revision.IRevision;
 import org.sidiff.history.revision.impl.Revision;
 import org.sidiff.revision.difference.api.settings.DifferenceSettings;
+import org.sidiff.revision.editrules.recognition.configuration.RecognitionSettings;
 import org.sidiff.revision.repair.complement.peo.finder.ComplementFinderEngine;
 import org.sidiff.revision.repair.ui.config.RepairPreferencePage;
 import org.sidiff.revision.ui.editors.integration.access.ActiveModelEditorAccess;
@@ -122,12 +123,13 @@ public class ModelCompletionProposalGenerator {
 		
 		for (Rule editRule : getEditRules()) {
 			ModelCompletionProposalCaculation proposalCaculation = new ModelCompletionProposalCaculation(editRule, revision, impactAnalyzes, complementFinderEngine);
+			RecognitionSettings recognitionSettings = proposalCaculation.getComplementFinderSettings().getRecognitionEngineSettings();
 			
 //			if (editRule.getName().contains("Create: TransitionWithCallEventTriggerAndOperationInClass")) {
 //				System.out.println("ModelCompletionProposalGenerator.calculateProposals()");
 //			}
 			
-			if (proposalCaculation.isPotentialProposal()) {
+			if (recognitionSettings.hasPotentialImpact()) {
 				List<ModelCompletionProposal> proposalsForEditRule = proposalCaculation.findProposals();
 				
 				// TODO: Make this configurable: Plain proposals

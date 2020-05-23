@@ -18,7 +18,6 @@ import org.eclipse.emf.henshin.model.GraphElement;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Parameter;
 import org.sidiff.common.utilities.henshin.HenshinRuleAnalysisUtil;
-import org.sidiff.history.revision.IRevision;
 import org.sidiff.revision.common.logging.util.LogTime;
 import org.sidiff.revision.editrules.recognition.IRecognitionEngineProvider;
 import org.sidiff.revision.editrules.recognition.impact.ImpactScope;
@@ -97,7 +96,7 @@ public class ComplementFinderEngine {
 	}
 	
 	public ComplementFinder createComplementFinder(ComplementFinderSettings settings) {
-		return new ComplementFinder(this,  settings);
+		return new ComplementFinder(this, settings);
 	}
 	
 	public List<Match> findComplementMatches(ComplementRule complementRule) {

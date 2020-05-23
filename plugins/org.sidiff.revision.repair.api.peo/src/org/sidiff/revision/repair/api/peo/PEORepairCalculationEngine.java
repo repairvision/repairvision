@@ -13,6 +13,7 @@ import org.eclipse.emf.henshin.model.Rule;
 import org.sidiff.history.revision.IRevision;
 import org.sidiff.history.revision.impl.Revision;
 import org.sidiff.revision.common.logging.util.LogTime;
+import org.sidiff.revision.editrules.recognition.configuration.RecognitionSettings;
 import org.sidiff.revision.repair.api.IRepairPlan;
 import org.sidiff.revision.repair.api.peo.configuration.PEORepairSettings;
 import org.sidiff.revision.repair.complement.peo.finder.ComplementFinderEngine;
@@ -98,8 +99,9 @@ public class PEORepairCalculationEngine {
 			// BREAKPOINT CONDITION: editRule.getName().contains("The name of the edit rule")
 			
 			PEORepairCaculation repairCaculation = createRepairCalculation(editRule, impact, revision, complementFinderEngine);
+			RecognitionSettings recognitionSettings = repairCaculation.getComplementFinderSettings().getRecognitionEngineSettings();
 			
-			if (repairCaculation.isPotentialRepair()) {
+			if (recognitionSettings.hasPotentialImpact()) {
 				List<IRepairPlan> repairsForEditRule = repairCaculation.findRepairs(complementMatchingTimer);
 				repairs.addAll(repairsForEditRule);
 				
