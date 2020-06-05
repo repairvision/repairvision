@@ -11,7 +11,7 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.sidiff.common.utilities.emf.EMFStorage;
 import org.sidiff.generic.matcher.uuid.UUIDResource;
 import org.sidiff.history.analysis.validation.IValidator;
-import org.sidiff.history.repository.IModelRepository;
+import org.sidiff.history.repository.IModelHistory;
 import org.sidiff.history.repository.IModelVersion;
 import org.sidiff.historymodel.History;
 import org.sidiff.historymodel.HistoryModelFactory;
@@ -26,7 +26,7 @@ import org.sidiff.revision.difference.api.settings.DifferenceSettings;
 public class HistoryModelGenerator {
 	
 	public static History generateHistory(String historyName, 
-			IModelRepository repository, Iterator<IModelVersion> revisions, 
+			IModelHistory modelHistory, Iterator<IModelVersion> revisions, 
 			IValidator validator, DifferenceSettings settings) {
 		
 		History history = HistoryModelFactory.eINSTANCE.createHistory();
@@ -39,7 +39,7 @@ public class HistoryModelGenerator {
 			IModelVersion revision = revisions.next();
 			
 			ResourceSet rss = new ResourceSetImpl();
-			Resource resource = repository.loadModelVersion(rss, revision);
+			Resource resource = modelHistory.loadModelVersion(rss, revision);
 			
 			Version version = generateVersion(revision.getVersion(), resource, validator);
 			
@@ -67,9 +67,9 @@ public class HistoryModelGenerator {
 		return history;
 	}
 	
-	public static Version appendVersion(History history, IModelRepository repository, IModelVersion modelVersion, IValidator validator) {
+	public static Version appendVersion(History history, IModelHistory modelHistory, IModelVersion modelVersion, IValidator validator) {
 		
-		Resource model = repository.loadModelVersion(new ResourceSetImpl(), modelVersion);
+		Resource model = modelHistory.loadModelVersion(new ResourceSetImpl(), modelVersion);
 		Version historyVersion = HistoryModelGenerator.generateVersion(
 				modelVersion.getVersion(), model, validator);
 		history.getVersions().add(historyVersion);

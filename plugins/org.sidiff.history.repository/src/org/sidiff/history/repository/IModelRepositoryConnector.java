@@ -14,8 +14,8 @@ public interface IModelRepositoryConnector {
 	
 	/**
 	 * @param resource
-	 *            A model resource.
-	 * @return The associated repository version.
+	 *            A model resource under version control.
+	 * @return The associated version in the repository.
 	 */
 	IModelVersion getModelVersion(URI resource);
 }

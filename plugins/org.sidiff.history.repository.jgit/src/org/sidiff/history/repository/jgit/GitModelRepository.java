@@ -1,14 +1,14 @@
-package org.sidiff.history.repository.svnkit;
+package org.sidiff.history.repository.jgit;
 
 import org.sidiff.history.repository.IModelHistory;
 import org.sidiff.history.repository.IModelRepository;
 import org.sidiff.history.repository.IModelVersion;
 
-public class SVNModelRepository implements IModelRepository {
+public class GitModelRepository implements IModelRepository {
 
 	@Override
 	public IModelHistory getModelVersions(IModelVersion modelVersion) {
-		return new SVNModelHistory((SVNModelVersion) modelVersion);
+		return new GitModelHistory((GitModelVersion) modelVersion);
 	}
-	
+
 }

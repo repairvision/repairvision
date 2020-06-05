@@ -16,6 +16,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.sidiff.common.utilities.emf.EMFStorage;
 import org.sidiff.common.utilities.ui.util.WorkbenchUtil;
 import org.sidiff.history.analysis.validation.IValidator;
+import org.sidiff.history.repository.IModelHistory;
 import org.sidiff.history.repository.IModelRepository;
 import org.sidiff.history.repository.IModelRepositoryConnector;
 import org.sidiff.history.repository.IModelVersion;
@@ -70,30 +71,34 @@ public class HistoryModelDatabase {
 			
 			// Append new versions from repository:
 			if ((inconsistentHistoryVersion == null) && WorkbenchUtil.askQuestion("Update history log?")) {
-				Iterator<IModelVersion> revisions = repository.getModelVersions(inconsistentModelVersion);
-				int latestHistoryVersionIndex = history.getVersions().size() - 1;
-				Version latestHistoryVersion = history.getVersions().get(latestHistoryVersionIndex);
-
-				// Read new version:
-				List<IModelVersion> newVersions = new ArrayList<>();
-
-				while (revisions.hasNext()) {
-					IModelVersion revision = revisions.next();
-
-					if (!latestHistoryVersion.getRepositoryVersion().equals(revision.getVersion())) {
-						newVersions.add(revision);
+				try (IModelHistory modelHistory = repository.getModelVersions(inconsistentModelVersion)) {
+					Iterator<IModelVersion> revisions = modelHistory.iterator();
+					int latestHistoryVersionIndex = history.getVersions().size() - 1;
+					Version latestHistoryVersion = history.getVersions().get(latestHistoryVersionIndex);
+					
+					// Read new version:
+					List<IModelVersion> newVersions = new ArrayList<>();
+					
+					while (revisions.hasNext()) {
+						IModelVersion revision = revisions.next();
+						
+						if (!latestHistoryVersion.getRepositoryVersion().equals(revision.getVersion())) {
+							newVersions.add(revision);
+						}
 					}
-				}
-
-				// Append new version:
-				Collections.reverse(newVersions);
-
-				for (IModelVersion newVersion : newVersions) {
-					HistoryModelGenerator.appendVersion(history, repository, newVersion, validator);
-				}
-
-				try {
-					history.eResource().save(Collections.EMPTY_MAP);
+					
+					// Append new version:
+					Collections.reverse(newVersions);
+					
+					for (IModelVersion newVersion : newVersions) {
+						HistoryModelGenerator.appendVersion(history, modelHistory, newVersion, validator);
+					}
+					
+					try {
+						history.eResource().save(Collections.EMPTY_MAP);
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
@@ -104,20 +109,24 @@ public class HistoryModelDatabase {
 		else {
 			
 			// Check out revisions:
-			Iterator<IModelVersion> revisions = repository.getModelVersions(inconsistentModelVersion);
-			
-			// Search inconsistency traces:
-			history = HistoryModelGenerator.generateHistory(
-					inconsistentModel.getURI().toString(), 
-					repository, revisions, 
-					validator, settings);
-			
-			try {
-				ResourceSet rss = new ResourceSetImpl();
-				Resource historyResource = rss.createResource(inconsistentModel.getURI().appendFileExtension("history"));
-				historyResource.getContents().add(history);
-				
-				historyResource.save(Collections.emptyMap());
+			try (IModelHistory modelHistory = repository.getModelVersions(inconsistentModelVersion)) {
+				Iterator<IModelVersion> revisions = modelHistory.iterator();
+
+				// Search inconsistency traces:
+				history = HistoryModelGenerator.generateHistory(
+						inconsistentModel.getURI().toString(), 
+						modelHistory, revisions, 
+						validator, settings);
+
+				try {
+					ResourceSet rss = new ResourceSetImpl();
+					Resource historyResource = rss.createResource(inconsistentModel.getURI().appendFileExtension("history"));
+					historyResource.getContents().add(history);
+
+					historyResource.save(Collections.emptyMap());
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 			} catch (IOException e) {
 				e.printStackTrace();
 			}

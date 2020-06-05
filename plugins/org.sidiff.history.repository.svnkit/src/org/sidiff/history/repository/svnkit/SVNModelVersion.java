@@ -2,6 +2,7 @@ package org.sidiff.history.repository.svnkit;
 
 import org.eclipse.emf.common.util.URI;
 import org.sidiff.history.repository.IModelVersion;
+import org.sidiff.history.repository.util.ModelRepositoryUtil;
 import org.tmatesoft.svn.core.SVNURL;
 import org.tmatesoft.svn.core.wc.SVNInfo;
 import org.tmatesoft.svn.core.wc.SVNRevision;
@@ -58,9 +59,6 @@ public class SVNModelVersion implements IModelVersion {
 	}
 	
 	public void setWorkspaceLocation(URI workingCopy, long revision) {
-		this.workspaceLocation = workingCopy.trimSegments(1)
-				.appendSegment(workingCopy.lastSegment() + ".history.versions")
-				.appendSegment("" + revision)
-				.appendSegment(workingCopy.lastSegment());
+		this.workspaceLocation = ModelRepositoryUtil.generateWorkspaceLocation(workingCopy, revision + "");
 	}
 }

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.sidiff.history.repository.connector">
+      <repository
+            connector="org.sidiff.history.repository.jgit.GitModelRepositoryConnector"
+            repository="org.sidiff.history.repository.jgit.GitModelRepository">
+      </repository>
+   </extension>
+
+</plugin>

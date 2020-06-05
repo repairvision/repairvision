@@ -15,4 +15,11 @@ public class ModelRepositoryUtil {
 	public static File getModelFile(URI model) {
 		return EMFStorage.uriToFile(model);
 	}
+	
+	public static URI generateWorkspaceLocation(URI workingCopy, String revision) {
+		return workingCopy.trimSegments(1)
+				.appendSegment(workingCopy.lastSegment() + ".history.versions")
+				.appendSegment("" + revision)
+				.appendSegment(workingCopy.lastSegment());
+	}
 }

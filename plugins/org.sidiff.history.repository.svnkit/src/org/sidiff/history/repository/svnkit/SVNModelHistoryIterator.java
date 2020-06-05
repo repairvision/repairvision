@@ -1,23 +1,25 @@
 package org.sidiff.history.repository.svnkit;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Iterator;
 
 import org.sidiff.history.repository.IModelVersion;
 import org.tmatesoft.svn.core.SVNLogEntry;
 import org.tmatesoft.svn.core.SVNURL;
-import org.tmatesoft.svn.core.io.SVNRepository;
-import org.tmatesoft.svn.core.io.SVNRepositoryFactory;
+import org.tmatesoft.svn.core.wc.SVNRevision;
+import org.tmatesoft.svn.core.wc2.SvnLog;
+import org.tmatesoft.svn.core.wc2.SvnOperationFactory;
+import org.tmatesoft.svn.core.wc2.SvnRevisionRange;
+import org.tmatesoft.svn.core.wc2.SvnTarget;
 
-public class SVNHistoryIterator implements Iterator<IModelVersion> {
+public class SVNModelHistoryIterator implements Iterator<IModelVersion> {
 
 	private SVNModelVersion latestModelVersion;
 	
 	private Iterator<?> logs;
 	
-	private boolean changePath = false;
-	
-	public SVNHistoryIterator(SVNModelVersion latestModelVersion) {
+	public SVNModelHistoryIterator(SVNModelVersion latestModelVersion) {
 		this.latestModelVersion = latestModelVersion;
 	}
 
@@ -26,10 +28,12 @@ public class SVNHistoryIterator implements Iterator<IModelVersion> {
 			try {
 				SVNURL location = latestModelVersion.getSVNRepositoryLocation();
 				
-				SVNRepository repository = SVNRepositoryFactory.create(location);
-				Collection<?> logEntries = repository.log(new String[] { location.getPath() }, 
-						(Collection<?>) null, latestModelVersion.getSVNVersion().getNumber(), 0, changePath, false);
+				SvnLog logOperation = new SvnOperationFactory().createLog();
+				logOperation.setSingleTarget(SvnTarget.fromURL(location));
+				logOperation.setRevisionRanges(
+						Collections.singleton(SvnRevisionRange.create(SVNRevision.create(1), SVNRevision.HEAD)));
 				
+				Collection<?> logEntries = logOperation.run(null);
 				logs = logEntries.iterator();
 			} catch (Exception e) {
 				e.printStackTrace();
