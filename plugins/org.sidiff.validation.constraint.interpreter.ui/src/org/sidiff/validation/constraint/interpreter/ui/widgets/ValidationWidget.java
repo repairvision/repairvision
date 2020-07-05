@@ -15,7 +15,7 @@ import org.sidiff.common.utilities.ui.widgets.IUnsetableControl;
 import org.sidiff.revision.ui.editors.highlighting.EditorHighlighting;
 import org.sidiff.revision.ui.editors.highlighting.ISelectionHighlightingAdapter;
 import org.sidiff.validation.constraint.api.util.Validation;
-import org.sidiff.validation.constraint.interpreter.repair.RepairAction;
+import org.sidiff.validation.constraint.interpreter.decisiontree.repair.RepairAction;
 import org.sidiff.validation.constraint.interpreter.ui.provider.RepairTreeContentProvider;
 import org.sidiff.validation.constraint.interpreter.ui.provider.RepairTreeLabelProvider;
 

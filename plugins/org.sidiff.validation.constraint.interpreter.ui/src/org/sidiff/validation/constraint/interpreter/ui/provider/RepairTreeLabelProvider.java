@@ -10,7 +10,7 @@ import org.sidiff.validation.constraint.api.util.Validation;
 import org.sidiff.validation.constraint.interpreter.decisiontree.Alternative;
 import org.sidiff.validation.constraint.interpreter.decisiontree.IDecisionNode;
 import org.sidiff.validation.constraint.interpreter.decisiontree.Sequence;
-import org.sidiff.validation.constraint.interpreter.repair.RepairAction;
+import org.sidiff.validation.constraint.interpreter.decisiontree.repair.RepairAction;
 import org.sidiff.validation.constraint.interpreter.ui.Activator;
 
 public class RepairTreeLabelProvider extends LabelProvider {

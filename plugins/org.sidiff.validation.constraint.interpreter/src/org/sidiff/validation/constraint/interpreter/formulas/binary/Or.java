@@ -3,6 +3,7 @@ package org.sidiff.validation.constraint.interpreter.formulas.binary;
 import org.sidiff.validation.constraint.interpreter.decisiontree.Alternative;
 import org.sidiff.validation.constraint.interpreter.decisiontree.IDecisionBranch;
 import org.sidiff.validation.constraint.interpreter.decisiontree.Sequence;
+import org.sidiff.validation.constraint.interpreter.formulas.Formula;
 import org.sidiff.validation.constraint.interpreter.scope.IScopeRecorder;
 
 public class Or extends BinaryFormula {
@@ -32,21 +33,21 @@ public class Or extends BinaryFormula {
 	}
 	
 	@Override
-	public void generate(IDecisionBranch parent, boolean expected) {
+	public void analyze(IDecisionBranch parent, boolean expected) {
 		
 		if (expected) {
 			
 			// t t / t f / f t
 			Alternative alternative = Alternative.nextAlternative(parent);
-			left.generate(alternative, true);
-			right.generate(alternative, true);
+			left.analyze(alternative, true);
+			right.analyze(alternative, true);
 			
 		} else {
 			
 			// f f
 			Sequence sequence = Sequence.nextSequence(parent);
-			left.generate(sequence, false);
-			right.generate(sequence, false);
+			left.analyze(sequence, false);
+			right.analyze(sequence, false);
 		}
 	}
 	

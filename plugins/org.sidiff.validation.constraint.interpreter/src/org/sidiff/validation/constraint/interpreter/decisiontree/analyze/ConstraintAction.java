@@ -1,4 +1,4 @@
-package org.sidiff.validation.constraint.interpreter.repair;
+package org.sidiff.validation.constraint.interpreter.decisiontree.analyze;
 
 import java.util.Collections;
 import java.util.Iterator;
@@ -115,5 +115,10 @@ public class ConstraintAction implements IDecisionLeaf {
 	@Override
 	public String toString() {
 		return "Constraint@" + Integer.toHexString(hashCode()) + ": <" + constraint.name() + " " + context.getName() + "." + feature.getName() + " : " + type.getName() + ">";
+	}
+
+	@Override
+	public IDecisionNode deepCopy() {
+		return new ConstraintAction(constraint, context, feature, type);
 	}
 }

@@ -5,8 +5,8 @@ import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
 import org.sidiff.validation.constraint.interpreter.decisiontree.IDecisionBranch;
-import org.sidiff.validation.constraint.interpreter.repair.ConstraintAction.ConstraintType;
-import org.sidiff.validation.constraint.interpreter.repair.RepairAction.RepairType;
+import org.sidiff.validation.constraint.interpreter.decisiontree.analyze.ConstraintAction.ConstraintType;
+import org.sidiff.validation.constraint.interpreter.decisiontree.repair.RepairAction.RepairType;
 import org.sidiff.validation.constraint.interpreter.scope.IScopeRecorder;
 import org.sidiff.validation.constraint.interpreter.terms.Term;
 
@@ -69,7 +69,7 @@ public class IsInstanceOf extends PredicateImpl {
 	}
 	
 	@Override
-	public void generate(IDecisionBranch parent, boolean expected) {
+	public void analyze(IDecisionBranch parent, boolean expected) {
 		
 		if (expected) {
 			term.generate(parent, ConstraintType.REQUIRE);

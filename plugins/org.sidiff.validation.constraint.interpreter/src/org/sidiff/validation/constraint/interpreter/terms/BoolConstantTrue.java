@@ -21,7 +21,7 @@ public class BoolConstantTrue extends Constant implements Predicate {
 	}
 
 	@Override
-	public void generate(IDecisionBranch parent, boolean expected) {
+	public void analyze(IDecisionBranch parent, boolean expected) {
 		
 	}
 

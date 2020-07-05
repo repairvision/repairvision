@@ -6,7 +6,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.sidiff.validation.constraint.interpreter.decisiontree.Alternative;
 import org.sidiff.validation.constraint.interpreter.decisiontree.IDecisionBranch;
 import org.sidiff.validation.constraint.interpreter.decisiontree.Sequence;
-import org.sidiff.validation.constraint.interpreter.repair.RepairAction.RepairType;
+import org.sidiff.validation.constraint.interpreter.decisiontree.repair.RepairAction.RepairType;
 import org.sidiff.validation.constraint.interpreter.scope.IScopeRecorder;
 import org.sidiff.validation.constraint.interpreter.scope.ScopeNode;
 import org.sidiff.validation.constraint.interpreter.terms.Constant;

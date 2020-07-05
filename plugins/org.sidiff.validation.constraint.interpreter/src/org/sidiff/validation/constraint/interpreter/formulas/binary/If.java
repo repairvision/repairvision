@@ -3,6 +3,7 @@ package org.sidiff.validation.constraint.interpreter.formulas.binary;
 import org.sidiff.validation.constraint.interpreter.decisiontree.Alternative;
 import org.sidiff.validation.constraint.interpreter.decisiontree.IDecisionBranch;
 import org.sidiff.validation.constraint.interpreter.decisiontree.Sequence;
+import org.sidiff.validation.constraint.interpreter.formulas.Formula;
 import org.sidiff.validation.constraint.interpreter.scope.IScopeRecorder;
 
 public class If extends BinaryFormula {
@@ -18,7 +19,7 @@ public class If extends BinaryFormula {
 	}
 	
 	@Override
-	public void generate(IDecisionBranch parent, boolean expected) {
+	public void analyze(IDecisionBranch parent, boolean expected) {
 		
 		if (expected) {
 			
@@ -27,17 +28,17 @@ public class If extends BinaryFormula {
 			
 			// t t
 			Sequence sequence = Sequence.nextSequence(alternative);
-			left.generate(sequence, true);
-			right.generate(sequence, true);
+			left.analyze(sequence, true);
+			right.analyze(sequence, true);
 			
 			// f t / f f
-			left.generate(alternative, false);
+			left.analyze(alternative, false);
 		} else {
 			
 			// t f
 			Sequence sequence = Sequence.nextSequence(parent);
-			left.generate(sequence, true);
-			right.generate(sequence, false);
+			left.analyze(sequence, true);
+			right.analyze(sequence, false);
 		}
 	}
 

@@ -1,4 +1,4 @@
-package org.sidiff.validation.constraint.interpreter.repair;
+package org.sidiff.validation.constraint.interpreter.decisiontree.analyze;
 
 import java.util.Collections;
 import java.util.Iterator;
@@ -8,7 +8,7 @@ import org.eclipse.emf.ecore.EClassifier;
 import org.sidiff.common.utilities.java.JUtil;
 import org.sidiff.validation.constraint.interpreter.decisiontree.IDecisionLeaf;
 import org.sidiff.validation.constraint.interpreter.decisiontree.IDecisionNode;
-import org.sidiff.validation.constraint.interpreter.repair.ConstraintAction.ConstraintType;
+import org.sidiff.validation.constraint.interpreter.decisiontree.analyze.ConstraintAction.ConstraintType;
 
 public class ConstraintConstant implements IDecisionLeaf {
 
@@ -97,5 +97,10 @@ public class ConstraintConstant implements IDecisionLeaf {
 	@Override
 	public String toString() {
 		return "Constraint@" + Integer.toHexString(hashCode()) + ": <" + constraint.name() + " " + context.getName() + " = " + value + ">";
+	}
+
+	@Override
+	public IDecisionNode deepCopy() {
+		return new ConstraintConstant(constraint, context, value);
 	}
 }

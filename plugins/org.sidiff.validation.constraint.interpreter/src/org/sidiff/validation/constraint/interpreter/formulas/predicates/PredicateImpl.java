@@ -1,6 +1,6 @@
 package org.sidiff.validation.constraint.interpreter.formulas.predicates;
 
-import org.sidiff.validation.constraint.interpreter.formulas.binary.FormulaImpl;
+import org.sidiff.validation.constraint.interpreter.formulas.FormulaImpl;
 import org.sidiff.validation.constraint.interpreter.terms.Term;
 
 /**

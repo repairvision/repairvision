@@ -10,4 +10,6 @@ public interface IDecisionNode {
 	Iterator<List<? extends IDecisionNode>> combinations();
 
 	String toString(int indent);
+	
+	IDecisionNode deepCopy();
 }

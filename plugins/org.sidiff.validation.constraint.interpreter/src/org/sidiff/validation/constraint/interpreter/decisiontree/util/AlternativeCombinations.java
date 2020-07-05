@@ -1,8 +1,11 @@
-package org.sidiff.validation.constraint.interpreter.decisiontree;
+package org.sidiff.validation.constraint.interpreter.decisiontree.util;
 
 import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
+
+import org.sidiff.validation.constraint.interpreter.decisiontree.Alternative;
+import org.sidiff.validation.constraint.interpreter.decisiontree.IDecisionNode;
 
 public class AlternativeCombinations implements Iterator<List<? extends IDecisionNode>> {
 

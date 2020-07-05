@@ -52,4 +52,9 @@ public class StringDecisionLeaf implements IDecisionLeaf {
 		return JUtil.singeltonIterator(this);
 	}
 
+	@Override
+	public IDecisionNode deepCopy() {
+		return new StringDecisionLeaf(text);
+	}
+
 }

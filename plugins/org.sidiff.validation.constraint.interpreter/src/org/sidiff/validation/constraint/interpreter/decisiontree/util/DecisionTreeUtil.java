@@ -1,8 +1,14 @@
-package org.sidiff.validation.constraint.interpreter.decisiontree;
+package org.sidiff.validation.constraint.interpreter.decisiontree.util;
 
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+
+import org.sidiff.validation.constraint.interpreter.decisiontree.Alternative;
+import org.sidiff.validation.constraint.interpreter.decisiontree.IDecisionBranch;
+import org.sidiff.validation.constraint.interpreter.decisiontree.IDecisionLeaf;
+import org.sidiff.validation.constraint.interpreter.decisiontree.IDecisionNode;
+import org.sidiff.validation.constraint.interpreter.decisiontree.Sequence;
 
 public class DecisionTreeUtil {
 	

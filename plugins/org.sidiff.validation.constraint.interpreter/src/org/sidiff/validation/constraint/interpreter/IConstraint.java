@@ -3,7 +3,7 @@ package org.sidiff.validation.constraint.interpreter;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.sidiff.validation.constraint.interpreter.decisiontree.IDecisionNode;
-import org.sidiff.validation.constraint.interpreter.formulas.binary.Formula;
+import org.sidiff.validation.constraint.interpreter.formulas.Formula;
 import org.sidiff.validation.constraint.interpreter.scope.IScopeRecorder;
 
 public interface IConstraint extends INamedElement {

@@ -1,4 +1,4 @@
-package org.sidiff.validation.constraint.interpreter.decisiontree;
+package org.sidiff.validation.constraint.interpreter.decisiontree.util;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -7,6 +7,9 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.NoSuchElementException;
 import java.util.Stack;
+
+import org.sidiff.validation.constraint.interpreter.decisiontree.IDecisionNode;
+import org.sidiff.validation.constraint.interpreter.decisiontree.Sequence;
 
 public class SequenceCombinations implements Iterator<List<? extends IDecisionNode>> {
 

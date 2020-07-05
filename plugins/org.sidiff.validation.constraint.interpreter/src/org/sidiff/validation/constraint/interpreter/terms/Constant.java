@@ -3,9 +3,9 @@ package org.sidiff.validation.constraint.interpreter.terms;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.sidiff.validation.constraint.interpreter.decisiontree.IDecisionBranch;
-import org.sidiff.validation.constraint.interpreter.repair.ConstraintAction.ConstraintType;
-import org.sidiff.validation.constraint.interpreter.repair.ConstraintConstant;
-import org.sidiff.validation.constraint.interpreter.repair.RepairAction.RepairType;
+import org.sidiff.validation.constraint.interpreter.decisiontree.analyze.ConstraintConstant;
+import org.sidiff.validation.constraint.interpreter.decisiontree.analyze.ConstraintAction.ConstraintType;
+import org.sidiff.validation.constraint.interpreter.decisiontree.repair.RepairAction.RepairType;
 import org.sidiff.validation.constraint.interpreter.scope.IScopeRecorder;
 import org.sidiff.validation.constraint.interpreter.scope.ScopeNode;
 

@@ -1,4 +1,4 @@
-package org.sidiff.validation.constraint.interpreter.formulas.binary;
+package org.sidiff.validation.constraint.interpreter.formulas;
 
 import org.sidiff.validation.constraint.interpreter.NamedElement;
 import org.sidiff.validation.constraint.interpreter.decisiontree.IDecisionBranch;
@@ -17,7 +17,7 @@ public abstract class FormulaImpl extends NamedElement implements Formula {
 	public abstract boolean evaluate(IScopeRecorder scope, boolean optimize);
 	
 	@Override
-	public abstract void generate(IDecisionBranch parent, boolean expected);
+	public abstract void analyze(IDecisionBranch parent, boolean expected);
 	
 	@Override
 	public abstract void required(IDecisionBranch parent, boolean expected);

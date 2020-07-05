@@ -1,5 +1,8 @@
 package org.sidiff.validation.constraint.interpreter.formulas.binary;
 
+import org.sidiff.validation.constraint.interpreter.formulas.Formula;
+import org.sidiff.validation.constraint.interpreter.formulas.FormulaImpl;
+
 public abstract class BinaryFormula extends FormulaImpl {
 
 	protected Formula left;

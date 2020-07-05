@@ -86,4 +86,11 @@ public class ScopeNode implements IDecisionLeaf {
 	public String toString() {
 		return scope.toString();
 	}
+
+	@Override
+	public IDecisionNode deepCopy() {
+		ScopeNode copy = new ScopeNode();
+		copy.getScope().getScope().addAll(scope.getScope());
+		return copy;
+	}
 }

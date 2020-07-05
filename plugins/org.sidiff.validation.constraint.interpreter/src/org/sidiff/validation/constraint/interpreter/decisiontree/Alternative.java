@@ -3,6 +3,8 @@ package org.sidiff.validation.constraint.interpreter.decisiontree;
 import java.util.Iterator;
 import java.util.List;
 
+import org.sidiff.validation.constraint.interpreter.decisiontree.util.AlternativeCombinations;
+
 public class Alternative extends DecisionBranch {
 	
 	public static Alternative nextAlternative(IDecisionBranch parent) {
@@ -25,5 +27,16 @@ public class Alternative extends DecisionBranch {
 	@Override
 	public Iterator<List<? extends IDecisionNode>> combinations() {
 		return new AlternativeCombinations(this);
+	}
+
+	@Override
+	public IDecisionBranch deepCopy() {
+		Alternative copy = new Alternative();
+		
+		for (IDecisionNode child : this.getChildDecisions()) {
+			copy.getChildDecisions().add(child.deepCopy());
+		}
+		
+		return copy;
 	}
 }

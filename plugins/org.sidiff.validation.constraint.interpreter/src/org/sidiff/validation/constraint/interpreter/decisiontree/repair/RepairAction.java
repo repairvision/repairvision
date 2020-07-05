@@ -1,4 +1,4 @@
-package org.sidiff.validation.constraint.interpreter.repair;
+package org.sidiff.validation.constraint.interpreter.decisiontree.repair;
 
 import java.util.Collections;
 import java.util.Iterator;
@@ -112,6 +112,11 @@ public class RepairAction implements IDecisionLeaf {
 	@Override
 	public String toString() {
 		return "Repair@" + Integer.toHexString(hashCode()) + ": <" + getRepairTripleLabel() + ">";
+	}
+
+	@Override
+	public IDecisionNode deepCopy() {
+		return new RepairAction(type, context, feature);
 	}
 	
 }
