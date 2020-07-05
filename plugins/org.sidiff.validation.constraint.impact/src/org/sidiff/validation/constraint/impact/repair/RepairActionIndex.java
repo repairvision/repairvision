@@ -17,7 +17,7 @@ import org.sidiff.validation.constraint.api.util.RepairValidationIterator;
 import org.sidiff.validation.constraint.interpreter.IConstraint;
 import org.sidiff.validation.constraint.interpreter.decisiontree.IDecisionBranch;
 import org.sidiff.validation.constraint.interpreter.decisiontree.IDecisionNode;
-import org.sidiff.validation.constraint.interpreter.repair.RepairAction;
+import org.sidiff.validation.constraint.interpreter.decisiontree.repair.RepairAction;
 
 public class RepairActionIndex {
 

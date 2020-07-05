@@ -10,8 +10,8 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.sidiff.common.utilities.emf.MetaModelUtil;
 import org.sidiff.validation.constraint.impact.PotentialImpactAnalysis;
-import org.sidiff.validation.constraint.interpreter.repair.RepairAction;
-import org.sidiff.validation.constraint.interpreter.repair.RepairAction.RepairType;
+import org.sidiff.validation.constraint.interpreter.decisiontree.repair.RepairAction;
+import org.sidiff.validation.constraint.interpreter.decisiontree.repair.RepairAction.RepairType;
 
 public class PositivePotentialImpactAnalysis implements PotentialImpactAnalysis {
 

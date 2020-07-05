@@ -10,12 +10,20 @@ import java.util.Map;
 import org.sidiff.validation.constraint.project.registry.*;
 
 import org.sidiff.validation.constraint.interpreter.*;
+import org.sidiff.validation.constraint.interpreter.formulas.*;
 import org.sidiff.validation.constraint.interpreter.formulas.binary.*;
 import org.sidiff.validation.constraint.interpreter.formulas.predicates.*;
+import org.sidiff.validation.constraint.interpreter.formulas.predicates.collections.*;
+import org.sidiff.validation.constraint.interpreter.formulas.predicates.integers.*;
+import org.sidiff.validation.constraint.interpreter.formulas.predicates.types.*;
 import org.sidiff.validation.constraint.interpreter.formulas.quantifiers.*;
 import org.sidiff.validation.constraint.interpreter.formulas.unary.*;
 import org.sidiff.validation.constraint.interpreter.terms.*;
+import org.sidiff.validation.constraint.interpreter.terms.constants.*;
 import org.sidiff.validation.constraint.interpreter.terms.functions.*;
+import org.sidiff.validation.constraint.interpreter.terms.functions.collections.*;
+import org.sidiff.validation.constraint.interpreter.terms.functions.navigation.*;
+import org.sidiff.validation.constraint.interpreter.terms.functions.strings.*;
 
 public class UMLConsistencyRules implements IConstraintLibrary {
 	

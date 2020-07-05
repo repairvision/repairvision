@@ -35,8 +35,8 @@ import org.sidiff.validation.constraint.api.util.RepairValidation;
 import org.sidiff.validation.constraint.api.util.Validation;
 import org.sidiff.validation.constraint.interpreter.IConstraint;
 import org.sidiff.validation.constraint.interpreter.decisiontree.IDecisionNode;
-import org.sidiff.validation.constraint.interpreter.repair.RepairAction;
-import org.sidiff.validation.constraint.interpreter.repair.RepairAction.RepairType;
+import org.sidiff.validation.constraint.interpreter.decisiontree.repair.RepairAction;
+import org.sidiff.validation.constraint.interpreter.decisiontree.repair.RepairAction.RepairType;
 
 /*
  * TODO: Es sollte auch ermittelt werden, ob während einer Reparatur 

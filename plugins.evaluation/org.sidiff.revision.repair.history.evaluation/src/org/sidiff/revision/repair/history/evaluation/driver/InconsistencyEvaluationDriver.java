@@ -31,7 +31,7 @@ import org.sidiff.validation.constraint.api.util.RepairValidation;
 import org.sidiff.validation.constraint.api.util.ScopeValidation;
 import org.sidiff.validation.constraint.interpreter.IConstraint;
 import org.sidiff.validation.constraint.interpreter.decisiontree.IDecisionNode;
-import org.sidiff.validation.constraint.interpreter.repair.RepairAction;
+import org.sidiff.validation.constraint.interpreter.decisiontree.repair.RepairAction;
 
 public class InconsistencyEvaluationDriver {
 	

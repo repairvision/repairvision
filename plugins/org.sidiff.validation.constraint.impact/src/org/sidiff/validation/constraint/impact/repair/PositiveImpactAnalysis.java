@@ -9,8 +9,8 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.sidiff.validation.constraint.impact.ImpactAnalysis;
-import org.sidiff.validation.constraint.interpreter.repair.RepairAction;
-import org.sidiff.validation.constraint.interpreter.repair.RepairAction.RepairType;
+import org.sidiff.validation.constraint.interpreter.decisiontree.repair.RepairAction;
+import org.sidiff.validation.constraint.interpreter.decisiontree.repair.RepairAction.RepairType;
 
 public class PositiveImpactAnalysis implements ImpactAnalysis {
 
