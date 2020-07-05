@@ -1,29 +1,32 @@
-package org.sidiff.validation.constraint.interpreter.formulas.predicates;
+package org.sidiff.validation.constraint.interpreter.formulas.predicates.types;
 
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EDataType;
-import org.eclipse.emf.ecore.util.Diagnostician;
+import org.eclipse.emf.ecore.EObject;
 import org.sidiff.validation.constraint.interpreter.decisiontree.IDecisionBranch;
 import org.sidiff.validation.constraint.interpreter.decisiontree.analyze.ConstraintAction.ConstraintType;
 import org.sidiff.validation.constraint.interpreter.decisiontree.repair.RepairAction.RepairType;
+import org.sidiff.validation.constraint.interpreter.formulas.predicates.PredicateImpl;
 import org.sidiff.validation.constraint.interpreter.scope.IScopeRecorder;
 import org.sidiff.validation.constraint.interpreter.terms.Term;
 
-public class IsValueLiteralOf extends PredicateImpl {
+public class IsInstanceOf extends PredicateImpl {
 
 	protected Term term;
 	
-	protected EDataType type;
+	protected EClassifier type;
 	
 	protected Term typeTerm;
 	
-	public IsValueLiteralOf(Term term, EDataType type) {
-		this.name = "isValueLiteralOf";
+	public IsInstanceOf(Term term, EClassifier type) {
+		this.name = "isInstanceOf";
 		this.term = term;
 		this.type = type;
 	}
 	
-	public IsValueLiteralOf(Term term, Term typeTerm) {
-		this.name = "isValueLiteralOf";
+	public IsInstanceOf(Term term, Term typeTerm) {
+		this.name = "isInstanceOf";
 		this.term = term;
 		this.typeTerm = typeTerm;
 	}
@@ -49,15 +52,15 @@ public class IsValueLiteralOf extends PredicateImpl {
 		if (type != null) {
 			term.evaluate(scope);
 			
-			if (term.getValue() != null) {
-				try {
-					Object defaultValue = type.getEPackage().getEFactoryInstance().createFromString(type, (String) term.getValue());
-					result = Diagnostician.INSTANCE.validate(type, defaultValue, null, null);
-				} catch (Exception e) {
-					result = false;
-				}
+			if (term.getValue() == null) {
+				result = false;
 			} else {
-				result = true;
+				if ((type instanceof EClass) && (term.getValue() instanceof EObject)) {
+					result = (((EObject) term.getValue()).eClass() == type)
+							|| (((EObject) term.getValue()).eClass()).getESuperTypes().contains(type);
+				} else {
+					result = type.getInstanceClass().isInstance(term.getValue());
+				}
 			}
 		} else {
 			result = false;

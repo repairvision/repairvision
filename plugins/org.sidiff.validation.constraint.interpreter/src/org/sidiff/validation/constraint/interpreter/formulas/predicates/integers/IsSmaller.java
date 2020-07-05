@@ -1,15 +1,16 @@
-package org.sidiff.validation.constraint.interpreter.formulas.predicates;
+package org.sidiff.validation.constraint.interpreter.formulas.predicates.integers;
 
 import org.sidiff.validation.constraint.interpreter.decisiontree.Alternative;
 import org.sidiff.validation.constraint.interpreter.decisiontree.IDecisionBranch;
 import org.sidiff.validation.constraint.interpreter.decisiontree.repair.RepairAction.RepairType;
+import org.sidiff.validation.constraint.interpreter.formulas.predicates.Comparison;
 import org.sidiff.validation.constraint.interpreter.scope.IScopeRecorder;
 import org.sidiff.validation.constraint.interpreter.terms.Term;
 
-public class IsSmallerEqual extends Comparison  {
+public class IsSmaller extends Comparison {
 
-	public IsSmallerEqual(Term left, Term right) {
-		super("isSmallerEqual", left, right);
+	public IsSmaller(Term left, Term right) {
+		super("isSmaller", left, right);
 	}
 	
 	@Override
@@ -24,7 +25,7 @@ public class IsSmallerEqual extends Comparison  {
 		
 		Integer left_value = (Integer) left.getValue();
 		Integer right_value = (Integer) right.getValue();
-		result = left_value <= right_value;
+		result = left_value < right_value;
 		
 		return result;
 	}

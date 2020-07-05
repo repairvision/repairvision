@@ -10,7 +10,7 @@ import org.sidiff.validation.constraint.interpreter.formulas.Formula;
 import org.sidiff.validation.constraint.interpreter.scope.IScopeRecorder;
 import org.sidiff.validation.constraint.interpreter.terms.Term;
 import org.sidiff.validation.constraint.interpreter.terms.Variable;
-import org.sidiff.validation.constraint.interpreter.terms.functions.GetClosure;
+import org.sidiff.validation.constraint.interpreter.terms.functions.navigation.GetClosure;
 
 /**
  * Represents an universal quantifier.

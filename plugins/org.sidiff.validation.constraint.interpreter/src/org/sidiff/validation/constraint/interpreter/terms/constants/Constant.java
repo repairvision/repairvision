@@ -1,4 +1,4 @@
-package org.sidiff.validation.constraint.interpreter.terms;
+package org.sidiff.validation.constraint.interpreter.terms.constants;
 
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EcorePackage;
@@ -8,6 +8,7 @@ import org.sidiff.validation.constraint.interpreter.decisiontree.analyze.Constra
 import org.sidiff.validation.constraint.interpreter.decisiontree.repair.RepairAction.RepairType;
 import org.sidiff.validation.constraint.interpreter.scope.IScopeRecorder;
 import org.sidiff.validation.constraint.interpreter.scope.ScopeNode;
+import org.sidiff.validation.constraint.interpreter.terms.Term;
 
 public class Constant extends Term {
 	

@@ -1,4 +1,4 @@
-package org.sidiff.validation.constraint.interpreter.terms.functions;
+package org.sidiff.validation.constraint.interpreter.terms.functions.navigation;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -17,6 +17,7 @@ import org.sidiff.validation.constraint.interpreter.decisiontree.repair.RepairAc
 import org.sidiff.validation.constraint.interpreter.scope.IScopeRecorder;
 import org.sidiff.validation.constraint.interpreter.scope.ScopeNode;
 import org.sidiff.validation.constraint.interpreter.terms.Term;
+import org.sidiff.validation.constraint.interpreter.terms.functions.Function;
 
 /**
  * Calculates the closure over a given reference type. The closure includes the

@@ -1,4 +1,4 @@
-package org.sidiff.validation.constraint.interpreter.terms;
+package org.sidiff.validation.constraint.interpreter.terms.constants;
 
 public class BoolConstant {
 	

@@ -9,9 +9,9 @@ import org.sidiff.validation.constraint.interpreter.decisiontree.Sequence;
 import org.sidiff.validation.constraint.interpreter.decisiontree.repair.RepairAction.RepairType;
 import org.sidiff.validation.constraint.interpreter.scope.IScopeRecorder;
 import org.sidiff.validation.constraint.interpreter.scope.ScopeNode;
-import org.sidiff.validation.constraint.interpreter.terms.Constant;
 import org.sidiff.validation.constraint.interpreter.terms.Term;
-import org.sidiff.validation.constraint.interpreter.terms.functions.Get;
+import org.sidiff.validation.constraint.interpreter.terms.constants.Constant;
+import org.sidiff.validation.constraint.interpreter.terms.functions.navigation.Get;
 
 public class Equality extends Comparison {
 

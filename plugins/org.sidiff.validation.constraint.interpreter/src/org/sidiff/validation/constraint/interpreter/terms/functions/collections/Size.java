@@ -1,4 +1,4 @@
-package org.sidiff.validation.constraint.interpreter.terms.functions;
+package org.sidiff.validation.constraint.interpreter.terms.functions.collections;
 
 import java.util.Collection;
 
@@ -9,6 +9,7 @@ import org.sidiff.validation.constraint.interpreter.decisiontree.analyze.Constra
 import org.sidiff.validation.constraint.interpreter.decisiontree.repair.RepairAction.RepairType;
 import org.sidiff.validation.constraint.interpreter.scope.IScopeRecorder;
 import org.sidiff.validation.constraint.interpreter.terms.Term;
+import org.sidiff.validation.constraint.interpreter.terms.functions.Function;
 
 public class Size extends Function {
 

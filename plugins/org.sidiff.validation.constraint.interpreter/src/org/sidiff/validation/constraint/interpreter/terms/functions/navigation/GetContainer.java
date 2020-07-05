@@ -1,4 +1,4 @@
-package org.sidiff.validation.constraint.interpreter.terms.functions;
+package org.sidiff.validation.constraint.interpreter.terms.functions.navigation;
 
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
@@ -13,6 +13,7 @@ import org.sidiff.validation.constraint.interpreter.scope.IScopeRecorder;
 import org.sidiff.validation.constraint.interpreter.scope.ReferenceScope;
 import org.sidiff.validation.constraint.interpreter.scope.ScopeNode;
 import org.sidiff.validation.constraint.interpreter.terms.Term;
+import org.sidiff.validation.constraint.interpreter.terms.functions.Function;
 
 public class GetContainer extends Function {
 

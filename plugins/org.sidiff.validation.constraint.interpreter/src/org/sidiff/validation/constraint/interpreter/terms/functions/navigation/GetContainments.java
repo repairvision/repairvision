@@ -1,4 +1,4 @@
-package org.sidiff.validation.constraint.interpreter.terms.functions;
+package org.sidiff.validation.constraint.interpreter.terms.functions.navigation;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -16,6 +16,7 @@ import org.sidiff.validation.constraint.interpreter.decisiontree.repair.RepairAc
 import org.sidiff.validation.constraint.interpreter.scope.IScopeRecorder;
 import org.sidiff.validation.constraint.interpreter.scope.ScopeNode;
 import org.sidiff.validation.constraint.interpreter.terms.Term;
+import org.sidiff.validation.constraint.interpreter.terms.functions.Function;
 
 public class GetContainments extends Function {
 

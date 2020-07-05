@@ -1,27 +1,28 @@
-package org.sidiff.validation.constraint.interpreter.terms;
+package org.sidiff.validation.constraint.interpreter.terms.constants;
 
 import org.sidiff.validation.constraint.interpreter.decisiontree.IDecisionBranch;
 import org.sidiff.validation.constraint.interpreter.formulas.predicates.Predicate;
 import org.sidiff.validation.constraint.interpreter.scope.IScopeRecorder;
 
-public class BoolConstantFalse extends Constant implements Predicate {
+public class BoolConstantTrue extends Constant implements Predicate {
 
-	public BoolConstantFalse() {
-		super(false);
+	public BoolConstantTrue() {
+		super(true);
 	}
 	
 	@Override
 	public String toString() {
-		return "false";
+		return "true";
 	}
 
 	@Override
 	public boolean evaluate(IScopeRecorder scope, boolean optimize) {
-		return false;
+		return true;
 	}
 
 	@Override
 	public void analyze(IDecisionBranch parent, boolean expected) {
+		
 	}
 
 	@Override
@@ -34,7 +35,7 @@ public class BoolConstantFalse extends Constant implements Predicate {
 
 	@Override
 	public Boolean getResult() {
-		return false;
+		return true;
 	}
 
 	@Override

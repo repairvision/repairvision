@@ -1,31 +1,30 @@
-package org.sidiff.validation.constraint.interpreter.formulas.predicates;
+package org.sidiff.validation.constraint.interpreter.formulas.predicates.types;
 
-import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EDataType;
-import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.util.Diagnostician;
 import org.sidiff.validation.constraint.interpreter.decisiontree.IDecisionBranch;
 import org.sidiff.validation.constraint.interpreter.decisiontree.analyze.ConstraintAction.ConstraintType;
 import org.sidiff.validation.constraint.interpreter.decisiontree.repair.RepairAction.RepairType;
+import org.sidiff.validation.constraint.interpreter.formulas.predicates.PredicateImpl;
 import org.sidiff.validation.constraint.interpreter.scope.IScopeRecorder;
 import org.sidiff.validation.constraint.interpreter.terms.Term;
 
-public class IsInstanceOf extends PredicateImpl {
+public class IsValueLiteralOf extends PredicateImpl {
 
 	protected Term term;
 	
-	protected EClassifier type;
+	protected EDataType type;
 	
 	protected Term typeTerm;
 	
-	public IsInstanceOf(Term term, EClassifier type) {
-		this.name = "isInstanceOf";
+	public IsValueLiteralOf(Term term, EDataType type) {
+		this.name = "isValueLiteralOf";
 		this.term = term;
 		this.type = type;
 	}
 	
-	public IsInstanceOf(Term term, Term typeTerm) {
-		this.name = "isInstanceOf";
+	public IsValueLiteralOf(Term term, Term typeTerm) {
+		this.name = "isValueLiteralOf";
 		this.term = term;
 		this.typeTerm = typeTerm;
 	}
@@ -51,15 +50,15 @@ public class IsInstanceOf extends PredicateImpl {
 		if (type != null) {
 			term.evaluate(scope);
 			
-			if (term.getValue() == null) {
-				result = false;
-			} else {
-				if ((type instanceof EClass) && (term.getValue() instanceof EObject)) {
-					result = (((EObject) term.getValue()).eClass() == type)
-							|| (((EObject) term.getValue()).eClass()).getESuperTypes().contains(type);
-				} else {
-					result = type.getInstanceClass().isInstance(term.getValue());
+			if (term.getValue() != null) {
+				try {
+					Object defaultValue = type.getEPackage().getEFactoryInstance().createFromString(type, (String) term.getValue());
+					result = Diagnostician.INSTANCE.validate(type, defaultValue, null, null);
+				} catch (Exception e) {
+					result = false;
 				}
+			} else {
+				result = true;
 			}
 		} else {
 			result = false;

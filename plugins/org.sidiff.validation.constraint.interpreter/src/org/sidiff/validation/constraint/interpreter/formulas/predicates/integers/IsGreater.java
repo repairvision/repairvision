@@ -1,15 +1,16 @@
-package org.sidiff.validation.constraint.interpreter.formulas.predicates;
+ package org.sidiff.validation.constraint.interpreter.formulas.predicates.integers;
 
 import org.sidiff.validation.constraint.interpreter.decisiontree.Alternative;
 import org.sidiff.validation.constraint.interpreter.decisiontree.IDecisionBranch;
 import org.sidiff.validation.constraint.interpreter.decisiontree.repair.RepairAction.RepairType;
+import org.sidiff.validation.constraint.interpreter.formulas.predicates.Comparison;
 import org.sidiff.validation.constraint.interpreter.scope.IScopeRecorder;
 import org.sidiff.validation.constraint.interpreter.terms.Term;
 
-public class IsSmaller extends Comparison {
+public class IsGreater extends Comparison {
 
-	public IsSmaller(Term left, Term right) {
-		super("isSmaller", left, right);
+	public IsGreater(Term left, Term right) {
+		super("isGreater", left, right);
 	}
 	
 	@Override
@@ -24,7 +25,7 @@ public class IsSmaller extends Comparison {
 		
 		Integer left_value = (Integer) left.getValue();
 		Integer right_value = (Integer) right.getValue();
-		result = left_value < right_value;
+		result = left_value > right_value;
 		
 		return result;
 	}
@@ -35,15 +36,15 @@ public class IsSmaller extends Comparison {
 		if (expected && !getResult()) {
 			Alternative newRepairAlternative = Alternative.nextAlternative(parent);
 
-			left.repair(newRepairAlternative, RepairType.DELETE);
-			right.repair(newRepairAlternative, RepairType.CREATE);
+			left.repair(newRepairAlternative, RepairType.CREATE);
+			right.repair(newRepairAlternative, RepairType.DELETE);
 		} 
 		
 		else if (!expected && getResult()) {
 			Alternative newRepairAlternative = Alternative.nextAlternative(parent);
 
-			left.repair(newRepairAlternative, RepairType.CREATE);
-			right.repair(newRepairAlternative, RepairType.DELETE);
+			left.repair(newRepairAlternative, RepairType.DELETE);
+			right.repair(newRepairAlternative, RepairType.CREATE);
 		}
 	}
 }
