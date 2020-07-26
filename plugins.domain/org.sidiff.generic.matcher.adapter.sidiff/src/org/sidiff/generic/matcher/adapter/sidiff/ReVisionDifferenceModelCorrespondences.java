@@ -57,7 +57,7 @@ public class ReVisionDifferenceModelCorrespondences extends AbstractCorresponden
 
 	}
 	@Override
-	public void addCorrespondence(List<EObject> elements) {
+	public void addCorrespondence(List<? extends EObject> elements) {
 
 		if (elements.size() != 2) {
 			throw new UnsupportedOperationException("Only pairwise matches allowed: Size " + elements.size());
@@ -118,7 +118,7 @@ public class ReVisionDifferenceModelCorrespondences extends AbstractCorresponden
 	}
 	
 	@Override
-	public boolean isCorresponding(List<EObject> elements) {
+	public boolean isCorresponding(List<? extends EObject> elements) {
 		
 		if (elements.size() != 2) {
 			throw new UnsupportedOperationException(); // only pairwise matches allowed
@@ -170,7 +170,7 @@ public class ReVisionDifferenceModelCorrespondences extends AbstractCorresponden
 	}
 
 	@Override
-	public void removeCorrespondence(List<EObject> elements) {
+	public void removeCorrespondence(List<? extends EObject> elements) {
 		for (EObject element : elements) {
 			removeCorrespondences(element);
 		}
