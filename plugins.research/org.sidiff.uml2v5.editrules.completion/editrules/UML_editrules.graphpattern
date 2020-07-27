@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="ASCII"?>
 <graphpattern:Bundle xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:graphpattern="http://www.sidiff.org/graphpattern/1.0" xmi:id="_zqsycKMJEemOz6uYMhavJw" name="UMLBundle">
   <patterns xmi:id="_zqsycaMJEemOz6uYMhavJw" name="UML">
-    <subpatterns xmi:id="_zqsycqMJEemOz6uYMhavJw" name="Transition">
-      <subpatterns xmi:id="_zqsyc6MJEemOz6uYMhavJw" name="TransitionWithEffect">
-        <subpatterns xmi:id="_zqsydKMJEemOz6uYMhavJw" name="Activity">
+    <patterns xmi:id="_zqsycqMJEemOz6uYMhavJw" name="Transition">
+      <patterns xmi:id="_zqsyc6MJEemOz6uYMhavJw" name="TransitionWithEffect">
+        <patterns xmi:id="_zqsydKMJEemOz6uYMhavJw" name="Activity">
           <graphs xmi:id="_zqsydaMJEemOz6uYMhavJw" name="TransitionWithActivityEffect">
             <nodes xmi:id="_zqsydqMJEemOz6uYMhavJw" name="region" incomings="_zqsyfKMJEemOz6uYMhavJw">
               <outgoings xmi:id="_zqsyd6MJEemOz6uYMhavJw" target="_zqsyeKMJEemOz6uYMhavJw" opposite="_zqsyfKMJEemOz6uYMhavJw">
@@ -43,7 +43,7 @@
             </nodes>
           </graphs>
           <parameters xmi:id="_zqsygqMJEemOz6uYMhavJw" name="transitionName"/>
-          <subpatterns xmi:id="_iji0XqMLEemOz6uYMhavJw" name="Create: TransitionWithActivityEffect">
+          <patterns xmi:id="_iji0XqMLEemOz6uYMhavJw" name="Create: TransitionWithActivityEffect">
             <graphs xmi:id="_iji0X6MLEemOz6uYMhavJw" name="Create: TransitionWithActivityEffect">
               <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.henshin#rule"/>
               <nodes xmi:id="_iji0YKMLEemOz6uYMhavJw" name="region" subgraphs="_OvI-QaMMEemWlJuPjNhG1w" incomings="_iji0ZqMLEemOz6uYMhavJw">
@@ -117,8 +117,8 @@
             <parameters xmi:id="_iji0baMLEemOz6uYMhavJw" name="transitionName"/>
             <parameters xmi:id="_iji0bqMLEemOz6uYMhavJw" name="source"/>
             <parameters xmi:id="_iji0b6MLEemOz6uYMhavJw" name="target"/>
-          </subpatterns>
-          <subpatterns xmi:id="_iji0cKMLEemOz6uYMhavJw" name="Delete: TransitionWithActivityEffect">
+          </patterns>
+          <patterns xmi:id="_iji0cKMLEemOz6uYMhavJw" name="Delete: TransitionWithActivityEffect">
             <graphs xmi:id="_iji0caMLEemOz6uYMhavJw" name="Delete: TransitionWithActivityEffect">
               <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.henshin#rule"/>
               <nodes xmi:id="_iji0cqMLEemOz6uYMhavJw" name="region" subgraphs="_OvKzcaMMEemWlJuPjNhG1w" incomings="_iji0eKMLEemOz6uYMhavJw">
@@ -194,9 +194,9 @@
             <parameters xmi:id="_iji0gaMLEemOz6uYMhavJw" name="activityEffect"/>
             <parameters xmi:id="_iji0gqMLEemOz6uYMhavJw" name="source"/>
             <parameters xmi:id="_iji0g6MLEemOz6uYMhavJw" name="target"/>
-          </subpatterns>
-        </subpatterns>
-        <subpatterns xmi:id="_zqsyg6MJEemOz6uYMhavJw" name="FunctionBehavior">
+          </patterns>
+        </patterns>
+        <patterns xmi:id="_zqsyg6MJEemOz6uYMhavJw" name="FunctionBehavior">
           <graphs xmi:id="_zqsyhKMJEemOz6uYMhavJw" name="TransitionWithFunctionBehaviorEffect">
             <nodes xmi:id="_zqsyhaMJEemOz6uYMhavJw" name="region" incomings="_zqsyi6MJEemOz6uYMhavJw">
               <outgoings xmi:id="_zqsyhqMJEemOz6uYMhavJw" target="_zqsyh6MJEemOz6uYMhavJw" opposite="_zqsyi6MJEemOz6uYMhavJw">
@@ -236,7 +236,7 @@
             </nodes>
           </graphs>
           <parameters xmi:id="_zqsykaMJEemOz6uYMhavJw" name="transitionName"/>
-          <subpatterns xmi:id="_ijiLQKMLEemOz6uYMhavJw" name="Create: TransitionWithFunctionBehaviorEffect">
+          <patterns xmi:id="_ijiLQKMLEemOz6uYMhavJw" name="Create: TransitionWithFunctionBehaviorEffect">
             <graphs xmi:id="_ijiLQaMLEemOz6uYMhavJw" name="Create: TransitionWithFunctionBehaviorEffect">
               <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.henshin#rule"/>
               <nodes xmi:id="_ijiLQqMLEemOz6uYMhavJw" name="region" subgraphs="_OvMBkaMMEemWlJuPjNhG1w" incomings="_ijiLSKMLEemOz6uYMhavJw">
@@ -310,8 +310,8 @@
             <parameters xmi:id="_ijiLT6MLEemOz6uYMhavJw" name="transitionName"/>
             <parameters xmi:id="_ijiLUKMLEemOz6uYMhavJw" name="source"/>
             <parameters xmi:id="_ijiLUaMLEemOz6uYMhavJw" name="target"/>
-          </subpatterns>
-          <subpatterns xmi:id="_ijiLUqMLEemOz6uYMhavJw" name="Delete: TransitionWithFunctionBehaviorEffect">
+          </patterns>
+          <patterns xmi:id="_ijiLUqMLEemOz6uYMhavJw" name="Delete: TransitionWithFunctionBehaviorEffect">
             <graphs xmi:id="_ijiLU6MLEemOz6uYMhavJw" name="Delete: TransitionWithFunctionBehaviorEffect">
               <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.henshin#rule"/>
               <nodes xmi:id="_ijiLVKMLEemOz6uYMhavJw" name="region" subgraphs="_OvN2waMMEemWlJuPjNhG1w" incomings="_ijiLWqMLEemOz6uYMhavJw">
@@ -387,9 +387,9 @@
             <parameters xmi:id="_ijiLY6MLEemOz6uYMhavJw" name="functionBehaviorEffect"/>
             <parameters xmi:id="_ijiLZKMLEemOz6uYMhavJw" name="source"/>
             <parameters xmi:id="_ijiLZaMLEemOz6uYMhavJw" name="target"/>
-          </subpatterns>
-        </subpatterns>
-        <subpatterns xmi:id="_zqsykqMJEemOz6uYMhavJw" name="Interaction">
+          </patterns>
+        </patterns>
+        <patterns xmi:id="_zqsykqMJEemOz6uYMhavJw" name="Interaction">
           <graphs xmi:id="_zqsyk6MJEemOz6uYMhavJw" name="TransitionWithInteractionEffect">
             <nodes xmi:id="_zqsylKMJEemOz6uYMhavJw" name="region" incomings="_zqsymqMJEemOz6uYMhavJw">
               <outgoings xmi:id="_zqsylaMJEemOz6uYMhavJw" target="_zqsylqMJEemOz6uYMhavJw" opposite="_zqsymqMJEemOz6uYMhavJw">
@@ -429,7 +429,7 @@
             </nodes>
           </graphs>
           <parameters xmi:id="_zqsyoKMJEemOz6uYMhavJw" name="transitionName"/>
-          <subpatterns xmi:id="_ijiLtqMLEemOz6uYMhavJw" name="Create: TransitionWithInteractionEffect">
+          <patterns xmi:id="_ijiLtqMLEemOz6uYMhavJw" name="Create: TransitionWithInteractionEffect">
             <graphs xmi:id="_ijiLt6MLEemOz6uYMhavJw" name="Create: TransitionWithInteractionEffect">
               <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.henshin#rule"/>
               <nodes xmi:id="_ijiLuKMLEemOz6uYMhavJw" name="region" subgraphs="_OvPE4aMMEemWlJuPjNhG1w" incomings="_ijiLvqMLEemOz6uYMhavJw">
@@ -503,8 +503,8 @@
             <parameters xmi:id="_ijiyVKMLEemOz6uYMhavJw" name="transitionName"/>
             <parameters xmi:id="_ijiyVaMLEemOz6uYMhavJw" name="source"/>
             <parameters xmi:id="_ijiyVqMLEemOz6uYMhavJw" name="target"/>
-          </subpatterns>
-          <subpatterns xmi:id="_ijiyV6MLEemOz6uYMhavJw" name="Delete: TransitionWithInteractionEffect">
+          </patterns>
+          <patterns xmi:id="_ijiyV6MLEemOz6uYMhavJw" name="Delete: TransitionWithInteractionEffect">
             <graphs xmi:id="_ijiyWKMLEemOz6uYMhavJw" name="Delete: TransitionWithInteractionEffect">
               <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.henshin#rule"/>
               <nodes xmi:id="_ijiyWaMLEemOz6uYMhavJw" name="region" subgraphs="_OvQ6EKMMEemWlJuPjNhG1w" incomings="_ijiyX6MLEemOz6uYMhavJw">
@@ -580,9 +580,9 @@
             <parameters xmi:id="_ijiyaKMLEemOz6uYMhavJw" name="interactionEffect"/>
             <parameters xmi:id="_ijiyaaMLEemOz6uYMhavJw" name="source"/>
             <parameters xmi:id="_ijiyaqMLEemOz6uYMhavJw" name="target"/>
-          </subpatterns>
-        </subpatterns>
-        <subpatterns xmi:id="_zqsyoaMJEemOz6uYMhavJw" name="OpaqueBehavior">
+          </patterns>
+        </patterns>
+        <patterns xmi:id="_zqsyoaMJEemOz6uYMhavJw" name="OpaqueBehavior">
           <graphs xmi:id="_zqsyoqMJEemOz6uYMhavJw" name="TransitionWithOpaqueBehaviorEffect">
             <nodes xmi:id="_zqsyo6MJEemOz6uYMhavJw" name="region" incomings="_zqsyqaMJEemOz6uYMhavJw">
               <outgoings xmi:id="_zqsypKMJEemOz6uYMhavJw" target="_zqsypaMJEemOz6uYMhavJw" opposite="_zqsyqaMJEemOz6uYMhavJw">
@@ -622,7 +622,7 @@
             </nodes>
           </graphs>
           <parameters xmi:id="_zqsyr6MJEemOz6uYMhavJw" name="transitionName"/>
-          <subpatterns xmi:id="_ijiLZqMLEemOz6uYMhavJw" name="Create: TransitionWithOpaqueBehaviorEffect">
+          <patterns xmi:id="_ijiLZqMLEemOz6uYMhavJw" name="Create: TransitionWithOpaqueBehaviorEffect">
             <graphs xmi:id="_ijiLZ6MLEemOz6uYMhavJw" name="Create: TransitionWithOpaqueBehaviorEffect">
               <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.henshin#rule"/>
               <nodes xmi:id="_ijiLaKMLEemOz6uYMhavJw" name="region" subgraphs="_OvRhIaMMEemWlJuPjNhG1w" incomings="_ijiLbqMLEemOz6uYMhavJw">
@@ -696,8 +696,8 @@
             <parameters xmi:id="_ijiLdaMLEemOz6uYMhavJw" name="transitionName"/>
             <parameters xmi:id="_ijiLdqMLEemOz6uYMhavJw" name="source"/>
             <parameters xmi:id="_ijiLd6MLEemOz6uYMhavJw" name="target"/>
-          </subpatterns>
-          <subpatterns xmi:id="_ijiLeKMLEemOz6uYMhavJw" name="Delete: TransitionWithOpaqueBehaviorEffect">
+          </patterns>
+          <patterns xmi:id="_ijiLeKMLEemOz6uYMhavJw" name="Delete: TransitionWithOpaqueBehaviorEffect">
             <graphs xmi:id="_ijiLeaMLEemOz6uYMhavJw" name="Delete: TransitionWithOpaqueBehaviorEffect">
               <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.henshin#rule"/>
               <nodes xmi:id="_ijiLeqMLEemOz6uYMhavJw" name="region" subgraphs="_OvSvQaMMEemWlJuPjNhG1w" incomings="_ijiLgKMLEemOz6uYMhavJw">
@@ -773,9 +773,9 @@
             <parameters xmi:id="_ijiLiaMLEemOz6uYMhavJw" name="opaqueBehaviorEffect"/>
             <parameters xmi:id="_ijiLiqMLEemOz6uYMhavJw" name="source"/>
             <parameters xmi:id="_ijiLi6MLEemOz6uYMhavJw" name="target"/>
-          </subpatterns>
-        </subpatterns>
-        <subpatterns xmi:id="_zqsysKMJEemOz6uYMhavJw" name="ProtocolStateMachine">
+          </patterns>
+        </patterns>
+        <patterns xmi:id="_zqsysKMJEemOz6uYMhavJw" name="ProtocolStateMachine">
           <graphs xmi:id="_zqsysaMJEemOz6uYMhavJw" name="TransitionWithProtocolStateMachineEffect">
             <nodes xmi:id="_zqsysqMJEemOz6uYMhavJw" name="region" incomings="_zqsyuKMJEemOz6uYMhavJw">
               <outgoings xmi:id="_zqsys6MJEemOz6uYMhavJw" target="_zqsytKMJEemOz6uYMhavJw" opposite="_zqsyuKMJEemOz6uYMhavJw">
@@ -827,7 +827,7 @@
             </nodes>
           </graphs>
           <parameters xmi:id="_zqsywqMJEemOz6uYMhavJw" name="transitionName"/>
-          <subpatterns xmi:id="_iji1EKMLEemOz6uYMhavJw" name="Create: TransitionWithProtocolStateMachineEffect">
+          <patterns xmi:id="_iji1EKMLEemOz6uYMhavJw" name="Create: TransitionWithProtocolStateMachineEffect">
             <graphs xmi:id="_iji1EaMLEemOz6uYMhavJw" name="Create: TransitionWithProtocolStateMachineEffect">
               <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.henshin#rule"/>
               <nodes xmi:id="_iji1EqMLEemOz6uYMhavJw" name="region" subgraphs="_OvT9YaMMEemWlJuPjNhG1w" incomings="_iji1GKMLEemOz6uYMhavJw">
@@ -917,8 +917,8 @@
             <parameters xmi:id="_iji1I6MLEemOz6uYMhavJw" name="transitionName"/>
             <parameters xmi:id="_iji1JKMLEemOz6uYMhavJw" name="source"/>
             <parameters xmi:id="_iji1JaMLEemOz6uYMhavJw" name="target"/>
-          </subpatterns>
-          <subpatterns xmi:id="_iji1JqMLEemOz6uYMhavJw" name="Delete: TransitionWithProtocolStateMachineEffect">
+          </patterns>
+          <patterns xmi:id="_iji1JqMLEemOz6uYMhavJw" name="Delete: TransitionWithProtocolStateMachineEffect">
             <graphs xmi:id="_iji1J6MLEemOz6uYMhavJw" name="Delete: TransitionWithProtocolStateMachineEffect">
               <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.henshin#rule"/>
               <nodes xmi:id="_iji1KKMLEemOz6uYMhavJw" name="region" subgraphs="_OvVykaMMEemWlJuPjNhG1w" incomings="_iji1LqMLEemOz6uYMhavJw">
@@ -1011,9 +1011,9 @@
             <parameters xmi:id="_iji1PKMLEemOz6uYMhavJw" name="protocolStateMachineEffectRegion"/>
             <parameters xmi:id="_iji1PaMLEemOz6uYMhavJw" name="source"/>
             <parameters xmi:id="_iji1PqMLEemOz6uYMhavJw" name="target"/>
-          </subpatterns>
-        </subpatterns>
-        <subpatterns xmi:id="_zqsyw6MJEemOz6uYMhavJw" name="StateMachine">
+          </patterns>
+        </patterns>
+        <patterns xmi:id="_zqsyw6MJEemOz6uYMhavJw" name="StateMachine">
           <graphs xmi:id="_zqsyxKMJEemOz6uYMhavJw" name="TransitionWithStateMachineEffect">
             <nodes xmi:id="_zqsyxaMJEemOz6uYMhavJw" name="region" incomings="_zqsyy6MJEemOz6uYMhavJw">
               <outgoings xmi:id="_zqsyxqMJEemOz6uYMhavJw" target="_zqsyx6MJEemOz6uYMhavJw" opposite="_zqsyy6MJEemOz6uYMhavJw">
@@ -1065,7 +1065,7 @@
             </nodes>
           </graphs>
           <parameters xmi:id="_zqsy1aMJEemOz6uYMhavJw" name="transitionName"/>
-          <subpatterns xmi:id="_iji0rqMLEemOz6uYMhavJw" name="Create: TransitionWithStateMachineEffect">
+          <patterns xmi:id="_iji0rqMLEemOz6uYMhavJw" name="Create: TransitionWithStateMachineEffect">
             <graphs xmi:id="_iji0r6MLEemOz6uYMhavJw" name="Create: TransitionWithStateMachineEffect">
               <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.henshin#rule"/>
               <nodes xmi:id="_iji0sKMLEemOz6uYMhavJw" name="region" subgraphs="_OvXAsaMMEemWlJuPjNhG1w" incomings="_iji0tqMLEemOz6uYMhavJw">
@@ -1155,8 +1155,8 @@
             <parameters xmi:id="_iji0waMLEemOz6uYMhavJw" name="transitionName"/>
             <parameters xmi:id="_iji0wqMLEemOz6uYMhavJw" name="source"/>
             <parameters xmi:id="_iji0w6MLEemOz6uYMhavJw" name="target"/>
-          </subpatterns>
-          <subpatterns xmi:id="_iji0xKMLEemOz6uYMhavJw" name="Delete: TransitionWithStateMachineEffect">
+          </patterns>
+          <patterns xmi:id="_iji0xKMLEemOz6uYMhavJw" name="Delete: TransitionWithStateMachineEffect">
             <graphs xmi:id="_iji0xaMLEemOz6uYMhavJw" name="Delete: TransitionWithStateMachineEffect">
               <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.henshin#rule"/>
               <nodes xmi:id="_iji0xqMLEemOz6uYMhavJw" name="region" subgraphs="_OvYO0aMMEemWlJuPjNhG1w" incomings="_iji0zKMLEemOz6uYMhavJw">
@@ -1249,11 +1249,11 @@
             <parameters xmi:id="_iji02qMLEemOz6uYMhavJw" name="stateMachineEffectRegion"/>
             <parameters xmi:id="_iji026MLEemOz6uYMhavJw" name="source"/>
             <parameters xmi:id="_iji03KMLEemOz6uYMhavJw" name="target"/>
-          </subpatterns>
-        </subpatterns>
-      </subpatterns>
-      <subpatterns xmi:id="_zqsy1qMJEemOz6uYMhavJw" name="TransitionWithGuard">
-        <subpatterns xmi:id="_zqsy16MJEemOz6uYMhavJw" name="ConstraintGuard">
+          </patterns>
+        </patterns>
+      </patterns>
+      <patterns xmi:id="_zqsy1qMJEemOz6uYMhavJw" name="TransitionWithGuard">
+        <patterns xmi:id="_zqsy16MJEemOz6uYMhavJw" name="ConstraintGuard">
           <graphs xmi:id="_zqsy2KMJEemOz6uYMhavJw" name="TransitionWithConstraintGuard">
             <nodes xmi:id="_zqsy2aMJEemOz6uYMhavJw" name="region" incomings="_zqsy4KMJEemOz6uYMhavJw">
               <outgoings xmi:id="_zqsy2qMJEemOz6uYMhavJw" target="_zqsy26MJEemOz6uYMhavJw" opposite="_zqsy4KMJEemOz6uYMhavJw">
@@ -1299,7 +1299,7 @@
             </nodes>
           </graphs>
           <parameters xmi:id="_zqsy56MJEemOz6uYMhavJw" name="transitionName"/>
-          <subpatterns xmi:id="_ijiz-aMLEemOz6uYMhavJw" name="Create: TransitionWithConstraintGuard">
+          <patterns xmi:id="_ijiz-aMLEemOz6uYMhavJw" name="Create: TransitionWithConstraintGuard">
             <graphs xmi:id="_ijiz-qMLEemOz6uYMhavJw" name="Create: TransitionWithConstraintGuard">
               <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.henshin#rule"/>
               <nodes xmi:id="_ijiz-6MLEemOz6uYMhavJw" name="region" subgraphs="_OvZc8aMMEemWlJuPjNhG1w" incomings="_iji0AqMLEemOz6uYMhavJw">
@@ -1381,8 +1381,8 @@
             <parameters xmi:id="_iji0CqMLEemOz6uYMhavJw" name="transitionName"/>
             <parameters xmi:id="_iji0C6MLEemOz6uYMhavJw" name="source"/>
             <parameters xmi:id="_iji0DKMLEemOz6uYMhavJw" name="target"/>
-          </subpatterns>
-          <subpatterns xmi:id="_iji0DaMLEemOz6uYMhavJw" name="Delete: TransitionWithConstraintGuard">
+          </patterns>
+          <patterns xmi:id="_iji0DaMLEemOz6uYMhavJw" name="Delete: TransitionWithConstraintGuard">
             <graphs xmi:id="_iji0DqMLEemOz6uYMhavJw" name="Delete: TransitionWithConstraintGuard">
               <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.henshin#rule"/>
               <nodes xmi:id="_iji0D6MLEemOz6uYMhavJw" name="region" subgraphs="_OvaEAaMMEemWlJuPjNhG1w" incomings="_iji0FqMLEemOz6uYMhavJw">
@@ -1466,9 +1466,9 @@
             <parameters xmi:id="_iji0IKMLEemOz6uYMhavJw" name="constraint"/>
             <parameters xmi:id="_iji0IaMLEemOz6uYMhavJw" name="source"/>
             <parameters xmi:id="_iji0IqMLEemOz6uYMhavJw" name="target"/>
-          </subpatterns>
-        </subpatterns>
-        <subpatterns xmi:id="_zqsy6KMJEemOz6uYMhavJw" name="DurationConstraint">
+          </patterns>
+        </patterns>
+        <patterns xmi:id="_zqsy6KMJEemOz6uYMhavJw" name="DurationConstraint">
           <graphs xmi:id="_zqsy6aMJEemOz6uYMhavJw" name="TransitionWithDurationConstraintGuard">
             <nodes xmi:id="_zqsy6qMJEemOz6uYMhavJw" name="region" incomings="_zqsy8aMJEemOz6uYMhavJw">
               <outgoings xmi:id="_zqsy66MJEemOz6uYMhavJw" target="_zqsy7KMJEemOz6uYMhavJw" opposite="_zqsy8aMJEemOz6uYMhavJw">
@@ -1514,7 +1514,7 @@
             </nodes>
           </graphs>
           <parameters xmi:id="_zqsy-KMJEemOz6uYMhavJw" name="transitionName"/>
-          <subpatterns xmi:id="_ijiy7KMLEemOz6uYMhavJw" name="Create: TransitionWithDurationConstraintGuard">
+          <patterns xmi:id="_ijiy7KMLEemOz6uYMhavJw" name="Create: TransitionWithDurationConstraintGuard">
             <graphs xmi:id="_ijiy7aMLEemOz6uYMhavJw" name="Create: TransitionWithDurationConstraintGuard">
               <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.henshin#rule"/>
               <nodes xmi:id="_ijiy7qMLEemOz6uYMhavJw" name="region" subgraphs="_OvarEaMMEemWlJuPjNhG1w" incomings="_ijiy9aMLEemOz6uYMhavJw">
@@ -1596,8 +1596,8 @@
             <parameters xmi:id="_ijiy_aMLEemOz6uYMhavJw" name="transitionName"/>
             <parameters xmi:id="_ijiy_qMLEemOz6uYMhavJw" name="source"/>
             <parameters xmi:id="_ijiy_6MLEemOz6uYMhavJw" name="target"/>
-          </subpatterns>
-          <subpatterns xmi:id="_ijizAKMLEemOz6uYMhavJw" name="Delete: TransitionWithDurationConstraintGuard">
+          </patterns>
+          <patterns xmi:id="_ijizAKMLEemOz6uYMhavJw" name="Delete: TransitionWithDurationConstraintGuard">
             <graphs xmi:id="_ijizAaMLEemOz6uYMhavJw" name="Delete: TransitionWithDurationConstraintGuard">
               <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.henshin#rule"/>
               <nodes xmi:id="_ijizAqMLEemOz6uYMhavJw" name="region" subgraphs="_OvbSIaMMEemWlJuPjNhG1w" incomings="_ijizCaMLEemOz6uYMhavJw">
@@ -1681,9 +1681,9 @@
             <parameters xmi:id="_ijizE6MLEemOz6uYMhavJw" name="durationConstraint"/>
             <parameters xmi:id="_ijizFKMLEemOz6uYMhavJw" name="source"/>
             <parameters xmi:id="_ijizFaMLEemOz6uYMhavJw" name="target"/>
-          </subpatterns>
-        </subpatterns>
-        <subpatterns xmi:id="_zqsy-aMJEemOz6uYMhavJw" name="InteractionConstraint">
+          </patterns>
+        </patterns>
+        <patterns xmi:id="_zqsy-aMJEemOz6uYMhavJw" name="InteractionConstraint">
           <graphs xmi:id="_zqsy-qMJEemOz6uYMhavJw" name="TransitionWithInteractionConstraintGuard">
             <nodes xmi:id="_zqsy-6MJEemOz6uYMhavJw" name="region" incomings="_zqszAqMJEemOz6uYMhavJw">
               <outgoings xmi:id="_zqsy_KMJEemOz6uYMhavJw" target="_zqsy_aMJEemOz6uYMhavJw" opposite="_zqszAqMJEemOz6uYMhavJw">
@@ -1729,7 +1729,7 @@
             </nodes>
           </graphs>
           <parameters xmi:id="_zqszCaMJEemOz6uYMhavJw" name="transitionName"/>
-          <subpatterns xmi:id="_iji0hKMLEemOz6uYMhavJw" name="Create: TransitionWithInteractionConstraintGuard">
+          <patterns xmi:id="_iji0hKMLEemOz6uYMhavJw" name="Create: TransitionWithInteractionConstraintGuard">
             <graphs xmi:id="_iji0haMLEemOz6uYMhavJw" name="Create: TransitionWithInteractionConstraintGuard">
               <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.henshin#rule"/>
               <nodes xmi:id="_iji0hqMLEemOz6uYMhavJw" name="region" subgraphs="_Ovb5MaMMEemWlJuPjNhG1w" incomings="_iji0jaMLEemOz6uYMhavJw">
@@ -1811,8 +1811,8 @@
             <parameters xmi:id="_iji0laMLEemOz6uYMhavJw" name="transitionName"/>
             <parameters xmi:id="_iji0lqMLEemOz6uYMhavJw" name="source"/>
             <parameters xmi:id="_iji0l6MLEemOz6uYMhavJw" name="target"/>
-          </subpatterns>
-          <subpatterns xmi:id="_iji0mKMLEemOz6uYMhavJw" name="Delete: TransitionWithInteractionConstraintGuard">
+          </patterns>
+          <patterns xmi:id="_iji0mKMLEemOz6uYMhavJw" name="Delete: TransitionWithInteractionConstraintGuard">
             <graphs xmi:id="_iji0maMLEemOz6uYMhavJw" name="Delete: TransitionWithInteractionConstraintGuard">
               <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.henshin#rule"/>
               <nodes xmi:id="_iji0mqMLEemOz6uYMhavJw" name="region" subgraphs="_OvcgQaMMEemWlJuPjNhG1w" incomings="_iji0oaMLEemOz6uYMhavJw">
@@ -1896,9 +1896,9 @@
             <parameters xmi:id="_iji0q6MLEemOz6uYMhavJw" name="interactionConstraint"/>
             <parameters xmi:id="_iji0rKMLEemOz6uYMhavJw" name="source"/>
             <parameters xmi:id="_iji0raMLEemOz6uYMhavJw" name="target"/>
-          </subpatterns>
-        </subpatterns>
-        <subpatterns xmi:id="_zqszCqMJEemOz6uYMhavJw" name="IntervalConstraint">
+          </patterns>
+        </patterns>
+        <patterns xmi:id="_zqszCqMJEemOz6uYMhavJw" name="IntervalConstraint">
           <graphs xmi:id="_zqszC6MJEemOz6uYMhavJw" name="TransitionWithIntervalConstraintGuard">
             <nodes xmi:id="_zqszDKMJEemOz6uYMhavJw" name="region" incomings="_zqszE6MJEemOz6uYMhavJw">
               <outgoings xmi:id="_zqszDaMJEemOz6uYMhavJw" target="_zqszDqMJEemOz6uYMhavJw" opposite="_zqszE6MJEemOz6uYMhavJw">
@@ -1944,7 +1944,7 @@
             </nodes>
           </graphs>
           <parameters xmi:id="_zqszGqMJEemOz6uYMhavJw" name="transitionName"/>
-          <subpatterns xmi:id="_ijiLjKMLEemOz6uYMhavJw" name="Create: TransitionWithIntervalConstraintGuard">
+          <patterns xmi:id="_ijiLjKMLEemOz6uYMhavJw" name="Create: TransitionWithIntervalConstraintGuard">
             <graphs xmi:id="_ijiLjaMLEemOz6uYMhavJw" name="Create: TransitionWithIntervalConstraintGuard">
               <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.henshin#rule"/>
               <nodes xmi:id="_ijiLjqMLEemOz6uYMhavJw" name="region" subgraphs="_OvcgR6MMEemWlJuPjNhG1w" incomings="_ijiLlaMLEemOz6uYMhavJw">
@@ -2026,8 +2026,8 @@
             <parameters xmi:id="_ijiLnaMLEemOz6uYMhavJw" name="transitionName"/>
             <parameters xmi:id="_ijiLnqMLEemOz6uYMhavJw" name="source"/>
             <parameters xmi:id="_ijiLn6MLEemOz6uYMhavJw" name="target"/>
-          </subpatterns>
-          <subpatterns xmi:id="_ijiLoKMLEemOz6uYMhavJw" name="Delete: TransitionWithIntervalConstraintGuard">
+          </patterns>
+          <patterns xmi:id="_ijiLoKMLEemOz6uYMhavJw" name="Delete: TransitionWithIntervalConstraintGuard">
             <graphs xmi:id="_ijiLoaMLEemOz6uYMhavJw" name="Delete: TransitionWithIntervalConstraintGuard">
               <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.henshin#rule"/>
               <nodes xmi:id="_ijiLoqMLEemOz6uYMhavJw" name="region" subgraphs="_OvdHVKMMEemWlJuPjNhG1w" incomings="_ijiLqaMLEemOz6uYMhavJw">
@@ -2111,9 +2111,9 @@
             <parameters xmi:id="_ijiLs6MLEemOz6uYMhavJw" name="intervalConstraint"/>
             <parameters xmi:id="_ijiLtKMLEemOz6uYMhavJw" name="source"/>
             <parameters xmi:id="_ijiLtaMLEemOz6uYMhavJw" name="target"/>
-          </subpatterns>
-        </subpatterns>
-        <subpatterns xmi:id="_zqszG6MJEemOz6uYMhavJw" name="TimeConstraint">
+          </patterns>
+        </patterns>
+        <patterns xmi:id="_zqszG6MJEemOz6uYMhavJw" name="TimeConstraint">
           <graphs xmi:id="_zqszHKMJEemOz6uYMhavJw" name="TransitionWithTimeConstraintGuard">
             <nodes xmi:id="_zqszHaMJEemOz6uYMhavJw" name="region" incomings="_zqszJKMJEemOz6uYMhavJw">
               <outgoings xmi:id="_zqszHqMJEemOz6uYMhavJw" target="_zqszH6MJEemOz6uYMhavJw" opposite="_zqszJKMJEemOz6uYMhavJw">
@@ -2159,7 +2159,7 @@
             </nodes>
           </graphs>
           <parameters xmi:id="_zqszK6MJEemOz6uYMhavJw" name="transitionName"/>
-          <subpatterns xmi:id="_ijizXKMLEemOz6uYMhavJw" name="Create: TransitionWithTimeConstraintGuard">
+          <patterns xmi:id="_ijizXKMLEemOz6uYMhavJw" name="Create: TransitionWithTimeConstraintGuard">
             <graphs xmi:id="_ijizXaMLEemOz6uYMhavJw" name="Create: TransitionWithTimeConstraintGuard">
               <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.henshin#rule"/>
               <nodes xmi:id="_ijizXqMLEemOz6uYMhavJw" name="region" subgraphs="_OvduYaMMEemWlJuPjNhG1w" incomings="_ijizZaMLEemOz6uYMhavJw">
@@ -2241,8 +2241,8 @@
             <parameters xmi:id="_ijizbaMLEemOz6uYMhavJw" name="transitionName"/>
             <parameters xmi:id="_ijizbqMLEemOz6uYMhavJw" name="source"/>
             <parameters xmi:id="_ijizb6MLEemOz6uYMhavJw" name="target"/>
-          </subpatterns>
-          <subpatterns xmi:id="_ijizcKMLEemOz6uYMhavJw" name="Delete: TransitionWithTimeConstraintGuard">
+          </patterns>
+          <patterns xmi:id="_ijizcKMLEemOz6uYMhavJw" name="Delete: TransitionWithTimeConstraintGuard">
             <graphs xmi:id="_ijizcaMLEemOz6uYMhavJw" name="Delete: TransitionWithTimeConstraintGuard">
               <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.henshin#rule"/>
               <nodes xmi:id="_ijizcqMLEemOz6uYMhavJw" name="region" subgraphs="_OvduZ6MMEemWlJuPjNhG1w" incomings="_ijizeaMLEemOz6uYMhavJw">
@@ -2326,11 +2326,11 @@
             <parameters xmi:id="_ijizg6MLEemOz6uYMhavJw" name="timeConstraint"/>
             <parameters xmi:id="_ijizhKMLEemOz6uYMhavJw" name="source"/>
             <parameters xmi:id="_ijizhaMLEemOz6uYMhavJw" name="target"/>
-          </subpatterns>
-        </subpatterns>
-      </subpatterns>
-      <subpatterns xmi:id="_zqszLKMJEemOz6uYMhavJw" name="TransitionWithTrigger">
-        <subpatterns xmi:id="_zqszLaMJEemOz6uYMhavJw" name="AnyReceiveEvent">
+          </patterns>
+        </patterns>
+      </patterns>
+      <patterns xmi:id="_zqszLKMJEemOz6uYMhavJw" name="TransitionWithTrigger">
+        <patterns xmi:id="_zqszLaMJEemOz6uYMhavJw" name="AnyReceiveEvent">
           <graphs xmi:id="_zqszLqMJEemOz6uYMhavJw" name="TransitionWithAnyReveiveEventTrigger">
             <nodes xmi:id="_zqszL6MJEemOz6uYMhavJw" name="container">
               <outgoings xmi:id="_zqszMKMJEemOz6uYMhavJw" target="_zqszPqMJEemOz6uYMhavJw">
@@ -2385,7 +2385,7 @@
             </nodes>
           </graphs>
           <parameters xmi:id="_zqszQKMJEemOz6uYMhavJw" name="eventName"/>
-          <subpatterns xmi:id="_ijizxqMLEemOz6uYMhavJw" name="Create: TransitionWithAnyReveiveEventTrigger">
+          <patterns xmi:id="_ijizxqMLEemOz6uYMhavJw" name="Create: TransitionWithAnyReveiveEventTrigger">
             <graphs xmi:id="_ijizx6MLEemOz6uYMhavJw" name="Create: TransitionWithAnyReveiveEventTrigger">
               <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.henshin#rule"/>
               <nodes xmi:id="_ijizyKMLEemOz6uYMhavJw" name="container" subgraphs="_Ove8hKMMEemWlJuPjNhG1w">
@@ -2489,8 +2489,8 @@
             <parameters xmi:id="_ijiz26MLEemOz6uYMhavJw" name="eventName"/>
             <parameters xmi:id="_ijiz3KMLEemOz6uYMhavJw" name="source"/>
             <parameters xmi:id="_ijiz3aMLEemOz6uYMhavJw" name="target"/>
-          </subpatterns>
-          <subpatterns xmi:id="_ijiz3qMLEemOz6uYMhavJw" name="Delete: TransitionWithAnyReveiveEventTrigger">
+          </patterns>
+          <patterns xmi:id="_ijiz3qMLEemOz6uYMhavJw" name="Delete: TransitionWithAnyReveiveEventTrigger">
             <graphs xmi:id="_ijiz36MLEemOz6uYMhavJw" name="Delete: TransitionWithAnyReveiveEventTrigger">
               <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.henshin#rule"/>
               <nodes xmi:id="_ijiz4KMLEemOz6uYMhavJw" name="container" subgraphs="_Ovfjl6MMEemWlJuPjNhG1w">
@@ -2597,10 +2597,10 @@
             <parameters xmi:id="_ijiz9qMLEemOz6uYMhavJw" name="source"/>
             <parameters xmi:id="_ijiz96MLEemOz6uYMhavJw" name="target"/>
             <parameters xmi:id="_ijiz-KMLEemOz6uYMhavJw" name="anyReceiveEvent"/>
-          </subpatterns>
-        </subpatterns>
-        <subpatterns xmi:id="_zqszQaMJEemOz6uYMhavJw" name="CallEvent">
-          <subpatterns xmi:id="_zqszQqMJEemOz6uYMhavJw" name="TransitionWithCallEventTrigger">
+          </patterns>
+        </patterns>
+        <patterns xmi:id="_zqszQaMJEemOz6uYMhavJw" name="CallEvent">
+          <patterns xmi:id="_zqszQqMJEemOz6uYMhavJw" name="TransitionWithCallEventTrigger">
             <graphs xmi:id="_zqszQ6MJEemOz6uYMhavJw" name="TransitionWithCallEventTrigger">
               <nodes xmi:id="_zqszRKMJEemOz6uYMhavJw" name="container">
                 <outgoings xmi:id="_zqszRaMJEemOz6uYMhavJw" target="_zqszVaMJEemOz6uYMhavJw">
@@ -2665,7 +2665,7 @@
             </graphs>
             <parameters xmi:id="_zqszWKMJEemOz6uYMhavJw" name="eventName"/>
             <parameters xmi:id="_zqszWaMJEemOz6uYMhavJw" name="className"/>
-            <subpatterns xmi:id="_iji0I6MLEemOz6uYMhavJw" name="Create: TransitionWithCallEventTrigger">
+            <patterns xmi:id="_iji0I6MLEemOz6uYMhavJw" name="Create: TransitionWithCallEventTrigger">
               <graphs xmi:id="_iji0JKMLEemOz6uYMhavJw" name="Create: TransitionWithCallEventTrigger">
                 <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.henshin#rule"/>
                 <nodes xmi:id="_iji0JaMLEemOz6uYMhavJw" name="container">
@@ -2773,8 +2773,8 @@
               <parameters xmi:id="_iji0PKMLEemOz6uYMhavJw" name="source"/>
               <parameters xmi:id="_iji0PaMLEemOz6uYMhavJw" name="target"/>
               <parameters xmi:id="_iji0PqMLEemOz6uYMhavJw" name="calledOperation"/>
-            </subpatterns>
-            <subpatterns xmi:id="_iji0P6MLEemOz6uYMhavJw" name="Delete: TransitionWithCallEventTrigger">
+            </patterns>
+            <patterns xmi:id="_iji0P6MLEemOz6uYMhavJw" name="Delete: TransitionWithCallEventTrigger">
               <graphs xmi:id="_iji0QKMLEemOz6uYMhavJw" name="Delete: TransitionWithCallEventTrigger">
                 <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.henshin#rule"/>
                 <nodes xmi:id="_iji0QaMLEemOz6uYMhavJw" name="container">
@@ -2885,9 +2885,9 @@
               <parameters xmi:id="_iji0W6MLEemOz6uYMhavJw" name="target"/>
               <parameters xmi:id="_iji0XKMLEemOz6uYMhavJw" name="calledOperation"/>
               <parameters xmi:id="_iji0XaMLEemOz6uYMhavJw" name="callEvent"/>
-            </subpatterns>
-          </subpatterns>
-          <subpatterns xmi:id="_zqszWqMJEemOz6uYMhavJw" name="TransitionWithCallEventTriggerAndClassWithOperationInModel">
+            </patterns>
+          </patterns>
+          <patterns xmi:id="_zqszWqMJEemOz6uYMhavJw" name="TransitionWithCallEventTriggerAndClassWithOperationInModel">
             <graphs xmi:id="_zqszW6MJEemOz6uYMhavJw" name="TransitionWithCallEventTriggerAndClassWithOperationInModel">
               <nodes xmi:id="_zqszXKMJEemOz6uYMhavJw" name="container">
                 <outgoings xmi:id="_zqszXaMJEemOz6uYMhavJw" target="_zqszbKMJEemOz6uYMhavJw">
@@ -2967,7 +2967,7 @@
             </graphs>
             <parameters xmi:id="_zqszdaMJEemOz6uYMhavJw" name="eventName"/>
             <parameters xmi:id="_zqszdqMJEemOz6uYMhavJw" name="className"/>
-            <subpatterns xmi:id="_ijiypaMLEemOz6uYMhavJw" name="Create: TransitionWithCallEventTriggerAndClassWithOperationInModel">
+            <patterns xmi:id="_ijiypaMLEemOz6uYMhavJw" name="Create: TransitionWithCallEventTriggerAndClassWithOperationInModel">
               <graphs xmi:id="_ijiypqMLEemOz6uYMhavJw" name="Create: TransitionWithCallEventTriggerAndClassWithOperationInModel">
                 <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.henshin#rule"/>
                 <nodes xmi:id="_ijiyp6MLEemOz6uYMhavJw" name="container" subgraphs="_Ovim4aMMEemWlJuPjNhG1w">
@@ -3113,8 +3113,8 @@
               <parameters xmi:id="_ijiyw6MLEemOz6uYMhavJw" name="source"/>
               <parameters xmi:id="_ijiyxKMLEemOz6uYMhavJw" name="target"/>
               <parameters xmi:id="_ijiyxaMLEemOz6uYMhavJw" name="className"/>
-            </subpatterns>
-            <subpatterns xmi:id="_ijiyxqMLEemOz6uYMhavJw" name="Delete: TransitionWithCallEventTriggerAndClassWithOperationInModel">
+            </patterns>
+            <patterns xmi:id="_ijiyxqMLEemOz6uYMhavJw" name="Delete: TransitionWithCallEventTriggerAndClassWithOperationInModel">
               <graphs xmi:id="_ijiyx6MLEemOz6uYMhavJw" name="Delete: TransitionWithCallEventTriggerAndClassWithOperationInModel">
                 <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.henshin#rule"/>
                 <nodes xmi:id="_ijiyyKMLEemOz6uYMhavJw" name="container" subgraphs="_Ovj1AaMMEemWlJuPjNhG1w">
@@ -3265,9 +3265,9 @@
               <parameters xmi:id="_ijiy6aMLEemOz6uYMhavJw" name="className"/>
               <parameters xmi:id="_ijiy6qMLEemOz6uYMhavJw" name="calledOperation"/>
               <parameters xmi:id="_ijiy66MLEemOz6uYMhavJw" name="callEvent"/>
-            </subpatterns>
-          </subpatterns>
-          <subpatterns xmi:id="_zqszd6MJEemOz6uYMhavJw" name="TransitionWithCallEventTriggerAndOperationInClass">
+            </patterns>
+          </patterns>
+          <patterns xmi:id="_zqszd6MJEemOz6uYMhavJw" name="TransitionWithCallEventTriggerAndOperationInClass">
             <graphs xmi:id="_zqszeKMJEemOz6uYMhavJw" name="TransitionWithCallEventTriggerAndOperationInClass">
               <nodes xmi:id="_zqszeaMJEemOz6uYMhavJw" name="container">
                 <outgoings xmi:id="_zqszeqMJEemOz6uYMhavJw" target="_zqtZjaMJEemOz6uYMhavJw">
@@ -3344,7 +3344,7 @@
             </graphs>
             <parameters xmi:id="_zqtZkKMJEemOz6uYMhavJw" name="eventName"/>
             <parameters xmi:id="_zqtZkaMJEemOz6uYMhavJw" name="className"/>
-            <subpatterns xmi:id="_ijizFqMLEemOz6uYMhavJw" name="Create: TransitionWithCallEventTriggerAndOperationInClass">
+            <patterns xmi:id="_ijizFqMLEemOz6uYMhavJw" name="Create: TransitionWithCallEventTriggerAndOperationInClass">
               <graphs xmi:id="_ijizF6MLEemOz6uYMhavJw" name="Create: TransitionWithCallEventTriggerAndOperationInClass">
                 <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.henshin#rule"/>
                 <nodes xmi:id="_ijizGKMLEemOz6uYMhavJw" name="container">
@@ -3478,8 +3478,8 @@
               <parameters xmi:id="_ijizNKMLEemOz6uYMhavJw" name="target"/>
               <parameters xmi:id="_ijizNaMLEemOz6uYMhavJw" name="containingClass"/>
               <parameters xmi:id="_ijizNqMLEemOz6uYMhavJw" name="className"/>
-            </subpatterns>
-            <subpatterns xmi:id="_ijizN6MLEemOz6uYMhavJw" name="Delete: TransitionWithCallEventTriggerAndOperationInClass">
+            </patterns>
+            <patterns xmi:id="_ijizN6MLEemOz6uYMhavJw" name="Delete: TransitionWithCallEventTriggerAndOperationInClass">
               <graphs xmi:id="_ijizOKMLEemOz6uYMhavJw" name="Delete: TransitionWithCallEventTriggerAndOperationInClass">
                 <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.henshin#rule"/>
                 <nodes xmi:id="_ijizOaMLEemOz6uYMhavJw" name="container">
@@ -3617,10 +3617,10 @@
               <parameters xmi:id="_ijizWaMLEemOz6uYMhavJw" name="className"/>
               <parameters xmi:id="_ijizWqMLEemOz6uYMhavJw" name="calledOperation"/>
               <parameters xmi:id="_ijizW6MLEemOz6uYMhavJw" name="callEvent"/>
-            </subpatterns>
-          </subpatterns>
-        </subpatterns>
-        <subpatterns xmi:id="_zqtZkqMJEemOz6uYMhavJw" name="ChangeEvent">
+            </patterns>
+          </patterns>
+        </patterns>
+        <patterns xmi:id="_zqtZkqMJEemOz6uYMhavJw" name="ChangeEvent">
           <graphs xmi:id="_zqtZk6MJEemOz6uYMhavJw" name="TransitionWithChangeEventTrigger">
             <nodes xmi:id="_zqtZlKMJEemOz6uYMhavJw" name="container">
               <outgoings xmi:id="_zqtZlaMJEemOz6uYMhavJw" target="_zqtZo6MJEemOz6uYMhavJw">
@@ -3675,7 +3675,7 @@
             </nodes>
           </graphs>
           <parameters xmi:id="_zqtZpaMJEemOz6uYMhavJw" name="eventName"/>
-          <subpatterns xmi:id="_iji03aMLEemOz6uYMhavJw" name="Create: TransitionWithChangeEventTrigger">
+          <patterns xmi:id="_iji03aMLEemOz6uYMhavJw" name="Create: TransitionWithChangeEventTrigger">
             <graphs xmi:id="_iji03qMLEemOz6uYMhavJw" name="Create: TransitionWithChangeEventTrigger">
               <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.henshin#rule"/>
               <nodes xmi:id="_iji036MLEemOz6uYMhavJw" name="container" subgraphs="_Ovm4VKMMEemWlJuPjNhG1w">
@@ -3779,8 +3779,8 @@
             <parameters xmi:id="_iji08qMLEemOz6uYMhavJw" name="eventName"/>
             <parameters xmi:id="_iji086MLEemOz6uYMhavJw" name="source"/>
             <parameters xmi:id="_iji09KMLEemOz6uYMhavJw" name="target"/>
-          </subpatterns>
-          <subpatterns xmi:id="_iji09aMLEemOz6uYMhavJw" name="Delete: TransitionWithChangeEventTrigger">
+          </patterns>
+          <patterns xmi:id="_iji09aMLEemOz6uYMhavJw" name="Delete: TransitionWithChangeEventTrigger">
             <graphs xmi:id="_iji09qMLEemOz6uYMhavJw" name="Delete: TransitionWithChangeEventTrigger">
               <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.henshin#rule"/>
               <nodes xmi:id="_iji096MLEemOz6uYMhavJw" name="container" subgraphs="_OvoGcaMMEemWlJuPjNhG1w">
@@ -3887,9 +3887,9 @@
             <parameters xmi:id="_iji1DaMLEemOz6uYMhavJw" name="source"/>
             <parameters xmi:id="_iji1DqMLEemOz6uYMhavJw" name="target"/>
             <parameters xmi:id="_iji1D6MLEemOz6uYMhavJw" name="changeEvent"/>
-          </subpatterns>
-        </subpatterns>
-        <subpatterns xmi:id="_zqtZpqMJEemOz6uYMhavJw" name="SignalEvent">
+          </patterns>
+        </patterns>
+        <patterns xmi:id="_zqtZpqMJEemOz6uYMhavJw" name="SignalEvent">
           <graphs xmi:id="_zqtZp6MJEemOz6uYMhavJw" name="TransitionWithSignalEventTrigger">
             <nodes xmi:id="_zqtZqKMJEemOz6uYMhavJw" name="container">
               <outgoings xmi:id="_zqtZqaMJEemOz6uYMhavJw" target="_zqtZu6MJEemOz6uYMhavJw">
@@ -3959,7 +3959,7 @@
             </nodes>
           </graphs>
           <parameters xmi:id="_zqtZvqMJEemOz6uYMhavJw" name="eventName"/>
-          <subpatterns xmi:id="_ijizhqMLEemOz6uYMhavJw" name="Create: TransitionWithSignalEventTrigger">
+          <patterns xmi:id="_ijizhqMLEemOz6uYMhavJw" name="Create: TransitionWithSignalEventTrigger">
             <graphs xmi:id="_ijizh6MLEemOz6uYMhavJw" name="Create: TransitionWithSignalEventTrigger">
               <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.henshin#rule"/>
               <nodes xmi:id="_ijiziKMLEemOz6uYMhavJw" name="container">
@@ -4084,8 +4084,8 @@
             <parameters xmi:id="_ijizoaMLEemOz6uYMhavJw" name="region"/>
             <parameters xmi:id="_ijizoqMLEemOz6uYMhavJw" name="source"/>
             <parameters xmi:id="_ijizo6MLEemOz6uYMhavJw" name="target"/>
-          </subpatterns>
-          <subpatterns xmi:id="_ijizpKMLEemOz6uYMhavJw" name="Delete: TransitionWithSignalEventTrigger">
+          </patterns>
+          <patterns xmi:id="_ijizpKMLEemOz6uYMhavJw" name="Delete: TransitionWithSignalEventTrigger">
             <graphs xmi:id="_ijizpaMLEemOz6uYMhavJw" name="Delete: TransitionWithSignalEventTrigger">
               <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.henshin#rule"/>
               <nodes xmi:id="_ijizpqMLEemOz6uYMhavJw" name="container">
@@ -4214,9 +4214,9 @@
             <parameters xmi:id="_ijizw6MLEemOz6uYMhavJw" name="source"/>
             <parameters xmi:id="_ijizxKMLEemOz6uYMhavJw" name="target"/>
             <parameters xmi:id="_ijizxaMLEemOz6uYMhavJw" name="signalEvent"/>
-          </subpatterns>
-        </subpatterns>
-        <subpatterns xmi:id="_zqtZv6MJEemOz6uYMhavJw" name="TimeEvent">
+          </patterns>
+        </patterns>
+        <patterns xmi:id="_zqtZv6MJEemOz6uYMhavJw" name="TimeEvent">
           <graphs xmi:id="_zqtZwKMJEemOz6uYMhavJw" name="TransitionWithTimeEventTrigger">
             <nodes xmi:id="_zqtZwaMJEemOz6uYMhavJw" name="container">
               <outgoings xmi:id="_zqtZwqMJEemOz6uYMhavJw" target="_zqtZ0KMJEemOz6uYMhavJw">
@@ -4280,7 +4280,7 @@
             </nodes>
           </graphs>
           <parameters xmi:id="_zqtZ1aMJEemOz6uYMhavJw" name="eventName"/>
-          <subpatterns xmi:id="_ijiya6MLEemOz6uYMhavJw" name="Create: TransitionWithTimeEventTrigger">
+          <patterns xmi:id="_ijiya6MLEemOz6uYMhavJw" name="Create: TransitionWithTimeEventTrigger">
             <graphs xmi:id="_ijiybKMLEemOz6uYMhavJw" name="Create: TransitionWithTimeEventTrigger">
               <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.henshin#rule"/>
               <nodes xmi:id="_ijiybaMLEemOz6uYMhavJw" name="container">
@@ -4387,8 +4387,8 @@
             <parameters xmi:id="_ijiyg6MLEemOz6uYMhavJw" name="eventName"/>
             <parameters xmi:id="_ijiyhKMLEemOz6uYMhavJw" name="source"/>
             <parameters xmi:id="_ijiyhaMLEemOz6uYMhavJw" name="target"/>
-          </subpatterns>
-          <subpatterns xmi:id="_ijiyhqMLEemOz6uYMhavJw" name="Delete: TransitionWithTimeEventTrigger">
+          </patterns>
+          <patterns xmi:id="_ijiyhqMLEemOz6uYMhavJw" name="Delete: TransitionWithTimeEventTrigger">
             <graphs xmi:id="_ijiyh6MLEemOz6uYMhavJw" name="Delete: TransitionWithTimeEventTrigger">
               <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.henshin#rule"/>
               <nodes xmi:id="_ijiyiKMLEemOz6uYMhavJw" name="container">
@@ -4499,10 +4499,10 @@
             <parameters xmi:id="_ijiyoqMLEemOz6uYMhavJw" name="target"/>
             <parameters xmi:id="_ijiyo6MLEemOz6uYMhavJw" name="timeEvent"/>
             <parameters xmi:id="_ijiypKMLEemOz6uYMhavJw" name="eventTime"/>
-          </subpatterns>
-        </subpatterns>
-      </subpatterns>
-    </subpatterns>
+          </patterns>
+        </patterns>
+      </patterns>
+    </patterns>
   </patterns>
   <profiles href="graphpatternprofile:/org.sidiff.graphpattern.profile.henshin#@profile0"/>
 </graphpattern:Bundle>

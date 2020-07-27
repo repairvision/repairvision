@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="ASCII"?>
 <graphpattern:Bundle xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:graphpattern="http://www.sidiff.org/graphpattern/1.0" xmi:id="_3Zgs8KJNEemR1OcBKwie-w" name="UMLBundle">
   <patterns xmi:id="_3Zgs8qJNEemR1OcBKwie-w" name="[+]InRegion">
-    <subpatterns xmi:id="_3Zgs86JNEemR1OcBKwie-w" name="Transition" description="Derived from: TransitionWithActivityEffect">
+    <patterns xmi:id="_3Zgs86JNEemR1OcBKwie-w" name="Transition" description="Derived from: TransitionWithActivityEffect">
       <graphs xmi:id="_3Zgs9KJNEemR1OcBKwie-w" name="Transition" description="Derived from: TransitionWithActivityEffect">
         <nodes xmi:id="_3Zgs9aJNEemR1OcBKwie-w" name="region" incomings="_3Zgs-qJNEemR1OcBKwie-w">
-          <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#require"/>
+          <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#exists"/>
           <outgoings xmi:id="_3Zgs9qJNEemR1OcBKwie-w" target="_3Zgs96JNEemR1OcBKwie-w" opposite="_3Zgs-qJNEemR1OcBKwie-w">
             <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Region/transition"/>
           </outgoings>
@@ -26,11 +26,11 @@
           </attributes>
         </nodes>
         <nodes xmi:id="_3Zgs_KJNEemR1OcBKwie-w" name="source" incomings="_3Zgs-KJNEemR1OcBKwie-w">
-          <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#require"/>
+          <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#exists"/>
           <type href="http://www.eclipse.org/uml2/5.0.0/UML#//State"/>
         </nodes>
         <nodes xmi:id="_3Zgs_aJNEemR1OcBKwie-w" name="target" incomings="_3Zgs-aJNEemR1OcBKwie-w">
-          <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#require"/>
+          <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#exists"/>
           <type href="http://www.eclipse.org/uml2/5.0.0/UML#//State"/>
         </nodes>
       </graphs>
@@ -39,7 +39,7 @@
       <parameters xmi:id="_3ZgtAKJNEemR1OcBKwie-w" name="transitionName"/>
       <parameters xmi:id="_3ZgtAaJNEemR1OcBKwie-w" name="source"/>
       <parameters xmi:id="_3ZgtAqJNEemR1OcBKwie-w" name="target"/>
-      <subpatterns xmi:id="_W-vTt6MLEemOz6uYMhavJw" name="Create: Transition">
+      <patterns xmi:id="_W-vTt6MLEemOz6uYMhavJw" name="Create: Transition">
         <graphs xmi:id="_W-vTuKMLEemOz6uYMhavJw" name="Create: Transition" description="Derived from: TransitionWithActivityEffect">
           <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.henshin#rule"/>
           <nodes xmi:id="_W-vTuaMLEemOz6uYMhavJw" name="region" incomings="_W-vTvqMLEemOz6uYMhavJw">
@@ -83,8 +83,8 @@
         <parameters xmi:id="_W-vTw6MLEemOz6uYMhavJw" name="transitionName"/>
         <parameters xmi:id="_W-vTxKMLEemOz6uYMhavJw" name="source"/>
         <parameters xmi:id="_W-vTxaMLEemOz6uYMhavJw" name="target"/>
-      </subpatterns>
-      <subpatterns xmi:id="_W-vTxqMLEemOz6uYMhavJw" name="Delete: Transition">
+      </patterns>
+      <patterns xmi:id="_W-vTxqMLEemOz6uYMhavJw" name="Delete: Transition">
         <graphs xmi:id="_W-vTx6MLEemOz6uYMhavJw" name="Delete: Transition" description="Derived from: TransitionWithActivityEffect">
           <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.henshin#rule"/>
           <nodes xmi:id="_W-vTyKMLEemOz6uYMhavJw" name="region" incomings="_W-vTzaMLEemOz6uYMhavJw">
@@ -129,15 +129,15 @@
         <parameters xmi:id="_W-vT06MLEemOz6uYMhavJw" name="transitionName"/>
         <parameters xmi:id="_W-vT1KMLEemOz6uYMhavJw" name="source"/>
         <parameters xmi:id="_W-vT1aMLEemOz6uYMhavJw" name="target"/>
-      </subpatterns>
-    </subpatterns>
+      </patterns>
+    </patterns>
   </patterns>
   <patterns xmi:id="_3ZgtA6JNEemR1OcBKwie-w" name="[+]InTransition">
-    <subpatterns xmi:id="_8_wHQKJOEemR1OcBKwie-w" name="[+]Guard">
-      <subpatterns xmi:id="_3ZgtSqJNEemR1OcBKwie-w" name="Constraint" description="Derived from: TransitionWithConstraintGuard">
+    <patterns xmi:id="_8_wHQKJOEemR1OcBKwie-w" name="[+]Guard">
+      <patterns xmi:id="_3ZgtSqJNEemR1OcBKwie-w" name="Constraint" description="Derived from: TransitionWithConstraintGuard">
         <graphs xmi:id="_3ZgtS6JNEemR1OcBKwie-w" name="Constraint" description="Derived from: TransitionWithConstraintGuard">
           <nodes xmi:id="_3ZgtTKJNEemR1OcBKwie-w" name="transition" incomings="_3ZgtUKJNEemR1OcBKwie-w">
-            <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#require"/>
+            <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#exists"/>
             <outgoings xmi:id="_3ZgtTaJNEemR1OcBKwie-w" target="_3ZgtT6JNEemR1OcBKwie-w" opposite="_3ZgtUKJNEemR1OcBKwie-w">
               <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Namespace/ownedRule"/>
             </outgoings>
@@ -159,7 +159,7 @@
         <parameters xmi:id="_3ZgtUqJNEemR1OcBKwie-w" name="transition"/>
         <parameters xmi:id="_3ZgtU6JNEemR1OcBKwie-w" name="transitionName"/>
         <parameters xmi:id="_3ZgtVKJNEemR1OcBKwie-w" name="constraint"/>
-        <subpatterns xmi:id="_W-vUuKMLEemOz6uYMhavJw" name="Create: Constraint">
+        <patterns xmi:id="_W-vUuKMLEemOz6uYMhavJw" name="Create: Constraint">
           <graphs xmi:id="_W-vUuaMLEemOz6uYMhavJw" name="Create: Constraint" description="Derived from: TransitionWithConstraintGuard">
             <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.henshin#rule"/>
             <nodes xmi:id="_W-vUuqMLEemOz6uYMhavJw" name="transition" incomings="_W-vUvqMLEemOz6uYMhavJw">
@@ -189,8 +189,8 @@
           </graphs>
           <parameters xmi:id="_W-vUwKMLEemOz6uYMhavJw" name="transition"/>
           <parameters xmi:id="_W-vUwaMLEemOz6uYMhavJw" name="transitionName"/>
-        </subpatterns>
-        <subpatterns xmi:id="_W-vUwqMLEemOz6uYMhavJw" name="Delete: Constraint">
+        </patterns>
+        <patterns xmi:id="_W-vUwqMLEemOz6uYMhavJw" name="Delete: Constraint">
           <graphs xmi:id="_W-vUw6MLEemOz6uYMhavJw" name="Delete: Constraint" description="Derived from: TransitionWithConstraintGuard">
             <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.henshin#rule"/>
             <nodes xmi:id="_W-vUxKMLEemOz6uYMhavJw" name="transition" incomings="_W-vUyKMLEemOz6uYMhavJw">
@@ -221,12 +221,12 @@
           <parameters xmi:id="_W-vUyqMLEemOz6uYMhavJw" name="transition"/>
           <parameters xmi:id="_W-vUy6MLEemOz6uYMhavJw" name="transitionName"/>
           <parameters xmi:id="_W-vUzKMLEemOz6uYMhavJw" name="constraint"/>
-        </subpatterns>
-      </subpatterns>
-      <subpatterns xmi:id="_3ZgtVaJNEemR1OcBKwie-w" name="DurationConstraint" description="Derived from: TransitionWithDurationConstraintGuard">
+        </patterns>
+      </patterns>
+      <patterns xmi:id="_3ZgtVaJNEemR1OcBKwie-w" name="DurationConstraint" description="Derived from: TransitionWithDurationConstraintGuard">
         <graphs xmi:id="_3ZgtVqJNEemR1OcBKwie-w" name="DurationConstraint" description="Derived from: TransitionWithDurationConstraintGuard">
           <nodes xmi:id="_3ZgtV6JNEemR1OcBKwie-w" name="transition" incomings="_3ZgtW6JNEemR1OcBKwie-w">
-            <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#require"/>
+            <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#exists"/>
             <outgoings xmi:id="_3ZgtWKJNEemR1OcBKwie-w" target="_3ZgtWqJNEemR1OcBKwie-w" opposite="_3ZgtW6JNEemR1OcBKwie-w">
               <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Namespace/ownedRule"/>
             </outgoings>
@@ -248,7 +248,7 @@
         <parameters xmi:id="_3ZgtXaJNEemR1OcBKwie-w" name="transition"/>
         <parameters xmi:id="_3ZgtXqJNEemR1OcBKwie-w" name="transitionName"/>
         <parameters xmi:id="_3ZgtX6JNEemR1OcBKwie-w" name="durationConstraint"/>
-        <subpatterns xmi:id="_W-vT-qMLEemOz6uYMhavJw" name="Create: DurationConstraint">
+        <patterns xmi:id="_W-vT-qMLEemOz6uYMhavJw" name="Create: DurationConstraint">
           <graphs xmi:id="_W-vT-6MLEemOz6uYMhavJw" name="Create: DurationConstraint" description="Derived from: TransitionWithDurationConstraintGuard">
             <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.henshin#rule"/>
             <nodes xmi:id="_W-vT_KMLEemOz6uYMhavJw" name="transition" incomings="_W-vUAKMLEemOz6uYMhavJw">
@@ -278,8 +278,8 @@
           </graphs>
           <parameters xmi:id="_W-vUAqMLEemOz6uYMhavJw" name="transition"/>
           <parameters xmi:id="_W-vUA6MLEemOz6uYMhavJw" name="transitionName"/>
-        </subpatterns>
-        <subpatterns xmi:id="_W-vUBKMLEemOz6uYMhavJw" name="Delete: DurationConstraint">
+        </patterns>
+        <patterns xmi:id="_W-vUBKMLEemOz6uYMhavJw" name="Delete: DurationConstraint">
           <graphs xmi:id="_W-vUBaMLEemOz6uYMhavJw" name="Delete: DurationConstraint" description="Derived from: TransitionWithDurationConstraintGuard">
             <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.henshin#rule"/>
             <nodes xmi:id="_W-vUBqMLEemOz6uYMhavJw" name="transition" incomings="_W-vUCqMLEemOz6uYMhavJw">
@@ -310,12 +310,12 @@
           <parameters xmi:id="_W-vUDKMLEemOz6uYMhavJw" name="transition"/>
           <parameters xmi:id="_W-vUDaMLEemOz6uYMhavJw" name="transitionName"/>
           <parameters xmi:id="_W-vUDqMLEemOz6uYMhavJw" name="durationConstraint"/>
-        </subpatterns>
-      </subpatterns>
-      <subpatterns xmi:id="_3ZgtYKJNEemR1OcBKwie-w" name="InteractionConstraint" description="Derived from: TransitionWithInteractionConstraintGuard">
+        </patterns>
+      </patterns>
+      <patterns xmi:id="_3ZgtYKJNEemR1OcBKwie-w" name="InteractionConstraint" description="Derived from: TransitionWithInteractionConstraintGuard">
         <graphs xmi:id="_3ZgtYaJNEemR1OcBKwie-w" name="InteractionConstraint" description="Derived from: TransitionWithInteractionConstraintGuard">
           <nodes xmi:id="_3ZgtYqJNEemR1OcBKwie-w" name="transition" incomings="_3ZgtZqJNEemR1OcBKwie-w">
-            <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#require"/>
+            <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#exists"/>
             <outgoings xmi:id="_3ZgtY6JNEemR1OcBKwie-w" target="_3ZgtZaJNEemR1OcBKwie-w" opposite="_3ZgtZqJNEemR1OcBKwie-w">
               <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Namespace/ownedRule"/>
             </outgoings>
@@ -337,7 +337,7 @@
         <parameters xmi:id="_3ZgtaKJNEemR1OcBKwie-w" name="transition"/>
         <parameters xmi:id="_3ZgtaaJNEemR1OcBKwie-w" name="transitionName"/>
         <parameters xmi:id="_3ZgtaqJNEemR1OcBKwie-w" name="interactionConstraint"/>
-        <subpatterns xmi:id="_W-vTOKMLEemOz6uYMhavJw" name="Create: InteractionConstraint">
+        <patterns xmi:id="_W-vTOKMLEemOz6uYMhavJw" name="Create: InteractionConstraint">
           <graphs xmi:id="_W-vTOaMLEemOz6uYMhavJw" name="Create: InteractionConstraint" description="Derived from: TransitionWithInteractionConstraintGuard">
             <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.henshin#rule"/>
             <nodes xmi:id="_W-vTOqMLEemOz6uYMhavJw" name="transition" incomings="_W-vTPqMLEemOz6uYMhavJw">
@@ -367,8 +367,8 @@
           </graphs>
           <parameters xmi:id="_W-vTQKMLEemOz6uYMhavJw" name="transition"/>
           <parameters xmi:id="_W-vTQaMLEemOz6uYMhavJw" name="transitionName"/>
-        </subpatterns>
-        <subpatterns xmi:id="_W-vTQqMLEemOz6uYMhavJw" name="Delete: InteractionConstraint">
+        </patterns>
+        <patterns xmi:id="_W-vTQqMLEemOz6uYMhavJw" name="Delete: InteractionConstraint">
           <graphs xmi:id="_W-vTQ6MLEemOz6uYMhavJw" name="Delete: InteractionConstraint" description="Derived from: TransitionWithInteractionConstraintGuard">
             <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.henshin#rule"/>
             <nodes xmi:id="_W-vTRKMLEemOz6uYMhavJw" name="transition" incomings="_W-vTSKMLEemOz6uYMhavJw">
@@ -399,12 +399,12 @@
           <parameters xmi:id="_W-vTSqMLEemOz6uYMhavJw" name="transition"/>
           <parameters xmi:id="_W-vTS6MLEemOz6uYMhavJw" name="transitionName"/>
           <parameters xmi:id="_W-vTTKMLEemOz6uYMhavJw" name="interactionConstraint"/>
-        </subpatterns>
-      </subpatterns>
-      <subpatterns xmi:id="_3Zgta6JNEemR1OcBKwie-w" name="IntervalConstraint" description="Derived from: TransitionWithIntervalConstraintGuard">
+        </patterns>
+      </patterns>
+      <patterns xmi:id="_3Zgta6JNEemR1OcBKwie-w" name="IntervalConstraint" description="Derived from: TransitionWithIntervalConstraintGuard">
         <graphs xmi:id="_3ZgtbKJNEemR1OcBKwie-w" name="IntervalConstraint" description="Derived from: TransitionWithIntervalConstraintGuard">
           <nodes xmi:id="_3ZgtbaJNEemR1OcBKwie-w" name="transition" incomings="_3ZgtcaJNEemR1OcBKwie-w">
-            <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#require"/>
+            <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#exists"/>
             <outgoings xmi:id="_3ZgtbqJNEemR1OcBKwie-w" target="_3ZgtcKJNEemR1OcBKwie-w" opposite="_3ZgtcaJNEemR1OcBKwie-w">
               <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Namespace/ownedRule"/>
             </outgoings>
@@ -426,7 +426,7 @@
         <parameters xmi:id="_3Zgtc6JNEemR1OcBKwie-w" name="transition"/>
         <parameters xmi:id="_3ZgtdKJNEemR1OcBKwie-w" name="transitionName"/>
         <parameters xmi:id="_3ZgtdaJNEemR1OcBKwie-w" name="intervalConstraint"/>
-        <subpatterns xmi:id="_W-vUUqMLEemOz6uYMhavJw" name="Create: IntervalConstraint">
+        <patterns xmi:id="_W-vUUqMLEemOz6uYMhavJw" name="Create: IntervalConstraint">
           <graphs xmi:id="_W-vUU6MLEemOz6uYMhavJw" name="Create: IntervalConstraint" description="Derived from: TransitionWithIntervalConstraintGuard">
             <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.henshin#rule"/>
             <nodes xmi:id="_W-vUVKMLEemOz6uYMhavJw" name="transition" incomings="_W-vUWKMLEemOz6uYMhavJw">
@@ -456,8 +456,8 @@
           </graphs>
           <parameters xmi:id="_W-vUWqMLEemOz6uYMhavJw" name="transition"/>
           <parameters xmi:id="_W-vUW6MLEemOz6uYMhavJw" name="transitionName"/>
-        </subpatterns>
-        <subpatterns xmi:id="_W-vUXKMLEemOz6uYMhavJw" name="Delete: IntervalConstraint">
+        </patterns>
+        <patterns xmi:id="_W-vUXKMLEemOz6uYMhavJw" name="Delete: IntervalConstraint">
           <graphs xmi:id="_W-vUXaMLEemOz6uYMhavJw" name="Delete: IntervalConstraint" description="Derived from: TransitionWithIntervalConstraintGuard">
             <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.henshin#rule"/>
             <nodes xmi:id="_W-vUXqMLEemOz6uYMhavJw" name="transition" incomings="_W-vUYqMLEemOz6uYMhavJw">
@@ -488,12 +488,12 @@
           <parameters xmi:id="_W-vUZKMLEemOz6uYMhavJw" name="transition"/>
           <parameters xmi:id="_W-vUZaMLEemOz6uYMhavJw" name="transitionName"/>
           <parameters xmi:id="_W-vUZqMLEemOz6uYMhavJw" name="intervalConstraint"/>
-        </subpatterns>
-      </subpatterns>
-      <subpatterns xmi:id="_3ZgtdqJNEemR1OcBKwie-w" name="TimeConstraint" description="Derived from: TransitionWithTimeConstraintGuard">
+        </patterns>
+      </patterns>
+      <patterns xmi:id="_3ZgtdqJNEemR1OcBKwie-w" name="TimeConstraint" description="Derived from: TransitionWithTimeConstraintGuard">
         <graphs xmi:id="_3Zgtd6JNEemR1OcBKwie-w" name="TimeConstraint" description="Derived from: TransitionWithTimeConstraintGuard">
           <nodes xmi:id="_3ZgteKJNEemR1OcBKwie-w" name="transition" incomings="_3ZgtfKJNEemR1OcBKwie-w">
-            <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#require"/>
+            <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#exists"/>
             <outgoings xmi:id="_3ZgteaJNEemR1OcBKwie-w" target="_3Zgte6JNEemR1OcBKwie-w" opposite="_3ZgtfKJNEemR1OcBKwie-w">
               <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Namespace/ownedRule"/>
             </outgoings>
@@ -515,7 +515,7 @@
         <parameters xmi:id="_3ZgtfqJNEemR1OcBKwie-w" name="transition"/>
         <parameters xmi:id="_3Zgtf6JNEemR1OcBKwie-w" name="transitionName"/>
         <parameters xmi:id="_3ZgtgKJNEemR1OcBKwie-w" name="timeConstraint"/>
-        <subpatterns xmi:id="_W-vToqMLEemOz6uYMhavJw" name="Create: TimeConstraint">
+        <patterns xmi:id="_W-vToqMLEemOz6uYMhavJw" name="Create: TimeConstraint">
           <graphs xmi:id="_W-vTo6MLEemOz6uYMhavJw" name="Create: TimeConstraint" description="Derived from: TransitionWithTimeConstraintGuard">
             <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.henshin#rule"/>
             <nodes xmi:id="_W-vTpKMLEemOz6uYMhavJw" name="transition" incomings="_W-vTqKMLEemOz6uYMhavJw">
@@ -545,8 +545,8 @@
           </graphs>
           <parameters xmi:id="_W-vTqqMLEemOz6uYMhavJw" name="transition"/>
           <parameters xmi:id="_W-vTq6MLEemOz6uYMhavJw" name="transitionName"/>
-        </subpatterns>
-        <subpatterns xmi:id="_W-vTrKMLEemOz6uYMhavJw" name="Delete: TimeConstraint">
+        </patterns>
+        <patterns xmi:id="_W-vTrKMLEemOz6uYMhavJw" name="Delete: TimeConstraint">
           <graphs xmi:id="_W-vTraMLEemOz6uYMhavJw" name="Delete: TimeConstraint" description="Derived from: TransitionWithTimeConstraintGuard">
             <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.henshin#rule"/>
             <nodes xmi:id="_W-vTrqMLEemOz6uYMhavJw" name="transition" incomings="_W-vTsqMLEemOz6uYMhavJw">
@@ -577,14 +577,14 @@
           <parameters xmi:id="_W-vTtKMLEemOz6uYMhavJw" name="transition"/>
           <parameters xmi:id="_W-vTtaMLEemOz6uYMhavJw" name="transitionName"/>
           <parameters xmi:id="_W-vTtqMLEemOz6uYMhavJw" name="timeConstraint"/>
-        </subpatterns>
-      </subpatterns>
-    </subpatterns>
-    <subpatterns xmi:id="_Ckb30KJPEemR1OcBKwie-w" name="[+]Effect">
-      <subpatterns xmi:id="_3ZgtBKJNEemR1OcBKwie-w" name="Activity" description="Derived from: TransitionWithActivityEffect">
+        </patterns>
+      </patterns>
+    </patterns>
+    <patterns xmi:id="_Ckb30KJPEemR1OcBKwie-w" name="[+]Effect">
+      <patterns xmi:id="_3ZgtBKJNEemR1OcBKwie-w" name="Activity" description="Derived from: TransitionWithActivityEffect">
         <graphs xmi:id="_3ZgtBaJNEemR1OcBKwie-w" name="Activity" description="Derived from: TransitionWithActivityEffect">
           <nodes xmi:id="_3ZgtBqJNEemR1OcBKwie-w" name="transition">
-            <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#require"/>
+            <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#exists"/>
             <outgoings xmi:id="_3ZgtB6JNEemR1OcBKwie-w" target="_3ZgtCaJNEemR1OcBKwie-w">
               <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Transition/effect"/>
             </outgoings>
@@ -603,7 +603,7 @@
         <parameters xmi:id="_3ZgtC6JNEemR1OcBKwie-w" name="transition"/>
         <parameters xmi:id="_3ZgtDKJNEemR1OcBKwie-w" name="transitionName"/>
         <parameters xmi:id="_3ZgtDaJNEemR1OcBKwie-w" name="activityEffect"/>
-        <subpatterns xmi:id="_W-vUJKMLEemOz6uYMhavJw" name="Create: Activity">
+        <patterns xmi:id="_W-vUJKMLEemOz6uYMhavJw" name="Create: Activity">
           <graphs xmi:id="_W-vUJaMLEemOz6uYMhavJw" name="Create: Activity" description="Derived from: TransitionWithActivityEffect">
             <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.henshin#rule"/>
             <nodes xmi:id="_W-vUJqMLEemOz6uYMhavJw" name="transition">
@@ -629,8 +629,8 @@
           </graphs>
           <parameters xmi:id="_W-vUK6MLEemOz6uYMhavJw" name="transition"/>
           <parameters xmi:id="_W-vULKMLEemOz6uYMhavJw" name="transitionName"/>
-        </subpatterns>
-        <subpatterns xmi:id="_W-vULaMLEemOz6uYMhavJw" name="Delete: Activity">
+        </patterns>
+        <patterns xmi:id="_W-vULaMLEemOz6uYMhavJw" name="Delete: Activity">
           <graphs xmi:id="_W-vULqMLEemOz6uYMhavJw" name="Delete: Activity" description="Derived from: TransitionWithActivityEffect">
             <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.henshin#rule"/>
             <nodes xmi:id="_W-vUL6MLEemOz6uYMhavJw" name="transition">
@@ -657,12 +657,12 @@
           <parameters xmi:id="_W-vUNKMLEemOz6uYMhavJw" name="transition"/>
           <parameters xmi:id="_W-vUNaMLEemOz6uYMhavJw" name="transitionName"/>
           <parameters xmi:id="_W-vUNqMLEemOz6uYMhavJw" name="activityEffect"/>
-        </subpatterns>
-      </subpatterns>
-      <subpatterns xmi:id="_3ZgtDqJNEemR1OcBKwie-w" name="FunctionBehavior" description="Derived from: TransitionWithFunctionBehaviorEffect">
+        </patterns>
+      </patterns>
+      <patterns xmi:id="_3ZgtDqJNEemR1OcBKwie-w" name="FunctionBehavior" description="Derived from: TransitionWithFunctionBehaviorEffect">
         <graphs xmi:id="_3ZgtD6JNEemR1OcBKwie-w" name="FunctionBehavior" description="Derived from: TransitionWithFunctionBehaviorEffect">
           <nodes xmi:id="_3ZgtEKJNEemR1OcBKwie-w" name="transition">
-            <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#require"/>
+            <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#exists"/>
             <outgoings xmi:id="_3ZgtEaJNEemR1OcBKwie-w" target="_3ZgtE6JNEemR1OcBKwie-w">
               <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Transition/effect"/>
             </outgoings>
@@ -681,7 +681,7 @@
         <parameters xmi:id="_3ZgtFaJNEemR1OcBKwie-w" name="transition"/>
         <parameters xmi:id="_3ZgtFqJNEemR1OcBKwie-w" name="transitionName"/>
         <parameters xmi:id="_3ZgtF6JNEemR1OcBKwie-w" name="functionBehaviorEffect"/>
-        <subpatterns xmi:id="_W-vT1qMLEemOz6uYMhavJw" name="Create: FunctionBehavior">
+        <patterns xmi:id="_W-vT1qMLEemOz6uYMhavJw" name="Create: FunctionBehavior">
           <graphs xmi:id="_W-vT16MLEemOz6uYMhavJw" name="Create: FunctionBehavior" description="Derived from: TransitionWithFunctionBehaviorEffect">
             <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.henshin#rule"/>
             <nodes xmi:id="_W-vT2KMLEemOz6uYMhavJw" name="transition">
@@ -707,8 +707,8 @@
           </graphs>
           <parameters xmi:id="_W-vT3aMLEemOz6uYMhavJw" name="transition"/>
           <parameters xmi:id="_W-vT3qMLEemOz6uYMhavJw" name="transitionName"/>
-        </subpatterns>
-        <subpatterns xmi:id="_W-vT36MLEemOz6uYMhavJw" name="Delete: FunctionBehavior">
+        </patterns>
+        <patterns xmi:id="_W-vT36MLEemOz6uYMhavJw" name="Delete: FunctionBehavior">
           <graphs xmi:id="_W-vT4KMLEemOz6uYMhavJw" name="Delete: FunctionBehavior" description="Derived from: TransitionWithFunctionBehaviorEffect">
             <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.henshin#rule"/>
             <nodes xmi:id="_W-vT4aMLEemOz6uYMhavJw" name="transition">
@@ -735,12 +735,12 @@
           <parameters xmi:id="_W-vT5qMLEemOz6uYMhavJw" name="transition"/>
           <parameters xmi:id="_W-vT56MLEemOz6uYMhavJw" name="transitionName"/>
           <parameters xmi:id="_W-vT6KMLEemOz6uYMhavJw" name="functionBehaviorEffect"/>
-        </subpatterns>
-      </subpatterns>
-      <subpatterns xmi:id="_3ZgtGKJNEemR1OcBKwie-w" name="Interaction" description="Derived from: TransitionWithInteractionEffect">
+        </patterns>
+      </patterns>
+      <patterns xmi:id="_3ZgtGKJNEemR1OcBKwie-w" name="Interaction" description="Derived from: TransitionWithInteractionEffect">
         <graphs xmi:id="_3ZgtGaJNEemR1OcBKwie-w" name="Interaction" description="Derived from: TransitionWithInteractionEffect">
           <nodes xmi:id="_3ZgtGqJNEemR1OcBKwie-w" name="transition">
-            <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#require"/>
+            <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#exists"/>
             <outgoings xmi:id="_3ZgtG6JNEemR1OcBKwie-w" target="_3ZgtHaJNEemR1OcBKwie-w">
               <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Transition/effect"/>
             </outgoings>
@@ -759,7 +759,7 @@
         <parameters xmi:id="_3ZgtH6JNEemR1OcBKwie-w" name="transition"/>
         <parameters xmi:id="_3ZgtIKJNEemR1OcBKwie-w" name="transitionName"/>
         <parameters xmi:id="_3ZgtIaJNEemR1OcBKwie-w" name="interactionEffect"/>
-        <subpatterns xmi:id="_W-vSxKMLEemOz6uYMhavJw" name="Create: Interaction">
+        <patterns xmi:id="_W-vSxKMLEemOz6uYMhavJw" name="Create: Interaction">
           <graphs xmi:id="_W-vSxaMLEemOz6uYMhavJw" name="Create: Interaction" description="Derived from: TransitionWithInteractionEffect">
             <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.henshin#rule"/>
             <nodes xmi:id="_W-vSxqMLEemOz6uYMhavJw" name="transition">
@@ -785,8 +785,8 @@
           </graphs>
           <parameters xmi:id="_W-vSy6MLEemOz6uYMhavJw" name="transition"/>
           <parameters xmi:id="_W-vSzKMLEemOz6uYMhavJw" name="transitionName"/>
-        </subpatterns>
-        <subpatterns xmi:id="_W-vSzaMLEemOz6uYMhavJw" name="Delete: Interaction">
+        </patterns>
+        <patterns xmi:id="_W-vSzaMLEemOz6uYMhavJw" name="Delete: Interaction">
           <graphs xmi:id="_W-vSzqMLEemOz6uYMhavJw" name="Delete: Interaction" description="Derived from: TransitionWithInteractionEffect">
             <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.henshin#rule"/>
             <nodes xmi:id="_W-vSz6MLEemOz6uYMhavJw" name="transition">
@@ -813,12 +813,12 @@
           <parameters xmi:id="_W-vS1KMLEemOz6uYMhavJw" name="transition"/>
           <parameters xmi:id="_W-vS1aMLEemOz6uYMhavJw" name="transitionName"/>
           <parameters xmi:id="_W-vS1qMLEemOz6uYMhavJw" name="interactionEffect"/>
-        </subpatterns>
-      </subpatterns>
-      <subpatterns xmi:id="_3ZgtIqJNEemR1OcBKwie-w" name="OpaqueBehavior" description="Derived from: TransitionWithOpaqueBehaviorEffect">
+        </patterns>
+      </patterns>
+      <patterns xmi:id="_3ZgtIqJNEemR1OcBKwie-w" name="OpaqueBehavior" description="Derived from: TransitionWithOpaqueBehaviorEffect">
         <graphs xmi:id="_3ZgtI6JNEemR1OcBKwie-w" name="OpaqueBehavior" description="Derived from: TransitionWithOpaqueBehaviorEffect">
           <nodes xmi:id="_3ZgtJKJNEemR1OcBKwie-w" name="transition">
-            <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#require"/>
+            <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#exists"/>
             <outgoings xmi:id="_3ZgtJaJNEemR1OcBKwie-w" target="_3ZgtJ6JNEemR1OcBKwie-w">
               <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Transition/effect"/>
             </outgoings>
@@ -837,7 +837,7 @@
         <parameters xmi:id="_3ZgtKaJNEemR1OcBKwie-w" name="transition"/>
         <parameters xmi:id="_3ZgtKqJNEemR1OcBKwie-w" name="transitionName"/>
         <parameters xmi:id="_3ZgtK6JNEemR1OcBKwie-w" name="opaqueBehaviorEffect"/>
-        <subpatterns xmi:id="_W-vUpaMLEemOz6uYMhavJw" name="Create: OpaqueBehavior">
+        <patterns xmi:id="_W-vUpaMLEemOz6uYMhavJw" name="Create: OpaqueBehavior">
           <graphs xmi:id="_W-vUpqMLEemOz6uYMhavJw" name="Create: OpaqueBehavior" description="Derived from: TransitionWithOpaqueBehaviorEffect">
             <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.henshin#rule"/>
             <nodes xmi:id="_W-vUp6MLEemOz6uYMhavJw" name="transition">
@@ -863,8 +863,8 @@
           </graphs>
           <parameters xmi:id="_W-vUrKMLEemOz6uYMhavJw" name="transition"/>
           <parameters xmi:id="_W-vUraMLEemOz6uYMhavJw" name="transitionName"/>
-        </subpatterns>
-        <subpatterns xmi:id="_W-vUrqMLEemOz6uYMhavJw" name="Delete: OpaqueBehavior">
+        </patterns>
+        <patterns xmi:id="_W-vUrqMLEemOz6uYMhavJw" name="Delete: OpaqueBehavior">
           <graphs xmi:id="_W-vUr6MLEemOz6uYMhavJw" name="Delete: OpaqueBehavior" description="Derived from: TransitionWithOpaqueBehaviorEffect">
             <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.henshin#rule"/>
             <nodes xmi:id="_W-vUsKMLEemOz6uYMhavJw" name="transition">
@@ -891,12 +891,12 @@
           <parameters xmi:id="_W-vUtaMLEemOz6uYMhavJw" name="transition"/>
           <parameters xmi:id="_W-vUtqMLEemOz6uYMhavJw" name="transitionName"/>
           <parameters xmi:id="_W-vUt6MLEemOz6uYMhavJw" name="opaqueBehaviorEffect"/>
-        </subpatterns>
-      </subpatterns>
-      <subpatterns xmi:id="_3ZgtLKJNEemR1OcBKwie-w" name="ProtocolStateMachineAndRegion" description="Derived from: TransitionWithProtocolStateMachineEffect">
+        </patterns>
+      </patterns>
+      <patterns xmi:id="_3ZgtLKJNEemR1OcBKwie-w" name="ProtocolStateMachineAndRegion" description="Derived from: TransitionWithProtocolStateMachineEffect">
         <graphs xmi:id="_3ZgtLaJNEemR1OcBKwie-w" name="ProtocolStateMachineAndRegion" description="Derived from: TransitionWithProtocolStateMachineEffect">
           <nodes xmi:id="_3ZgtLqJNEemR1OcBKwie-w" name="transition">
-            <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#require"/>
+            <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#exists"/>
             <outgoings xmi:id="_3ZgtL6JNEemR1OcBKwie-w" target="_3ZgtMaJNEemR1OcBKwie-w">
               <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Transition/effect"/>
             </outgoings>
@@ -928,7 +928,7 @@
         <parameters xmi:id="_3ZgtOKJNEemR1OcBKwie-w" name="transitionName"/>
         <parameters xmi:id="_3ZgtOaJNEemR1OcBKwie-w" name="protocolStateMachineEffect"/>
         <parameters xmi:id="_3ZgtOqJNEemR1OcBKwie-w" name="protocolStateMachineEffectRegion"/>
-        <subpatterns xmi:id="_W-vSc6MLEemOz6uYMhavJw" name="Create: ProtocolStateMachineAndRegion">
+        <patterns xmi:id="_W-vSc6MLEemOz6uYMhavJw" name="Create: ProtocolStateMachineAndRegion">
           <graphs xmi:id="_W-vSdKMLEemOz6uYMhavJw" name="Create: ProtocolStateMachineAndRegion" description="Derived from: TransitionWithProtocolStateMachineEffect">
             <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.henshin#rule"/>
             <nodes xmi:id="_W-vSdaMLEemOz6uYMhavJw" name="transition">
@@ -970,8 +970,8 @@
           </graphs>
           <parameters xmi:id="_W-vSfqMLEemOz6uYMhavJw" name="transition"/>
           <parameters xmi:id="_W-vSf6MLEemOz6uYMhavJw" name="transitionName"/>
-        </subpatterns>
-        <subpatterns xmi:id="_W-vSgKMLEemOz6uYMhavJw" name="Delete: ProtocolStateMachineAndRegion">
+        </patterns>
+        <patterns xmi:id="_W-vSgKMLEemOz6uYMhavJw" name="Delete: ProtocolStateMachineAndRegion">
           <graphs xmi:id="_W-vSgaMLEemOz6uYMhavJw" name="Delete: ProtocolStateMachineAndRegion" description="Derived from: TransitionWithProtocolStateMachineEffect">
             <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.henshin#rule"/>
             <nodes xmi:id="_W-vSgqMLEemOz6uYMhavJw" name="transition">
@@ -1015,12 +1015,12 @@
           <parameters xmi:id="_W-vSjKMLEemOz6uYMhavJw" name="transitionName"/>
           <parameters xmi:id="_W-vSjaMLEemOz6uYMhavJw" name="protocolStateMachineEffect"/>
           <parameters xmi:id="_W-vSjqMLEemOz6uYMhavJw" name="protocolStateMachineEffectRegion"/>
-        </subpatterns>
-      </subpatterns>
-      <subpatterns xmi:id="_3ZgtO6JNEemR1OcBKwie-w" name="RegionAndStateMachine" description="Derived from: TransitionWithStateMachineEffect">
+        </patterns>
+      </patterns>
+      <patterns xmi:id="_3ZgtO6JNEemR1OcBKwie-w" name="RegionAndStateMachine" description="Derived from: TransitionWithStateMachineEffect">
         <graphs xmi:id="_3ZgtPKJNEemR1OcBKwie-w" name="RegionAndStateMachine" description="Derived from: TransitionWithStateMachineEffect">
           <nodes xmi:id="_3ZgtPaJNEemR1OcBKwie-w" name="transition">
-            <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#require"/>
+            <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#exists"/>
             <outgoings xmi:id="_3ZgtPqJNEemR1OcBKwie-w" target="_3ZgtQKJNEemR1OcBKwie-w">
               <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Transition/effect"/>
             </outgoings>
@@ -1052,7 +1052,7 @@
         <parameters xmi:id="_3ZgtR6JNEemR1OcBKwie-w" name="transitionName"/>
         <parameters xmi:id="_3ZgtSKJNEemR1OcBKwie-w" name="stateMachineEffect"/>
         <parameters xmi:id="_3ZgtSaJNEemR1OcBKwie-w" name="stateMachineEffectRegion"/>
-        <subpatterns xmi:id="_W-urZ6MLEemOz6uYMhavJw" name="Create: RegionAndStateMachine">
+        <patterns xmi:id="_W-urZ6MLEemOz6uYMhavJw" name="Create: RegionAndStateMachine">
           <graphs xmi:id="_W-uraKMLEemOz6uYMhavJw" name="Create: RegionAndStateMachine" description="Derived from: TransitionWithStateMachineEffect">
             <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.henshin#rule"/>
             <nodes xmi:id="_W-uraaMLEemOz6uYMhavJw" name="transition">
@@ -1094,8 +1094,8 @@
           </graphs>
           <parameters xmi:id="_W-vSYqMLEemOz6uYMhavJw" name="transition"/>
           <parameters xmi:id="_W-vSY6MLEemOz6uYMhavJw" name="transitionName"/>
-        </subpatterns>
-        <subpatterns xmi:id="_W-vSZKMLEemOz6uYMhavJw" name="Delete: RegionAndStateMachine">
+        </patterns>
+        <patterns xmi:id="_W-vSZKMLEemOz6uYMhavJw" name="Delete: RegionAndStateMachine">
           <graphs xmi:id="_W-vSZaMLEemOz6uYMhavJw" name="Delete: RegionAndStateMachine" description="Derived from: TransitionWithStateMachineEffect">
             <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.henshin#rule"/>
             <nodes xmi:id="_W-vSZqMLEemOz6uYMhavJw" name="transition">
@@ -1139,14 +1139,14 @@
           <parameters xmi:id="_W-vScKMLEemOz6uYMhavJw" name="transitionName"/>
           <parameters xmi:id="_W-vScaMLEemOz6uYMhavJw" name="stateMachineEffect"/>
           <parameters xmi:id="_W-vScqMLEemOz6uYMhavJw" name="stateMachineEffectRegion"/>
-        </subpatterns>
-      </subpatterns>
-    </subpatterns>
-    <subpatterns xmi:id="_FrDDcKJPEemR1OcBKwie-w" name="[+]Trigger">
-      <subpatterns xmi:id="_3ZgtgaJNEemR1OcBKwie-w" name="AnyReceiveEvent" description="Derived from: TransitionWithAnyReveiveEventTrigger">
+        </patterns>
+      </patterns>
+    </patterns>
+    <patterns xmi:id="_FrDDcKJPEemR1OcBKwie-w" name="[+]Trigger">
+      <patterns xmi:id="_3ZgtgaJNEemR1OcBKwie-w" name="AnyReceiveEvent" description="Derived from: TransitionWithAnyReveiveEventTrigger">
         <graphs xmi:id="_3ZgtgqJNEemR1OcBKwie-w" name="AnyReceiveEvent" description="Derived from: TransitionWithAnyReveiveEventTrigger">
           <nodes xmi:id="_3Zgtg6JNEemR1OcBKwie-w" name="transition">
-            <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#require"/>
+            <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#exists"/>
             <outgoings xmi:id="_3ZgthKJNEemR1OcBKwie-w" target="_3ZgthqJNEemR1OcBKwie-w">
               <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Transition/trigger"/>
             </outgoings>
@@ -1165,7 +1165,7 @@
             </attributes>
           </nodes>
           <nodes xmi:id="_3ZgtiaJNEemR1OcBKwie-w" name="anyReceiveEvent" incomings="_3Zgth6JNEemR1OcBKwie-w">
-            <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#require"/>
+            <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#exists"/>
             <type href="http://www.eclipse.org/uml2/5.0.0/UML#//AnyReceiveEvent"/>
             <attributes xmi:id="_3ZgtiqJNEemR1OcBKwie-w" value="eventName + &quot;AnyReveiveEvent&quot;">
               <type href="http://www.eclipse.org/uml2/5.0.0/UML#//NamedElement/name"/>
@@ -1176,7 +1176,7 @@
         <parameters xmi:id="_3ZgtjKJNEemR1OcBKwie-w" name="eventName"/>
         <parameters xmi:id="_3ZgtjaJNEemR1OcBKwie-w" name="trigger"/>
         <parameters xmi:id="_3ZgtjqJNEemR1OcBKwie-w" name="anyReceiveEvent"/>
-        <subpatterns xmi:id="_W-vUiqMLEemOz6uYMhavJw" name="Create: AnyReceiveEvent">
+        <patterns xmi:id="_W-vUiqMLEemOz6uYMhavJw" name="Create: AnyReceiveEvent">
           <graphs xmi:id="_W-vUi6MLEemOz6uYMhavJw" name="Create: AnyReceiveEvent" description="Derived from: TransitionWithAnyReveiveEventTrigger">
             <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.henshin#rule"/>
             <nodes xmi:id="_W-vUjKMLEemOz6uYMhavJw" name="transition">
@@ -1215,8 +1215,8 @@
           <parameters xmi:id="_W-vUlKMLEemOz6uYMhavJw" name="transition"/>
           <parameters xmi:id="_W-vUlaMLEemOz6uYMhavJw" name="eventName"/>
           <parameters xmi:id="_W-vUlqMLEemOz6uYMhavJw" name="anyReceiveEvent"/>
-        </subpatterns>
-        <subpatterns xmi:id="_W-vUl6MLEemOz6uYMhavJw" name="Delete: AnyReceiveEvent">
+        </patterns>
+        <patterns xmi:id="_W-vUl6MLEemOz6uYMhavJw" name="Delete: AnyReceiveEvent">
           <graphs xmi:id="_W-vUmKMLEemOz6uYMhavJw" name="Delete: AnyReceiveEvent" description="Derived from: TransitionWithAnyReveiveEventTrigger">
             <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.henshin#rule"/>
             <nodes xmi:id="_W-vUmaMLEemOz6uYMhavJw" name="transition">
@@ -1256,12 +1256,12 @@
           <parameters xmi:id="_W-vUoqMLEemOz6uYMhavJw" name="eventName"/>
           <parameters xmi:id="_W-vUo6MLEemOz6uYMhavJw" name="trigger"/>
           <parameters xmi:id="_W-vUpKMLEemOz6uYMhavJw" name="anyReceiveEvent"/>
-        </subpatterns>
-      </subpatterns>
-      <subpatterns xmi:id="_3Zgtj6JNEemR1OcBKwie-w" name="CallEvent" description="Derived from: TransitionWithCallEventTrigger">
+        </patterns>
+      </patterns>
+      <patterns xmi:id="_3Zgtj6JNEemR1OcBKwie-w" name="CallEvent" description="Derived from: TransitionWithCallEventTrigger">
         <graphs xmi:id="_3ZgtkKJNEemR1OcBKwie-w" name="CallEvent" description="Derived from: TransitionWithCallEventTrigger">
           <nodes xmi:id="_3ZgtkaJNEemR1OcBKwie-w" name="transition">
-            <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#require"/>
+            <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#exists"/>
             <outgoings xmi:id="_3ZgtkqJNEemR1OcBKwie-w" target="_3ZgtlKJNEemR1OcBKwie-w">
               <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Transition/trigger"/>
             </outgoings>
@@ -1280,7 +1280,7 @@
             </attributes>
           </nodes>
           <nodes xmi:id="_3Zgtl6JNEemR1OcBKwie-w" name="callEvent" incomings="_3ZgtlaJNEemR1OcBKwie-w">
-            <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#require"/>
+            <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#exists"/>
             <outgoings xmi:id="_3ZgtmKJNEemR1OcBKwie-w" target="_3ZgtmqJNEemR1OcBKwie-w">
               <type href="http://www.eclipse.org/uml2/5.0.0/UML#//CallEvent/operation"/>
             </outgoings>
@@ -1290,7 +1290,7 @@
             </attributes>
           </nodes>
           <nodes xmi:id="_3ZgtmqJNEemR1OcBKwie-w" name="calledOperation" incomings="_3ZgtmKJNEemR1OcBKwie-w">
-            <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#require"/>
+            <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#exists"/>
             <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Operation"/>
             <attributes xmi:id="_3Zgtm6JNEemR1OcBKwie-w" value="eventName">
               <type href="http://www.eclipse.org/uml2/5.0.0/UML#//NamedElement/name"/>
@@ -1302,7 +1302,7 @@
         <parameters xmi:id="_3ZgtnqJNEemR1OcBKwie-w" name="trigger"/>
         <parameters xmi:id="_3Zgtn6JNEemR1OcBKwie-w" name="callEvent"/>
         <parameters xmi:id="_3ZgtoKJNEemR1OcBKwie-w" name="calledOperation"/>
-        <subpatterns xmi:id="_W-vUZ6MLEemOz6uYMhavJw" name="Create: CallEvent">
+        <patterns xmi:id="_W-vUZ6MLEemOz6uYMhavJw" name="Create: CallEvent">
           <graphs xmi:id="_W-vUaKMLEemOz6uYMhavJw" name="Create: CallEvent" description="Derived from: TransitionWithCallEventTrigger">
             <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.henshin#rule"/>
             <nodes xmi:id="_W-vUaaMLEemOz6uYMhavJw" name="transition">
@@ -1354,8 +1354,8 @@
           <parameters xmi:id="_W-vUdaMLEemOz6uYMhavJw" name="eventName"/>
           <parameters xmi:id="_W-vUdqMLEemOz6uYMhavJw" name="callEvent"/>
           <parameters xmi:id="_W-vUd6MLEemOz6uYMhavJw" name="calledOperation"/>
-        </subpatterns>
-        <subpatterns xmi:id="_W-vUeKMLEemOz6uYMhavJw" name="Delete: CallEvent">
+        </patterns>
+        <patterns xmi:id="_W-vUeKMLEemOz6uYMhavJw" name="Delete: CallEvent">
           <graphs xmi:id="_W-vUeaMLEemOz6uYMhavJw" name="Delete: CallEvent" description="Derived from: TransitionWithCallEventTrigger">
             <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.henshin#rule"/>
             <nodes xmi:id="_W-vUeqMLEemOz6uYMhavJw" name="transition">
@@ -1408,12 +1408,12 @@
           <parameters xmi:id="_W-vUh6MLEemOz6uYMhavJw" name="trigger"/>
           <parameters xmi:id="_W-vUiKMLEemOz6uYMhavJw" name="callEvent"/>
           <parameters xmi:id="_W-vUiaMLEemOz6uYMhavJw" name="calledOperation"/>
-        </subpatterns>
-      </subpatterns>
-      <subpatterns xmi:id="_3ZgtoaJNEemR1OcBKwie-w" name="ChangeEvent" description="Derived from: TransitionWithChangeEventTrigger">
+        </patterns>
+      </patterns>
+      <patterns xmi:id="_3ZgtoaJNEemR1OcBKwie-w" name="ChangeEvent" description="Derived from: TransitionWithChangeEventTrigger">
         <graphs xmi:id="_3ZgtoqJNEemR1OcBKwie-w" name="ChangeEvent" description="Derived from: TransitionWithChangeEventTrigger">
           <nodes xmi:id="_3Zgto6JNEemR1OcBKwie-w" name="transition">
-            <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#require"/>
+            <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#exists"/>
             <outgoings xmi:id="_3ZgtpKJNEemR1OcBKwie-w" target="_3ZgtpqJNEemR1OcBKwie-w">
               <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Transition/trigger"/>
             </outgoings>
@@ -1432,7 +1432,7 @@
             </attributes>
           </nodes>
           <nodes xmi:id="_3ZgtqaJNEemR1OcBKwie-w" name="changeEvent" incomings="_3Zgtp6JNEemR1OcBKwie-w">
-            <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#require"/>
+            <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#exists"/>
             <type href="http://www.eclipse.org/uml2/5.0.0/UML#//ChangeEvent"/>
             <attributes xmi:id="_3ZgtqqJNEemR1OcBKwie-w" value="eventName + &quot;ChangeEvent&quot;">
               <type href="http://www.eclipse.org/uml2/5.0.0/UML#//NamedElement/name"/>
@@ -1443,7 +1443,7 @@
         <parameters xmi:id="_3ZgtrKJNEemR1OcBKwie-w" name="eventName"/>
         <parameters xmi:id="_3ZgtraJNEemR1OcBKwie-w" name="trigger"/>
         <parameters xmi:id="_3ZgtrqJNEemR1OcBKwie-w" name="changeEvent"/>
-        <subpatterns xmi:id="_W-vUN6MLEemOz6uYMhavJw" name="Create: ChangeEvent">
+        <patterns xmi:id="_W-vUN6MLEemOz6uYMhavJw" name="Create: ChangeEvent">
           <graphs xmi:id="_W-vUOKMLEemOz6uYMhavJw" name="Create: ChangeEvent" description="Derived from: TransitionWithChangeEventTrigger">
             <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.henshin#rule"/>
             <nodes xmi:id="_W-vUOaMLEemOz6uYMhavJw" name="transition">
@@ -1482,8 +1482,8 @@
           <parameters xmi:id="_W-vUQaMLEemOz6uYMhavJw" name="transition"/>
           <parameters xmi:id="_W-vUQqMLEemOz6uYMhavJw" name="eventName"/>
           <parameters xmi:id="_W-vUQ6MLEemOz6uYMhavJw" name="changeEvent"/>
-        </subpatterns>
-        <subpatterns xmi:id="_W-vURKMLEemOz6uYMhavJw" name="Delete: ChangeEvent">
+        </patterns>
+        <patterns xmi:id="_W-vURKMLEemOz6uYMhavJw" name="Delete: ChangeEvent">
           <graphs xmi:id="_W-vURaMLEemOz6uYMhavJw" name="Delete: ChangeEvent" description="Derived from: TransitionWithChangeEventTrigger">
             <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.henshin#rule"/>
             <nodes xmi:id="_W-vURqMLEemOz6uYMhavJw" name="transition">
@@ -1523,12 +1523,12 @@
           <parameters xmi:id="_W-vUT6MLEemOz6uYMhavJw" name="eventName"/>
           <parameters xmi:id="_W-vUUKMLEemOz6uYMhavJw" name="trigger"/>
           <parameters xmi:id="_W-vUUaMLEemOz6uYMhavJw" name="changeEvent"/>
-        </subpatterns>
-      </subpatterns>
-      <subpatterns xmi:id="_3Zgtr6JNEemR1OcBKwie-w" name="SignalEvent" description="Derived from: TransitionWithSignalEventTrigger">
+        </patterns>
+      </patterns>
+      <patterns xmi:id="_3Zgtr6JNEemR1OcBKwie-w" name="SignalEvent" description="Derived from: TransitionWithSignalEventTrigger">
         <graphs xmi:id="_3ZgtsKJNEemR1OcBKwie-w" name="SignalEvent" description="Derived from: TransitionWithSignalEventTrigger">
           <nodes xmi:id="_3ZgtsaJNEemR1OcBKwie-w" name="transition">
-            <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#require"/>
+            <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#exists"/>
             <outgoings xmi:id="_3ZgtsqJNEemR1OcBKwie-w" target="_3ZgttKJNEemR1OcBKwie-w">
               <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Transition/trigger"/>
             </outgoings>
@@ -1547,7 +1547,7 @@
             </attributes>
           </nodes>
           <nodes xmi:id="_3Zgtt6JNEemR1OcBKwie-w" name="signalEvent" incomings="_3ZgttaJNEemR1OcBKwie-w">
-            <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#require"/>
+            <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#exists"/>
             <outgoings xmi:id="_3ZgtuKJNEemR1OcBKwie-w" target="_3ZgtuqJNEemR1OcBKwie-w">
               <type href="http://www.eclipse.org/uml2/5.0.0/UML#//SignalEvent/signal"/>
             </outgoings>
@@ -1557,7 +1557,7 @@
             </attributes>
           </nodes>
           <nodes xmi:id="_3ZgtuqJNEemR1OcBKwie-w" name="signal" incomings="_3ZgtuKJNEemR1OcBKwie-w">
-            <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#require"/>
+            <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#exists"/>
             <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Signal"/>
             <attributes xmi:id="_3Zgtu6JNEemR1OcBKwie-w" value="eventName + &quot;Signal&quot;">
               <type href="http://www.eclipse.org/uml2/5.0.0/UML#//NamedElement/name"/>
@@ -1569,7 +1569,7 @@
         <parameters xmi:id="_3ZgtvqJNEemR1OcBKwie-w" name="trigger"/>
         <parameters xmi:id="_3Zgtv6JNEemR1OcBKwie-w" name="signalEvent"/>
         <parameters xmi:id="_3ZgtwKJNEemR1OcBKwie-w" name="signal"/>
-        <subpatterns xmi:id="_W-vTFaMLEemOz6uYMhavJw" name="Create: SignalEvent">
+        <patterns xmi:id="_W-vTFaMLEemOz6uYMhavJw" name="Create: SignalEvent">
           <graphs xmi:id="_W-vTFqMLEemOz6uYMhavJw" name="Create: SignalEvent" description="Derived from: TransitionWithSignalEventTrigger">
             <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.henshin#rule"/>
             <nodes xmi:id="_W-vTF6MLEemOz6uYMhavJw" name="transition">
@@ -1621,8 +1621,8 @@
           <parameters xmi:id="_W-vTI6MLEemOz6uYMhavJw" name="eventName"/>
           <parameters xmi:id="_W-vTJKMLEemOz6uYMhavJw" name="signalEvent"/>
           <parameters xmi:id="_W-vTJaMLEemOz6uYMhavJw" name="signal"/>
-        </subpatterns>
-        <subpatterns xmi:id="_W-vTJqMLEemOz6uYMhavJw" name="Delete: SignalEvent">
+        </patterns>
+        <patterns xmi:id="_W-vTJqMLEemOz6uYMhavJw" name="Delete: SignalEvent">
           <graphs xmi:id="_W-vTJ6MLEemOz6uYMhavJw" name="Delete: SignalEvent" description="Derived from: TransitionWithSignalEventTrigger">
             <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.henshin#rule"/>
             <nodes xmi:id="_W-vTKKMLEemOz6uYMhavJw" name="transition">
@@ -1675,12 +1675,12 @@
           <parameters xmi:id="_W-vTNaMLEemOz6uYMhavJw" name="trigger"/>
           <parameters xmi:id="_W-vTNqMLEemOz6uYMhavJw" name="signalEvent"/>
           <parameters xmi:id="_W-vTN6MLEemOz6uYMhavJw" name="signal"/>
-        </subpatterns>
-      </subpatterns>
-      <subpatterns xmi:id="_3ZgtwaJNEemR1OcBKwie-w" name="TimeEvent" description="Derived from: TransitionWithTimeEventTrigger">
+        </patterns>
+      </patterns>
+      <patterns xmi:id="_3ZgtwaJNEemR1OcBKwie-w" name="TimeEvent" description="Derived from: TransitionWithTimeEventTrigger">
         <graphs xmi:id="_3ZgtwqJNEemR1OcBKwie-w" name="TimeEvent" description="Derived from: TransitionWithTimeEventTrigger">
           <nodes xmi:id="_3Zgtw6JNEemR1OcBKwie-w" name="transition">
-            <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#require"/>
+            <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#exists"/>
             <outgoings xmi:id="_3ZgtxKJNEemR1OcBKwie-w" target="_3ZgtxqJNEemR1OcBKwie-w">
               <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Transition/trigger"/>
             </outgoings>
@@ -1699,14 +1699,14 @@
             </attributes>
           </nodes>
           <nodes xmi:id="_3ZgtyaJNEemR1OcBKwie-w" name="eventTime" incomings="_3ZgtzKJNEemR1OcBKwie-w">
-            <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#require"/>
+            <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#exists"/>
             <type href="http://www.eclipse.org/uml2/5.0.0/UML#//TimeExpression"/>
             <attributes xmi:id="_3ZgtyqJNEemR1OcBKwie-w" value="eventName + &quot;EventTime&quot;">
               <type href="http://www.eclipse.org/uml2/5.0.0/UML#//NamedElement/name"/>
             </attributes>
           </nodes>
           <nodes xmi:id="_3Zgty6JNEemR1OcBKwie-w" name="timeEvent" incomings="_3Zgtx6JNEemR1OcBKwie-w">
-            <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#require"/>
+            <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#exists"/>
             <outgoings xmi:id="_3ZgtzKJNEemR1OcBKwie-w" target="_3ZgtyaJNEemR1OcBKwie-w">
               <type href="http://www.eclipse.org/uml2/5.0.0/UML#//TimeEvent/when"/>
             </outgoings>
@@ -1721,7 +1721,7 @@
         <parameters xmi:id="_3Zgt0KJNEemR1OcBKwie-w" name="trigger"/>
         <parameters xmi:id="_3Zgt0aJNEemR1OcBKwie-w" name="eventTime"/>
         <parameters xmi:id="_3Zgt0qJNEemR1OcBKwie-w" name="timeEvent"/>
-        <subpatterns xmi:id="_W-vTTaMLEemOz6uYMhavJw" name="Create: TimeEvent">
+        <patterns xmi:id="_W-vTTaMLEemOz6uYMhavJw" name="Create: TimeEvent">
           <graphs xmi:id="_W-vTTqMLEemOz6uYMhavJw" name="Create: TimeEvent" description="Derived from: TransitionWithTimeEventTrigger">
             <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.henshin#rule"/>
             <nodes xmi:id="_W-vTT6MLEemOz6uYMhavJw" name="transition">
@@ -1773,8 +1773,8 @@
           <parameters xmi:id="_W-vTW6MLEemOz6uYMhavJw" name="eventName"/>
           <parameters xmi:id="_W-vTXKMLEemOz6uYMhavJw" name="eventTime"/>
           <parameters xmi:id="_W-vTXaMLEemOz6uYMhavJw" name="timeEvent"/>
-        </subpatterns>
-        <subpatterns xmi:id="_W-vTXqMLEemOz6uYMhavJw" name="Delete: TimeEvent">
+        </patterns>
+        <patterns xmi:id="_W-vTXqMLEemOz6uYMhavJw" name="Delete: TimeEvent">
           <graphs xmi:id="_W-vTX6MLEemOz6uYMhavJw" name="Delete: TimeEvent" description="Derived from: TransitionWithTimeEventTrigger">
             <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.henshin#rule"/>
             <nodes xmi:id="_W-vTYKMLEemOz6uYMhavJw" name="transition">
@@ -1827,15 +1827,15 @@
           <parameters xmi:id="_W-vTbaMLEemOz6uYMhavJw" name="trigger"/>
           <parameters xmi:id="_W-vTbqMLEemOz6uYMhavJw" name="eventTime"/>
           <parameters xmi:id="_W-vTb6MLEemOz6uYMhavJw" name="timeEvent"/>
-        </subpatterns>
-      </subpatterns>
-    </subpatterns>
+        </patterns>
+      </patterns>
+    </patterns>
   </patterns>
   <patterns xmi:id="_3Zgt06JNEemR1OcBKwie-w" name="[+]InProtocolStateMachine">
-    <subpatterns xmi:id="_3Zgt1KJNEemR1OcBKwie-w" name="Region" description="Derived from: TransitionWithProtocolStateMachineEffect">
+    <patterns xmi:id="_3Zgt1KJNEemR1OcBKwie-w" name="Region" description="Derived from: TransitionWithProtocolStateMachineEffect">
       <graphs xmi:id="_3Zgt1aJNEemR1OcBKwie-w" name="Region" description="Derived from: TransitionWithProtocolStateMachineEffect">
         <nodes xmi:id="_3Zgt1qJNEemR1OcBKwie-w" name="protocolStateMachineEffect" incomings="_3Zgt2qJNEemR1OcBKwie-w">
-          <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#require"/>
+          <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#exists"/>
           <outgoings xmi:id="_3Zgt16JNEemR1OcBKwie-w" target="_3Zgt2aJNEemR1OcBKwie-w" opposite="_3Zgt2qJNEemR1OcBKwie-w">
             <type href="http://www.eclipse.org/uml2/5.0.0/UML#//StateMachine/region"/>
           </outgoings>
@@ -1857,7 +1857,7 @@
       <parameters xmi:id="_3Zgt3KJNEemR1OcBKwie-w" name="protocolStateMachineEffect"/>
       <parameters xmi:id="_3Zgt3aJNEemR1OcBKwie-w" name="transitionName"/>
       <parameters xmi:id="_3Zgt3qJNEemR1OcBKwie-w" name="protocolStateMachineEffectRegion"/>
-      <subpatterns xmi:id="_W-vUD6MLEemOz6uYMhavJw" name="Create: Region">
+      <patterns xmi:id="_W-vUD6MLEemOz6uYMhavJw" name="Create: Region">
         <graphs xmi:id="_W-vUEKMLEemOz6uYMhavJw" name="Create: Region" description="Derived from: TransitionWithProtocolStateMachineEffect">
           <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.henshin#rule"/>
           <nodes xmi:id="_W-vUEaMLEemOz6uYMhavJw" name="protocolStateMachineEffect" incomings="_W-vUFaMLEemOz6uYMhavJw">
@@ -1887,8 +1887,8 @@
         </graphs>
         <parameters xmi:id="_W-vUF6MLEemOz6uYMhavJw" name="protocolStateMachineEffect"/>
         <parameters xmi:id="_W-vUGKMLEemOz6uYMhavJw" name="transitionName"/>
-      </subpatterns>
-      <subpatterns xmi:id="_W-vUGaMLEemOz6uYMhavJw" name="Delete: Region">
+      </patterns>
+      <patterns xmi:id="_W-vUGaMLEemOz6uYMhavJw" name="Delete: Region">
         <graphs xmi:id="_W-vUGqMLEemOz6uYMhavJw" name="Delete: Region" description="Derived from: TransitionWithProtocolStateMachineEffect">
           <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.henshin#rule"/>
           <nodes xmi:id="_W-vUG6MLEemOz6uYMhavJw" name="protocolStateMachineEffect" incomings="_W-vUH6MLEemOz6uYMhavJw">
@@ -1919,14 +1919,14 @@
         <parameters xmi:id="_W-vUIaMLEemOz6uYMhavJw" name="protocolStateMachineEffect"/>
         <parameters xmi:id="_W-vUIqMLEemOz6uYMhavJw" name="transitionName"/>
         <parameters xmi:id="_W-vUI6MLEemOz6uYMhavJw" name="protocolStateMachineEffectRegion"/>
-      </subpatterns>
-    </subpatterns>
+      </patterns>
+    </patterns>
   </patterns>
   <patterns xmi:id="_3Zgt36JNEemR1OcBKwie-w" name="[+]InStateMachine">
-    <subpatterns xmi:id="_3Zgt4KJNEemR1OcBKwie-w" name="Region" description="Derived from: TransitionWithStateMachineEffect">
+    <patterns xmi:id="_3Zgt4KJNEemR1OcBKwie-w" name="Region" description="Derived from: TransitionWithStateMachineEffect">
       <graphs xmi:id="_3Zgt4aJNEemR1OcBKwie-w" name="Region" description="Derived from: TransitionWithStateMachineEffect">
         <nodes xmi:id="_3Zgt4qJNEemR1OcBKwie-w" name="stateMachineEffect" incomings="_3Zgt5qJNEemR1OcBKwie-w">
-          <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#require"/>
+          <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#exists"/>
           <outgoings xmi:id="_3Zgt46JNEemR1OcBKwie-w" target="_3Zgt5aJNEemR1OcBKwie-w" opposite="_3Zgt5qJNEemR1OcBKwie-w">
             <type href="http://www.eclipse.org/uml2/5.0.0/UML#//StateMachine/region"/>
           </outgoings>
@@ -1948,7 +1948,7 @@
       <parameters xmi:id="_3Zgt6KJNEemR1OcBKwie-w" name="stateMachineEffect"/>
       <parameters xmi:id="_3Zgt6aJNEemR1OcBKwie-w" name="transitionName"/>
       <parameters xmi:id="_3Zgt6qJNEemR1OcBKwie-w" name="stateMachineEffectRegion"/>
-      <subpatterns xmi:id="_W-vTAKMLEemOz6uYMhavJw" name="Create: Region">
+      <patterns xmi:id="_W-vTAKMLEemOz6uYMhavJw" name="Create: Region">
         <graphs xmi:id="_W-vTAaMLEemOz6uYMhavJw" name="Create: Region" description="Derived from: TransitionWithStateMachineEffect">
           <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.henshin#rule"/>
           <nodes xmi:id="_W-vTAqMLEemOz6uYMhavJw" name="stateMachineEffect" incomings="_W-vTBqMLEemOz6uYMhavJw">
@@ -1978,8 +1978,8 @@
         </graphs>
         <parameters xmi:id="_W-vTCKMLEemOz6uYMhavJw" name="stateMachineEffect"/>
         <parameters xmi:id="_W-vTCaMLEemOz6uYMhavJw" name="transitionName"/>
-      </subpatterns>
-      <subpatterns xmi:id="_W-vTCqMLEemOz6uYMhavJw" name="Delete: Region">
+      </patterns>
+      <patterns xmi:id="_W-vTCqMLEemOz6uYMhavJw" name="Delete: Region">
         <graphs xmi:id="_W-vTC6MLEemOz6uYMhavJw" name="Delete: Region" description="Derived from: TransitionWithStateMachineEffect">
           <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.henshin#rule"/>
           <nodes xmi:id="_W-vTDKMLEemOz6uYMhavJw" name="stateMachineEffect" incomings="_W-vTEKMLEemOz6uYMhavJw">
@@ -2010,12 +2010,12 @@
         <parameters xmi:id="_W-vTEqMLEemOz6uYMhavJw" name="stateMachineEffect"/>
         <parameters xmi:id="_W-vTE6MLEemOz6uYMhavJw" name="transitionName"/>
         <parameters xmi:id="_W-vTFKMLEemOz6uYMhavJw" name="stateMachineEffectRegion"/>
-      </subpatterns>
-    </subpatterns>
-    <subpatterns xmi:id="_3Zgt66JNEemR1OcBKwie-w" name="Signal" description="Derived from: TransitionWithSignalEventTrigger">
+      </patterns>
+    </patterns>
+    <patterns xmi:id="_3Zgt66JNEemR1OcBKwie-w" name="Signal" description="Derived from: TransitionWithSignalEventTrigger">
       <graphs xmi:id="_3Zgt7KJNEemR1OcBKwie-w" name="Signal" description="Derived from: TransitionWithSignalEventTrigger">
         <nodes xmi:id="_3Zgt7aJNEemR1OcBKwie-w" name="stateMachine">
-          <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#require"/>
+          <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#exists"/>
           <outgoings xmi:id="_3Zgt7qJNEemR1OcBKwie-w" target="_3Zgt76JNEemR1OcBKwie-w">
             <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Class/nestedClassifier"/>
           </outgoings>
@@ -2031,7 +2031,7 @@
       <parameters xmi:id="_3Zgt8aJNEemR1OcBKwie-w" name="stateMachine"/>
       <parameters xmi:id="_3Zgt8qJNEemR1OcBKwie-w" name="signal"/>
       <parameters xmi:id="_3Zgt86JNEemR1OcBKwie-w" name="eventName"/>
-      <subpatterns xmi:id="_W-vT6aMLEemOz6uYMhavJw" name="Create: Signal">
+      <patterns xmi:id="_W-vT6aMLEemOz6uYMhavJw" name="Create: Signal">
         <graphs xmi:id="_W-vT6qMLEemOz6uYMhavJw" name="Create: Signal" description="Derived from: TransitionWithSignalEventTrigger">
           <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.henshin#rule"/>
           <nodes xmi:id="_W-vT66MLEemOz6uYMhavJw" name="stateMachine">
@@ -2053,8 +2053,8 @@
         </graphs>
         <parameters xmi:id="_W-vT76MLEemOz6uYMhavJw" name="stateMachine"/>
         <parameters xmi:id="_W-vT8KMLEemOz6uYMhavJw" name="eventName"/>
-      </subpatterns>
-      <subpatterns xmi:id="_W-vT8aMLEemOz6uYMhavJw" name="Delete: Signal">
+      </patterns>
+      <patterns xmi:id="_W-vT8aMLEemOz6uYMhavJw" name="Delete: Signal">
         <graphs xmi:id="_W-vT8qMLEemOz6uYMhavJw" name="Delete: Signal" description="Derived from: TransitionWithSignalEventTrigger">
           <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.henshin#rule"/>
           <nodes xmi:id="_W-vT86MLEemOz6uYMhavJw" name="stateMachine">
@@ -2077,14 +2077,14 @@
         <parameters xmi:id="_W-vT96MLEemOz6uYMhavJw" name="stateMachine"/>
         <parameters xmi:id="_W-vT-KMLEemOz6uYMhavJw" name="signal"/>
         <parameters xmi:id="_W-vT-aMLEemOz6uYMhavJw" name="eventName"/>
-      </subpatterns>
-    </subpatterns>
+      </patterns>
+    </patterns>
   </patterns>
   <patterns xmi:id="_3Zgt9KJNEemR1OcBKwie-w" name="[+]InModel">
-    <subpatterns xmi:id="_3Zgt9aJNEemR1OcBKwie-w" name="AnyReceiveEvent" description="Derived from: TransitionWithAnyReveiveEventTrigger">
+    <patterns xmi:id="_3Zgt9aJNEemR1OcBKwie-w" name="AnyReceiveEvent" description="Derived from: TransitionWithAnyReveiveEventTrigger">
       <graphs xmi:id="_3Zgt9qJNEemR1OcBKwie-w" name="AnyReceiveEvent" description="Derived from: TransitionWithAnyReveiveEventTrigger">
         <nodes xmi:id="_3Zgt96JNEemR1OcBKwie-w" name="container">
-          <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#require"/>
+          <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#exists"/>
           <outgoings xmi:id="_3Zgt-KJNEemR1OcBKwie-w" target="_3Zgt-aJNEemR1OcBKwie-w">
             <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Package/packagedElement"/>
           </outgoings>
@@ -2100,7 +2100,7 @@
       <parameters xmi:id="_3Zgt-6JNEemR1OcBKwie-w" name="container"/>
       <parameters xmi:id="_3Zgt_KJNEemR1OcBKwie-w" name="anyReceiveEvent"/>
       <parameters xmi:id="_3Zgt_aJNEemR1OcBKwie-w" name="eventName"/>
-      <subpatterns xmi:id="_W-vS76MLEemOz6uYMhavJw" name="Create: AnyReceiveEvent">
+      <patterns xmi:id="_W-vS76MLEemOz6uYMhavJw" name="Create: AnyReceiveEvent">
         <graphs xmi:id="_W-vS8KMLEemOz6uYMhavJw" name="Create: AnyReceiveEvent" description="Derived from: TransitionWithAnyReveiveEventTrigger">
           <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.henshin#rule"/>
           <nodes xmi:id="_W-vS8aMLEemOz6uYMhavJw" name="container">
@@ -2122,8 +2122,8 @@
         </graphs>
         <parameters xmi:id="_W-vS9aMLEemOz6uYMhavJw" name="container"/>
         <parameters xmi:id="_W-vS9qMLEemOz6uYMhavJw" name="eventName"/>
-      </subpatterns>
-      <subpatterns xmi:id="_W-vS96MLEemOz6uYMhavJw" name="Delete: AnyReceiveEvent">
+      </patterns>
+      <patterns xmi:id="_W-vS96MLEemOz6uYMhavJw" name="Delete: AnyReceiveEvent">
         <graphs xmi:id="_W-vS-KMLEemOz6uYMhavJw" name="Delete: AnyReceiveEvent" description="Derived from: TransitionWithAnyReveiveEventTrigger">
           <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.henshin#rule"/>
           <nodes xmi:id="_W-vS-aMLEemOz6uYMhavJw" name="container">
@@ -2146,12 +2146,12 @@
         <parameters xmi:id="_W-vS_aMLEemOz6uYMhavJw" name="container"/>
         <parameters xmi:id="_W-vS_qMLEemOz6uYMhavJw" name="anyReceiveEvent"/>
         <parameters xmi:id="_W-vS_6MLEemOz6uYMhavJw" name="eventName"/>
-      </subpatterns>
-    </subpatterns>
-    <subpatterns xmi:id="_3Zgt_qJNEemR1OcBKwie-w" name="Class" description="Derived from: TransitionWithCallEventTrigger">
+      </patterns>
+    </patterns>
+    <patterns xmi:id="_3Zgt_qJNEemR1OcBKwie-w" name="Class" description="Derived from: TransitionWithCallEventTrigger">
       <graphs xmi:id="_3Zgt_6JNEemR1OcBKwie-w" name="Class" description="Derived from: TransitionWithCallEventTrigger">
         <nodes xmi:id="_3ZguAKJNEemR1OcBKwie-w" name="container">
-          <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#require"/>
+          <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#exists"/>
           <outgoings xmi:id="_3ZguAaJNEemR1OcBKwie-w" target="_3ZguAqJNEemR1OcBKwie-w">
             <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Package/packagedElement"/>
           </outgoings>
@@ -2167,7 +2167,7 @@
       <parameters xmi:id="_3ZguBKJNEemR1OcBKwie-w" name="container"/>
       <parameters xmi:id="_3ZguBaJNEemR1OcBKwie-w" name="containingClass"/>
       <parameters xmi:id="_3ZguBqJNEemR1OcBKwie-w" name="className"/>
-      <subpatterns xmi:id="_W-vSs6MLEemOz6uYMhavJw" name="Create: Class">
+      <patterns xmi:id="_W-vSs6MLEemOz6uYMhavJw" name="Create: Class">
         <graphs xmi:id="_W-vStKMLEemOz6uYMhavJw" name="Create: Class" description="Derived from: TransitionWithCallEventTrigger">
           <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.henshin#rule"/>
           <nodes xmi:id="_W-vStaMLEemOz6uYMhavJw" name="container">
@@ -2189,8 +2189,8 @@
         </graphs>
         <parameters xmi:id="_W-vSuaMLEemOz6uYMhavJw" name="container"/>
         <parameters xmi:id="_W-vSuqMLEemOz6uYMhavJw" name="className"/>
-      </subpatterns>
-      <subpatterns xmi:id="_W-vSu6MLEemOz6uYMhavJw" name="Delete: Class">
+      </patterns>
+      <patterns xmi:id="_W-vSu6MLEemOz6uYMhavJw" name="Delete: Class">
         <graphs xmi:id="_W-vSvKMLEemOz6uYMhavJw" name="Delete: Class" description="Derived from: TransitionWithCallEventTrigger">
           <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.henshin#rule"/>
           <nodes xmi:id="_W-vSvaMLEemOz6uYMhavJw" name="container">
@@ -2213,12 +2213,12 @@
         <parameters xmi:id="_W-vSwaMLEemOz6uYMhavJw" name="container"/>
         <parameters xmi:id="_W-vSwqMLEemOz6uYMhavJw" name="containingClass"/>
         <parameters xmi:id="_W-vSw6MLEemOz6uYMhavJw" name="className"/>
-      </subpatterns>
-    </subpatterns>
-    <subpatterns xmi:id="_3ZguB6JNEemR1OcBKwie-w" name="CallEvent" description="Derived from: TransitionWithCallEventTrigger">
+      </patterns>
+    </patterns>
+    <patterns xmi:id="_3ZguB6JNEemR1OcBKwie-w" name="CallEvent" description="Derived from: TransitionWithCallEventTrigger">
       <graphs xmi:id="_3ZguCKJNEemR1OcBKwie-w" name="CallEvent" description="Derived from: TransitionWithCallEventTrigger">
         <nodes xmi:id="_3ZguCaJNEemR1OcBKwie-w" name="container">
-          <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#require"/>
+          <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#exists"/>
           <outgoings xmi:id="_3ZguCqJNEemR1OcBKwie-w" target="_3ZguC6JNEemR1OcBKwie-w">
             <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Package/packagedElement"/>
           </outgoings>
@@ -2234,7 +2234,7 @@
           </attributes>
         </nodes>
         <nodes xmi:id="_3ZguDqJNEemR1OcBKwie-w" name="calledOperation" incomings="_3ZguDKJNEemR1OcBKwie-w">
-          <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#require"/>
+          <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#exists"/>
           <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Operation"/>
           <attributes xmi:id="_3ZguD6JNEemR1OcBKwie-w" value="eventName">
             <type href="http://www.eclipse.org/uml2/5.0.0/UML#//NamedElement/name"/>
@@ -2245,7 +2245,7 @@
       <parameters xmi:id="_3ZguEaJNEemR1OcBKwie-w" name="callEvent"/>
       <parameters xmi:id="_3ZguEqJNEemR1OcBKwie-w" name="eventName"/>
       <parameters xmi:id="_3ZguE6JNEemR1OcBKwie-w" name="calledOperation"/>
-      <subpatterns xmi:id="_W-vTcKMLEemOz6uYMhavJw" name="Create: CallEvent">
+      <patterns xmi:id="_W-vTcKMLEemOz6uYMhavJw" name="Create: CallEvent">
         <graphs xmi:id="_W-vTcaMLEemOz6uYMhavJw" name="Create: CallEvent" description="Derived from: TransitionWithCallEventTrigger">
           <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.henshin#rule"/>
           <nodes xmi:id="_W-vTcqMLEemOz6uYMhavJw" name="container">
@@ -2280,8 +2280,8 @@
         <parameters xmi:id="_W-vTeaMLEemOz6uYMhavJw" name="container"/>
         <parameters xmi:id="_W-vTeqMLEemOz6uYMhavJw" name="eventName"/>
         <parameters xmi:id="_W-vTe6MLEemOz6uYMhavJw" name="calledOperation"/>
-      </subpatterns>
-      <subpatterns xmi:id="_W-vTfKMLEemOz6uYMhavJw" name="Delete: CallEvent">
+      </patterns>
+      <patterns xmi:id="_W-vTfKMLEemOz6uYMhavJw" name="Delete: CallEvent">
         <graphs xmi:id="_W-vTfaMLEemOz6uYMhavJw" name="Delete: CallEvent" description="Derived from: TransitionWithCallEventTrigger">
           <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.henshin#rule"/>
           <nodes xmi:id="_W-vTfqMLEemOz6uYMhavJw" name="container">
@@ -2317,12 +2317,12 @@
         <parameters xmi:id="_W-vThqMLEemOz6uYMhavJw" name="callEvent"/>
         <parameters xmi:id="_W-vTh6MLEemOz6uYMhavJw" name="eventName"/>
         <parameters xmi:id="_W-vTiKMLEemOz6uYMhavJw" name="calledOperation"/>
-      </subpatterns>
-    </subpatterns>
-    <subpatterns xmi:id="_3ZguFKJNEemR1OcBKwie-w" name="ChangeEvent" description="Derived from: TransitionWithChangeEventTrigger">
+      </patterns>
+    </patterns>
+    <patterns xmi:id="_3ZguFKJNEemR1OcBKwie-w" name="ChangeEvent" description="Derived from: TransitionWithChangeEventTrigger">
       <graphs xmi:id="_3ZguFaJNEemR1OcBKwie-w" name="ChangeEvent" description="Derived from: TransitionWithChangeEventTrigger">
         <nodes xmi:id="_3ZguFqJNEemR1OcBKwie-w" name="container">
-          <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#require"/>
+          <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#exists"/>
           <outgoings xmi:id="_3ZguF6JNEemR1OcBKwie-w" target="_3ZguGKJNEemR1OcBKwie-w">
             <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Package/packagedElement"/>
           </outgoings>
@@ -2338,7 +2338,7 @@
       <parameters xmi:id="_3ZguGqJNEemR1OcBKwie-w" name="container"/>
       <parameters xmi:id="_3ZguG6JNEemR1OcBKwie-w" name="changeEvent"/>
       <parameters xmi:id="_3ZguHKJNEemR1OcBKwie-w" name="eventName"/>
-      <subpatterns xmi:id="_W-vSoqMLEemOz6uYMhavJw" name="Create: ChangeEvent">
+      <patterns xmi:id="_W-vSoqMLEemOz6uYMhavJw" name="Create: ChangeEvent">
         <graphs xmi:id="_W-vSo6MLEemOz6uYMhavJw" name="Create: ChangeEvent" description="Derived from: TransitionWithChangeEventTrigger">
           <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.henshin#rule"/>
           <nodes xmi:id="_W-vSpKMLEemOz6uYMhavJw" name="container">
@@ -2360,8 +2360,8 @@
         </graphs>
         <parameters xmi:id="_W-vSqKMLEemOz6uYMhavJw" name="container"/>
         <parameters xmi:id="_W-vSqaMLEemOz6uYMhavJw" name="eventName"/>
-      </subpatterns>
-      <subpatterns xmi:id="_W-vSqqMLEemOz6uYMhavJw" name="Delete: ChangeEvent">
+      </patterns>
+      <patterns xmi:id="_W-vSqqMLEemOz6uYMhavJw" name="Delete: ChangeEvent">
         <graphs xmi:id="_W-vSq6MLEemOz6uYMhavJw" name="Delete: ChangeEvent" description="Derived from: TransitionWithChangeEventTrigger">
           <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.henshin#rule"/>
           <nodes xmi:id="_W-vSrKMLEemOz6uYMhavJw" name="container">
@@ -2384,12 +2384,12 @@
         <parameters xmi:id="_W-vSsKMLEemOz6uYMhavJw" name="container"/>
         <parameters xmi:id="_W-vSsaMLEemOz6uYMhavJw" name="changeEvent"/>
         <parameters xmi:id="_W-vSsqMLEemOz6uYMhavJw" name="eventName"/>
-      </subpatterns>
-    </subpatterns>
-    <subpatterns xmi:id="_3ZguHaJNEemR1OcBKwie-w" name="SignalEvent" description="Derived from: TransitionWithSignalEventTrigger">
+      </patterns>
+    </patterns>
+    <patterns xmi:id="_3ZguHaJNEemR1OcBKwie-w" name="SignalEvent" description="Derived from: TransitionWithSignalEventTrigger">
       <graphs xmi:id="_3ZguHqJNEemR1OcBKwie-w" name="SignalEvent" description="Derived from: TransitionWithSignalEventTrigger">
         <nodes xmi:id="_3ZguH6JNEemR1OcBKwie-w" name="container">
-          <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#require"/>
+          <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#exists"/>
           <outgoings xmi:id="_3ZguIKJNEemR1OcBKwie-w" target="_3ZguIaJNEemR1OcBKwie-w">
             <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Package/packagedElement"/>
           </outgoings>
@@ -2405,7 +2405,7 @@
           </attributes>
         </nodes>
         <nodes xmi:id="_3ZguJKJNEemR1OcBKwie-w" name="signal" incomings="_3ZguIqJNEemR1OcBKwie-w">
-          <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#require"/>
+          <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#exists"/>
           <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Signal"/>
           <attributes xmi:id="_3ZguJaJNEemR1OcBKwie-w" value="eventName + &quot;Signal&quot;">
             <type href="http://www.eclipse.org/uml2/5.0.0/UML#//NamedElement/name"/>
@@ -2416,7 +2416,7 @@
       <parameters xmi:id="_3ZguJ6JNEemR1OcBKwie-w" name="signalEvent"/>
       <parameters xmi:id="_3ZguKKJNEemR1OcBKwie-w" name="eventName"/>
       <parameters xmi:id="_3ZguKaJNEemR1OcBKwie-w" name="signal"/>
-      <subpatterns xmi:id="_W-vTiaMLEemOz6uYMhavJw" name="Create: SignalEvent">
+      <patterns xmi:id="_W-vTiaMLEemOz6uYMhavJw" name="Create: SignalEvent">
         <graphs xmi:id="_W-vTiqMLEemOz6uYMhavJw" name="Create: SignalEvent" description="Derived from: TransitionWithSignalEventTrigger">
           <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.henshin#rule"/>
           <nodes xmi:id="_W-vTi6MLEemOz6uYMhavJw" name="container">
@@ -2451,8 +2451,8 @@
         <parameters xmi:id="_W-vTkqMLEemOz6uYMhavJw" name="container"/>
         <parameters xmi:id="_W-vTk6MLEemOz6uYMhavJw" name="eventName"/>
         <parameters xmi:id="_W-vTlKMLEemOz6uYMhavJw" name="signal"/>
-      </subpatterns>
-      <subpatterns xmi:id="_W-vTlaMLEemOz6uYMhavJw" name="Delete: SignalEvent">
+      </patterns>
+      <patterns xmi:id="_W-vTlaMLEemOz6uYMhavJw" name="Delete: SignalEvent">
         <graphs xmi:id="_W-vTlqMLEemOz6uYMhavJw" name="Delete: SignalEvent" description="Derived from: TransitionWithSignalEventTrigger">
           <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.henshin#rule"/>
           <nodes xmi:id="_W-vTl6MLEemOz6uYMhavJw" name="container">
@@ -2488,12 +2488,12 @@
         <parameters xmi:id="_W-vTn6MLEemOz6uYMhavJw" name="signalEvent"/>
         <parameters xmi:id="_W-vToKMLEemOz6uYMhavJw" name="eventName"/>
         <parameters xmi:id="_W-vToaMLEemOz6uYMhavJw" name="signal"/>
-      </subpatterns>
-    </subpatterns>
-    <subpatterns xmi:id="_3ZguKqJNEemR1OcBKwie-w" name="TimeEventAndTimeExpression" description="Derived from: TransitionWithTimeEventTrigger">
+      </patterns>
+    </patterns>
+    <patterns xmi:id="_3ZguKqJNEemR1OcBKwie-w" name="TimeEventAndTimeExpression" description="Derived from: TransitionWithTimeEventTrigger">
       <graphs xmi:id="_3ZguK6JNEemR1OcBKwie-w" name="TimeEventAndTimeExpression" description="Derived from: TransitionWithTimeEventTrigger">
         <nodes xmi:id="_3ZguLKJNEemR1OcBKwie-w" name="container">
-          <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#require"/>
+          <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#exists"/>
           <outgoings xmi:id="_3ZguLaJNEemR1OcBKwie-w" target="_3ZguMKJNEemR1OcBKwie-w">
             <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Package/packagedElement"/>
           </outgoings>
@@ -2519,7 +2519,7 @@
       <parameters xmi:id="_3ZguNKJNEemR1OcBKwie-w" name="eventTime"/>
       <parameters xmi:id="_3ZguNaJNEemR1OcBKwie-w" name="eventName"/>
       <parameters xmi:id="_3ZguNqJNEemR1OcBKwie-w" name="timeEvent"/>
-      <subpatterns xmi:id="_W-vS16MLEemOz6uYMhavJw" name="Create: TimeEventAndTimeExpression">
+      <patterns xmi:id="_W-vS16MLEemOz6uYMhavJw" name="Create: TimeEventAndTimeExpression">
         <graphs xmi:id="_W-vS2KMLEemOz6uYMhavJw" name="Create: TimeEventAndTimeExpression" description="Derived from: TransitionWithTimeEventTrigger">
           <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.henshin#rule"/>
           <nodes xmi:id="_W-vS2aMLEemOz6uYMhavJw" name="container">
@@ -2553,8 +2553,8 @@
         </graphs>
         <parameters xmi:id="_W-vS4KMLEemOz6uYMhavJw" name="container"/>
         <parameters xmi:id="_W-vS4aMLEemOz6uYMhavJw" name="eventName"/>
-      </subpatterns>
-      <subpatterns xmi:id="_W-vS4qMLEemOz6uYMhavJw" name="Delete: TimeEventAndTimeExpression">
+      </patterns>
+      <patterns xmi:id="_W-vS4qMLEemOz6uYMhavJw" name="Delete: TimeEventAndTimeExpression">
         <graphs xmi:id="_W-vS46MLEemOz6uYMhavJw" name="Delete: TimeEventAndTimeExpression" description="Derived from: TransitionWithTimeEventTrigger">
           <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.henshin#rule"/>
           <nodes xmi:id="_W-vS5KMLEemOz6uYMhavJw" name="container">
@@ -2590,14 +2590,14 @@
         <parameters xmi:id="_W-vS7KMLEemOz6uYMhavJw" name="eventTime"/>
         <parameters xmi:id="_W-vS7aMLEemOz6uYMhavJw" name="eventName"/>
         <parameters xmi:id="_W-vS7qMLEemOz6uYMhavJw" name="timeEvent"/>
-      </subpatterns>
-    </subpatterns>
+      </patterns>
+    </patterns>
   </patterns>
   <patterns xmi:id="_3ZguN6JNEemR1OcBKwie-w" name="[+]InClass">
-    <subpatterns xmi:id="_3ZguOKJNEemR1OcBKwie-w" name="Operation" description="Derived from: TransitionWithCallEventTrigger">
+    <patterns xmi:id="_3ZguOKJNEemR1OcBKwie-w" name="Operation" description="Derived from: TransitionWithCallEventTrigger">
       <graphs xmi:id="_3ZguOaJNEemR1OcBKwie-w" name="Operation" description="Derived from: TransitionWithCallEventTrigger">
         <nodes xmi:id="_3ZguOqJNEemR1OcBKwie-w" name="containingClass" incomings="_3ZguPqJNEemR1OcBKwie-w">
-          <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#require"/>
+          <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#exists"/>
           <outgoings xmi:id="_3ZguO6JNEemR1OcBKwie-w" target="_3ZguPaJNEemR1OcBKwie-w" opposite="_3ZguPqJNEemR1OcBKwie-w">
             <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Class/ownedOperation"/>
           </outgoings>
@@ -2620,7 +2620,7 @@
       <parameters xmi:id="_3ZguQaJNEemR1OcBKwie-w" name="className"/>
       <parameters xmi:id="_3ZguQqJNEemR1OcBKwie-w" name="calledOperation"/>
       <parameters xmi:id="_3ZguQ6JNEemR1OcBKwie-w" name="eventName"/>
-      <subpatterns xmi:id="_W-urUKMLEemOz6uYMhavJw" name="Create: Operation">
+      <patterns xmi:id="_W-urUKMLEemOz6uYMhavJw" name="Create: Operation">
         <graphs xmi:id="_W-urUaMLEemOz6uYMhavJw" name="Create: Operation" description="Derived from: TransitionWithCallEventTrigger">
           <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.henshin#rule"/>
           <nodes xmi:id="_W-urUqMLEemOz6uYMhavJw" name="containingClass" incomings="_W-urVqMLEemOz6uYMhavJw">
@@ -2651,8 +2651,8 @@
         <parameters xmi:id="_W-urWKMLEemOz6uYMhavJw" name="containingClass"/>
         <parameters xmi:id="_W-urWaMLEemOz6uYMhavJw" name="className"/>
         <parameters xmi:id="_W-urWqMLEemOz6uYMhavJw" name="eventName"/>
-      </subpatterns>
-      <subpatterns xmi:id="_W-urW6MLEemOz6uYMhavJw" name="Delete: Operation">
+      </patterns>
+      <patterns xmi:id="_W-urW6MLEemOz6uYMhavJw" name="Delete: Operation">
         <graphs xmi:id="_W-urXKMLEemOz6uYMhavJw" name="Delete: Operation" description="Derived from: TransitionWithCallEventTrigger">
           <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.henshin#rule"/>
           <nodes xmi:id="_W-urXaMLEemOz6uYMhavJw" name="containingClass" incomings="_W-urYaMLEemOz6uYMhavJw">
@@ -2684,14 +2684,14 @@
         <parameters xmi:id="_W-urZKMLEemOz6uYMhavJw" name="className"/>
         <parameters xmi:id="_W-urZaMLEemOz6uYMhavJw" name="calledOperation"/>
         <parameters xmi:id="_W-urZqMLEemOz6uYMhavJw" name="eventName"/>
-      </subpatterns>
-    </subpatterns>
+      </patterns>
+    </patterns>
   </patterns>
   <patterns xmi:id="_3ZguRKJNEemR1OcBKwie-w" name="[+]InTimeEvent">
-    <subpatterns xmi:id="_3ZguRaJNEemR1OcBKwie-w" name="TimeExpression" description="Derived from: TransitionWithTimeEventTrigger">
+    <patterns xmi:id="_3ZguRaJNEemR1OcBKwie-w" name="TimeExpression" description="Derived from: TransitionWithTimeEventTrigger">
       <graphs xmi:id="_3ZguRqJNEemR1OcBKwie-w" name="TimeExpression" description="Derived from: TransitionWithTimeEventTrigger">
         <nodes xmi:id="_3ZguR6JNEemR1OcBKwie-w" name="timeEvent">
-          <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#require"/>
+          <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#exists"/>
           <outgoings xmi:id="_3ZguSKJNEemR1OcBKwie-w" target="_3ZguSqJNEemR1OcBKwie-w">
             <type href="http://www.eclipse.org/uml2/5.0.0/UML#//TimeEvent/when"/>
           </outgoings>
@@ -2710,7 +2710,7 @@
       <parameters xmi:id="_3ZguTKJNEemR1OcBKwie-w" name="timeEvent"/>
       <parameters xmi:id="_3ZguTaJNEemR1OcBKwie-w" name="eventName"/>
       <parameters xmi:id="_3ZguTqJNEemR1OcBKwie-w" name="eventTime"/>
-      <subpatterns xmi:id="_W-vSj6MLEemOz6uYMhavJw" name="Create: TimeExpression">
+      <patterns xmi:id="_W-vSj6MLEemOz6uYMhavJw" name="Create: TimeExpression">
         <graphs xmi:id="_W-vSkKMLEemOz6uYMhavJw" name="Create: TimeExpression" description="Derived from: TransitionWithTimeEventTrigger">
           <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.henshin#rule"/>
           <nodes xmi:id="_W-vSkaMLEemOz6uYMhavJw" name="timeEvent">
@@ -2736,8 +2736,8 @@
         </graphs>
         <parameters xmi:id="_W-vSlqMLEemOz6uYMhavJw" name="timeEvent"/>
         <parameters xmi:id="_W-vSl6MLEemOz6uYMhavJw" name="eventName"/>
-      </subpatterns>
-      <subpatterns xmi:id="_W-vSmKMLEemOz6uYMhavJw" name="Delete: TimeExpression">
+      </patterns>
+      <patterns xmi:id="_W-vSmKMLEemOz6uYMhavJw" name="Delete: TimeExpression">
         <graphs xmi:id="_W-vSmaMLEemOz6uYMhavJw" name="Delete: TimeExpression" description="Derived from: TransitionWithTimeEventTrigger">
           <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.henshin#rule"/>
           <nodes xmi:id="_W-vSmqMLEemOz6uYMhavJw" name="timeEvent">
@@ -2764,8 +2764,8 @@
         <parameters xmi:id="_W-vSn6MLEemOz6uYMhavJw" name="timeEvent"/>
         <parameters xmi:id="_W-vSoKMLEemOz6uYMhavJw" name="eventName"/>
         <parameters xmi:id="_W-vSoaMLEemOz6uYMhavJw" name="eventTime"/>
-      </subpatterns>
-    </subpatterns>
+      </patterns>
+    </patterns>
   </patterns>
   <profiles href="graphpatternprofile:/org.sidiff.graphpattern.profile.henshin#@profile0"/>
 </graphpattern:Bundle>

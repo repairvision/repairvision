@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="ASCII"?>
 <graphpattern:Bundle xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:graphpattern="http://www.sidiff.org/graphpattern/1.0" xmi:id="_3Zgs8KJNEemR1OcBKwie-w" name="UMLBundle">
   <patterns xmi:id="_3Zgs8qJNEemR1OcBKwie-w" name="[+]InRegion">
-    <subpatterns xmi:id="_3Zgs86JNEemR1OcBKwie-w" name="Transition" description="Derived from: TransitionWithActivityEffect">
+    <patterns xmi:id="_3Zgs86JNEemR1OcBKwie-w" name="Transition" description="Derived from: TransitionWithActivityEffect">
       <graphs xmi:id="_3Zgs9KJNEemR1OcBKwie-w" name="Transition" description="Derived from: TransitionWithActivityEffect">
         <nodes xmi:id="_3Zgs9aJNEemR1OcBKwie-w" name="region" incomings="_3Zgs-qJNEemR1OcBKwie-w">
-          <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#require"/>
+          <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#exists"/>
           <outgoings xmi:id="_3Zgs9qJNEemR1OcBKwie-w" target="_3Zgs96JNEemR1OcBKwie-w" opposite="_3Zgs-qJNEemR1OcBKwie-w">
             <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Region/transition"/>
           </outgoings>
@@ -26,11 +26,11 @@
           </attributes>
         </nodes>
         <nodes xmi:id="_3Zgs_KJNEemR1OcBKwie-w" name="source" incomings="_3Zgs-KJNEemR1OcBKwie-w">
-          <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#require"/>
+          <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#exists"/>
           <type href="http://www.eclipse.org/uml2/5.0.0/UML#//State"/>
         </nodes>
         <nodes xmi:id="_3Zgs_aJNEemR1OcBKwie-w" name="target" incomings="_3Zgs-aJNEemR1OcBKwie-w">
-          <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#require"/>
+          <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#exists"/>
           <type href="http://www.eclipse.org/uml2/5.0.0/UML#//State"/>
         </nodes>
       </graphs>
@@ -39,14 +39,14 @@
       <parameters xmi:id="_3ZgtAKJNEemR1OcBKwie-w" name="transitionName"/>
       <parameters xmi:id="_3ZgtAaJNEemR1OcBKwie-w" name="source"/>
       <parameters xmi:id="_3ZgtAqJNEemR1OcBKwie-w" name="target"/>
-    </subpatterns>
+    </patterns>
   </patterns>
   <patterns xmi:id="_3ZgtA6JNEemR1OcBKwie-w" name="[+]InTransition">
-    <subpatterns xmi:id="_8_wHQKJOEemR1OcBKwie-w" name="[+]Guard">
-      <subpatterns xmi:id="_3ZgtSqJNEemR1OcBKwie-w" name="Constraint" description="Derived from: TransitionWithConstraintGuard">
+    <patterns xmi:id="_8_wHQKJOEemR1OcBKwie-w" name="[+]Guard">
+      <patterns xmi:id="_3ZgtSqJNEemR1OcBKwie-w" name="Constraint" description="Derived from: TransitionWithConstraintGuard">
         <graphs xmi:id="_3ZgtS6JNEemR1OcBKwie-w" name="Constraint" description="Derived from: TransitionWithConstraintGuard">
           <nodes xmi:id="_3ZgtTKJNEemR1OcBKwie-w" name="transition" incomings="_3ZgtUKJNEemR1OcBKwie-w">
-            <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#require"/>
+            <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#exists"/>
             <outgoings xmi:id="_3ZgtTaJNEemR1OcBKwie-w" target="_3ZgtT6JNEemR1OcBKwie-w" opposite="_3ZgtUKJNEemR1OcBKwie-w">
               <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Namespace/ownedRule"/>
             </outgoings>
@@ -68,11 +68,11 @@
         <parameters xmi:id="_3ZgtUqJNEemR1OcBKwie-w" name="transition"/>
         <parameters xmi:id="_3ZgtU6JNEemR1OcBKwie-w" name="transitionName"/>
         <parameters xmi:id="_3ZgtVKJNEemR1OcBKwie-w" name="constraint"/>
-      </subpatterns>
-      <subpatterns xmi:id="_3ZgtVaJNEemR1OcBKwie-w" name="DurationConstraint" description="Derived from: TransitionWithDurationConstraintGuard">
+      </patterns>
+      <patterns xmi:id="_3ZgtVaJNEemR1OcBKwie-w" name="DurationConstraint" description="Derived from: TransitionWithDurationConstraintGuard">
         <graphs xmi:id="_3ZgtVqJNEemR1OcBKwie-w" name="DurationConstraint" description="Derived from: TransitionWithDurationConstraintGuard">
           <nodes xmi:id="_3ZgtV6JNEemR1OcBKwie-w" name="transition" incomings="_3ZgtW6JNEemR1OcBKwie-w">
-            <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#require"/>
+            <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#exists"/>
             <outgoings xmi:id="_3ZgtWKJNEemR1OcBKwie-w" target="_3ZgtWqJNEemR1OcBKwie-w" opposite="_3ZgtW6JNEemR1OcBKwie-w">
               <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Namespace/ownedRule"/>
             </outgoings>
@@ -94,11 +94,11 @@
         <parameters xmi:id="_3ZgtXaJNEemR1OcBKwie-w" name="transition"/>
         <parameters xmi:id="_3ZgtXqJNEemR1OcBKwie-w" name="transitionName"/>
         <parameters xmi:id="_3ZgtX6JNEemR1OcBKwie-w" name="durationConstraint"/>
-      </subpatterns>
-      <subpatterns xmi:id="_3ZgtYKJNEemR1OcBKwie-w" name="InteractionConstraint" description="Derived from: TransitionWithInteractionConstraintGuard">
+      </patterns>
+      <patterns xmi:id="_3ZgtYKJNEemR1OcBKwie-w" name="InteractionConstraint" description="Derived from: TransitionWithInteractionConstraintGuard">
         <graphs xmi:id="_3ZgtYaJNEemR1OcBKwie-w" name="InteractionConstraint" description="Derived from: TransitionWithInteractionConstraintGuard">
           <nodes xmi:id="_3ZgtYqJNEemR1OcBKwie-w" name="transition" incomings="_3ZgtZqJNEemR1OcBKwie-w">
-            <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#require"/>
+            <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#exists"/>
             <outgoings xmi:id="_3ZgtY6JNEemR1OcBKwie-w" target="_3ZgtZaJNEemR1OcBKwie-w" opposite="_3ZgtZqJNEemR1OcBKwie-w">
               <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Namespace/ownedRule"/>
             </outgoings>
@@ -120,11 +120,11 @@
         <parameters xmi:id="_3ZgtaKJNEemR1OcBKwie-w" name="transition"/>
         <parameters xmi:id="_3ZgtaaJNEemR1OcBKwie-w" name="transitionName"/>
         <parameters xmi:id="_3ZgtaqJNEemR1OcBKwie-w" name="interactionConstraint"/>
-      </subpatterns>
-      <subpatterns xmi:id="_3Zgta6JNEemR1OcBKwie-w" name="IntervalConstraint" description="Derived from: TransitionWithIntervalConstraintGuard">
+      </patterns>
+      <patterns xmi:id="_3Zgta6JNEemR1OcBKwie-w" name="IntervalConstraint" description="Derived from: TransitionWithIntervalConstraintGuard">
         <graphs xmi:id="_3ZgtbKJNEemR1OcBKwie-w" name="IntervalConstraint" description="Derived from: TransitionWithIntervalConstraintGuard">
           <nodes xmi:id="_3ZgtbaJNEemR1OcBKwie-w" name="transition" incomings="_3ZgtcaJNEemR1OcBKwie-w">
-            <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#require"/>
+            <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#exists"/>
             <outgoings xmi:id="_3ZgtbqJNEemR1OcBKwie-w" target="_3ZgtcKJNEemR1OcBKwie-w" opposite="_3ZgtcaJNEemR1OcBKwie-w">
               <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Namespace/ownedRule"/>
             </outgoings>
@@ -146,11 +146,11 @@
         <parameters xmi:id="_3Zgtc6JNEemR1OcBKwie-w" name="transition"/>
         <parameters xmi:id="_3ZgtdKJNEemR1OcBKwie-w" name="transitionName"/>
         <parameters xmi:id="_3ZgtdaJNEemR1OcBKwie-w" name="intervalConstraint"/>
-      </subpatterns>
-      <subpatterns xmi:id="_3ZgtdqJNEemR1OcBKwie-w" name="TimeConstraint" description="Derived from: TransitionWithTimeConstraintGuard">
+      </patterns>
+      <patterns xmi:id="_3ZgtdqJNEemR1OcBKwie-w" name="TimeConstraint" description="Derived from: TransitionWithTimeConstraintGuard">
         <graphs xmi:id="_3Zgtd6JNEemR1OcBKwie-w" name="TimeConstraint" description="Derived from: TransitionWithTimeConstraintGuard">
           <nodes xmi:id="_3ZgteKJNEemR1OcBKwie-w" name="transition" incomings="_3ZgtfKJNEemR1OcBKwie-w">
-            <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#require"/>
+            <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#exists"/>
             <outgoings xmi:id="_3ZgteaJNEemR1OcBKwie-w" target="_3Zgte6JNEemR1OcBKwie-w" opposite="_3ZgtfKJNEemR1OcBKwie-w">
               <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Namespace/ownedRule"/>
             </outgoings>
@@ -172,13 +172,13 @@
         <parameters xmi:id="_3ZgtfqJNEemR1OcBKwie-w" name="transition"/>
         <parameters xmi:id="_3Zgtf6JNEemR1OcBKwie-w" name="transitionName"/>
         <parameters xmi:id="_3ZgtgKJNEemR1OcBKwie-w" name="timeConstraint"/>
-      </subpatterns>
-    </subpatterns>
-    <subpatterns xmi:id="_Ckb30KJPEemR1OcBKwie-w" name="[+]Effect">
-      <subpatterns xmi:id="_3ZgtBKJNEemR1OcBKwie-w" name="Activity" description="Derived from: TransitionWithActivityEffect">
+      </patterns>
+    </patterns>
+    <patterns xmi:id="_Ckb30KJPEemR1OcBKwie-w" name="[+]Effect">
+      <patterns xmi:id="_3ZgtBKJNEemR1OcBKwie-w" name="Activity" description="Derived from: TransitionWithActivityEffect">
         <graphs xmi:id="_3ZgtBaJNEemR1OcBKwie-w" name="Activity" description="Derived from: TransitionWithActivityEffect">
           <nodes xmi:id="_3ZgtBqJNEemR1OcBKwie-w" name="transition">
-            <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#require"/>
+            <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#exists"/>
             <outgoings xmi:id="_3ZgtB6JNEemR1OcBKwie-w" target="_3ZgtCaJNEemR1OcBKwie-w">
               <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Transition/effect"/>
             </outgoings>
@@ -197,11 +197,11 @@
         <parameters xmi:id="_3ZgtC6JNEemR1OcBKwie-w" name="transition"/>
         <parameters xmi:id="_3ZgtDKJNEemR1OcBKwie-w" name="transitionName"/>
         <parameters xmi:id="_3ZgtDaJNEemR1OcBKwie-w" name="activityEffect"/>
-      </subpatterns>
-      <subpatterns xmi:id="_3ZgtDqJNEemR1OcBKwie-w" name="FunctionBehavior" description="Derived from: TransitionWithFunctionBehaviorEffect">
+      </patterns>
+      <patterns xmi:id="_3ZgtDqJNEemR1OcBKwie-w" name="FunctionBehavior" description="Derived from: TransitionWithFunctionBehaviorEffect">
         <graphs xmi:id="_3ZgtD6JNEemR1OcBKwie-w" name="FunctionBehavior" description="Derived from: TransitionWithFunctionBehaviorEffect">
           <nodes xmi:id="_3ZgtEKJNEemR1OcBKwie-w" name="transition">
-            <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#require"/>
+            <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#exists"/>
             <outgoings xmi:id="_3ZgtEaJNEemR1OcBKwie-w" target="_3ZgtE6JNEemR1OcBKwie-w">
               <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Transition/effect"/>
             </outgoings>
@@ -220,11 +220,11 @@
         <parameters xmi:id="_3ZgtFaJNEemR1OcBKwie-w" name="transition"/>
         <parameters xmi:id="_3ZgtFqJNEemR1OcBKwie-w" name="transitionName"/>
         <parameters xmi:id="_3ZgtF6JNEemR1OcBKwie-w" name="functionBehaviorEffect"/>
-      </subpatterns>
-      <subpatterns xmi:id="_3ZgtGKJNEemR1OcBKwie-w" name="Interaction" description="Derived from: TransitionWithInteractionEffect">
+      </patterns>
+      <patterns xmi:id="_3ZgtGKJNEemR1OcBKwie-w" name="Interaction" description="Derived from: TransitionWithInteractionEffect">
         <graphs xmi:id="_3ZgtGaJNEemR1OcBKwie-w" name="Interaction" description="Derived from: TransitionWithInteractionEffect">
           <nodes xmi:id="_3ZgtGqJNEemR1OcBKwie-w" name="transition">
-            <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#require"/>
+            <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#exists"/>
             <outgoings xmi:id="_3ZgtG6JNEemR1OcBKwie-w" target="_3ZgtHaJNEemR1OcBKwie-w">
               <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Transition/effect"/>
             </outgoings>
@@ -243,11 +243,11 @@
         <parameters xmi:id="_3ZgtH6JNEemR1OcBKwie-w" name="transition"/>
         <parameters xmi:id="_3ZgtIKJNEemR1OcBKwie-w" name="transitionName"/>
         <parameters xmi:id="_3ZgtIaJNEemR1OcBKwie-w" name="interactionEffect"/>
-      </subpatterns>
-      <subpatterns xmi:id="_3ZgtIqJNEemR1OcBKwie-w" name="OpaqueBehavior" description="Derived from: TransitionWithOpaqueBehaviorEffect">
+      </patterns>
+      <patterns xmi:id="_3ZgtIqJNEemR1OcBKwie-w" name="OpaqueBehavior" description="Derived from: TransitionWithOpaqueBehaviorEffect">
         <graphs xmi:id="_3ZgtI6JNEemR1OcBKwie-w" name="OpaqueBehavior" description="Derived from: TransitionWithOpaqueBehaviorEffect">
           <nodes xmi:id="_3ZgtJKJNEemR1OcBKwie-w" name="transition">
-            <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#require"/>
+            <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#exists"/>
             <outgoings xmi:id="_3ZgtJaJNEemR1OcBKwie-w" target="_3ZgtJ6JNEemR1OcBKwie-w">
               <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Transition/effect"/>
             </outgoings>
@@ -266,11 +266,11 @@
         <parameters xmi:id="_3ZgtKaJNEemR1OcBKwie-w" name="transition"/>
         <parameters xmi:id="_3ZgtKqJNEemR1OcBKwie-w" name="transitionName"/>
         <parameters xmi:id="_3ZgtK6JNEemR1OcBKwie-w" name="opaqueBehaviorEffect"/>
-      </subpatterns>
-      <subpatterns xmi:id="_3ZgtLKJNEemR1OcBKwie-w" name="ProtocolStateMachineAndRegion" description="Derived from: TransitionWithProtocolStateMachineEffect">
+      </patterns>
+      <patterns xmi:id="_3ZgtLKJNEemR1OcBKwie-w" name="ProtocolStateMachineAndRegion" description="Derived from: TransitionWithProtocolStateMachineEffect">
         <graphs xmi:id="_3ZgtLaJNEemR1OcBKwie-w" name="ProtocolStateMachineAndRegion" description="Derived from: TransitionWithProtocolStateMachineEffect">
           <nodes xmi:id="_3ZgtLqJNEemR1OcBKwie-w" name="transition">
-            <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#require"/>
+            <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#exists"/>
             <outgoings xmi:id="_3ZgtL6JNEemR1OcBKwie-w" target="_3ZgtMaJNEemR1OcBKwie-w">
               <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Transition/effect"/>
             </outgoings>
@@ -302,11 +302,11 @@
         <parameters xmi:id="_3ZgtOKJNEemR1OcBKwie-w" name="transitionName"/>
         <parameters xmi:id="_3ZgtOaJNEemR1OcBKwie-w" name="protocolStateMachineEffect"/>
         <parameters xmi:id="_3ZgtOqJNEemR1OcBKwie-w" name="protocolStateMachineEffectRegion"/>
-      </subpatterns>
-      <subpatterns xmi:id="_3ZgtO6JNEemR1OcBKwie-w" name="RegionAndStateMachine" description="Derived from: TransitionWithStateMachineEffect">
+      </patterns>
+      <patterns xmi:id="_3ZgtO6JNEemR1OcBKwie-w" name="RegionAndStateMachine" description="Derived from: TransitionWithStateMachineEffect">
         <graphs xmi:id="_3ZgtPKJNEemR1OcBKwie-w" name="RegionAndStateMachine" description="Derived from: TransitionWithStateMachineEffect">
           <nodes xmi:id="_3ZgtPaJNEemR1OcBKwie-w" name="transition">
-            <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#require"/>
+            <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#exists"/>
             <outgoings xmi:id="_3ZgtPqJNEemR1OcBKwie-w" target="_3ZgtQKJNEemR1OcBKwie-w">
               <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Transition/effect"/>
             </outgoings>
@@ -338,13 +338,13 @@
         <parameters xmi:id="_3ZgtR6JNEemR1OcBKwie-w" name="transitionName"/>
         <parameters xmi:id="_3ZgtSKJNEemR1OcBKwie-w" name="stateMachineEffect"/>
         <parameters xmi:id="_3ZgtSaJNEemR1OcBKwie-w" name="stateMachineEffectRegion"/>
-      </subpatterns>
-    </subpatterns>
-    <subpatterns xmi:id="_FrDDcKJPEemR1OcBKwie-w" name="[+]Trigger">
-      <subpatterns xmi:id="_3ZgtgaJNEemR1OcBKwie-w" name="AnyReceiveEvent" description="Derived from: TransitionWithAnyReveiveEventTrigger">
+      </patterns>
+    </patterns>
+    <patterns xmi:id="_FrDDcKJPEemR1OcBKwie-w" name="[+]Trigger">
+      <patterns xmi:id="_3ZgtgaJNEemR1OcBKwie-w" name="AnyReceiveEvent" description="Derived from: TransitionWithAnyReveiveEventTrigger">
         <graphs xmi:id="_3ZgtgqJNEemR1OcBKwie-w" name="AnyReceiveEvent" description="Derived from: TransitionWithAnyReveiveEventTrigger">
           <nodes xmi:id="_3Zgtg6JNEemR1OcBKwie-w" name="transition">
-            <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#require"/>
+            <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#exists"/>
             <outgoings xmi:id="_3ZgthKJNEemR1OcBKwie-w" target="_3ZgthqJNEemR1OcBKwie-w">
               <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Transition/trigger"/>
             </outgoings>
@@ -363,7 +363,7 @@
             </attributes>
           </nodes>
           <nodes xmi:id="_3ZgtiaJNEemR1OcBKwie-w" name="anyReceiveEvent" incomings="_3Zgth6JNEemR1OcBKwie-w">
-            <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#require"/>
+            <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#exists"/>
             <type href="http://www.eclipse.org/uml2/5.0.0/UML#//AnyReceiveEvent"/>
             <attributes xmi:id="_3ZgtiqJNEemR1OcBKwie-w" value="eventName + &quot;AnyReveiveEvent&quot;">
               <type href="http://www.eclipse.org/uml2/5.0.0/UML#//NamedElement/name"/>
@@ -374,11 +374,11 @@
         <parameters xmi:id="_3ZgtjKJNEemR1OcBKwie-w" name="eventName"/>
         <parameters xmi:id="_3ZgtjaJNEemR1OcBKwie-w" name="trigger"/>
         <parameters xmi:id="_3ZgtjqJNEemR1OcBKwie-w" name="anyReceiveEvent"/>
-      </subpatterns>
-      <subpatterns xmi:id="_3Zgtj6JNEemR1OcBKwie-w" name="CallEvent" description="Derived from: TransitionWithCallEventTrigger">
+      </patterns>
+      <patterns xmi:id="_3Zgtj6JNEemR1OcBKwie-w" name="CallEvent" description="Derived from: TransitionWithCallEventTrigger">
         <graphs xmi:id="_3ZgtkKJNEemR1OcBKwie-w" name="CallEvent" description="Derived from: TransitionWithCallEventTrigger">
           <nodes xmi:id="_3ZgtkaJNEemR1OcBKwie-w" name="transition">
-            <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#require"/>
+            <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#exists"/>
             <outgoings xmi:id="_3ZgtkqJNEemR1OcBKwie-w" target="_3ZgtlKJNEemR1OcBKwie-w">
               <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Transition/trigger"/>
             </outgoings>
@@ -397,7 +397,7 @@
             </attributes>
           </nodes>
           <nodes xmi:id="_3Zgtl6JNEemR1OcBKwie-w" name="callEvent" incomings="_3ZgtlaJNEemR1OcBKwie-w">
-            <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#require"/>
+            <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#exists"/>
             <outgoings xmi:id="_3ZgtmKJNEemR1OcBKwie-w" target="_3ZgtmqJNEemR1OcBKwie-w">
               <type href="http://www.eclipse.org/uml2/5.0.0/UML#//CallEvent/operation"/>
             </outgoings>
@@ -407,7 +407,7 @@
             </attributes>
           </nodes>
           <nodes xmi:id="_3ZgtmqJNEemR1OcBKwie-w" name="calledOperation" incomings="_3ZgtmKJNEemR1OcBKwie-w">
-            <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#require"/>
+            <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#exists"/>
             <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Operation"/>
             <attributes xmi:id="_3Zgtm6JNEemR1OcBKwie-w" value="eventName">
               <type href="http://www.eclipse.org/uml2/5.0.0/UML#//NamedElement/name"/>
@@ -419,11 +419,11 @@
         <parameters xmi:id="_3ZgtnqJNEemR1OcBKwie-w" name="trigger"/>
         <parameters xmi:id="_3Zgtn6JNEemR1OcBKwie-w" name="callEvent"/>
         <parameters xmi:id="_3ZgtoKJNEemR1OcBKwie-w" name="calledOperation"/>
-      </subpatterns>
-      <subpatterns xmi:id="_3ZgtoaJNEemR1OcBKwie-w" name="ChangeEvent" description="Derived from: TransitionWithChangeEventTrigger">
+      </patterns>
+      <patterns xmi:id="_3ZgtoaJNEemR1OcBKwie-w" name="ChangeEvent" description="Derived from: TransitionWithChangeEventTrigger">
         <graphs xmi:id="_3ZgtoqJNEemR1OcBKwie-w" name="ChangeEvent" description="Derived from: TransitionWithChangeEventTrigger">
           <nodes xmi:id="_3Zgto6JNEemR1OcBKwie-w" name="transition">
-            <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#require"/>
+            <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#exists"/>
             <outgoings xmi:id="_3ZgtpKJNEemR1OcBKwie-w" target="_3ZgtpqJNEemR1OcBKwie-w">
               <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Transition/trigger"/>
             </outgoings>
@@ -442,7 +442,7 @@
             </attributes>
           </nodes>
           <nodes xmi:id="_3ZgtqaJNEemR1OcBKwie-w" name="changeEvent" incomings="_3Zgtp6JNEemR1OcBKwie-w">
-            <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#require"/>
+            <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#exists"/>
             <type href="http://www.eclipse.org/uml2/5.0.0/UML#//ChangeEvent"/>
             <attributes xmi:id="_3ZgtqqJNEemR1OcBKwie-w" value="eventName + &quot;ChangeEvent&quot;">
               <type href="http://www.eclipse.org/uml2/5.0.0/UML#//NamedElement/name"/>
@@ -453,11 +453,11 @@
         <parameters xmi:id="_3ZgtrKJNEemR1OcBKwie-w" name="eventName"/>
         <parameters xmi:id="_3ZgtraJNEemR1OcBKwie-w" name="trigger"/>
         <parameters xmi:id="_3ZgtrqJNEemR1OcBKwie-w" name="changeEvent"/>
-      </subpatterns>
-      <subpatterns xmi:id="_3Zgtr6JNEemR1OcBKwie-w" name="SignalEvent" description="Derived from: TransitionWithSignalEventTrigger">
+      </patterns>
+      <patterns xmi:id="_3Zgtr6JNEemR1OcBKwie-w" name="SignalEvent" description="Derived from: TransitionWithSignalEventTrigger">
         <graphs xmi:id="_3ZgtsKJNEemR1OcBKwie-w" name="SignalEvent" description="Derived from: TransitionWithSignalEventTrigger">
           <nodes xmi:id="_3ZgtsaJNEemR1OcBKwie-w" name="transition">
-            <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#require"/>
+            <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#exists"/>
             <outgoings xmi:id="_3ZgtsqJNEemR1OcBKwie-w" target="_3ZgttKJNEemR1OcBKwie-w">
               <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Transition/trigger"/>
             </outgoings>
@@ -476,7 +476,7 @@
             </attributes>
           </nodes>
           <nodes xmi:id="_3Zgtt6JNEemR1OcBKwie-w" name="signalEvent" incomings="_3ZgttaJNEemR1OcBKwie-w">
-            <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#require"/>
+            <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#exists"/>
             <outgoings xmi:id="_3ZgtuKJNEemR1OcBKwie-w" target="_3ZgtuqJNEemR1OcBKwie-w">
               <type href="http://www.eclipse.org/uml2/5.0.0/UML#//SignalEvent/signal"/>
             </outgoings>
@@ -486,7 +486,7 @@
             </attributes>
           </nodes>
           <nodes xmi:id="_3ZgtuqJNEemR1OcBKwie-w" name="signal" incomings="_3ZgtuKJNEemR1OcBKwie-w">
-            <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#require"/>
+            <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#exists"/>
             <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Signal"/>
             <attributes xmi:id="_3Zgtu6JNEemR1OcBKwie-w" value="eventName + &quot;Signal&quot;">
               <type href="http://www.eclipse.org/uml2/5.0.0/UML#//NamedElement/name"/>
@@ -498,11 +498,11 @@
         <parameters xmi:id="_3ZgtvqJNEemR1OcBKwie-w" name="trigger"/>
         <parameters xmi:id="_3Zgtv6JNEemR1OcBKwie-w" name="signalEvent"/>
         <parameters xmi:id="_3ZgtwKJNEemR1OcBKwie-w" name="signal"/>
-      </subpatterns>
-      <subpatterns xmi:id="_3ZgtwaJNEemR1OcBKwie-w" name="TimeEvent" description="Derived from: TransitionWithTimeEventTrigger">
+      </patterns>
+      <patterns xmi:id="_3ZgtwaJNEemR1OcBKwie-w" name="TimeEvent" description="Derived from: TransitionWithTimeEventTrigger">
         <graphs xmi:id="_3ZgtwqJNEemR1OcBKwie-w" name="TimeEvent" description="Derived from: TransitionWithTimeEventTrigger">
           <nodes xmi:id="_3Zgtw6JNEemR1OcBKwie-w" name="transition">
-            <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#require"/>
+            <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#exists"/>
             <outgoings xmi:id="_3ZgtxKJNEemR1OcBKwie-w" target="_3ZgtxqJNEemR1OcBKwie-w">
               <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Transition/trigger"/>
             </outgoings>
@@ -521,14 +521,14 @@
             </attributes>
           </nodes>
           <nodes xmi:id="_3ZgtyaJNEemR1OcBKwie-w" name="eventTime" incomings="_3ZgtzKJNEemR1OcBKwie-w">
-            <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#require"/>
+            <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#exists"/>
             <type href="http://www.eclipse.org/uml2/5.0.0/UML#//TimeExpression"/>
             <attributes xmi:id="_3ZgtyqJNEemR1OcBKwie-w" value="eventName + &quot;EventTime&quot;">
               <type href="http://www.eclipse.org/uml2/5.0.0/UML#//NamedElement/name"/>
             </attributes>
           </nodes>
           <nodes xmi:id="_3Zgty6JNEemR1OcBKwie-w" name="timeEvent" incomings="_3Zgtx6JNEemR1OcBKwie-w">
-            <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#require"/>
+            <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#exists"/>
             <outgoings xmi:id="_3ZgtzKJNEemR1OcBKwie-w" target="_3ZgtyaJNEemR1OcBKwie-w">
               <type href="http://www.eclipse.org/uml2/5.0.0/UML#//TimeEvent/when"/>
             </outgoings>
@@ -543,14 +543,14 @@
         <parameters xmi:id="_3Zgt0KJNEemR1OcBKwie-w" name="trigger"/>
         <parameters xmi:id="_3Zgt0aJNEemR1OcBKwie-w" name="eventTime"/>
         <parameters xmi:id="_3Zgt0qJNEemR1OcBKwie-w" name="timeEvent"/>
-      </subpatterns>
-    </subpatterns>
+      </patterns>
+    </patterns>
   </patterns>
   <patterns xmi:id="_3Zgt06JNEemR1OcBKwie-w" name="[+]InProtocolStateMachine">
-    <subpatterns xmi:id="_3Zgt1KJNEemR1OcBKwie-w" name="Region" description="Derived from: TransitionWithProtocolStateMachineEffect">
+    <patterns xmi:id="_3Zgt1KJNEemR1OcBKwie-w" name="Region" description="Derived from: TransitionWithProtocolStateMachineEffect">
       <graphs xmi:id="_3Zgt1aJNEemR1OcBKwie-w" name="Region" description="Derived from: TransitionWithProtocolStateMachineEffect">
         <nodes xmi:id="_3Zgt1qJNEemR1OcBKwie-w" name="protocolStateMachineEffect" incomings="_3Zgt2qJNEemR1OcBKwie-w">
-          <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#require"/>
+          <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#exists"/>
           <outgoings xmi:id="_3Zgt16JNEemR1OcBKwie-w" target="_3Zgt2aJNEemR1OcBKwie-w" opposite="_3Zgt2qJNEemR1OcBKwie-w">
             <type href="http://www.eclipse.org/uml2/5.0.0/UML#//StateMachine/region"/>
           </outgoings>
@@ -572,13 +572,13 @@
       <parameters xmi:id="_3Zgt3KJNEemR1OcBKwie-w" name="protocolStateMachineEffect"/>
       <parameters xmi:id="_3Zgt3aJNEemR1OcBKwie-w" name="transitionName"/>
       <parameters xmi:id="_3Zgt3qJNEemR1OcBKwie-w" name="protocolStateMachineEffectRegion"/>
-    </subpatterns>
+    </patterns>
   </patterns>
   <patterns xmi:id="_3Zgt36JNEemR1OcBKwie-w" name="[+]InStateMachine">
-    <subpatterns xmi:id="_3Zgt4KJNEemR1OcBKwie-w" name="Region" description="Derived from: TransitionWithStateMachineEffect">
+    <patterns xmi:id="_3Zgt4KJNEemR1OcBKwie-w" name="Region" description="Derived from: TransitionWithStateMachineEffect">
       <graphs xmi:id="_3Zgt4aJNEemR1OcBKwie-w" name="Region" description="Derived from: TransitionWithStateMachineEffect">
         <nodes xmi:id="_3Zgt4qJNEemR1OcBKwie-w" name="stateMachineEffect" incomings="_3Zgt5qJNEemR1OcBKwie-w">
-          <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#require"/>
+          <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#exists"/>
           <outgoings xmi:id="_3Zgt46JNEemR1OcBKwie-w" target="_3Zgt5aJNEemR1OcBKwie-w" opposite="_3Zgt5qJNEemR1OcBKwie-w">
             <type href="http://www.eclipse.org/uml2/5.0.0/UML#//StateMachine/region"/>
           </outgoings>
@@ -600,11 +600,11 @@
       <parameters xmi:id="_3Zgt6KJNEemR1OcBKwie-w" name="stateMachineEffect"/>
       <parameters xmi:id="_3Zgt6aJNEemR1OcBKwie-w" name="transitionName"/>
       <parameters xmi:id="_3Zgt6qJNEemR1OcBKwie-w" name="stateMachineEffectRegion"/>
-    </subpatterns>
-    <subpatterns xmi:id="_3Zgt66JNEemR1OcBKwie-w" name="Signal" description="Derived from: TransitionWithSignalEventTrigger">
+    </patterns>
+    <patterns xmi:id="_3Zgt66JNEemR1OcBKwie-w" name="Signal" description="Derived from: TransitionWithSignalEventTrigger">
       <graphs xmi:id="_3Zgt7KJNEemR1OcBKwie-w" name="Signal" description="Derived from: TransitionWithSignalEventTrigger">
         <nodes xmi:id="_3Zgt7aJNEemR1OcBKwie-w" name="stateMachine">
-          <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#require"/>
+          <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#exists"/>
           <outgoings xmi:id="_3Zgt7qJNEemR1OcBKwie-w" target="_3Zgt76JNEemR1OcBKwie-w">
             <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Class/nestedClassifier"/>
           </outgoings>
@@ -620,13 +620,13 @@
       <parameters xmi:id="_3Zgt8aJNEemR1OcBKwie-w" name="stateMachine"/>
       <parameters xmi:id="_3Zgt8qJNEemR1OcBKwie-w" name="signal"/>
       <parameters xmi:id="_3Zgt86JNEemR1OcBKwie-w" name="eventName"/>
-    </subpatterns>
+    </patterns>
   </patterns>
   <patterns xmi:id="_3Zgt9KJNEemR1OcBKwie-w" name="[+]InModel">
-    <subpatterns xmi:id="_3Zgt9aJNEemR1OcBKwie-w" name="AnyReceiveEvent" description="Derived from: TransitionWithAnyReveiveEventTrigger">
+    <patterns xmi:id="_3Zgt9aJNEemR1OcBKwie-w" name="AnyReceiveEvent" description="Derived from: TransitionWithAnyReveiveEventTrigger">
       <graphs xmi:id="_3Zgt9qJNEemR1OcBKwie-w" name="AnyReceiveEvent" description="Derived from: TransitionWithAnyReveiveEventTrigger">
         <nodes xmi:id="_3Zgt96JNEemR1OcBKwie-w" name="container">
-          <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#require"/>
+          <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#exists"/>
           <outgoings xmi:id="_3Zgt-KJNEemR1OcBKwie-w" target="_3Zgt-aJNEemR1OcBKwie-w">
             <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Package/packagedElement"/>
           </outgoings>
@@ -642,11 +642,11 @@
       <parameters xmi:id="_3Zgt-6JNEemR1OcBKwie-w" name="container"/>
       <parameters xmi:id="_3Zgt_KJNEemR1OcBKwie-w" name="anyReceiveEvent"/>
       <parameters xmi:id="_3Zgt_aJNEemR1OcBKwie-w" name="eventName"/>
-    </subpatterns>
-    <subpatterns xmi:id="_3Zgt_qJNEemR1OcBKwie-w" name="Class" description="Derived from: TransitionWithCallEventTrigger">
+    </patterns>
+    <patterns xmi:id="_3Zgt_qJNEemR1OcBKwie-w" name="Class" description="Derived from: TransitionWithCallEventTrigger">
       <graphs xmi:id="_3Zgt_6JNEemR1OcBKwie-w" name="Class" description="Derived from: TransitionWithCallEventTrigger">
         <nodes xmi:id="_3ZguAKJNEemR1OcBKwie-w" name="container">
-          <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#require"/>
+          <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#exists"/>
           <outgoings xmi:id="_3ZguAaJNEemR1OcBKwie-w" target="_3ZguAqJNEemR1OcBKwie-w">
             <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Package/packagedElement"/>
           </outgoings>
@@ -662,11 +662,11 @@
       <parameters xmi:id="_3ZguBKJNEemR1OcBKwie-w" name="container"/>
       <parameters xmi:id="_3ZguBaJNEemR1OcBKwie-w" name="containingClass"/>
       <parameters xmi:id="_3ZguBqJNEemR1OcBKwie-w" name="className"/>
-    </subpatterns>
-    <subpatterns xmi:id="_3ZguB6JNEemR1OcBKwie-w" name="CallEvent" description="Derived from: TransitionWithCallEventTrigger">
+    </patterns>
+    <patterns xmi:id="_3ZguB6JNEemR1OcBKwie-w" name="CallEvent" description="Derived from: TransitionWithCallEventTrigger">
       <graphs xmi:id="_3ZguCKJNEemR1OcBKwie-w" name="CallEvent" description="Derived from: TransitionWithCallEventTrigger">
         <nodes xmi:id="_3ZguCaJNEemR1OcBKwie-w" name="container">
-          <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#require"/>
+          <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#exists"/>
           <outgoings xmi:id="_3ZguCqJNEemR1OcBKwie-w" target="_3ZguC6JNEemR1OcBKwie-w">
             <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Package/packagedElement"/>
           </outgoings>
@@ -682,7 +682,7 @@
           </attributes>
         </nodes>
         <nodes xmi:id="_3ZguDqJNEemR1OcBKwie-w" name="calledOperation" incomings="_3ZguDKJNEemR1OcBKwie-w">
-          <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#require"/>
+          <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#exists"/>
           <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Operation"/>
           <attributes xmi:id="_3ZguD6JNEemR1OcBKwie-w" value="eventName">
             <type href="http://www.eclipse.org/uml2/5.0.0/UML#//NamedElement/name"/>
@@ -693,11 +693,11 @@
       <parameters xmi:id="_3ZguEaJNEemR1OcBKwie-w" name="callEvent"/>
       <parameters xmi:id="_3ZguEqJNEemR1OcBKwie-w" name="eventName"/>
       <parameters xmi:id="_3ZguE6JNEemR1OcBKwie-w" name="calledOperation"/>
-    </subpatterns>
-    <subpatterns xmi:id="_3ZguFKJNEemR1OcBKwie-w" name="ChangeEvent" description="Derived from: TransitionWithChangeEventTrigger">
+    </patterns>
+    <patterns xmi:id="_3ZguFKJNEemR1OcBKwie-w" name="ChangeEvent" description="Derived from: TransitionWithChangeEventTrigger">
       <graphs xmi:id="_3ZguFaJNEemR1OcBKwie-w" name="ChangeEvent" description="Derived from: TransitionWithChangeEventTrigger">
         <nodes xmi:id="_3ZguFqJNEemR1OcBKwie-w" name="container">
-          <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#require"/>
+          <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#exists"/>
           <outgoings xmi:id="_3ZguF6JNEemR1OcBKwie-w" target="_3ZguGKJNEemR1OcBKwie-w">
             <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Package/packagedElement"/>
           </outgoings>
@@ -713,11 +713,11 @@
       <parameters xmi:id="_3ZguGqJNEemR1OcBKwie-w" name="container"/>
       <parameters xmi:id="_3ZguG6JNEemR1OcBKwie-w" name="changeEvent"/>
       <parameters xmi:id="_3ZguHKJNEemR1OcBKwie-w" name="eventName"/>
-    </subpatterns>
-    <subpatterns xmi:id="_3ZguHaJNEemR1OcBKwie-w" name="SignalEvent" description="Derived from: TransitionWithSignalEventTrigger">
+    </patterns>
+    <patterns xmi:id="_3ZguHaJNEemR1OcBKwie-w" name="SignalEvent" description="Derived from: TransitionWithSignalEventTrigger">
       <graphs xmi:id="_3ZguHqJNEemR1OcBKwie-w" name="SignalEvent" description="Derived from: TransitionWithSignalEventTrigger">
         <nodes xmi:id="_3ZguH6JNEemR1OcBKwie-w" name="container">
-          <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#require"/>
+          <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#exists"/>
           <outgoings xmi:id="_3ZguIKJNEemR1OcBKwie-w" target="_3ZguIaJNEemR1OcBKwie-w">
             <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Package/packagedElement"/>
           </outgoings>
@@ -733,7 +733,7 @@
           </attributes>
         </nodes>
         <nodes xmi:id="_3ZguJKJNEemR1OcBKwie-w" name="signal" incomings="_3ZguIqJNEemR1OcBKwie-w">
-          <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#require"/>
+          <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#exists"/>
           <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Signal"/>
           <attributes xmi:id="_3ZguJaJNEemR1OcBKwie-w" value="eventName + &quot;Signal&quot;">
             <type href="http://www.eclipse.org/uml2/5.0.0/UML#//NamedElement/name"/>
@@ -744,11 +744,11 @@
       <parameters xmi:id="_3ZguJ6JNEemR1OcBKwie-w" name="signalEvent"/>
       <parameters xmi:id="_3ZguKKJNEemR1OcBKwie-w" name="eventName"/>
       <parameters xmi:id="_3ZguKaJNEemR1OcBKwie-w" name="signal"/>
-    </subpatterns>
-    <subpatterns xmi:id="_3ZguKqJNEemR1OcBKwie-w" name="TimeEventAndTimeExpression" description="Derived from: TransitionWithTimeEventTrigger">
+    </patterns>
+    <patterns xmi:id="_3ZguKqJNEemR1OcBKwie-w" name="TimeEventAndTimeExpression" description="Derived from: TransitionWithTimeEventTrigger">
       <graphs xmi:id="_3ZguK6JNEemR1OcBKwie-w" name="TimeEventAndTimeExpression" description="Derived from: TransitionWithTimeEventTrigger">
         <nodes xmi:id="_3ZguLKJNEemR1OcBKwie-w" name="container">
-          <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#require"/>
+          <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#exists"/>
           <outgoings xmi:id="_3ZguLaJNEemR1OcBKwie-w" target="_3ZguMKJNEemR1OcBKwie-w">
             <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Package/packagedElement"/>
           </outgoings>
@@ -774,13 +774,13 @@
       <parameters xmi:id="_3ZguNKJNEemR1OcBKwie-w" name="eventTime"/>
       <parameters xmi:id="_3ZguNaJNEemR1OcBKwie-w" name="eventName"/>
       <parameters xmi:id="_3ZguNqJNEemR1OcBKwie-w" name="timeEvent"/>
-    </subpatterns>
+    </patterns>
   </patterns>
   <patterns xmi:id="_3ZguN6JNEemR1OcBKwie-w" name="[+]InClass">
-    <subpatterns xmi:id="_3ZguOKJNEemR1OcBKwie-w" name="Operation" description="Derived from: TransitionWithCallEventTrigger">
+    <patterns xmi:id="_3ZguOKJNEemR1OcBKwie-w" name="Operation" description="Derived from: TransitionWithCallEventTrigger">
       <graphs xmi:id="_3ZguOaJNEemR1OcBKwie-w" name="Operation" description="Derived from: TransitionWithCallEventTrigger">
         <nodes xmi:id="_3ZguOqJNEemR1OcBKwie-w" name="containingClass" incomings="_3ZguPqJNEemR1OcBKwie-w">
-          <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#require"/>
+          <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#exists"/>
           <outgoings xmi:id="_3ZguO6JNEemR1OcBKwie-w" target="_3ZguPaJNEemR1OcBKwie-w" opposite="_3ZguPqJNEemR1OcBKwie-w">
             <type href="http://www.eclipse.org/uml2/5.0.0/UML#//Class/ownedOperation"/>
           </outgoings>
@@ -803,13 +803,13 @@
       <parameters xmi:id="_3ZguQaJNEemR1OcBKwie-w" name="className"/>
       <parameters xmi:id="_3ZguQqJNEemR1OcBKwie-w" name="calledOperation"/>
       <parameters xmi:id="_3ZguQ6JNEemR1OcBKwie-w" name="eventName"/>
-    </subpatterns>
+    </patterns>
   </patterns>
   <patterns xmi:id="_3ZguRKJNEemR1OcBKwie-w" name="[+]InTimeEvent">
-    <subpatterns xmi:id="_3ZguRaJNEemR1OcBKwie-w" name="TimeExpression" description="Derived from: TransitionWithTimeEventTrigger">
+    <patterns xmi:id="_3ZguRaJNEemR1OcBKwie-w" name="TimeExpression" description="Derived from: TransitionWithTimeEventTrigger">
       <graphs xmi:id="_3ZguRqJNEemR1OcBKwie-w" name="TimeExpression" description="Derived from: TransitionWithTimeEventTrigger">
         <nodes xmi:id="_3ZguR6JNEemR1OcBKwie-w" name="timeEvent">
-          <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#require"/>
+          <stereotypes href="graphpatternprofile:/org.sidiff.graphpattern.profile.constraints#exists"/>
           <outgoings xmi:id="_3ZguSKJNEemR1OcBKwie-w" target="_3ZguSqJNEemR1OcBKwie-w">
             <type href="http://www.eclipse.org/uml2/5.0.0/UML#//TimeEvent/when"/>
           </outgoings>
@@ -828,6 +828,6 @@
       <parameters xmi:id="_3ZguTKJNEemR1OcBKwie-w" name="timeEvent"/>
       <parameters xmi:id="_3ZguTaJNEemR1OcBKwie-w" name="eventName"/>
       <parameters xmi:id="_3ZguTqJNEemR1OcBKwie-w" name="eventTime"/>
-    </subpatterns>
+    </patterns>
   </patterns>
 </graphpattern:Bundle>
