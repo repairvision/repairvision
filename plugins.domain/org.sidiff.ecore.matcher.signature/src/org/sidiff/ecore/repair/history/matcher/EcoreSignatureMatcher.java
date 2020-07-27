@@ -45,14 +45,8 @@ public class EcoreSignatureMatcher implements IMatcher {
 	
 	@Override
 	public void startMatching(Difference difference, Resource modelA, Resource modelB, Scope scope) {
-		
-		if (scope.equals(Scope.RESOURCE_SET)) {
-			resourceSetA.addAll(modelA.getResourceSet().getResources());
-			resourceSetB.addAll(modelB.getResourceSet().getResources());
-		} else {
-			resourceSetA.add(modelA);
-			resourceSetB.add(modelB);
-		}
+		List<Resource> resourceSetA = MatcherUtil.getResourceScope(modelA, scope);
+		List<Resource> resourceSetB = MatcherUtil.getResourceScope(modelB, scope);
 
 		Map<String, List<EObject>> signatures = new HashMap<>();
 		List<EObject> unmatched;
@@ -83,7 +77,6 @@ public class EcoreSignatureMatcher implements IMatcher {
 		
 		// Convert signature match to correspondences:
 		createCorrespondences(difference, signatures);
-		createUnmatched(difference);
 	}
 
 	protected void calculateSignatures(
@@ -558,10 +551,5 @@ public class EcoreSignatureMatcher implements IMatcher {
 				}
 			}
 		}
-	}
-	
-	protected void createUnmatched(Difference difference) {
-		MatcherUtil.createUnmatchedA(difference, resourceSetA);
-		MatcherUtil.createUnmatchedB(difference, resourceSetB);
 	}
 }

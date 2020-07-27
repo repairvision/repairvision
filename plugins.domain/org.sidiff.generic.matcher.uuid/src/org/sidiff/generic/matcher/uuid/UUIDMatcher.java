@@ -1,6 +1,5 @@
 package org.sidiff.generic.matcher.uuid;
 
-import java.util.Collections;
 import java.util.List;
 
 import org.eclipse.emf.ecore.EObject;
@@ -16,28 +15,15 @@ public class UUIDMatcher implements IMatcher {
 	
 	@Override
 	public void startMatching(Difference difference, Resource modelA, Resource modelB, Scope scope) {
-		List<Resource> resourceSetA;
-		List<Resource> resourceSetB;
-		
-		if (scope.equals(Scope.RESOURCE_SET)) {
-			resourceSetA = modelA.getResourceSet().getResources();
-			resourceSetB = modelB.getResourceSet().getResources();
-		} else {
-			resourceSetA = Collections.singletonList(modelA);
-			resourceSetB = Collections.singletonList(modelB);
-		}
+		List<Resource> resourceSetA = MatcherUtil.getResourceScope(modelA, scope);
+		List<Resource> resourceSetB = MatcherUtil.getResourceScope(modelB, scope);
 		
 		for (Resource resourceA : resourceSetA) {
 			for (EObject elementA : (Iterable<EObject>) () -> resourceA.getAllContents()) { 
 				EObject elementB = getCorresponding(resourceA, elementA, resourceSetB);
-				
-				if (!addCorrespondence(difference, elementA, elementB)) {
-					difference.getUnmatchedA().add(elementA);
-				}
+				addCorrespondence(difference, elementA, elementB);
 			}
 		}
-		
-		MatcherUtil.createUnmatchedB(difference, resourceSetB);
 	}
 
 	private boolean addCorrespondence(Difference difference, EObject elementA, EObject elementB) {

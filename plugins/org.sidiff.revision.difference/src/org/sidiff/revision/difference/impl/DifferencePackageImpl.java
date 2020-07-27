@@ -170,7 +170,7 @@ public class DifferencePackageImpl extends EPackageImpl implements DifferencePac
 	 */
 	@Override
 	public EAttribute getDifference_UriModelA() {
-		return (EAttribute)differenceEClass.getEStructuralFeatures().get(4);
+		return (EAttribute)differenceEClass.getEStructuralFeatures().get(2);
 	}
 
 	/**
@@ -180,7 +180,7 @@ public class DifferencePackageImpl extends EPackageImpl implements DifferencePac
 	 */
 	@Override
 	public EAttribute getDifference_UriModelB() {
-		return (EAttribute)differenceEClass.getEStructuralFeatures().get(5);
+		return (EAttribute)differenceEClass.getEStructuralFeatures().get(3);
 	}
 
 	/**
@@ -190,7 +190,7 @@ public class DifferencePackageImpl extends EPackageImpl implements DifferencePac
 	 */
 	@Override
 	public EAttribute getDifference_ModelA() {
-		return (EAttribute)differenceEClass.getEStructuralFeatures().get(6);
+		return (EAttribute)differenceEClass.getEStructuralFeatures().get(4);
 	}
 
 	/**
@@ -200,7 +200,7 @@ public class DifferencePackageImpl extends EPackageImpl implements DifferencePac
 	 */
 	@Override
 	public EAttribute getDifference_ModelB() {
-		return (EAttribute)differenceEClass.getEStructuralFeatures().get(7);
+		return (EAttribute)differenceEClass.getEStructuralFeatures().get(5);
 	}
 
 	/**
@@ -211,26 +211,6 @@ public class DifferencePackageImpl extends EPackageImpl implements DifferencePac
 	@Override
 	public EReference getDifference_Correspondences() {
 		return (EReference)differenceEClass.getEStructuralFeatures().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public EReference getDifference_UnmatchedA() {
-		return (EReference)differenceEClass.getEStructuralFeatures().get(2);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public EReference getDifference_UnmatchedB() {
-		return (EReference)differenceEClass.getEStructuralFeatures().get(3);
 	}
 
 	/**
@@ -465,8 +445,6 @@ public class DifferencePackageImpl extends EPackageImpl implements DifferencePac
 		differenceEClass = createEClass(DIFFERENCE);
 		createEReference(differenceEClass, DIFFERENCE__CHANGES);
 		createEReference(differenceEClass, DIFFERENCE__CORRESPONDENCES);
-		createEReference(differenceEClass, DIFFERENCE__UNMATCHED_A);
-		createEReference(differenceEClass, DIFFERENCE__UNMATCHED_B);
 		createEAttribute(differenceEClass, DIFFERENCE__URI_MODEL_A);
 		createEAttribute(differenceEClass, DIFFERENCE__URI_MODEL_B);
 		createEAttribute(differenceEClass, DIFFERENCE__MODEL_A);
@@ -538,8 +516,6 @@ public class DifferencePackageImpl extends EPackageImpl implements DifferencePac
 		initEClass(differenceEClass, Difference.class, "Difference", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getDifference_Changes(), this.getChange(), null, "changes", null, 0, -1, Difference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getDifference_Correspondences(), this.getCorrespondence(), null, "correspondences", null, 0, -1, Difference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
-		initEReference(getDifference_UnmatchedA(), ecorePackage.getEObject(), null, "unmatchedA", null, 0, -1, Difference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getDifference_UnmatchedB(), ecorePackage.getEObject(), null, "unmatchedB", null, 0, -1, Difference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getDifference_UriModelA(), ecorePackage.getEString(), "uriModelA", null, 0, 1, Difference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getDifference_UriModelB(), ecorePackage.getEString(), "uriModelB", null, 0, 1, Difference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getDifference_ModelA(), ecorePackage.getEResource(), "modelA", null, 0, 1, Difference.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, IS_DERIVED, !IS_ORDERED);

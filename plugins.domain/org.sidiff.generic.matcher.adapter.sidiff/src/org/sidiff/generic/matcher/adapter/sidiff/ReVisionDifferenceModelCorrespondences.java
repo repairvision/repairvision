@@ -2,17 +2,22 @@ package org.sidiff.generic.matcher.adapter.sidiff;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.sidiff.common.utilities.emf.Scope;
 import org.sidiff.correspondences.AbstractCorrespondences;
 import org.sidiff.correspondences.ICorrespondences;
 import org.sidiff.revision.difference.Correspondence;
 import org.sidiff.revision.difference.Difference;
 import org.sidiff.revision.difference.DifferenceFactory;
+import org.sidiff.revision.difference.matcher.util.MatcherUtil;
 
 public class ReVisionDifferenceModelCorrespondences extends AbstractCorrespondences {
 
@@ -21,10 +26,17 @@ public class ReVisionDifferenceModelCorrespondences extends AbstractCorresponden
 	/**
 	 * The underlying Difference-Model instance of the service.
 	 */
-	private Difference difference = null;
+	private Difference difference;
+	
+	private Set<EObject> unmatchedA;
+	
+	private Set<EObject> unmatchedB;
+	
+	private Scope scope;
 
-	public ReVisionDifferenceModelCorrespondences(Difference difference) {
+	public ReVisionDifferenceModelCorrespondences(Difference difference, Scope scope) {
 		this.difference = difference;
+		this.scope = scope;
 	}
 
 	public Difference getDifference() {
@@ -75,8 +87,8 @@ public class ReVisionDifferenceModelCorrespondences extends AbstractCorresponden
 		difference.addCorrespondence(correspondence);
 
 		// remove elementA and elementB from unmatchedA and unmatchedB, respectively
-		difference.getUnmatchedA().remove(elementA);
-		difference.getUnmatchedB().remove(elementB);
+		unmatchedA.remove(elementA);
+		unmatchedB.remove(elementB);
 	}
 
 
@@ -85,8 +97,8 @@ public class ReVisionDifferenceModelCorrespondences extends AbstractCorresponden
 
 		// update matching
 		difference.removeCorrespondence(correspondence);
-		difference.getUnmatchedA().add(correspondence.getMatchedA());
-		difference.getUnmatchedB().add(correspondence.getMatchedB());
+		unmatchedA.add(correspondence.getMatchedA());
+		unmatchedB.add(correspondence.getMatchedB());
 	}
 
 	@Override
@@ -136,11 +148,11 @@ public class ReVisionDifferenceModelCorrespondences extends AbstractCorresponden
 	public Collection<EObject> getElementsWithCorrespondences(Resource model) {
 		ArrayList<EObject> result = new ArrayList<EObject>();
 		
-		if (model == getDifference().getModelA()) {
+		if (getDifference().getModelA().getResourceSet().getResources().contains(model)) {
 			for (Correspondence correspondence : getDifference().getCorrespondences()) {
 				result.add(correspondence.getMatchedA());
 			}
-		} else if (model == getDifference().getModelB()) {
+		} else if (getDifference().getModelB().getResourceSet().getResources().contains(model)) {
 			for (Correspondence correspondence : getDifference().getCorrespondences()) {
 				result.add(correspondence.getMatchedB());
 			}
@@ -151,15 +163,14 @@ public class ReVisionDifferenceModelCorrespondences extends AbstractCorresponden
 
 	@Override
 	public Collection<EObject> getElementsWithoutCorrespondences(Resource model) {
-		ArrayList<EObject> result = new ArrayList<EObject>();
-
-		if (model == getDifference().getModelA()) {
-			result.addAll(getDifference().getUnmatchedA());
-		} else if (model == getDifference().getModelB()) {
-			result.addAll(getDifference().getUnmatchedB());
+		
+		if (getDifference().getModelA().getResourceSet().getResources().contains(model)) {
+			return unmatchedA;
+		} else if (getDifference().getModelB().getResourceSet().getResources().contains(model)) {
+			return unmatchedB;
 		}
 
-		return result;
+		return Collections.emptyList();
 	}
 
 	@Override
@@ -207,23 +218,44 @@ public class ReVisionDifferenceModelCorrespondences extends AbstractCorresponden
 	}
 
 	private void initUnmatched(Resource resourceA, Resource resourceB) {
+		List<Resource> resourceSetA = MatcherUtil.getResourceScope(resourceA, scope);
+		createUnmatchedA(difference, resourceSetA);
 		
-		// add unmatchedA
-		for (Iterator<EObject> iterator = resourceA.getAllContents(); iterator.hasNext();) {
-			EObject obj = iterator.next();
-			difference.getUnmatchedA().add(obj);
-		}
+		List<Resource> resourceSetB = MatcherUtil.getResourceScope(resourceB, scope);
+		createUnmatchedB(difference, resourceSetB);
+	}
 
-		// add unmatchedB
-		for (Iterator<EObject> iterator = resourceB.getAllContents(); iterator.hasNext();) {
-			EObject obj = iterator.next();
-			difference.getUnmatchedB().add(obj);
+	public void createUnmatchedB(Difference difference, Collection<Resource> resources) {
+		this.unmatchedA = new HashSet<>();
+		
+		for (Resource resource : resources) {
+			for (EObject element : (Iterable<EObject>) () -> resource.getAllContents()) {
+				if (difference.isUnmatchedB(element)) {
+					unmatchedB.add(element);
+				}
+			}
 		}
 	}
+	
+	public void createUnmatchedA(Difference difference, Collection<Resource> resources) {
+		this.unmatchedB = new HashSet<>();
+		
+		for (Resource resource : resources) {
+			for (EObject element : (Iterable<EObject>) () -> resource.getAllContents()) {
+				if (difference.isUnmatchedA(element)) {
+					unmatchedB.add(element);
+				}
+			}
+		}
+	}
+
 
 	@Override
 	public void reset() {
 		this.difference = null;
+		this.unmatchedA = null;
+		this.unmatchedB = null;
+		this.scope = null;
 	}
 
 	@Override

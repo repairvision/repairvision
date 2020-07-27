@@ -84,31 +84,13 @@ public interface DifferencePackage extends EPackage {
 	int DIFFERENCE__CORRESPONDENCES = 1;
 
 	/**
-	 * The feature id for the '<em><b>Unmatched A</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DIFFERENCE__UNMATCHED_A = 2;
-
-	/**
-	 * The feature id for the '<em><b>Unmatched B</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DIFFERENCE__UNMATCHED_B = 3;
-
-	/**
 	 * The feature id for the '<em><b>Uri Model A</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int DIFFERENCE__URI_MODEL_A = 4;
+	int DIFFERENCE__URI_MODEL_A = 2;
 
 	/**
 	 * The feature id for the '<em><b>Uri Model B</b></em>' attribute.
@@ -117,7 +99,7 @@ public interface DifferencePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DIFFERENCE__URI_MODEL_B = 5;
+	int DIFFERENCE__URI_MODEL_B = 3;
 
 	/**
 	 * The feature id for the '<em><b>Model A</b></em>' attribute.
@@ -126,7 +108,7 @@ public interface DifferencePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DIFFERENCE__MODEL_A = 6;
+	int DIFFERENCE__MODEL_A = 4;
 
 	/**
 	 * The feature id for the '<em><b>Model B</b></em>' attribute.
@@ -135,7 +117,7 @@ public interface DifferencePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DIFFERENCE__MODEL_B = 7;
+	int DIFFERENCE__MODEL_B = 5;
 
 	/**
 	 * The number of structural features of the '<em>Difference</em>' class.
@@ -144,7 +126,7 @@ public interface DifferencePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DIFFERENCE_FEATURE_COUNT = 8;
+	int DIFFERENCE_FEATURE_COUNT = 6;
 
 	/**
 	 * The meta object id for the '{@link org.sidiff.revision.difference.impl.CorrespondenceImpl <em>Correspondence</em>}' class.
@@ -474,28 +456,6 @@ public interface DifferencePackage extends EPackage {
 	EReference getDifference_Correspondences();
 
 	/**
-	 * Returns the meta object for the reference list '{@link org.sidiff.revision.difference.Difference#getUnmatchedA <em>Unmatched A</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference list '<em>Unmatched A</em>'.
-	 * @see org.sidiff.revision.difference.Difference#getUnmatchedA()
-	 * @see #getDifference()
-	 * @generated
-	 */
-	EReference getDifference_UnmatchedA();
-
-	/**
-	 * Returns the meta object for the reference list '{@link org.sidiff.revision.difference.Difference#getUnmatchedB <em>Unmatched B</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference list '<em>Unmatched B</em>'.
-	 * @see org.sidiff.revision.difference.Difference#getUnmatchedB()
-	 * @see #getDifference()
-	 * @generated
-	 */
-	EReference getDifference_UnmatchedB();
-
-	/**
 	 * Returns the meta object for class '{@link org.sidiff.revision.difference.Correspondence <em>Correspondence</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -787,22 +747,6 @@ public interface DifferencePackage extends EPackage {
 		 * @generated
 		 */
 		EReference DIFFERENCE__CORRESPONDENCES = eINSTANCE.getDifference_Correspondences();
-
-		/**
-		 * The meta object literal for the '<em><b>Unmatched A</b></em>' reference list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference DIFFERENCE__UNMATCHED_A = eINSTANCE.getDifference_UnmatchedA();
-
-		/**
-		 * The meta object literal for the '<em><b>Unmatched B</b></em>' reference list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference DIFFERENCE__UNMATCHED_B = eINSTANCE.getDifference_UnmatchedB();
 
 		/**
 		 * The meta object literal for the '{@link org.sidiff.revision.difference.impl.CorrespondenceImpl <em>Correspondence</em>}' class.

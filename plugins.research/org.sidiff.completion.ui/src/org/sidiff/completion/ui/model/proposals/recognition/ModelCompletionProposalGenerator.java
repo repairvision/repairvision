@@ -10,6 +10,7 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.henshin.interpreter.EGraph;
 import org.eclipse.emf.henshin.interpreter.impl.EGraphImpl;
 import org.eclipse.emf.henshin.model.Rule;
+import org.sidiff.common.utilities.emf.Scope;
 import org.sidiff.completion.ui.model.proposals.ModelCompletionProposal;
 import org.sidiff.completion.ui.model.proposals.ModelCompletionProposalCluster;
 import org.sidiff.completion.ui.model.proposals.recognition.impact.ModelCompletionImpactAnalyzes;
@@ -97,6 +98,10 @@ public class ModelCompletionProposalGenerator {
 	
 	private IRevision calculateDifference() {
 		DifferenceSettings differenceSettings = getMatchingSettings();
+		
+		// Search only in current active resource for changes of the developer:
+		differenceSettings.setScope(Scope.RESOURCE);
+		
 		IRevision revision = new Revision(getHistoricModel(), getCurrentModel(), differenceSettings);
 		return revision;
 	}
@@ -113,7 +118,7 @@ public class ModelCompletionProposalGenerator {
 		EGraph graphCurrentModel = new EGraphImpl(getCurrentModel());
 		
 		// Calculate proposals:
-		ComplementFinderEngine complementFinderEngine = new ComplementFinderEngine(null, graphCurrentModel);
+		ComplementFinderEngine complementFinderEngine = new ComplementFinderEngine(impactAnalyzes, graphCurrentModel);
 		complementFinderEngine.start();
 		
 		List<ModelCompletionProposalCluster> propsalClusters = new ArrayList<>();

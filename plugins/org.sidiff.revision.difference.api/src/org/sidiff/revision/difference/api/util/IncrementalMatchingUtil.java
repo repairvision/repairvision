@@ -39,8 +39,6 @@ public class IncrementalMatchingUtil {
 		
 		for (Correspondence correspondence : newCorrespondences) {
 			base.getCorrespondences().add(correspondence);
-			base.getUnmatchedA().remove(correspondence.getMatchedA());
-			base.getUnmatchedB().remove(correspondence.getMatchedB());
 		}
 	}
 	

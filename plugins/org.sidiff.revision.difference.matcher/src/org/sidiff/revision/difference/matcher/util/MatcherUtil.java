@@ -1,13 +1,14 @@
 package org.sidiff.revision.difference.matcher.util;
 
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.sidiff.common.utilities.emf.DocumentType;
-import org.sidiff.revision.difference.Difference;
+import org.sidiff.common.utilities.emf.Scope;
 import org.sidiff.revision.difference.matcher.IMatcherProvider;
 
 public class MatcherUtil {
@@ -21,24 +22,16 @@ public class MatcherUtil {
 		Set<String> documentTypes = models.stream().map(model -> DocumentType.getDocumentType(model)).collect(Collectors.toSet());
 		return canHandleDocTypes(matcherProvider, documentTypes);
 	}
-
-	public static void createUnmatchedB(Difference difference, Collection<Resource> resources) {
-		for (Resource resource : resources) {
-			for (EObject element : (Iterable<EObject>) () -> resource.getAllContents()) {
-				if (difference.isUnmatchedB(element)) {
-					difference.getUnmatchedB().add(element);
-				}
-			}
-		}
-	}
 	
-	public static void createUnmatchedA(Difference difference, Collection<Resource> resources) {
-		for (Resource resource : resources) {
-			for (EObject element : (Iterable<EObject>) () -> resource.getAllContents()) {
-				if (difference.isUnmatchedA(element)) {
-					difference.getUnmatchedA().add(element);
-				}
-			}
+	public static List<Resource> getResourceScope(Resource resource, Scope scope) {
+		List<Resource> resourceSet;
+		
+		if (scope.equals(Scope.RESOURCE_SET)) {
+			resourceSet = resource.getResourceSet().getResources();
+		} else {
+			resourceSet = Collections.singletonList(resource);
 		}
+		
+		return resourceSet;
 	}
 }

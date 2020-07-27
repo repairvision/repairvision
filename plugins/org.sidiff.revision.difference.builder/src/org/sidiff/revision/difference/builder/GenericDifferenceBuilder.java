@@ -2,24 +2,24 @@ package org.sidiff.revision.difference.builder;
 
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
-import org.eclipse.emf.ecore.EcorePackage;
+import org.eclipse.emf.ecore.resource.Resource;
 import org.sidiff.common.utilities.emf.Scope;
 import org.sidiff.revision.difference.AddObject;
 import org.sidiff.revision.difference.AddReference;
 import org.sidiff.revision.difference.AttributeValueChange;
-import org.sidiff.revision.difference.Change;
 import org.sidiff.revision.difference.Correspondence;
 import org.sidiff.revision.difference.Difference;
 import org.sidiff.revision.difference.DifferenceFactory;
 import org.sidiff.revision.difference.RemoveObject;
 import org.sidiff.revision.difference.RemoveReference;
+import org.sidiff.revision.difference.matcher.util.MatcherUtil;
 
 /**
  * Generic technical difference builder. Accepts any model type and filters nothing domain specific.
@@ -27,17 +27,19 @@ import org.sidiff.revision.difference.RemoveReference;
 public class GenericDifferenceBuilder implements IDifferenceBuilder {
 
 	private static final DifferenceFactory DIFFERENCE_FACTORY = DifferenceFactory.eINSTANCE;
+	
+	private Difference difference;
+	
+	private Scope scope;
 
 	@Override
 	public Difference deriveTechDiff(Difference difference, Scope scope) {
+		this.difference = difference;
+		this.scope = scope;
 		
-		// TODO: Should be indexed by difference!
-		Set<EObject> unmatchedA = new HashSet<>(difference.getUnmatchedA());
-		Set<EObject> unmatchedB = new HashSet<>(difference.getUnmatchedB());
-		
-		processUnmatchedA(difference, unmatchedA);
-		processUnmatchedB(difference, unmatchedB);
-		processMatched(difference, unmatchedA, unmatchedB);
+		processMatched(); // TODO: Call first -> "We do not support meta-model matching yet."
+		processUnmatchedA();
+		processUnmatchedB();
 
 		return difference;
 	}
@@ -54,31 +56,34 @@ public class GenericDifferenceBuilder implements IDifferenceBuilder {
 		return !reference.isDerived();
 	}
 
-	private void processMatched(Difference diff, Set<EObject> unmatchedA, Set<EObject> unmatchedB) {
+	private void processMatched() {
 		
-		for (Correspondence c : diff.getCorrespondences()) {
-			EObject elementA = c.getMatchedA();
-			EObject elementB = c.getMatchedB();
+		for (Iterator<Correspondence> iterator = difference.getCorrespondences().iterator(); iterator.hasNext();) {
+			Correspondence correspondence = iterator.next();
+			EObject elementA = correspondence.getMatchedA();
+			EObject elementB = correspondence.getMatchedB();
 			EClass nodeType = elementA.eClass();
-
-			if (isConsideredNode(nodeType)) {
+			
+			if (elementA.eClass() != elementB.eClass()) {
+				iterator.remove(); // TODO: We do not support meta-model matching yet.
+			} else if (isConsideredNode(nodeType)) {
 				
 				// Outgoing edges:
 				for (EReference edgeType : nodeType.getEAllReferences()) {
 					if (isConsideredEdgeType(edgeType)) {
 						
 						// Outgoing removed edges:
-						deriveRemovedEdges(diff, unmatchedA, elementA, elementB, edgeType);
+						deriveRemovedEdges(elementA, elementB, edgeType);
 						
 						// Outgoing added edges:
-						deriveAddedEdge(diff, unmatchedB, elementA, elementB, edgeType);
+						deriveAddedEdge(elementA, elementB, edgeType);
 					}
 				}
 				
 				// Changed attributes:
 				for (EAttribute attributeType : nodeType.getEAllAttributes()) {
 					if (isConsideredAttribute(attributeType)) {
-						deriveAttributeValueChange(diff.getChanges(), elementA, elementB, attributeType);
+						deriveAttributeValueChange(elementA, elementB, attributeType);
 					}
 				}
 			}
@@ -96,107 +101,157 @@ public class GenericDifferenceBuilder implements IDifferenceBuilder {
 	}
 
 	@SuppressWarnings("unchecked")
-	private void deriveRemovedEdges(Difference diff, Set<EObject> unmatchedA, EObject elementA, EObject elementB, EReference edgeType) {
+	private void deriveRemovedEdges(EObject sourceA, EObject sourceB, EReference edgeType) {
 		
 		if (edgeType.isMany()) {
-			Collection<?> targetsA = (Collection<Object>) elementA.eGet(edgeType);
-			Collection<?> targetsB = getEdgeIndex(elementB, edgeType, targetsA.size());
+			Collection<?> targetsA = (Collection<Object>) sourceA.eGet(edgeType);
+			Collection<?> targetsB = getEdgeIndex(sourceB, edgeType, targetsA.size());
 			
 			for (Object targetA : targetsA) {
 				if (targetA instanceof EObject) {
-					if (unmatchedA.contains(targetA)) {
-						createRemoveEdge(diff.getChanges(), elementA, (EObject) targetA, edgeType);
+					EObject targetB = difference.getCorrespondingObjectInB((EObject) targetA);
+					
+					if (targetB != null) {
+						if (!targetsB.contains(targetB)) {
+							createRemoveEdge(sourceA, (EObject) targetA, edgeType);
+						}
 					} else {
-						EObject targetB = diff.getCorrespondingObjectInB((EObject) targetA);
-						
-						if (targetB != null) {
-							if (!targetsB.contains(targetB)) {
-								createRemoveEdge(diff.getChanges(), elementA, (EObject) targetA, edgeType);
-							}
-						} else {
-							// Reference to common resource (e.g. registry)?
-							if (!targetsB.contains(targetA)) {
-								createRemoveEdge(diff.getChanges(), elementA, (EObject) targetA, edgeType);
-							}
+						if (isRemoveReferenceInScope((EObject) targetA, targetsB, true)) {
+							createRemoveEdge(sourceA, (EObject) targetA, edgeType);
 						}
 					}
 				}
 			}
 		} else {
-			Object targetA = elementA.eGet(edgeType);
+			Object targetA = sourceA.eGet(edgeType);
 	
 			if (targetA instanceof EObject) {
-				if (unmatchedA.contains(targetA)) {
-					createRemoveEdge(diff.getChanges(), elementA, (EObject) targetA, edgeType);
+				EObject targetB = difference.getCorrespondingObjectInB((EObject) targetA);
+				
+				if (targetB != null) {
+					if (sourceB.eGet(edgeType) != targetB) {
+						createRemoveEdge(sourceA, (EObject) targetA, edgeType);
+					}
 				} else {
-					EObject targetB = diff.getCorrespondingObjectInB((EObject) targetA);
-					
-					if (targetB != null) {
-						if (elementB.eGet(edgeType) != targetB) {
-							createRemoveEdge(diff.getChanges(), elementA, (EObject) targetA, edgeType);
-						}
-					} else {
-						// Reference to common resource (e.g. registry)?
-						if (elementB.eGet(edgeType) != targetA) {
-							createRemoveEdge(diff.getChanges(), elementA, (EObject) targetA, edgeType);
-						}
+					if (isRemoveReferenceInScope((EObject) targetA, (EObject) sourceB.eGet(edgeType), false)) {
+						createRemoveEdge(sourceA, (EObject) targetA, edgeType);
 					}
 				}
+			}
+		}
+	}
+
+	protected boolean isRemoveReferenceInScope(EObject targetA, Object targetB, boolean isMany) {
+		
+		// NOTE: Allow reference to external resource (e.g. registry)
+		Resource targetModelA = targetA.eResource();
+		Resource modelA = difference.getModelA();
+		
+		if (targetModelA == null) {
+			return false;
+		}
+		
+		if (scope == Scope.RESOURCE) {
+			if (targetModelA == modelA) {
+				return true;
+			} else {
+				if (targetModelA.getResourceSet() == modelA.getResourceSet()) {
+					return false; // filter references to other resources in the resource set
+				} else {
+					return matchExternalReference(targetA, targetB, isMany);
+				}
+			}
+		} else {
+			assert (scope == Scope.RESOURCE_SET);
+			
+			if (targetModelA.getResourceSet() != modelA.getResourceSet()) {
+				return matchExternalReference(targetA, targetB, isMany);
+			} else {
+				return true;
 			}
 		}
 	}
 
 	@SuppressWarnings("unchecked")
-	private void deriveAddedEdge(Difference diff, Set<EObject> unmatchedB, EObject elementA, EObject elementB, EReference edgeType) {
+	private void deriveAddedEdge(EObject sourceA, EObject sourceB, EReference edgeType) {
 		if (edgeType.isMany()) {
-			Collection<?> targetsB = (Collection<Object>) elementB.eGet(edgeType);
-			Collection<?> targetsA = getEdgeIndex(elementA, edgeType, targetsB.size());
+			Collection<?> targetsB = (Collection<Object>) sourceB.eGet(edgeType);
+			Collection<?> targetsA = getEdgeIndex(sourceA, edgeType, targetsB.size());
 			
 			for (Object targetB : targetsB) {
 				if (targetB instanceof EObject) {
-					if (unmatchedB.contains(targetB)) {
-						createAddEdge(diff.getChanges(), elementB, (EObject) targetB, edgeType);
+					EObject targetA = difference.getCorrespondingObjectInA((EObject) targetB);
+					
+					if (targetA != null) {
+						if (!targetsA.contains(targetA)) {
+							createAddEdge(sourceB, (EObject) targetB, edgeType);
+						}
 					} else {
-						EObject targetA = diff.getCorrespondingObjectInA((EObject) targetB);
-						
-						if (targetA != null) {
-							if (!targetsA.contains(targetA)) {
-								createAddEdge(diff.getChanges(), elementB, (EObject) targetB, edgeType);
-							}
-						} else {
-							// Reference to common resource (e.g. registry)?
-							if (!targetsA.contains(targetB)) {
-								createAddEdge(diff.getChanges(), elementB, (EObject) targetB, edgeType);
-							}
+						if (isAddReferenceInScope((EObject) targetB,targetsA, true)) {
+							createAddEdge(sourceB, (EObject) targetB, edgeType);
 						}
 					}
 				}
 			}
 		} else {
-			Object targetB = elementB.eGet(edgeType);
+			Object targetB = sourceB.eGet(edgeType);
 			
 			if (targetB instanceof EObject) {
-				if (unmatchedB.contains(targetB)) {
-					createAddEdge(diff.getChanges(), elementB, (EObject) targetB, edgeType);
+				EObject targetA = difference.getCorrespondingObjectInA((EObject) targetB);
+				
+				if (targetA != null) {
+					if (sourceA.eGet(edgeType) != targetA) {
+						createAddEdge(sourceB, (EObject) targetB, edgeType);
+					}
 				} else {
-					EObject targetA = diff.getCorrespondingObjectInA((EObject) targetB);
-					
-					if (targetA != null) {
-						if (elementA.eGet(edgeType) != targetA) {
-							createAddEdge(diff.getChanges(), elementB, (EObject) targetB, edgeType);
-						}
-					} else {
-						// Reference to common resource (e.g. registry)?
-						if (elementA.eGet(edgeType) != targetB) {
-							createAddEdge(diff.getChanges(), elementB, (EObject) targetB, edgeType);
-						}
+					if (isAddReferenceInScope((EObject) targetB, sourceA.eGet(edgeType), false)) {
+						createAddEdge(sourceB, (EObject) targetB, edgeType);
 					}
 				}
 			}
 		}
 	}
 
-	private void deriveAttributeValueChange(List<Change> changes, EObject nodeA, EObject nodeB, EAttribute attributeType) {
+	protected boolean isAddReferenceInScope(EObject targetB, Object targetA, boolean isMany) {
+		
+		// NOTE: Allow reference to external resource (e.g. registry)
+		Resource targetModelB = targetB.eResource();
+		Resource modelB = difference.getModelB();
+		
+		if (targetModelB == null) {
+			return false;
+		}
+		
+		if (scope == Scope.RESOURCE) {
+			if (targetModelB == modelB) {
+				return true;
+			} else {
+				if (targetModelB.getResourceSet() == modelB.getResourceSet()) {
+					return false; // filter references to other resources in the resource set
+				} else {
+					return matchExternalReference(targetB, targetA, isMany);
+				}
+			}
+		} else {
+			assert (scope == Scope.RESOURCE_SET);
+			
+			if (targetModelB.getResourceSet() != modelB.getResourceSet()) {
+				return matchExternalReference(targetB, targetA, isMany);
+			} else {
+				return true;
+			}
+		}
+	}
+
+	private boolean matchExternalReference(EObject object, Object referenced, boolean isMany) {
+		if (isMany) {
+			return !((Collection<?>) referenced).contains(object);
+		} else {
+			return referenced != object;
+		}
+	}
+
+	private void deriveAttributeValueChange(EObject nodeA, EObject nodeB, EAttribute attributeType) {
 		Object valueA = nodeA.eGet(attributeType);
 		Object valueB = nodeB.eGet(attributeType);
 		
@@ -209,33 +264,39 @@ public class GenericDifferenceBuilder implements IDifferenceBuilder {
 			// No value change!
 			return;
 		} else {
-			changeAttribute(changes, nodeA, nodeB, attributeType);
+			changeAttribute(nodeA, nodeB, attributeType);
 		}
 	}
 
 	@SuppressWarnings("unchecked")
-	private void processUnmatchedA(Difference diff, Set<EObject> unmatchedA) {
-		for (EObject elementA : diff.getUnmatchedA()) {
+	private void processUnmatchedA() {
+		List<Resource> resourceSetA = MatcherUtil.getResourceScope(difference.getModelA(), scope);
+		
+		for (Resource resourceA : resourceSetA) {
+			for (EObject elementA : (Iterable<EObject>) () -> resourceA.getAllContents()) { 
+				if (difference.isUnmatchedA(elementA)) {
+					
+					// Special in A:
+					createRemoveNode(elementA);
 
-			// Special in A:
-			createRemoveNode(diff.getChanges(), elementA);
+					// Outgoing removed edges:
+					EClass nodeType = elementA.eClass();
 
-			// Outgoing removed edges:
-			EClass nodeType = elementA.eClass();
-
-			for (EReference edgeType : nodeType.getEAllReferences()) {
-				if (isConsideredEdgeType(edgeType)) {
-					if (edgeType.isMany()) {
-						for (Object targetA : (Iterable<Object>) elementA.eGet(edgeType)) {
-							if (targetA instanceof EObject) {
-								createRemoveEdge(diff.getChanges(), elementA, (EObject) targetA, edgeType);
+					for (EReference edgeType : nodeType.getEAllReferences()) {
+						if (isConsideredEdgeType(edgeType)) {
+							if (edgeType.isMany()) {
+								for (Object targetA : (Iterable<Object>) elementA.eGet(edgeType)) {
+									if (targetA instanceof EObject) {
+										createRemoveEdge(elementA, (EObject) targetA, edgeType);
+									}
+								}
+							} else {
+								Object targetA = elementA.eGet(edgeType);
+								
+								if (targetA instanceof EObject) {
+									createRemoveEdge(elementA, (EObject) targetA, edgeType);
+								}
 							}
-						}
-					} else {
-						Object targetA = elementA.eGet(edgeType);
-						
-						if (targetA instanceof EObject) {
-							createRemoveEdge(diff.getChanges(), elementA, (EObject) targetA, edgeType);
 						}
 					}
 				}
@@ -244,28 +305,34 @@ public class GenericDifferenceBuilder implements IDifferenceBuilder {
 	}
 
 	@SuppressWarnings("unchecked")
-	private void processUnmatchedB(Difference diff, Set<EObject> unmatchedB) {
-		for (EObject elementB : diff.getUnmatchedB()) {
+	private void processUnmatchedB() {
+		List<Resource> resourceSetB = MatcherUtil.getResourceScope(difference.getModelB(), scope);
 
-			// Special in B:
-			createAddNode(diff.getChanges(), elementB);
+		for (Resource resourceB : resourceSetB) {
+			for (EObject elementB : (Iterable<EObject>) () -> resourceB.getAllContents()) { 
+				if (difference.isUnmatchedB(elementB)) {
 
-			// Outgoing added edges:
-			EClass nodeType = elementB.eClass();
+					// Special in B:
+					createAddNode(elementB);
 
-			for (EReference edgeType : nodeType.getEAllReferences()) {
-				if (isConsideredEdgeType(edgeType)) {
-					if (edgeType.isMany()) {
-						for (Object targetB : (Iterable<Object>) elementB.eGet(edgeType)) {
-							if (targetB instanceof EObject) {
-								createAddEdge(diff.getChanges(), elementB, (EObject) targetB, edgeType);
+					// Outgoing added edges:
+					EClass nodeType = elementB.eClass();
+
+					for (EReference edgeType : nodeType.getEAllReferences()) {
+						if (isConsideredEdgeType(edgeType)) {
+							if (edgeType.isMany()) {
+								for (Object targetB : (Iterable<Object>) elementB.eGet(edgeType)) {
+									if (targetB instanceof EObject) {
+										createAddEdge(elementB, (EObject) targetB, edgeType);
+									}
+								}
+							} else {
+								Object targetB = elementB.eGet(edgeType);
+
+								if (targetB instanceof EObject) {
+									createAddEdge(elementB, (EObject) targetB, edgeType);
+								}
 							}
-						}
-					} else {
-						Object targetB = elementB.eGet(edgeType);
-						
-						if (targetB instanceof EObject) {
-							createAddEdge(diff.getChanges(), elementB, (EObject) targetB, edgeType);
 						}
 					}
 				}
@@ -273,54 +340,39 @@ public class GenericDifferenceBuilder implements IDifferenceBuilder {
 		}
 	}
 
-	protected void createRemoveNode(List<Change> changes, EObject obj) {
+	protected void createRemoveNode(EObject obj) {
 		RemoveObject r = DIFFERENCE_FACTORY.createRemoveObject();
 		r.setObj(obj);
-		changes.add(r);
+		difference.getChanges().add(r);
 	}
 
-	protected void createAddNode(List<Change> changes, EObject obj) {
+	protected void createAddNode(EObject obj) {
 		AddObject a = DIFFERENCE_FACTORY.createAddObject();
 		a.setObj(obj);
-		changes.add(a);
+		difference.getChanges().add(a);
 	}
 
-	protected void createRemoveEdge(List<Change> changes, EObject src, EObject tgt, EReference type) {
+	protected void createRemoveEdge(EObject src, EObject tgt, EReference type) {
 		RemoveReference c = DIFFERENCE_FACTORY.createRemoveReference();
 		c.setSrc(src);
 		c.setTgt(tgt);
 		c.setType(type);
-		changes.add(c);
-	}
-	
-	public static boolean isDynamic(EObject element) {
-		EReference containment = element.eContainmentFeature();
-		
-		if ((containment != null) 
-				&& (containment.isTransient() 
-						|| containment.isVolatile() 
-						|| containment.isDerived()
-						// FIXME: How to handle the eGenericSuperTypes reference? Is dynamic until a type argument will be added!
-						|| containment.equals(EcorePackage.eINSTANCE.getEClass_EGenericSuperTypes()))) {
-			return true;
-		}
-		
-		return false;
+		difference.getChanges().add(c);
 	}
 
-	protected void createAddEdge(List<Change> changes, EObject src, EObject tgt, EReference type) {
+	protected void createAddEdge(EObject src, EObject tgt, EReference type) {
 		AddReference c = DIFFERENCE_FACTORY.createAddReference();
 		c.setSrc(src);
 		c.setTgt(tgt);
 		c.setType(type);
-		changes.add(c);
+		difference.getChanges().add(c);
 	}
 	
-	private void changeAttribute(List<Change> changes, EObject nodeA, EObject nodeB, EAttribute attributeType) {
+	private void changeAttribute(EObject nodeA, EObject nodeB, EAttribute attributeType) {
 		AttributeValueChange change = DIFFERENCE_FACTORY.createAttributeValueChange();
 		change.setObjA(nodeA);
 		change.setObjB(nodeB);
 		change.setType(attributeType);
-		changes.add(change);
+		difference.getChanges().add(change);
 	}
 }

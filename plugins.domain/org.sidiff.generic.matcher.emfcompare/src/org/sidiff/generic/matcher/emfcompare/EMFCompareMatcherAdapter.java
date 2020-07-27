@@ -40,4 +40,5 @@ public class EMFCompareMatcherAdapter implements IMatcher {
 		
 		match.getSubmatches().forEach(subMatch -> convertCorrespondence(difference, subMatch));
 	}
+
 }

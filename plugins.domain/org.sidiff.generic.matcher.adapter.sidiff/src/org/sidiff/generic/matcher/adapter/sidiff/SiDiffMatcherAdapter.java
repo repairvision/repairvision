@@ -19,7 +19,7 @@ public class SiDiffMatcherAdapter implements IMatcher {
 	@Override
 	public void startMatching(Difference difference, Resource modelA, Resource modelB, Scope scope) {
 		sidiffMatcher.reset();
-		sidiffMatcher.setCorrespondencesService(new ReVisionDifferenceModelCorrespondences(difference));
+		sidiffMatcher.setCorrespondencesService(new ReVisionDifferenceModelCorrespondences(difference, scope));
 		
 		Collection<Resource> models = Arrays.asList(new Resource[] {modelA, modelB});
 		

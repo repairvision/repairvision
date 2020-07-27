@@ -23,7 +23,6 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
-import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.sidiff.revision.difference.Change;
 import org.sidiff.revision.difference.Correspondence;
@@ -41,8 +40,6 @@ import org.sidiff.revision.difference.DifferencePackage;
  * <ul>
  *   <li>{@link org.sidiff.revision.difference.impl.DifferenceImpl#getChanges <em>Changes</em>}</li>
  *   <li>{@link org.sidiff.revision.difference.impl.DifferenceImpl#getCorrespondences <em>Correspondences</em>}</li>
- *   <li>{@link org.sidiff.revision.difference.impl.DifferenceImpl#getUnmatchedA <em>Unmatched A</em>}</li>
- *   <li>{@link org.sidiff.revision.difference.impl.DifferenceImpl#getUnmatchedB <em>Unmatched B</em>}</li>
  *   <li>{@link org.sidiff.revision.difference.impl.DifferenceImpl#getUriModelA <em>Uri Model A</em>}</li>
  *   <li>{@link org.sidiff.revision.difference.impl.DifferenceImpl#getUriModelB <em>Uri Model B</em>}</li>
  *   <li>{@link org.sidiff.revision.difference.impl.DifferenceImpl#getModelA <em>Model A</em>}</li>
@@ -86,26 +83,6 @@ public class DifferenceImpl extends EObjectImpl implements Difference {
 	 * @ordered
 	 */
 	protected EList<Correspondence> correspondences;
-
-	/**
-	 * The cached value of the '{@link #getUnmatchedA() <em>Unmatched A</em>}' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getUnmatchedA()
-	 * @generated
-	 * @ordered
-	 */
-	protected EList<EObject> unmatchedA;
-
-	/**
-	 * The cached value of the '{@link #getUnmatchedB() <em>Unmatched B</em>}' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getUnmatchedB()
-	 * @generated
-	 * @ordered
-	 */
-	protected EList<EObject> unmatchedB;
 
 	/**
 	 * The default value of the '{@link #getUriModelA() <em>Uri Model A</em>}' attribute.
@@ -190,7 +167,6 @@ public class DifferenceImpl extends EObjectImpl implements Difference {
 	/**
 	 * <!-- begin-user-doc --> 
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	protected DifferenceImpl() {
@@ -287,26 +263,17 @@ public class DifferenceImpl extends EObjectImpl implements Difference {
 	@Override
 	public Resource getModelA() {
 		if (modelA == null) {
-
-			if (!getCorrespondences().isEmpty()) {
-				modelA = getCorrespondences().get(0).getMatchedA().eResource();
-			} else if (!getUnmatchedA().isEmpty()) {
-				modelA = getUnmatchedA().get(0).eResource();
+			URI modelURI = URI.createURI(getUriModelA());
+			if (modelURI.isRelative() && this.eResource() != null) {
+				modelURI = this.eResource().getURI().trimSegments(1).appendSegment(getUriModelA());
 			}
-
-			if (modelA == null) {
-				URI modelURI = URI.createURI(getUriModelA());
-				if (modelURI.isRelative() && this.eResource() != null) {
-					modelURI = this.eResource().getURI().trimSegments(1).appendSegment(getUriModelA());
-				}
-				ResourceSet resourceSet = null;
-				if (this.eResource() == null) {
-					resourceSet = new ResourceSetImpl();
-				} else {
-					resourceSet = this.eResource().getResourceSet();
-				}
-				modelA = resourceSet.getResource(modelURI, true);
+			ResourceSet resourceSet = null;
+			if (this.eResource() == null) {
+				resourceSet = new ResourceSetImpl();
+			} else {
+				resourceSet = this.eResource().getResourceSet();
 			}
+			modelA = resourceSet.getResource(modelURI, true);
 		}
 
 		return modelA;
@@ -335,26 +302,17 @@ public class DifferenceImpl extends EObjectImpl implements Difference {
 	@Override
 	public Resource getModelB() {
 		if (modelB == null) {
-
-			if (!getCorrespondences().isEmpty()) {
-				modelB = getCorrespondences().get(0).getMatchedB().eResource();
-			} else if (!getUnmatchedB().isEmpty()) {
-				modelB = getUnmatchedB().get(0).eResource();
+			URI modelURI = URI.createURI(getUriModelB());
+			if (modelURI.isRelative() && this.eResource() != null) {
+				modelURI = this.eResource().getURI().trimSegments(1).appendSegment(getUriModelB());
 			}
-
-			if (modelB == null) {
-				URI modelURI = URI.createURI(getUriModelB());
-				if (modelURI.isRelative() && this.eResource() != null) {
-					modelURI = this.eResource().getURI().trimSegments(1).appendSegment(getUriModelB());
-				}
-				ResourceSet resourceSet = null;
-				if (this.eResource() == null) {
-					resourceSet = new ResourceSetImpl();
-				} else {
-					resourceSet = this.eResource().getResourceSet();
-				}
-				modelB = resourceSet.getResource(modelURI, true);
+			ResourceSet resourceSet = null;
+			if (this.eResource() == null) {
+				resourceSet = new ResourceSetImpl();
+			} else {
+				resourceSet = this.eResource().getResourceSet();
 			}
+			modelB = resourceSet.getResource(modelURI, true);
 		}
 
 		return modelB;
@@ -373,32 +331,6 @@ public class DifferenceImpl extends EObjectImpl implements Difference {
 			eNotify(new ENotificationImpl(this, Notification.SET, DifferencePackage.DIFFERENCE__MODEL_B, oldModelB, modelB));
 		
 		setUriModelB(getModelB().getURI().toString());
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public EList<EObject> getUnmatchedA() {
-		if (unmatchedA == null) {
-			unmatchedA = new EObjectResolvingEList<EObject>(EObject.class, this, DifferencePackage.DIFFERENCE__UNMATCHED_A);
-		}
-		return unmatchedA;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public EList<EObject> getUnmatchedB() {
-		if (unmatchedB == null) {
-			unmatchedB = new EObjectResolvingEList<EObject>(EObject.class, this, DifferencePackage.DIFFERENCE__UNMATCHED_B);
-		}
-		return unmatchedB;
 	}
 
 	/**
@@ -538,10 +470,6 @@ public class DifferenceImpl extends EObjectImpl implements Difference {
 				return getChanges();
 			case DifferencePackage.DIFFERENCE__CORRESPONDENCES:
 				return getCorrespondences();
-			case DifferencePackage.DIFFERENCE__UNMATCHED_A:
-				return getUnmatchedA();
-			case DifferencePackage.DIFFERENCE__UNMATCHED_B:
-				return getUnmatchedB();
 			case DifferencePackage.DIFFERENCE__URI_MODEL_A:
 				return getUriModelA();
 			case DifferencePackage.DIFFERENCE__URI_MODEL_B:
@@ -570,14 +498,6 @@ public class DifferenceImpl extends EObjectImpl implements Difference {
 			case DifferencePackage.DIFFERENCE__CORRESPONDENCES:
 				getCorrespondences().clear();
 				getCorrespondences().addAll((Collection<? extends Correspondence>)newValue);
-				return;
-			case DifferencePackage.DIFFERENCE__UNMATCHED_A:
-				getUnmatchedA().clear();
-				getUnmatchedA().addAll((Collection<? extends EObject>)newValue);
-				return;
-			case DifferencePackage.DIFFERENCE__UNMATCHED_B:
-				getUnmatchedB().clear();
-				getUnmatchedB().addAll((Collection<? extends EObject>)newValue);
 				return;
 			case DifferencePackage.DIFFERENCE__URI_MODEL_A:
 				setUriModelA((String)newValue);
@@ -609,12 +529,6 @@ public class DifferenceImpl extends EObjectImpl implements Difference {
 			case DifferencePackage.DIFFERENCE__CORRESPONDENCES:
 				getCorrespondences().clear();
 				return;
-			case DifferencePackage.DIFFERENCE__UNMATCHED_A:
-				getUnmatchedA().clear();
-				return;
-			case DifferencePackage.DIFFERENCE__UNMATCHED_B:
-				getUnmatchedB().clear();
-				return;
 			case DifferencePackage.DIFFERENCE__URI_MODEL_A:
 				setUriModelA(URI_MODEL_A_EDEFAULT);
 				return;
@@ -643,10 +557,6 @@ public class DifferenceImpl extends EObjectImpl implements Difference {
 				return changes != null && !changes.isEmpty();
 			case DifferencePackage.DIFFERENCE__CORRESPONDENCES:
 				return correspondences != null && !correspondences.isEmpty();
-			case DifferencePackage.DIFFERENCE__UNMATCHED_A:
-				return unmatchedA != null && !unmatchedA.isEmpty();
-			case DifferencePackage.DIFFERENCE__UNMATCHED_B:
-				return unmatchedB != null && !unmatchedB.isEmpty();
 			case DifferencePackage.DIFFERENCE__URI_MODEL_A:
 				return URI_MODEL_A_EDEFAULT == null ? uriModelA != null : !URI_MODEL_A_EDEFAULT.equals(uriModelA);
 			case DifferencePackage.DIFFERENCE__URI_MODEL_B:
