@@ -53,7 +53,7 @@ public class RulebaseExtension {
 				URL url = urls.nextElement();
 				String localFilePath = url.getFile();
 				
-				if (localFilePath.endsWith(".henshin")) {
+				if (localFilePath.toLowerCase().endsWith(".henshin")) {
 					editRules.add(URI.createPlatformPluginURI(projectName + localFilePath, true));
 				}
 			}
