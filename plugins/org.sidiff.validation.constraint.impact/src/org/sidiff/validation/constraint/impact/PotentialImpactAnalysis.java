@@ -6,6 +6,10 @@ import org.eclipse.emf.ecore.EReference;
 
 public interface PotentialImpactAnalysis {
 
+	boolean onCreate(EReference containingReference, EClass objectType, boolean strict);
+	
+	boolean onDelete(EReference containingReference, EClass objectType, boolean strict);
+	
 	boolean onCreate(EClass sourceContextType, EReference reference, boolean strict);
 	
 	boolean onDelete(EClass sourceContextType, EReference reference, boolean strict);

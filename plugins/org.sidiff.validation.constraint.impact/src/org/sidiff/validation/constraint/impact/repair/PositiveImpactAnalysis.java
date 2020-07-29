@@ -9,8 +9,10 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.sidiff.validation.constraint.impact.ImpactAnalysis;
-import org.sidiff.validation.constraint.interpreter.decisiontree.repair.RepairAction;
-import org.sidiff.validation.constraint.interpreter.decisiontree.repair.RepairAction.RepairType;
+import org.sidiff.validation.constraint.interpreter.decisiontree.repair.actions.ObjectRepairAction;
+import org.sidiff.validation.constraint.interpreter.decisiontree.repair.actions.RepairAction;
+import org.sidiff.validation.constraint.interpreter.decisiontree.repair.actions.RepairAction.RepairType;
+import org.sidiff.validation.constraint.interpreter.decisiontree.repair.actions.StructuralFeatureRepairAction;
 
 public class PositiveImpactAnalysis implements ImpactAnalysis {
 
@@ -21,18 +23,28 @@ public class PositiveImpactAnalysis implements ImpactAnalysis {
 	}
 	
 	@Override
+	public boolean onCreate(EObject object) {
+		return isObjectRepair(RepairType.CREATE, object);
+	}
+	
+	@Override
+	public boolean onDelete(EObject object) {
+		return isObjectRepair(RepairType.DELETE, object);
+	}
+	
+	@Override
 	public boolean onCreate(EObject sourceContext, EReference reference) {
-		return isRepair(RepairType.CREATE, sourceContext, reference);
+		return isStructuralFeatureRepair(RepairType.CREATE, sourceContext, reference);
 	}
 
 	@Override
 	public boolean onDelete(EObject sourceContext, EReference reference) {
-		return isRepair(RepairType.DELETE, sourceContext, reference);
+		return isStructuralFeatureRepair(RepairType.DELETE, sourceContext, reference);
 	}
 
 	@Override
 	public boolean onModify(EObject containerContext, EAttribute attribute) {
-		return isRepair(RepairType.MODIFY, containerContext, attribute);
+		return isStructuralFeatureRepair(RepairType.MODIFY, containerContext, attribute);
 	}
 	
 	@Override
@@ -40,7 +52,25 @@ public class PositiveImpactAnalysis implements ImpactAnalysis {
 		return repairActions.getScope();
 	}
 	
-	protected boolean isRepair(RepairType type, EObject context, EStructuralFeature feature) {
+	protected boolean isObjectRepair(RepairType type, EObject object) {
+		Map<EObject, List<RepairAction>> repairsPerMetaClass = repairActions.getRepairActions(object.eContainmentFeature());
+
+		if (repairsPerMetaClass != null) {
+			List<RepairAction> repairsPerObject = repairsPerMetaClass.get(object);
+			
+			if (repairsPerObject != null) {
+				for (RepairAction repair : repairsPerObject) {
+					if (repair instanceof ObjectRepairAction) {
+						return ((ObjectRepairAction) repair).match(type, object);
+					}
+				}
+			}
+		}
+		
+		return false;
+	}
+	
+	protected boolean isStructuralFeatureRepair(RepairType type, EObject context, EStructuralFeature feature) {
 		Map<EObject, List<RepairAction>> repairsPerMetaClass = repairActions.getRepairActions(feature);
 
 		if (repairsPerMetaClass != null) {
@@ -48,10 +78,8 @@ public class PositiveImpactAnalysis implements ImpactAnalysis {
 			
 			if (repairsPerObject != null) {
 				for (RepairAction repair : repairsPerObject) {
-					if (repair.getType().equals(RepairType.MODIFY) || repair.getType().equals(type)) {
-						if (repair.getFeature().equals(feature)) {
-							return true;
-						}
+					if (repair instanceof StructuralFeatureRepairAction) {
+						return ((StructuralFeatureRepairAction) repair).match(type, context, feature);
 					}
 				}
 			}

@@ -12,8 +12,9 @@ import org.sidiff.validation.constraint.interpreter.decisiontree.IDecisionBranch
 import org.sidiff.validation.constraint.interpreter.decisiontree.Sequence;
 import org.sidiff.validation.constraint.interpreter.decisiontree.analyze.ConstraintAction;
 import org.sidiff.validation.constraint.interpreter.decisiontree.analyze.ConstraintAction.ConstraintType;
-import org.sidiff.validation.constraint.interpreter.decisiontree.repair.RepairAction;
-import org.sidiff.validation.constraint.interpreter.decisiontree.repair.RepairAction.RepairType;
+import org.sidiff.validation.constraint.interpreter.decisiontree.repair.RepairActionFactory;
+import org.sidiff.validation.constraint.interpreter.decisiontree.repair.actions.RepairAction;
+import org.sidiff.validation.constraint.interpreter.decisiontree.repair.actions.RepairAction.RepairType;
 import org.sidiff.validation.constraint.interpreter.scope.IScopeRecorder;
 import org.sidiff.validation.constraint.interpreter.scope.ScopeNode;
 import org.sidiff.validation.constraint.interpreter.terms.Term;
@@ -189,7 +190,7 @@ public class GetClosure extends Function {
 				
 				for (EObject target : targets) {
 					if (getRepairNext(target, closure, sequence, type, invalid)) {
-						RepairAction newRepair = new RepairAction(type, element, feature); 
+						RepairAction newRepair = RepairActionFactory.getInstance().create(type, element, feature); 
 						parent.appendChildDecisions(newRepair);
 						invalidElementReachable = true;
 					}
@@ -197,7 +198,7 @@ public class GetClosure extends Function {
 			} else {
 				EObject target = (EObject) element.eGet(feature);
 				if (getRepairNext(target, closure, parent, type, invalid)) {
-					RepairAction newRepair = new RepairAction(type, element, feature); 
+					RepairAction newRepair = RepairActionFactory.getInstance().create(type, element, feature); 
 					parent.appendChildDecisions(newRepair);
 					invalidElementReachable = true;
 				}

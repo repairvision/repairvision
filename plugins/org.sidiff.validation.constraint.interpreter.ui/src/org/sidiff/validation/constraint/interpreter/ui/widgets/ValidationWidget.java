@@ -15,7 +15,8 @@ import org.sidiff.common.utilities.ui.widgets.IUnsetableControl;
 import org.sidiff.revision.ui.editors.highlighting.EditorHighlighting;
 import org.sidiff.revision.ui.editors.highlighting.ISelectionHighlightingAdapter;
 import org.sidiff.validation.constraint.api.util.Validation;
-import org.sidiff.validation.constraint.interpreter.decisiontree.repair.RepairAction;
+import org.sidiff.validation.constraint.interpreter.decisiontree.repair.actions.ObjectRepairAction;
+import org.sidiff.validation.constraint.interpreter.decisiontree.repair.actions.StructuralFeatureRepairAction;
 import org.sidiff.validation.constraint.interpreter.ui.provider.RepairTreeContentProvider;
 import org.sidiff.validation.constraint.interpreter.ui.provider.RepairTreeLabelProvider;
 
@@ -55,9 +56,14 @@ public class ValidationWidget implements IUnsetableControl, IDisposableControl {
 						return Collections.singletonList(validation.getContext()).iterator();
 					}
 					
-					else if (selectedElement instanceof RepairAction) {
-						RepairAction repair = (RepairAction) selectedElement;
+					else if (selectedElement instanceof StructuralFeatureRepairAction) {
+						StructuralFeatureRepairAction repair = (StructuralFeatureRepairAction) selectedElement;
 						return Collections.singletonList(repair.getContext()).iterator();
+					}
+					
+					else if (selectedElement instanceof ObjectRepairAction) {
+						ObjectRepairAction repair = (ObjectRepairAction) selectedElement;
+						return Collections.singletonList(repair.getObject()).iterator();
 					}
 				}
 				

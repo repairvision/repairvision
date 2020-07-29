@@ -2,11 +2,11 @@ package org.sidiff.validation.constraint.interpreter;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
-import org.sidiff.validation.constraint.interpreter.decisiontree.Alternative;
 import org.sidiff.validation.constraint.interpreter.decisiontree.IDecisionBranch;
 import org.sidiff.validation.constraint.interpreter.decisiontree.Sequence;
-import org.sidiff.validation.constraint.interpreter.decisiontree.repair.RepairAction;
-import org.sidiff.validation.constraint.interpreter.decisiontree.repair.RepairAction.RepairType;
+import org.sidiff.validation.constraint.interpreter.decisiontree.repair.RepairActionFactory;
+import org.sidiff.validation.constraint.interpreter.decisiontree.repair.RepairTree;
+import org.sidiff.validation.constraint.interpreter.decisiontree.repair.actions.RepairAction.RepairType;
 import org.sidiff.validation.constraint.interpreter.formulas.Formula;
 import org.sidiff.validation.constraint.interpreter.scope.IScopeRecorder;
 import org.sidiff.validation.constraint.interpreter.scope.ScopeNode;
@@ -57,33 +57,22 @@ public class Constraint extends NamedElement implements IConstraint {
 	@Override
 	public IDecisionBranch repair() {
 		formula.evaluate(IScopeRecorder.DUMMY, false);
+		RepairTree repairTree = new RepairTree();
 		
 		if (getResult() != true) {
-			IDecisionBranch repairTree = createRootRepairDecision();
+			
+			// Repair which deletes the root element:
+			repairTree.appendChildDecisions(RepairActionFactory.getInstance().create(
+					RepairType.DELETE, 
+					getContext().eContainmentFeature(),
+					getContext().eClass(),
+					getContext()));
+			
 			formula.repair(repairTree, true);
 			return repairTree;
-		} else {
-			return new Alternative();
-		}
-	}
-	
-	protected IDecisionBranch createRootRepairDecision() {
-		IDecisionBranch repairTreeRoot = new Alternative();
-		
-		// Repair which deletes the root element:
-		if (getContext().eContainmentFeature() != null) {
-			if (getContext().eContainmentFeature().getEOpposite() != null) {
-				// Use container reference:
-				repairTreeRoot.appendChildDecisions(new RepairAction(
-						RepairType.DELETE, getContext(),  getContext().eContainmentFeature().getEOpposite()));
-			} else {
-				// Use containment reference (as cross-reference):
-				repairTreeRoot.appendChildDecisions(new RepairAction(
-						RepairType.DELETE, getContext(),  getContext().eContainmentFeature()));
-			}
 		}
 		
-		return repairTreeRoot;
+		return repairTree;
 	}
 	
 	@Override

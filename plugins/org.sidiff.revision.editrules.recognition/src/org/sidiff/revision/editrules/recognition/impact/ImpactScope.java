@@ -14,6 +14,7 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.henshin.model.Attribute;
 import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.GraphElement;
+import org.eclipse.emf.henshin.model.Node;
 import org.sidiff.common.utilities.emf.MetaModelUtil;
 import org.sidiff.revision.editrules.recognition.revision.RevisionGraph;
 import org.sidiff.validation.constraint.impact.ImpactAnalysis;
@@ -33,34 +34,17 @@ public class ImpactScope {
 
 			// Abstract repairs consider only edges and attributes:
 			if (change instanceof Edge) {
-				EReference referenceType = ((Edge) change).getType();
 				EClass sourceContextType = ((Edge) change).getSource().getType();
 				boolean strictContextType = RevisionGraph.isStrictMatchingType(((Edge) change).getSource());
 
 				// Delete:
 				if (change.getGraph().isLhs()) {
 					buildScopeOnDelete(sourceContextType, (Edge) change, strictContextType);
-					
-					// Change which deletes the context element of a validation:
-					if (referenceType.isContainment() && (referenceType.getEOpposite() == null)) {
-						EClass targetContextType = ((Edge) change).getTarget().getType();
-						boolean strictTargetContextType = RevisionGraph.isStrictMatchingType(((Edge) change).getTarget());
-						
-						buildScopeOnDelete(targetContextType, (Edge) change, strictTargetContextType);
-					}
 				}
 
 				// Create:
 				else if (change.getGraph().isRhs()) {
 					buildScopeOnCreate(sourceContextType, (Edge) change, strictContextType);
-					
-					// Change which creates the context element of a validation:
-					if (referenceType.isContainment() && (referenceType.getEOpposite() == null)) {
-						EClass targetContextType = ((Edge) change).getTarget().getType();
-						boolean strictTargetContextType = RevisionGraph.isStrictMatchingType(((Edge) change).getTarget());
-						
-						buildScopeOnCreate(targetContextType, (Edge) change, strictTargetContextType);
-					}
 				}
 
 				else {
@@ -73,6 +57,25 @@ public class ImpactScope {
 				boolean strictContextType = RevisionGraph.isStrictMatchingType(((Attribute) change).getNode());
 				
 				buildScopeOnModify(contextType, (Attribute) change, strictContextType);
+			}
+			
+			else if (change instanceof Node) {
+				EClass objectType = ((Node) change).getType();
+				boolean strictObjectType = RevisionGraph.isStrictMatchingType((Node) change);
+
+				// Delete:
+				if (change.getGraph().isLhs()) {
+					buildScopeOnDelete(objectType, (Node) change, strictObjectType);
+				}
+
+				// Create:
+				else if (change.getGraph().isRhs()) {
+					buildScopeOnCreate(objectType, (Node) change, strictObjectType);
+				}
+
+				else {
+					assert false : "We should never get here...!";
+				}
 			}
 		}
 	}
@@ -117,6 +120,47 @@ public class ImpactScope {
 				}
 			}
 		}
+	}
+	
+	private void buildScopeOnCreate(EClass objectType, Node change, boolean strict) {
+		for (EObject contextElement : impact.getScope()) {
+			EClass repairContextType = contextElement.eClass();
+			
+			if (!strict || objectType.equals(repairContextType)) {
+				if (strict || MetaModelUtil.isAssignableTo(repairContextType, objectType)) {
+					if (contextElement.eContainingFeature() == getContainingReference(change)) {
+						if (impact.onCreate(contextElement)) {
+							add(change, contextElement);
+						}
+					}
+				}
+			}
+		}
+	}
+
+	private void buildScopeOnDelete(EClass objectType, Node change, boolean strict) {
+		for (EObject contextElement : impact.getScope()) {
+			EClass repairContextType = contextElement.eClass();
+			
+			if (!strict || objectType.equals(repairContextType)) {
+				if (strict || MetaModelUtil.isAssignableTo(repairContextType, objectType)) {
+					if (contextElement.eContainmentFeature() == getContainingReference(change)) {
+						if (impact.onDelete(contextElement)) {
+							add(change, contextElement);
+						}
+					}
+				}
+			}
+		}
+	}
+	
+	private EReference getContainingReference(Node change) {
+		for (Edge incomingEdge : change.getIncoming()) {
+			if (incomingEdge.getType().isContainment()) {
+				return incomingEdge.getType();
+			}
+		}
+		return null;
 	}
 	
 	public Set<GraphElement> getChanges() {

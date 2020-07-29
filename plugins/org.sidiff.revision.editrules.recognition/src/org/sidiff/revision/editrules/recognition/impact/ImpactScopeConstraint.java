@@ -43,16 +43,14 @@ public class ImpactScopeConstraint {
 			List<EObject> scope = repairScope.get(change);
 			
 			if (change instanceof Edge) {
-				
-				// Source:
 				NodePattern repairSourceContext = recognitionPattern.getEdgeTrace().get(change).getEdgePatternB().getSource();
 				addScopeToDomain(Domain.get(repairSourceContext), scope);
-				
-				// Target (repair which deletes the context element of a validation):
-				NodePattern repairTargetContext = recognitionPattern.getEdgeTrace().get(change).getEdgePatternB().getTarget();
-				addScopeToDomain(Domain.get(repairTargetContext), scope);
 			} else if (change instanceof Attribute) {
 				Node node = HenshinRuleAnalysisUtil.tryLHS(((Attribute) change).getNode());
+				NodePattern repairContext = recognitionPattern.getNodeTrace().get(node).getNodePatternB();
+				addScopeToDomain(Domain.get(repairContext), scope);
+			} else if (change instanceof Node) {
+				Node node = HenshinRuleAnalysisUtil.tryLHS((Node) change);
 				NodePattern repairContext = recognitionPattern.getNodeTrace().get(node).getNodePatternB();
 				addScopeToDomain(Domain.get(repairContext), scope);
 			}

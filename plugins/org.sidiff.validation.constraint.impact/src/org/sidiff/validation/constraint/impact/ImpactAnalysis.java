@@ -7,6 +7,10 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 
 public interface ImpactAnalysis {
+	
+	boolean onCreate(EObject object);
+	
+	boolean onDelete(EObject object);
 
 	boolean onCreate(EObject sourceContext, EReference reference);
 	

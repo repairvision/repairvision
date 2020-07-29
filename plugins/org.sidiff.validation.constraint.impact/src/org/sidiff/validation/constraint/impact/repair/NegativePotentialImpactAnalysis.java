@@ -8,6 +8,16 @@ public class NegativePotentialImpactAnalysis extends PositivePotentialImpactAnal
 	public NegativePotentialImpactAnalysis(RepairActionIndex repairActions) {
 		super(repairActions);
 	}
+	
+	@Override
+	public boolean onCreate(EReference containingReference, EClass objectType, boolean strict) {
+		return super.onDelete(containingReference, objectType, strict);
+	}
+	
+	@Override
+	public boolean onDelete(EReference containingReference, EClass objectType, boolean strict) {
+		return super.onCreate(containingReference, objectType, strict);
+	}
 
 	@Override
 	public boolean onCreate(EClass sourceContextType, EReference reference, boolean strict) {

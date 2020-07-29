@@ -10,7 +10,7 @@ import org.sidiff.validation.constraint.api.util.Validation;
 import org.sidiff.validation.constraint.interpreter.decisiontree.Alternative;
 import org.sidiff.validation.constraint.interpreter.decisiontree.IDecisionNode;
 import org.sidiff.validation.constraint.interpreter.decisiontree.Sequence;
-import org.sidiff.validation.constraint.interpreter.decisiontree.repair.RepairAction;
+import org.sidiff.validation.constraint.interpreter.decisiontree.repair.actions.RepairAction;
 import org.sidiff.validation.constraint.interpreter.ui.Activator;
 
 public class RepairTreeLabelProvider extends LabelProvider {
@@ -55,7 +55,7 @@ public class RepairTreeLabelProvider extends LabelProvider {
 		else if (element instanceof IDecisionNode) {
 			
 			if (element instanceof RepairAction) {
-				return "Repair(" + ((RepairAction) element).getRepairTripleLabel() + ")";
+				return "Repair(" + ((RepairAction) element).getRepairLabel() + ")";
 			}
 			
 			else if (element instanceof Alternative) {

@@ -8,8 +8,9 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.sidiff.validation.constraint.interpreter.decisiontree.IDecisionBranch;
 import org.sidiff.validation.constraint.interpreter.decisiontree.analyze.ConstraintAction.ConstraintType;
-import org.sidiff.validation.constraint.interpreter.decisiontree.repair.RepairAction;
-import org.sidiff.validation.constraint.interpreter.decisiontree.repair.RepairAction.RepairType;
+import org.sidiff.validation.constraint.interpreter.decisiontree.repair.RepairActionFactory;
+import org.sidiff.validation.constraint.interpreter.decisiontree.repair.actions.RepairAction;
+import org.sidiff.validation.constraint.interpreter.decisiontree.repair.actions.RepairAction.RepairType;
 import org.sidiff.validation.constraint.interpreter.scope.IScopeRecorder;
 import org.sidiff.validation.constraint.interpreter.terms.Term;
 import org.sidiff.validation.constraint.interpreter.terms.functions.Function;
@@ -84,7 +85,7 @@ public class IndexOf extends Function {
 		container.repair(parent, type);
 		element.repair(parent, type);
 
-		RepairAction newRepair = new RepairAction(RepairType.MODIFY, (EObject) container.getValue(), feature);
+		RepairAction newRepair = RepairActionFactory.getInstance().create(RepairType.MODIFY, (EObject) container.getValue(), feature);
 		parent.appendChildDecisions(newRepair);
 	}
 }

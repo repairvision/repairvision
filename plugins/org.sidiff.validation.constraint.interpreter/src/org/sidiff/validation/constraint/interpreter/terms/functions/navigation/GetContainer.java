@@ -7,8 +7,9 @@ import org.sidiff.validation.constraint.interpreter.decisiontree.Alternative;
 import org.sidiff.validation.constraint.interpreter.decisiontree.IDecisionBranch;
 import org.sidiff.validation.constraint.interpreter.decisiontree.Sequence;
 import org.sidiff.validation.constraint.interpreter.decisiontree.analyze.ConstraintAction.ConstraintType;
-import org.sidiff.validation.constraint.interpreter.decisiontree.repair.RepairAction;
-import org.sidiff.validation.constraint.interpreter.decisiontree.repair.RepairAction.RepairType;
+import org.sidiff.validation.constraint.interpreter.decisiontree.repair.RepairActionFactory;
+import org.sidiff.validation.constraint.interpreter.decisiontree.repair.actions.RepairAction;
+import org.sidiff.validation.constraint.interpreter.decisiontree.repair.actions.RepairAction.RepairType;
 import org.sidiff.validation.constraint.interpreter.scope.IScopeRecorder;
 import org.sidiff.validation.constraint.interpreter.scope.ReferenceScope;
 import org.sidiff.validation.constraint.interpreter.scope.ScopeNode;
@@ -78,7 +79,7 @@ public class GetContainer extends Function {
 		element.repair(alternative, type);
 
 		if ((element.getValue() != null) && (getValue() != null)) {
-			RepairAction newRepair = new RepairAction(type, (EObject) value, ((EObject) element.getValue()).eContainmentFeature()); 
+			RepairAction newRepair = RepairActionFactory.getInstance().create(type, (EObject) value, ((EObject) element.getValue()).eContainmentFeature()); 
 			alternative.appendChildDecisions(newRepair);
 		}
 	}

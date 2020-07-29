@@ -1,7 +1,5 @@
 package org.sidiff.revision.repair.complement.peo.impact;
 
-import static org.sidiff.common.utilities.henshin.HenshinRuleAnalysisUtil.getLHS;
-
 import java.util.Collection;
 import java.util.List;
 
@@ -48,32 +46,12 @@ public class GraphActionImpactUtil {
 					if (impact.onDelete(sourceContextType, referenceType, strictContextType)) {
 						return true;
 					}
-
-					// Change which deletes the root element of a validation:
-					if (referenceType.isContainment() && (referenceType.getEOpposite() == null)) {
-						EClass targetContextType = ((Edge) change).getTarget().getType();
-						boolean strictTargetContextType = RevisionGraph.isStrictMatchingType(((Edge) change).getTarget());
-
-						if (impact.onDelete(targetContextType, referenceType, strictTargetContextType)) {
-							return true;
-						}
-					}
 				}
 
 				// Create:
 				else if (change.getGraph().isRhs()) {
 					if (impact.onCreate(sourceContextType, referenceType, strictContextType)) {
 						return true;
-					}
-					
-					// Change which creates the root element of a validation:
-					if (referenceType.isContainment() && (referenceType.getEOpposite() == null)) {
-						EClass targetContextType = ((Edge) change).getTarget().getType();
-						boolean strictTargetContextType = RevisionGraph.isStrictMatchingType(((Edge) change).getTarget());
-
-						if (impact.onCreate(targetContextType, referenceType, strictTargetContextType)) {
-							return true;
-						}
 					}
 				}
 
@@ -91,9 +69,41 @@ public class GraphActionImpactUtil {
 					return true;
 				}
 			}
+			
+			else if (change instanceof Node) {
+				EClass objectType = ((Node) change).getType();
+				boolean strictObjectType = RevisionGraph.isStrictMatchingType((Node) change);
+
+				// Delete:
+				if (change.getGraph().isLhs()) {
+					if (impact.onDelete(getContainingReference((Node) change), objectType, strictObjectType)) {
+						return true;
+					}
+				}
+
+				// Create:
+				else if (change.getGraph().isRhs()) {
+					if (impact.onCreate(getContainingReference((Node) change), objectType, strictObjectType)) {
+						return true;
+					}
+				}
+
+				else {
+					assert false : "We should never get here...!";
+				}
+			}
 		}
 
 		return false;
+	}
+	
+	private static EReference getContainingReference(Node change) {
+		for (Edge incomingEdge : change.getIncoming()) {
+			if (incomingEdge.getType().isContainment()) {
+				return incomingEdge.getType();
+			}
+		}
+		return null;
 	}
 	
 	/**
@@ -143,36 +153,12 @@ public class GraphActionImpactUtil {
 						if (impact.onDelete(sourceContextObject, referenceType)) {
 							return true;
 						}
-						
-						// Change which deletes the root element of a validation:
-						if (referenceType.isContainment() && (referenceType.getEOpposite() == null)) {
-							
-							// Get the context object of the edge:
-							Node targetContextNode = getLHS(((Edge) change).getTarget());
-							EObject targetContextObject = getMatch(targetContextNode, match);
-							
-							if (impact.onDelete(targetContextObject, referenceType)) {
-								return true;
-							}
-						}
 					}
 					
 					// Create:
 					else if (change.getGraph().isRhs()) {
 						if (impact.onCreate(sourceContextObject, referenceType)) {
 							return true;
-						}
-						
-						// Change which creates the root element of a validation:
-						if (referenceType.isContainment() && (referenceType.getEOpposite() == null)) {
-							
-							// Get the context object of the edge:
-							Node targetContextNode = ((Edge) change).getTarget();
-							EObject targetContextObject = getMatch(targetContextNode, match);
-							
-							if (impact.onCreate(targetContextObject, referenceType)) {
-								return true;
-							}
 						}
 					}
 					
@@ -193,6 +179,31 @@ public class GraphActionImpactUtil {
 					if (impact.onModify(contextObject, attributeType)) {
 						return true;
 					}
+				}
+			}
+			
+			else if (change instanceof Node) {
+				EObject object = getMatch((Node) change, match);
+				
+				if (object != null) {
+					
+					// Delete:
+					if (change.getGraph().isLhs()) {
+						if (impact.onDelete(object)) {
+							return true;
+						}
+					}
+					
+					// Create:
+					else if (change.getGraph().isRhs()) {
+						if (impact.onCreate(object)) {
+							return true;
+						}
+					}
+				}
+
+				else {
+					assert false : "We should never get here...!";
 				}
 			}
 		}

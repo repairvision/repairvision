@@ -11,8 +11,9 @@ import org.eclipse.emf.ecore.EcorePackage;
 import org.sidiff.validation.constraint.interpreter.decisiontree.IDecisionBranch;
 import org.sidiff.validation.constraint.interpreter.decisiontree.Sequence;
 import org.sidiff.validation.constraint.interpreter.decisiontree.analyze.ConstraintAction.ConstraintType;
-import org.sidiff.validation.constraint.interpreter.decisiontree.repair.RepairAction;
-import org.sidiff.validation.constraint.interpreter.decisiontree.repair.RepairAction.RepairType;
+import org.sidiff.validation.constraint.interpreter.decisiontree.repair.RepairActionFactory;
+import org.sidiff.validation.constraint.interpreter.decisiontree.repair.actions.RepairAction;
+import org.sidiff.validation.constraint.interpreter.decisiontree.repair.actions.RepairAction.RepairType;
 import org.sidiff.validation.constraint.interpreter.scope.IScopeRecorder;
 import org.sidiff.validation.constraint.interpreter.scope.ScopeNode;
 import org.sidiff.validation.constraint.interpreter.terms.Term;
@@ -88,7 +89,7 @@ public class GetContainments extends Function {
 				
 				// Avoid duplicates:
 				if (!containmentFeatures.contains(containmentFeature)) {
-					RepairAction newRepair = new RepairAction(type, (EObject) element.getValue(), containmentFeature); 
+					RepairAction newRepair = RepairActionFactory.getInstance().create(type, (EObject) element.getValue(), containmentFeature); 
 					parent.appendChildDecisions(newRepair);
 					containmentFeatures.add(containmentFeature);
 				}

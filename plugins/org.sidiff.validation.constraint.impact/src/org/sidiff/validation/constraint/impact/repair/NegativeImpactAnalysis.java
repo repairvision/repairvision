@@ -8,6 +8,16 @@ public class NegativeImpactAnalysis extends PositiveImpactAnalysis {
 	public NegativeImpactAnalysis(RepairActionIndex repairActions) {
 		super(repairActions);
 	}
+	
+	@Override
+	public boolean onCreate(EObject object) {
+		return super.onDelete(object);
+	}
+	
+	@Override
+	public boolean onDelete(EObject object) {
+		return super.onCreate(object);
+	}
 
 	@Override
 	public boolean onCreate(EObject sourceContext, EReference reference) {

@@ -21,11 +21,13 @@ import org.sidiff.history.revision.util.SymmetricDifferenceUtil;
 import org.sidiff.historymodel.ChangeSet;
 import org.sidiff.historymodel.HistoryModelFactory;
 import org.sidiff.historymodel.Problem;
+import org.sidiff.revision.difference.AddObject;
 import org.sidiff.revision.difference.AddReference;
 import org.sidiff.revision.difference.AttributeValueChange;
 import org.sidiff.revision.difference.Change;
 import org.sidiff.revision.difference.Correspondence;
 import org.sidiff.revision.difference.Difference;
+import org.sidiff.revision.difference.RemoveObject;
 import org.sidiff.revision.difference.RemoveReference;
 import org.sidiff.revision.difference.api.DifferenceFacade;
 import org.sidiff.revision.difference.api.settings.DifferenceSettings;
@@ -35,8 +37,12 @@ import org.sidiff.validation.constraint.api.util.RepairValidation;
 import org.sidiff.validation.constraint.api.util.Validation;
 import org.sidiff.validation.constraint.interpreter.IConstraint;
 import org.sidiff.validation.constraint.interpreter.decisiontree.IDecisionNode;
-import org.sidiff.validation.constraint.interpreter.decisiontree.repair.RepairAction;
-import org.sidiff.validation.constraint.interpreter.decisiontree.repair.RepairAction.RepairType;
+import org.sidiff.validation.constraint.interpreter.decisiontree.repair.actions.AttributeRepairAction;
+import org.sidiff.validation.constraint.interpreter.decisiontree.repair.actions.ObjectRepairAction;
+import org.sidiff.validation.constraint.interpreter.decisiontree.repair.actions.ReferenceRepairAction;
+import org.sidiff.validation.constraint.interpreter.decisiontree.repair.actions.RepairAction;
+import org.sidiff.validation.constraint.interpreter.decisiontree.repair.actions.RepairAction.RepairType;
+import org.sidiff.validation.constraint.interpreter.decisiontree.repair.actions.StructuralFeatureRepairAction;
 
 /*
  * TODO: Es sollte auch ermittelt werden, ob während einer Reparatur 
@@ -269,24 +275,44 @@ public class InconsistencyAnalysis {
 		
 		List<Change> observedRepair = new ArrayList<>();
 		
-		EObject repairContextA = repairAction.getContext();
+		EObject repairContextA = null;
 		
-		for (Change localChange : revision.getDifference().getLocalChanges(repairAction.getContext())) {
+		if (repairAction instanceof StructuralFeatureRepairAction) {
+			repairContextA = ((StructuralFeatureRepairAction) repairAction).getContext();
+		} else if (repairAction instanceof ObjectRepairAction) {
+			repairContextA = ((ObjectRepairAction) repairAction).getObject();
+		}
+		
+		for (Change localChange : revision.getDifference().getLocalChanges(repairContextA)) {
 			if (!changeFilter.contains(localChange)) {
 				
-				if (localChange instanceof RemoveReference) {
-					if (repairAction.getType().equals(RepairType.DELETE) || repairAction.getType().equals(RepairType.MODIFY)) {
-						if (repairAction.getFeature().equals(((RemoveReference) localChange).getType())) {
-							if (repairAction.getContext() == ((RemoveReference) localChange).getSrc()) {
+				if ((localChange instanceof RemoveReference) && (repairAction instanceof ReferenceRepairAction)){
+					ReferenceRepairAction referenceRepairAction = (ReferenceRepairAction) repairAction;
+					
+					if (referenceRepairAction.getType().equals(RepairType.DELETE) || referenceRepairAction.getType().equals(RepairType.MODIFY)) {
+						if (referenceRepairAction.getFeature().equals(((RemoveReference) localChange).getType())) {
+							if (referenceRepairAction.getContext() == ((RemoveReference) localChange).getSrc()) {
 								observedRepair.add(localChange);
 							}
 						}
 					}
 				}
 				
-				else if (localChange instanceof AttributeValueChange) {
-					if (repairAction.getType().equals(RepairType.MODIFY)) {
-						if (repairAction.getFeature().equals(((AttributeValueChange) localChange).getType())) {
+				else if ((localChange instanceof AttributeValueChange) && (repairAction instanceof AttributeRepairAction)) {
+					AttributeRepairAction attributeRepairAction = (AttributeRepairAction) repairAction;
+					
+					if (attributeRepairAction.getType().equals(RepairType.MODIFY)) {
+						if (attributeRepairAction.getFeature().equals(((AttributeValueChange) localChange).getType())) {
+							observedRepair.add(localChange);
+						}
+					}
+				}
+				
+				else if ((localChange instanceof RemoveObject) && (repairAction instanceof ObjectRepairAction)){
+					ObjectRepairAction objectRepairAction = (ObjectRepairAction) repairAction;
+					
+					if (objectRepairAction.getType().equals(RepairType.DELETE) || objectRepairAction.getType().equals(RepairType.MODIFY)) {
+						if (objectRepairAction.getObject().equals(((RemoveObject) localChange).getObj())) {
 							observedRepair.add(localChange);
 						}
 					}
@@ -300,12 +326,24 @@ public class InconsistencyAnalysis {
 			for (Change localChange : revision.getDifference().getLocalChanges(repairContextB)) {
 				if (!changeFilter.contains(localChange)) {
 					
-					if (localChange instanceof AddReference) {
-						if (repairAction.getType().equals(RepairType.CREATE) || repairAction.getType().equals(RepairType.MODIFY)) {
-							if (repairAction.getFeature().equals(((AddReference) localChange).getType())) {
+					if ((localChange instanceof AddReference) && (repairAction instanceof ReferenceRepairAction)) {
+						ReferenceRepairAction referenceRepairAction = (ReferenceRepairAction) repairAction;
+						
+						if (referenceRepairAction.getType().equals(RepairType.CREATE) || referenceRepairAction.getType().equals(RepairType.MODIFY)) {
+							if (referenceRepairAction.getFeature().equals(((AddReference) localChange).getType())) {
 								if (repairContextB == ((AddReference) localChange).getSrc()) {
 									observedRepair.add(localChange);
 								}
+							}
+						}
+					}
+					
+					else if ((localChange instanceof AddObject) && (repairAction instanceof ObjectRepairAction)){
+						ObjectRepairAction objectRepairAction = (ObjectRepairAction) repairAction;
+						
+						if (objectRepairAction.getType().equals(RepairType.CREATE) || objectRepairAction.getType().equals(RepairType.MODIFY)) {
+							if (objectRepairAction.getObject().equals(((AddObject) localChange).getObj())) {
+								observedRepair.add(localChange);
 							}
 						}
 					}
@@ -470,10 +508,43 @@ public class InconsistencyAnalysis {
 	
 	private boolean equalsRepair(RepairAction repairA, RepairAction repairB) {
 		
-		if (repairA.getType().equals(repairB.getType())) {
-			if (repairA.getContext().equals(repairB.getContext())) {
-				if (repairA.getFeature().equals(repairB.getFeature())) {
-					return true;
+		if ((repairA instanceof ReferenceRepairAction) && (repairB instanceof ReferenceRepairAction)) {
+			ReferenceRepairAction structuralRepairA = (ReferenceRepairAction) repairA;
+			ReferenceRepairAction structuralRepairB = (ReferenceRepairAction) repairB;
+			
+			if (structuralRepairA.getType().equals(structuralRepairB.getType())) {
+				if (structuralRepairA.getContext().equals(structuralRepairB.getContext())) {
+					if (structuralRepairA.getFeature().equals(structuralRepairB.getFeature())) {
+						if (structuralRepairA.getTarget().equals(structuralRepairB.getTarget())) {
+							return true;
+						}
+					}
+				}
+			}
+		} else if ((repairA instanceof AttributeRepairAction) && (repairB instanceof AttributeRepairAction)) {
+			AttributeRepairAction structuralRepairA = (AttributeRepairAction) repairA;
+			AttributeRepairAction structuralRepairB = (AttributeRepairAction) repairB;
+			
+			if (structuralRepairA.getType().equals(structuralRepairB.getType())) {
+				if (structuralRepairA.getContext().equals(structuralRepairB.getContext())) {
+					if (structuralRepairA.getFeature().equals(structuralRepairB.getFeature())) {
+						if (structuralRepairA.getValue().equals(structuralRepairB.getValue())) {
+							return true;
+						}
+					}
+				}
+			}
+		}  else if ((repairA instanceof ObjectRepairAction) && (repairB instanceof ObjectRepairAction)) {
+			ObjectRepairAction objectRepairA = (ObjectRepairAction) repairA;
+			ObjectRepairAction objectRepairB = (ObjectRepairAction) repairB;
+			
+			if (objectRepairA.getType().equals(objectRepairB.getType())) {
+				if (objectRepairA.getContainingReference().equals(objectRepairB.getContainingReference())) {
+					if (objectRepairA.getObjectType().equals(objectRepairB.getObjectType())) {
+						if (objectRepairA.getObject().equals(objectRepairB.getObject())) {
+							return true;
+						}
+					}
 				}
 			}
 		}

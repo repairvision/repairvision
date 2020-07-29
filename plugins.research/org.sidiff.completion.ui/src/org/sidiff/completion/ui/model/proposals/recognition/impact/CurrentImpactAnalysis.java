@@ -18,6 +18,38 @@ public class CurrentImpactAnalysis implements ImpactAnalysis, PotentialImpactAna
 	}
 	
 	@Override
+	public boolean onCreate(EReference containingReference, EClass objectType, boolean strict) {
+		
+		for (EObject contextElement : context) {
+			if (objectType.isInstance(contextElement)) {
+				if (!strict || (objectType == contextElement.eClass())) {
+					if (contextElement.eContainmentFeature() == containingReference) {
+						return true;
+					}
+				}
+			}
+		}
+		
+		return false;
+	}
+	
+	@Override
+	public boolean onDelete(EReference containingReference, EClass objectType, boolean strict) {
+		
+		for (EObject contextElement : context) {
+			if (objectType.isInstance(contextElement)) {
+				if (!strict || (objectType == contextElement.eClass())) {
+					if (contextElement.eContainmentFeature() == containingReference) {
+						return true;
+					}
+				}
+			}
+		}
+		
+		return false;
+	}
+	
+	@Override
 	public boolean onCreate(EClass sourceContextType, EReference reference, boolean strict) {
 		
 		for (EObject contextElement : context) {
@@ -57,6 +89,16 @@ public class CurrentImpactAnalysis implements ImpactAnalysis, PotentialImpactAna
 		}
 		
 		return false;
+	}
+	
+	@Override
+	public boolean onCreate(EObject object) {
+		return context.contains(object);
+	}
+	
+	@Override
+	public boolean onDelete(EObject object) {
+		return context.contains(object);
 	}
 
 	@Override
