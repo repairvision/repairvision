@@ -1,5 +1,6 @@
 package org.sidiff.completion.ui.model.proposals;
 
+import static org.sidiff.completion.ui.model.proposals.util.ModelCompletionProposalUtil.TEMPLATE_EDIT_RULE_SEPARATOR;
 import static org.sidiff.completion.ui.model.proposals.util.ModelCompletionProposalUtil.TEMPLATE_PRESENCE_SEPARATOR;
 import static org.sidiff.completion.ui.model.proposals.util.ModelCompletionProposalUtil.generateDecompositionSequenceFromHierarchicals;
 
@@ -225,5 +226,43 @@ public class ModelCompletionProposalCluster implements ICompletionProposal {
 		editor.showPopupOnCursor();
 		
 		return false;
+	}
+	
+	@Override
+	public String toString() {
+			StringBuilder info = new StringBuilder();
+			
+			for (String intersectionHistoricTemplate : intersectionHistoricTemplates) {
+				info.append(intersectionHistoricTemplate);	
+				
+				if (intersectionHistoricTemplates.get(intersectionHistoricTemplates.size() - 1) != intersectionHistoricTemplate) {
+					info.append(TEMPLATE_EDIT_RULE_SEPARATOR);
+				}
+			}
+			
+			info.append(TEMPLATE_PRESENCE_SEPARATOR);
+			
+			for (String intersectionComplementTemplate : intersectionComplementTemplates) {
+				info.append(intersectionComplementTemplate);
+				
+				if (intersectionComplementTemplates.get(intersectionComplementTemplates.size() - 1) != intersectionComplementTemplate) {
+					info.append(TEMPLATE_EDIT_RULE_SEPARATOR);
+				}
+			}
+			
+			info.append("\n");
+			
+			for (ModelCompletionProposal proposal : proposalCluster) {
+				info.append("     ");
+				DecompositionTemplates decomposition = proposal.getDecomposition();
+				info.append(proposal.getComplement().getComplementRule().getName());
+				info.append(" = ");
+				info.append(generateDecompositionSequenceFromHierarchicals(decomposition.getHistoricTemplates()));
+				info.append(TEMPLATE_PRESENCE_SEPARATOR);
+				info.append(generateDecompositionSequenceFromHierarchicals(decomposition.getComplementTemplates()));
+				info.append("\n");
+			}
+			
+			return info.toString();
 	}
 }
