@@ -89,6 +89,7 @@ public class SelectionControllerDiagram {
 			public void run() {
 				try {
 					highlightDiagrams();
+					focusDiagram(false);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -99,6 +100,28 @@ public class SelectionControllerDiagram {
 	private void highlightDiagrams() {
 		for(IDecorator decorator : decorators) {
 			decorator.refresh();
+		}
+	}
+	
+	private void focusDiagram(boolean reveal) {
+		
+		// Reveal all:
+		if (reveal) {
+			for(IDecorator decorator : decorators) {
+				if (decorator instanceof SelectionDecorator) {
+					SelectionDecorator selectionDecorator = (SelectionDecorator) decorator;
+					selectionDecorator.reveal();
+				}
+			}
+		}
+		
+		// Focus first selection:
+		for(IDecorator decorator : decorators) {
+			if (decorator instanceof SelectionDecorator) {
+				SelectionDecorator selectionDecorator = (SelectionDecorator) decorator;
+				selectionDecorator.focus();
+				break;
+			}
 		}
 	}
 }

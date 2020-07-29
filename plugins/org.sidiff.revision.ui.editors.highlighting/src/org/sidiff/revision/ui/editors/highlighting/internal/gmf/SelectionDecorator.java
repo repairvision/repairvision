@@ -123,13 +123,6 @@ public class SelectionDecorator extends AbstractDecorator {
 		}
 
 		IGraphicalEditPart editPart = (IGraphicalEditPart) getDecoratorTarget().getAdapter(EditPart.class);
-		int x = editPart.getFigure().getBounds().x;
-		int y = editPart.getFigure().getBounds().y;
-
-		FigureCanvas canvas = (FigureCanvas) editPart.getViewer().getControl();
-		canvas.scrollSmoothTo(x, y);
-
-		editPart.getViewer().reveal(editPart);
 
 		if (view instanceof Node) {
 			IFigure figure = editPart.getFigure();
@@ -147,6 +140,21 @@ public class SelectionDecorator extends AbstractDecorator {
 			connection.setLineWidth(2);
 		}
 		return view;
+	}
+
+	public void focus() {
+		IGraphicalEditPart editPart = (IGraphicalEditPart) getDecoratorTarget().getAdapter(EditPart.class);
+		
+		int x = editPart.getFigure().getBounds().x;
+		int y = editPart.getFigure().getBounds().y;
+		
+		FigureCanvas canvas = (FigureCanvas) editPart.getViewer().getControl();
+		canvas.scrollSmoothTo(x, y);
+	}
+	
+	public void reveal() {
+		IGraphicalEditPart editPart = (IGraphicalEditPart) getDecoratorTarget().getAdapter(EditPart.class);
+		editPart.getViewer().reveal(editPart);
 	}
 	
 	private boolean selectionContains(EObject viewDataElement){
