@@ -49,7 +49,7 @@ public class GraphActionImpactUtil {
 						return true;
 					}
 
-					// Repair which deletes the root element of a validation:
+					// Change which deletes the root element of a validation:
 					if (referenceType.isContainment() && (referenceType.getEOpposite() == null)) {
 						EClass targetContextType = ((Edge) change).getTarget().getType();
 						boolean strictTargetContextType = RevisionGraph.isStrictMatchingType(((Edge) change).getTarget());
@@ -64,6 +64,16 @@ public class GraphActionImpactUtil {
 				else if (change.getGraph().isRhs()) {
 					if (impact.onCreate(sourceContextType, referenceType, strictContextType)) {
 						return true;
+					}
+					
+					// Change which creates the root element of a validation:
+					if (referenceType.isContainment() && (referenceType.getEOpposite() == null)) {
+						EClass targetContextType = ((Edge) change).getTarget().getType();
+						boolean strictTargetContextType = RevisionGraph.isStrictMatchingType(((Edge) change).getTarget());
+
+						if (impact.onCreate(targetContextType, referenceType, strictTargetContextType)) {
+							return true;
+						}
 					}
 				}
 
@@ -134,7 +144,7 @@ public class GraphActionImpactUtil {
 							return true;
 						}
 						
-						// Repair which deletes the root element of a validation:
+						// Change which deletes the root element of a validation:
 						if (referenceType.isContainment() && (referenceType.getEOpposite() == null)) {
 							
 							// Get the context object of the edge:
@@ -151,6 +161,18 @@ public class GraphActionImpactUtil {
 					else if (change.getGraph().isRhs()) {
 						if (impact.onCreate(sourceContextObject, referenceType)) {
 							return true;
+						}
+						
+						// Change which creates the root element of a validation:
+						if (referenceType.isContainment() && (referenceType.getEOpposite() == null)) {
+							
+							// Get the context object of the edge:
+							Node targetContextNode = ((Edge) change).getTarget();
+							EObject targetContextObject = getMatch(targetContextNode, match);
+							
+							if (impact.onCreate(targetContextObject, referenceType)) {
+								return true;
+							}
 						}
 					}
 					

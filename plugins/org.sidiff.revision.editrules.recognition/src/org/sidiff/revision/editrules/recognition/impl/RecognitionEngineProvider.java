@@ -34,9 +34,9 @@ public class RecognitionEngineProvider implements IRecognitionEngineProvider {
 		return new RecognitionEngine(
 				recognitionPattern,
 				new RecognitionMatchCreator(recognitionPattern, settings.getRevision(), settings.getImpactAnalyzes()),
-				settings.getScopeModelB(), 
+				settings.getScopeModelA(), 
 				settings.getOverwriteScope(),
-				settings.getScopeModelA(),
+				settings.getScopeModelB(),
 				settings);
 	}
 

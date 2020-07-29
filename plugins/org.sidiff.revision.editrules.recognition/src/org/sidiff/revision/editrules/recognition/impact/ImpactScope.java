@@ -41,7 +41,7 @@ public class ImpactScope {
 				if (change.getGraph().isLhs()) {
 					buildScopeOnDelete(sourceContextType, (Edge) change, strictContextType);
 					
-					// Repair which deletes the context element of a validation:
+					// Change which deletes the context element of a validation:
 					if (referenceType.isContainment() && (referenceType.getEOpposite() == null)) {
 						EClass targetContextType = ((Edge) change).getTarget().getType();
 						boolean strictTargetContextType = RevisionGraph.isStrictMatchingType(((Edge) change).getTarget());
@@ -53,6 +53,14 @@ public class ImpactScope {
 				// Create:
 				else if (change.getGraph().isRhs()) {
 					buildScopeOnCreate(sourceContextType, (Edge) change, strictContextType);
+					
+					// Change which creates the context element of a validation:
+					if (referenceType.isContainment() && (referenceType.getEOpposite() == null)) {
+						EClass targetContextType = ((Edge) change).getTarget().getType();
+						boolean strictTargetContextType = RevisionGraph.isStrictMatchingType(((Edge) change).getTarget());
+						
+						buildScopeOnCreate(targetContextType, (Edge) change, strictTargetContextType);
+					}
 				}
 
 				else {
