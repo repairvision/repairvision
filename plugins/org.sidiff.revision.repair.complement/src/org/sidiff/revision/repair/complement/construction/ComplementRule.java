@@ -145,6 +145,12 @@ public class ComplementRule {
 				if (container != null) {
 					boundaryComplementingChanges.add(graphElement);
 				}
+			} else if (graphElement instanceof Node) {
+				Node node = HenshinRuleAnalysisUtil.getLHS((Node) graphElement);
+				
+				if (node != null) {
+					boundaryComplementingChanges.add(node);
+				}
 			}
 		}
 		
