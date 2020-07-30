@@ -81,7 +81,7 @@ public class RepairPlan implements IRepairPlan {
 		Node lhsNode = node.getGraph().isLhs() ? node : HenshinRuleAnalysisUtil.getLHS(node);
 		Node rhsNode = node.getGraph().isRhs() ? node : HenshinRuleAnalysisUtil.getRHS(node);
 		
-		for (RecognitionMatch recognitionMatch : complementRule.getRecognitionMatch()) {
+		for (RecognitionMatch recognitionMatch : complementRule.getRecognitionMatching()) {
 			
 			if (recognitionMatch instanceof RecognitionNodeMatch) {
 				Node matchedNode = ((RecognitionNodeMatch) recognitionMatch).getNode();

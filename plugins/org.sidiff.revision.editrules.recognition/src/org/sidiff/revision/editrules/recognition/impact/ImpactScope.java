@@ -16,8 +16,8 @@ import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.GraphElement;
 import org.eclipse.emf.henshin.model.Node;
 import org.sidiff.common.utilities.emf.MetaModelUtil;
-import org.sidiff.revision.editrules.recognition.revision.RevisionGraph;
 import org.sidiff.validation.constraint.impact.ImpactAnalysis;
+import org.sidiff.validation.constraint.impact.util.GraphActionImpactUtil;
 
 public class ImpactScope {
 	
@@ -35,7 +35,7 @@ public class ImpactScope {
 			// Abstract repairs consider only edges and attributes:
 			if (change instanceof Edge) {
 				EClass sourceContextType = ((Edge) change).getSource().getType();
-				boolean strictContextType = RevisionGraph.isStrictMatchingType(((Edge) change).getSource());
+				boolean strictContextType = GraphActionImpactUtil.isStrictMatchingType(((Edge) change).getSource());
 
 				// Delete:
 				if (change.getGraph().isLhs()) {
@@ -54,14 +54,14 @@ public class ImpactScope {
 			
 			else if (change instanceof Attribute) {
 				EClass contextType = ((Attribute) change).getNode().getType();
-				boolean strictContextType = RevisionGraph.isStrictMatchingType(((Attribute) change).getNode());
+				boolean strictContextType = GraphActionImpactUtil.isStrictMatchingType(((Attribute) change).getNode());
 				
 				buildScopeOnModify(contextType, (Attribute) change, strictContextType);
 			}
 			
 			else if (change instanceof Node) {
 				EClass objectType = ((Node) change).getType();
-				boolean strictObjectType = RevisionGraph.isStrictMatchingType((Node) change);
+				boolean strictObjectType = GraphActionImpactUtil.isStrictMatchingType((Node) change);
 
 				// Delete:
 				if (change.getGraph().isLhs()) {

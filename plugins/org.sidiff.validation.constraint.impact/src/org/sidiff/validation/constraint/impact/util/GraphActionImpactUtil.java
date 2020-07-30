@@ -1,23 +1,16 @@
-package org.sidiff.revision.repair.complement.peo.impact;
+package org.sidiff.validation.constraint.impact.util;
 
 import java.util.Collection;
-import java.util.List;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
-import org.eclipse.emf.henshin.interpreter.Match;
 import org.eclipse.emf.henshin.model.Attribute;
 import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.GraphElement;
 import org.eclipse.emf.henshin.model.Node;
 import org.sidiff.common.utilities.henshin.HenshinRuleAnalysisUtil;
-import org.sidiff.revision.editrules.recognition.match.RecognitionAttributeMatch;
-import org.sidiff.revision.editrules.recognition.match.RecognitionEdgeMatch;
-import org.sidiff.revision.editrules.recognition.match.RecognitionMatch;
-import org.sidiff.revision.editrules.recognition.match.RecognitionNodeSingleMatch;
-import org.sidiff.revision.editrules.recognition.revision.RevisionGraph;
 import org.sidiff.validation.constraint.impact.ImpactAnalysis;
 import org.sidiff.validation.constraint.impact.PotentialImpactAnalysis;
 
@@ -39,7 +32,7 @@ public class GraphActionImpactUtil {
 			if (change instanceof Edge) {
 				EReference referenceType = ((Edge) change).getType();
 				EClass sourceContextType = ((Edge) change).getSource().getType();
-				boolean strictContextType = RevisionGraph.isStrictMatchingType(((Edge) change).getSource());
+				boolean strictContextType = isStrictMatchingType(((Edge) change).getSource());
 					
 				// Delete:
 				if (change.getGraph().isLhs()) {
@@ -63,7 +56,7 @@ public class GraphActionImpactUtil {
 			else if (change instanceof Attribute) {
 				EAttribute attributeType = ((Attribute) change).getType();
 				EClass contextType = ((Attribute) change).getNode().getType();
-				boolean strictContextType = RevisionGraph.isStrictMatchingType(((Attribute) change).getNode());
+				boolean strictContextType = isStrictMatchingType(((Attribute) change).getNode());
 				
 				if (impact.onModify(contextType, attributeType, strictContextType)) {
 					return true;
@@ -72,7 +65,7 @@ public class GraphActionImpactUtil {
 			
 			else if (change instanceof Node) {
 				EClass objectType = ((Node) change).getType();
-				boolean strictObjectType = RevisionGraph.isStrictMatchingType((Node) change);
+				boolean strictObjectType = isStrictMatchingType((Node) change);
 
 				// Delete:
 				if (change.getGraph().isLhs()) {
@@ -111,30 +104,12 @@ public class GraphActionImpactUtil {
 	 * 
 	 * @param changes
 	 *            The set of changes to test
-	 * @param complementMatch
+	 * @param matching
 	 *            The matching of the complement rule nodes to model elements.
 	 * @return <code>true</code> if the changes have a validation impact;
 	 *         <code>false</code> otherwise.
 	 */
-	public static boolean real(ImpactAnalysis impact, Collection<GraphElement> changes, Match complementMatch) {
-		return real(impact, changes, (Object) complementMatch);
-	}
-	
-	/**
-	 * Checks if the set of changes contains at least one change with a validation impact.
-	 * 
-	 * @param changes
-	 *            The set of changes to test
-	 * @param recognitionMatch
-	 *            The matching of the sub-rule nodes to model elements.
-	 * @return <code>true</code> if the changes have a validation impact;
-	 *         <code>false</code> otherwise.
-	 */
-	public static boolean real(ImpactAnalysis impact, Collection<GraphElement> changes, List<RecognitionMatch> recognitionMatch) {
-		return real(impact, changes, (Object) recognitionMatch);
-	}
-	
-	private static boolean real(ImpactAnalysis impact, Collection<GraphElement> changes, Object match) {
+	public static boolean real(ImpactAnalysis impact, Collection<GraphElement> changes, Matching matching) {
 
 		for (GraphElement change : changes) {
 
@@ -144,7 +119,7 @@ public class GraphActionImpactUtil {
 				
 				// Get the context object of the edge:
 				Node sourceContextNode = HenshinRuleAnalysisUtil.tryLHS(((Edge) change).getSource());
-				EObject sourceContextObject = getMatch(sourceContextNode, match);
+				EObject sourceContextObject = matching.getMatch(sourceContextNode);
 				
 				if (sourceContextObject != null) {
 					
@@ -173,7 +148,7 @@ public class GraphActionImpactUtil {
 				
 				// Get the context object of the edge:
 				Node contextNode = HenshinRuleAnalysisUtil.tryLHS(((Attribute) change).getNode());
-				EObject contextObject = getMatch(contextNode, match);
+				EObject contextObject = matching.getMatch(contextNode);
 				
 				if (contextObject != null) {
 					if (impact.onModify(contextObject, attributeType)) {
@@ -183,7 +158,7 @@ public class GraphActionImpactUtil {
 			}
 			
 			else if (change instanceof Node) {
-				EObject object = getMatch((Node) change, match);
+				EObject object = matching.getMatch((Node) change);
 				
 				if (object != null) {
 					
@@ -210,44 +185,13 @@ public class GraphActionImpactUtil {
 
 		return false;
 	}
-	
-	// TODO: Create/Use a common matching interface:
-	
-	@SuppressWarnings("unchecked")
-	private static EObject getMatch(Node node, Object match) {
-		if (match instanceof Match) {
-			return getMatch(node, (Match) match);
-		} else {
-			return getMatch(node, (List<RecognitionMatch>) match);
-		}
-	}
-	
-	private static EObject getMatch(Node node, Match complementMatch) {
-		return complementMatch.getNodeTarget(node);
-	}
-	
-	private static EObject getMatch(Node node, List<RecognitionMatch> recognitionMatch) {
-		for (RecognitionMatch match : recognitionMatch) {
-			if (match instanceof RecognitionNodeSingleMatch) {
-				if (((RecognitionNodeSingleMatch) match).getNode() == node) {
-					return ((RecognitionNodeSingleMatch) match).getModelBElement();
-				}
-			} else if (match instanceof RecognitionEdgeMatch) {
-				Edge edge = ((RecognitionEdgeMatch) match).getEdge();
-				
-				if (HenshinRuleAnalysisUtil.tryLHS(edge.getSource()) == node) {
-					return ((RecognitionEdgeMatch) match).getSrcModelBElement();
-				} else if (HenshinRuleAnalysisUtil.tryLHS(edge.getTarget()) == node) {
-					return ((RecognitionEdgeMatch) match).getTgtModelBElement();
-				}
-			} else if (match instanceof RecognitionAttributeMatch) {
-				Attribute attribute = ((RecognitionAttributeMatch) match).getAttribute();
-				
-				if (HenshinRuleAnalysisUtil.tryLHS(attribute.getNode()) == node) {
-					return ((RecognitionAttributeMatch) match).getObject();
-				}
-			}
-		}
-		return null;
+
+	/**
+	 * @param node
+	 *            A typed node.
+	 * @return <code>true</code> if the type is a concrete (none abstract, interface) creation node.
+	 */
+	public static boolean isStrictMatchingType(Node node) {
+		return !(node.getType().isAbstract() || node.getType().isInterface()) && HenshinRuleAnalysisUtil.isCreationNode(node);
 	}
 }

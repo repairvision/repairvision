@@ -29,7 +29,6 @@ import org.sidiff.common.utilities.henshin.HenshinChangesUtil;
 import org.sidiff.common.utilities.henshin.HenshinRuleAnalysisUtil;
 import org.sidiff.revision.difference.Change;
 import org.sidiff.revision.editrules.recognition.match.RecognitionActionMatch;
-import org.sidiff.revision.editrules.recognition.match.RecognitionMatch;
 import org.sidiff.revision.editrules.recognition.match.RecognitionMatching;
 
 /**
@@ -105,7 +104,7 @@ public class ComplementRule {
 		return recognizedChanges;
 	}
 	
-	public List<RecognitionMatch> getRecognitionMatch() {
+	public RecognitionMatching getRecognitionMatching() {
 		return recognitionMatch;
 	}
 	

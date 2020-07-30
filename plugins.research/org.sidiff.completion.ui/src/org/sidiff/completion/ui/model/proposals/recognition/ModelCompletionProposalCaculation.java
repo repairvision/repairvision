@@ -13,8 +13,8 @@ import org.sidiff.revision.repair.complement.construction.ComplementRule;
 import org.sidiff.revision.repair.complement.peo.configuration.ComplementFinderSettings;
 import org.sidiff.revision.repair.complement.peo.finder.ComplementFinder;
 import org.sidiff.revision.repair.complement.peo.finder.ComplementFinderEngine;
-import org.sidiff.revision.repair.complement.peo.impact.GraphActionImpactUtil;
 import org.sidiff.validation.constraint.impact.ImpactAnalyzes;
+import org.sidiff.validation.constraint.impact.util.GraphActionImpactUtil;
 
 // org.sidiff.revision.repair.api.peo.PEORepairCaculation
 public class ModelCompletionProposalCaculation {
@@ -63,7 +63,7 @@ public class ModelCompletionProposalCaculation {
 						if (GraphActionImpactUtil.real(
 								impactAnalyzes.getHistoricalImpactAnalysis(),
 								complement.getRecognizedChanges(),
-								complement.getRecognitionMatch())) {
+								complement.getRecognitionMatching())) {
 							
 							List<Match> proposalMatches = complementFinderEngine.findComplementMatches(complement);
 							

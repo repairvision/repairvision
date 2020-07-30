@@ -32,9 +32,10 @@ import org.sidiff.revision.repair.complement.construction.ComplementRule;
 import org.sidiff.revision.repair.complement.peo.configuration.ComplementFinderSettings;
 import org.sidiff.revision.repair.complement.peo.finder.henshin.ComplementEngine;
 import org.sidiff.revision.repair.complement.peo.finder.henshin.HenshinRuleStructureSorting;
-import org.sidiff.revision.repair.complement.peo.impact.GraphActionImpactUtil;
+import org.sidiff.revision.repair.complement.peo.impact.ComplementMatching;
 import org.sidiff.validation.constraint.impact.ImpactAnalysis;
 import org.sidiff.validation.constraint.impact.ImpactAnalyzes;
+import org.sidiff.validation.constraint.impact.util.GraphActionImpactUtil;
 
 /**
  * Tries to find all complementing operation for a given edit-rule and a model difference. 
@@ -141,7 +142,7 @@ public class ComplementFinderEngine {
 	private void createComplementPreMatch(ComplementRule complementRule, Match complementMatch) {
 		
 		// Get change context as pre-match:
-		for (RecognitionMatch sourceRuleMatch : complementRule.getRecognitionMatch()) {
+		for (RecognitionMatch sourceRuleMatch : complementRule.getRecognitionMatching()) {
 
 			if (sourceRuleMatch instanceof RecognitionEdgeMatch) {
 				RecognitionEdgeMatch sourceEdgeMatch = (RecognitionEdgeMatch) sourceRuleMatch;
@@ -270,7 +271,7 @@ public class ComplementFinderEngine {
 			Match nextMatch = matchFinder.next();
 			
 			// Filter complement with match by impact:
-			if (GraphActionImpactUtil.real(currentImpactAnalysis, complementChanges, nextMatch)) {
+			if (GraphActionImpactUtil.real(currentImpactAnalysis, complementChanges, new ComplementMatching(complementMatch))) {
 				complementPreMatches.add(nextMatch);
 			}
 		}
