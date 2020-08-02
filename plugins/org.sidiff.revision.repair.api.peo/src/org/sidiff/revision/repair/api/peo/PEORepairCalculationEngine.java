@@ -18,8 +18,9 @@ import org.sidiff.revision.repair.api.IRepairPlan;
 import org.sidiff.revision.repair.api.peo.configuration.PEORepairSettings;
 import org.sidiff.revision.repair.complement.peo.finder.ComplementFinderEngine;
 import org.sidiff.validation.constraint.impact.ImpactAnalyzes;
-import org.sidiff.validation.constraint.impact.repair.RepairActionIndex;
-import org.sidiff.validation.constraint.impact.repair.RepairImpactAnalyzes;
+import org.sidiff.validation.constraint.impact.repair.NegativeImpactAnalyzes;
+import org.sidiff.validation.constraint.impact.repair.PositiveImpactAnalyzes;
+import org.sidiff.validation.constraint.impact.repair.RepairActionImpactScope;
 
 public class PEORepairCalculationEngine {
 	
@@ -67,16 +68,19 @@ public class PEORepairCalculationEngine {
 		// Validate model and calculate abstract repairs:
 		LogTime valiationTimer = new LogTime();
 		
-		RepairImpactAnalyzes impact = new RepairImpactAnalyzes(new RepairActionIndex(
+		RepairActionImpactScope repairActionImpactScope = new RepairActionImpactScope(
 				settings.getValidationScope().iterator(), 
-				settings.getConsistencyRules(), true));
+				settings.getConsistencyRules(), true);
+		
+		ImpactAnalyzes historicalImpactAnalyzes = new NegativeImpactAnalyzes(repairActionImpactScope);
+		ImpactAnalyzes currentImpactAnalyzes = new PositiveImpactAnalyzes(repairActionImpactScope);
 		
 		valiationTimer.stop();
 
 		// Report:
 		if (settings.getLogger().isDebugging()) {
 			settings.getLogger().logValidationTime(valiationTimer);
-			settings.getLogger().logInconsistencyCount(impact.getValidations().size());
+			settings.getLogger().logInconsistencyCount(repairActionImpactScope.getValidations().size());
 			settings.getLogger().logEditRuleCount(settings.getEditRules().size());
 		}
 
@@ -84,7 +88,7 @@ public class PEORepairCalculationEngine {
 		EGraph graphModelB = new EGraphImpl(revision.getVersionB().getTargetResource());
 		
 		// Calculate repairs:
-		ComplementFinderEngine complementFinderEngine = new ComplementFinderEngine(impact, graphModelB);
+		ComplementFinderEngine complementFinderEngine = new ComplementFinderEngine(currentImpactAnalyzes, graphModelB);
 		complementFinderEngine.start();
 		
 		List<IRepairPlan> repairs = new ArrayList<>();
@@ -98,7 +102,8 @@ public class PEORepairCalculationEngine {
 			
 			// BREAKPOINT CONDITION: editRule.getName().contains("The name of the edit rule")
 			
-			PEORepairCaculation repairCaculation = createRepairCalculation(editRule, impact, revision, complementFinderEngine);
+			PEORepairCaculation repairCaculation = createRepairCalculation(
+					editRule, revision, historicalImpactAnalyzes, currentImpactAnalyzes, complementFinderEngine);
 			RecognitionSettings recognitionSettings = repairCaculation.getComplementFinderSettings().getRecognitionEngineSettings();
 			
 			if (recognitionSettings.hasPotentialImpact()) {
@@ -123,11 +128,15 @@ public class PEORepairCalculationEngine {
 		}
 		
 		// Create repair job:
-		PEORepairJob repairJob = new PEORepairJob(impact.getValidations(), repairs, revision, graphModelB);
+		PEORepairJob repairJob = new PEORepairJob(repairActionImpactScope.getValidations(), repairs, revision, graphModelB);
 		return repairJob;
 	}
 	
-	protected PEORepairCaculation createRepairCalculation(Rule editRule, ImpactAnalyzes impact, IRevision revision, ComplementFinderEngine complementFinderEngine) {
-		return new PEORepairCaculation(settings, editRule, revision, impact, complementFinderEngine);
+	protected PEORepairCaculation createRepairCalculation(
+			Rule editRule, IRevision revision, 
+			ImpactAnalyzes historicalImpactAnalyzes, ImpactAnalyzes currentImpactAnalyzes,
+			ComplementFinderEngine complementFinderEngine) {
+		
+		return new PEORepairCaculation(settings, editRule, revision, historicalImpactAnalyzes, currentImpactAnalyzes, complementFinderEngine);
 	}
 }

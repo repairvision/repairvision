@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.henshin.model.Attribute;
 import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.Mapping;
@@ -252,6 +253,19 @@ public class HenshinRuleAnalysisUtil {
 		}
 		
 		return false;
+	}
+	
+	/**
+	 * @param node A node within a containment edge.
+	 * @return The containment edge containing the given node or <code>null</code>.
+	 */
+	public static EReference getContainingReference(Node node) {
+		for (Edge incomingEdge : node.getIncoming()) {
+			if (incomingEdge.getType().isContainment()) {
+				return incomingEdge.getType();
+			}
+		}
+		return null;
 	}
 
 	/**

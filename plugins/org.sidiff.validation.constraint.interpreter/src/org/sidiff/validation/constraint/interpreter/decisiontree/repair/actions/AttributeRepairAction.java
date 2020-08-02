@@ -49,7 +49,7 @@ public class AttributeRepairAction extends StructuralFeatureRepairAction {
 
 	@Override
 	public String toString() {
-		return "AttributeRepairAction [type=" + type + ", context=" + context + ", feature=" + feature + ", value=" + value + "]";
+		return "AttributeRepairAction [" + getRepairLabel() + "]";
 	}
 	
 	@Override

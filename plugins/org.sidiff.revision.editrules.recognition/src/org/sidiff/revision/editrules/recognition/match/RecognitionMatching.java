@@ -9,9 +9,9 @@ import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.Node;
 import org.sidiff.common.utilities.henshin.HenshinRuleAnalysisUtil;
 import org.sidiff.revision.difference.Change;
-import org.sidiff.validation.constraint.impact.util.Matching;
+import org.sidiff.validation.constraint.impact.editrules.GraphMatching;
 
-public class RecognitionMatching extends ArrayList<RecognitionMatch> implements Matching {
+public class RecognitionMatching extends ArrayList<RecognitionMatch> implements GraphMatching {
 
 	private static final long serialVersionUID = 1L;
 

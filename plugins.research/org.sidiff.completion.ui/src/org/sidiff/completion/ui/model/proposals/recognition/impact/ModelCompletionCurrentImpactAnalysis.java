@@ -9,16 +9,16 @@ import org.eclipse.emf.ecore.EReference;
 import org.sidiff.validation.constraint.impact.ImpactAnalysis;
 import org.sidiff.validation.constraint.impact.PotentialImpactAnalysis;
 
-public class CurrentImpactAnalysis implements ImpactAnalysis, PotentialImpactAnalysis {
+public class ModelCompletionCurrentImpactAnalysis implements PotentialImpactAnalysis, ImpactAnalysis {
 
 	private Set<EObject> context;
 	
-	public CurrentImpactAnalysis(Set<EObject> context) {
+	public ModelCompletionCurrentImpactAnalysis(Set<EObject> context) {
 		this.context = context;
 	}
 	
 	@Override
-	public boolean onCreate(EReference containingReference, EClass objectType, boolean strict) {
+	public boolean onCreateObject(EReference containingReference, EClass objectType, boolean strict) {
 		
 		for (EObject contextElement : context) {
 			if (objectType.isInstance(contextElement)) {
@@ -34,7 +34,7 @@ public class CurrentImpactAnalysis implements ImpactAnalysis, PotentialImpactAna
 	}
 	
 	@Override
-	public boolean onDelete(EReference containingReference, EClass objectType, boolean strict) {
+	public boolean onDeleteObject(EReference containingReference, EClass objectType, boolean strict) {
 		
 		for (EObject contextElement : context) {
 			if (objectType.isInstance(contextElement)) {
@@ -50,7 +50,7 @@ public class CurrentImpactAnalysis implements ImpactAnalysis, PotentialImpactAna
 	}
 	
 	@Override
-	public boolean onCreate(EClass sourceContextType, EReference reference, boolean strict) {
+	public boolean onCreateReference(EClass sourceContextType, EReference reference, boolean strict) {
 		
 		for (EObject contextElement : context) {
 			if (sourceContextType.isInstance(contextElement)) {
@@ -64,7 +64,7 @@ public class CurrentImpactAnalysis implements ImpactAnalysis, PotentialImpactAna
 	}
 
 	@Override
-	public boolean onDelete(EClass sourceContextType, EReference reference, boolean strict) {
+	public boolean onDeleteReference(EClass sourceContextType, EReference reference, boolean strict) {
 		
 		for (EObject contextElement : context) {
 			if (sourceContextType.isInstance(contextElement)) {
@@ -78,7 +78,7 @@ public class CurrentImpactAnalysis implements ImpactAnalysis, PotentialImpactAna
 	}
 
 	@Override
-	public boolean onModify(EClass containerContextType, EAttribute attribute, boolean strict) {
+	public boolean onModifyAttribute(EClass containerContextType, EAttribute attribute, boolean strict) {
 		
 		for (EObject contextElement : context) {
 			if (containerContextType.isInstance(contextElement)) {
@@ -92,33 +92,30 @@ public class CurrentImpactAnalysis implements ImpactAnalysis, PotentialImpactAna
 	}
 	
 	@Override
-	public boolean onCreate(EObject object) {
+	public boolean onCreateObject(EReference containingReference, EObject object) {
 		return context.contains(object);
 	}
 	
 	@Override
-	public boolean onDelete(EObject object) {
+	public boolean onDeleteObject(EReference containingReference, EObject object) {
 		return context.contains(object);
 	}
 
 	@Override
-	public boolean onCreate(EObject sourceContext, EReference reference) {
+	public boolean onCreateReference(EObject sourceContext, EReference reference) {
 		return context.contains(sourceContext);
 	}
 
 	@Override
-	public boolean onDelete(EObject sourceContext, EReference reference) {
+	public boolean onDeleteReference(EObject sourceContext, EReference reference) {
 		return context.contains(sourceContext);
 	}
 
 	@Override
-	public boolean onModify(EObject containerContext, EAttribute attribute) {
+	public boolean onModifyAttribute(EObject containerContext, EAttribute attribute) {
 		return context.contains(containerContext);
 	}
 
-	@Override
-	public Set<EObject> getScope() {
-		return context;
-	}
+
 
 }

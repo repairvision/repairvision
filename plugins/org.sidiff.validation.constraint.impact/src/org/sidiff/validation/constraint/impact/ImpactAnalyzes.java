@@ -1,13 +1,30 @@
 package org.sidiff.validation.constraint.impact;
 
+/**
+ * A container for potential impact scopes/analysis.
+ * 
+ * @author Manuel Ohrndorf
+ */
 public interface ImpactAnalyzes {
+	
+	/**
+	 * @return Interface to get all elements that are in the impact scope.
+	 */
+	ImpactScope getImpactScope();
 
-	PotentialImpactAnalysis getHistoricalPotentialImpactAnalysis();
-
-	ImpactAnalysis getHistoricalImpactAnalysis();
-
-	ImpactAnalysis getCurrentImpactAnalysis();
-
-	PotentialImpactAnalysis getCurrentPotentialImpactAnalysis();
+	/**
+	 * @return Interface for testing changes on specific model elements for impact.
+	 */
+	ImpactAnalysis getImpactAnalysis();
+	
+	/**
+	 * @return Interface for querying model elements by specific changes.
+	 */
+	PotentialImpactScope getPotentialImpactScope();
+	
+	/**
+	 * @return Interface for testing specific changes for impact.
+	 */
+	PotentialImpactAnalysis getPotentialImpactAnalysis();
 
 }

@@ -7,8 +7,8 @@ import org.eclipse.emf.henshin.model.GraphElement;
 import org.eclipse.emf.henshin.model.Rule;
 import org.sidiff.common.utilities.henshin.HenshinChangesUtil;
 import org.sidiff.history.revision.IRevision;
-import org.sidiff.revision.editrules.recognition.impact.ImpactScope;
 import org.sidiff.validation.constraint.impact.ImpactAnalyzes;
+import org.sidiff.validation.constraint.impact.editrules.GraphActionImpactScope;
 
 public class RecognitionSettings {
 
@@ -20,18 +20,20 @@ public class RecognitionSettings {
 	
 	private Rule editRule;
 	
-	private ImpactAnalyzes impactAnalyzes;
+	private ImpactAnalyzes historicalImpactAnalyzes;
+	
+	private ImpactAnalyzes currentImpactAnalyzes;
 	
 	// Indexed scopes:
 	
-	protected ImpactScope scopeModelA;
+	protected GraphActionImpactScope historicalScope;
 	
-	protected ImpactScope scopeModelB;
+	protected GraphActionImpactScope currentScope;
 	
-	protected ImpactScope overwriteScope;
+	protected GraphActionImpactScope attributeScope;
 
 	public boolean hasPotentialImpact() {
-		return !scopeModelA.isEmpty() && !scopeModelB.isEmpty();
+		return !historicalScope.isEmpty() && !currentScope.isEmpty();
 	}
 
 	/**
@@ -80,12 +82,17 @@ public class RecognitionSettings {
 		this.editRule = editRule;
 	}
 
-	public ImpactAnalyzes getImpactAnalyzes() {
-		return impactAnalyzes;
+	public ImpactAnalyzes getHistoricalImpactAnalyzes() {
+		return historicalImpactAnalyzes;
+	}
+	
+	public ImpactAnalyzes getCurrentImpactAnalyzes() {
+		return currentImpactAnalyzes;
 	}
 
-	public void setImpactAnalyzes(ImpactAnalyzes impact) {
-		this.impactAnalyzes = impact;
+	public void setImpactAnalyzes(ImpactAnalyzes historicalImpactAnalyzes, ImpactAnalyzes currentImpactAnalyzes) {
+		this.historicalImpactAnalyzes = historicalImpactAnalyzes;
+		this.currentImpactAnalyzes = currentImpactAnalyzes;
 		
 		if (editRule == null) {
 			throw new RuntimeException("Edit rule needs to be set prior to the impact analyzes!");
@@ -96,21 +103,21 @@ public class RecognitionSettings {
 		List<Attribute> settingAttributes = HenshinChangesUtil.getSettingAttributes(editRule);
 	
 		// Filter edit-rules by impact (sub-rule -> negative, complement-rule -> positive):
-		this.scopeModelA = new ImpactScope(changes, impact.getCurrentImpactAnalysis());
-		this.scopeModelB = new ImpactScope(changes, impact.getHistoricalImpactAnalysis());
-		this.overwriteScope = new ImpactScope(settingAttributes, impact.getCurrentImpactAnalysis());
+		this.historicalScope = new GraphActionImpactScope(changes, historicalImpactAnalyzes.getPotentialImpactScope());
+		this.currentScope = new GraphActionImpactScope(changes, currentImpactAnalyzes.getPotentialImpactScope());
+		this.attributeScope = new GraphActionImpactScope(settingAttributes, currentImpactAnalyzes.getPotentialImpactScope());
+	}
+	
+	public GraphActionImpactScope getHistoricalScope() {
+		return historicalScope;
 	}
 
-	public ImpactScope getScopeModelB() {
-		return scopeModelB;
+	public GraphActionImpactScope getCurrentScope() {
+		return currentScope;
 	}
 
-	public ImpactScope getOverwriteScope() {
-		return overwriteScope;
-	}
-
-	public ImpactScope getScopeModelA() {
-		return scopeModelA;
+	public GraphActionImpactScope getAttributeScope() {
+		return attributeScope;
 	}
 	
 }

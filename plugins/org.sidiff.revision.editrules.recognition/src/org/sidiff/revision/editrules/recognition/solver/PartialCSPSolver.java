@@ -137,11 +137,11 @@ public class PartialCSPSolver {
 
 	private int minimumSolutionSize = 1;
 
-	private ImpactScopeConstraint resolvingScope;
+	private ImpactScopeConstraint currentScope;
 	
-	private ImpactScopeConstraint overwriteScope;
+	private ImpactScopeConstraint attributeScope;
 	
-	private ImpactScopeConstraint introducingScope;
+	private ImpactScopeConstraint historicalScope;
 	
 	// -------------------------------------------------
 	
@@ -255,9 +255,9 @@ public class PartialCSPSolver {
 			IMatchSelector matchSelector,
 			RecognitionMatchCreator matchCreator,
 			DependencyEvaluation dependencies,
-			ImpactScopeConstraint resolvingScope,
-			ImpactScopeConstraint overwriteScope,
-			ImpactScopeConstraint introducingScope,
+			ImpactScopeConstraint historicalScope,
+			ImpactScopeConstraint currentScope,
+			ImpactScopeConstraint attributeScope,
 			RecognitionLogger logger) {
 
 		// evaluation:
@@ -267,9 +267,9 @@ public class PartialCSPSolver {
 		
 		// constraints:
 		this.dependencies = dependencies;
-		this.resolvingScope = resolvingScope;
-		this.overwriteScope = overwriteScope;
-		this.introducingScope = introducingScope;
+		this.historicalScope = historicalScope;
+		this.currentScope = currentScope;
+		this.attributeScope = attributeScope;
 		
 		this.logger = logger;
 
@@ -415,11 +415,11 @@ public class PartialCSPSolver {
 		//        (Since the scope test is just an optimization, it would be correct anyway.)
 		// NOTE: Needs only to be checked after the selection has changed!
 //		if (firstVariableOfAtomic) {
-			if ((resolvingScope != null) && !resolvingScope.test()) {
+			if ((currentScope != null) && !currentScope.test()) {
 				return false;
 			}
 			
-			if ((introducingScope != null) && !introducingScope.test()) {
+			if ((historicalScope != null) && !historicalScope.test()) {
 				return false;
 			}
 //		}
@@ -539,7 +539,7 @@ public class PartialCSPSolver {
 	}
 	
 	private boolean isOverwritingRepair() {
-		return overwriteScope.test();
+		return attributeScope.test();
 	}
 
 	private boolean isMaximumAssignment() {

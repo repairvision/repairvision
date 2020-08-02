@@ -16,6 +16,7 @@ import org.sidiff.common.utilities.henshin.HenshinRuleAnalysisUtil;
 import org.sidiff.graphpattern.NodePattern;
 import org.sidiff.revision.editrules.recognition.pattern.RecognitionPattern;
 import org.sidiff.revision.editrules.recognition.pattern.domain.Domain;
+import org.sidiff.validation.constraint.impact.editrules.GraphActionImpactScope;
 
 public class ImpactScopeConstraint {
 
@@ -30,17 +31,17 @@ public class ImpactScopeConstraint {
 	private Map<Domain, Set<EObject>> domains = new LinkedHashMap<>();
 	
 	@SuppressWarnings("unused")
-	private ImpactScope repairScope; // NOTE: For debugging...
+	private GraphActionImpactScope repairScope; // NOTE: For debugging...
 	
 	protected ImpactScopeConstraint() {
 	}
 	
-	public ImpactScopeConstraint(ImpactScope repairScope, RecognitionPattern recognitionPattern) {
-		this.repairScope = repairScope;
+	public ImpactScopeConstraint(GraphActionImpactScope graphActionImpactScope, RecognitionPattern recognitionPattern) {
+		this.repairScope = graphActionImpactScope;
 		
 		// Create map from change/repair action to domain: 
-		for (GraphElement change : repairScope.getChanges()) {
-			List<EObject> scope = repairScope.get(change);
+		for (GraphElement change : graphActionImpactScope.getChanges()) {
+			List<EObject> scope = graphActionImpactScope.get(change);
 			
 			if (change instanceof Edge) {
 				NodePattern repairSourceContext = recognitionPattern.getEdgeTrace().get(change).getEdgePatternB().getSource();

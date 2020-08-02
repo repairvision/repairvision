@@ -33,10 +33,10 @@ public class RecognitionEngineProvider implements IRecognitionEngineProvider {
 		// Create matcher:
 		return new RecognitionEngine(
 				recognitionPattern,
-				new RecognitionMatchCreator(recognitionPattern, settings.getRevision(), settings.getImpactAnalyzes()),
-				settings.getScopeModelA(), 
-				settings.getOverwriteScope(),
-				settings.getScopeModelB(),
+				new RecognitionMatchCreator(recognitionPattern, settings.getRevision(), settings.getCurrentImpactAnalyzes()),
+				settings.getHistoricalScope(), 
+				settings.getCurrentScope(),
+				settings.getAttributeScope(),
 				settings);
 	}
 

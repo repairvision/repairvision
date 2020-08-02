@@ -46,7 +46,7 @@ public class ReferenceRepairAction extends StructuralFeatureRepairAction {
 
 	@Override
 	public String toString() {
-		return "ReferenceRepairAction [type=" + type + ", context=" + context + ", feature=" + feature + ", target=" + target + "]";
+		return "ReferenceRepairAction [" + getRepairLabel() + "]";
 	}
 	
 	@Override

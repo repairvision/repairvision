@@ -8,13 +8,13 @@ import org.eclipse.emf.henshin.model.Node;
 import org.sidiff.common.utilities.henshin.HenshinRuleAnalysisUtil;
 import org.sidiff.graphpattern.NodePattern;
 import org.sidiff.revision.difference.Change;
-import org.sidiff.revision.editrules.recognition.impact.ImpactScope;
 import org.sidiff.revision.editrules.recognition.pattern.RecognitionPattern;
 import org.sidiff.revision.editrules.recognition.pattern.domain.Domain;
 import org.sidiff.revision.editrules.recognition.pattern.graph.ActionNode;
 import org.sidiff.revision.editrules.recognition.pattern.graph.path.MatchingPath;
 import org.sidiff.revision.editrules.recognition.pattern.graph.path.MatchingPathFactory;
 import org.sidiff.revision.editrules.recognition.selection.IMatchSelector;
+import org.sidiff.validation.constraint.impact.editrules.GraphActionImpactScope;
 
 public class MatchSeeding implements IMatchSelector {
 	
@@ -31,10 +31,10 @@ public class MatchSeeding implements IMatchSelector {
 		this.matchingPathFactory = matchingPathFactory;
 	}
 	
-	public void seed(ImpactScope... scopes) {
+	public void seed(GraphActionImpactScope... scopes) {
 		seedInitialize();
 		
-		for (ImpactScope scope : scopes) {
+		for (GraphActionImpactScope scope : scopes) {
 			for (GraphElement scopeGraphElement: scope.getChanges()) {
 				Node scopeNode = null;
 

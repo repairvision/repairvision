@@ -5,28 +5,28 @@ import org.eclipse.emf.ecore.EReference;
 
 public class NegativeImpactAnalysis extends PositiveImpactAnalysis {
 	
-	public NegativeImpactAnalysis(RepairActionIndex repairActions) {
+	public NegativeImpactAnalysis(RepairActionImpactScope repairActions) {
 		super(repairActions);
 	}
 	
 	@Override
-	public boolean onCreate(EObject object) {
-		return super.onDelete(object);
+	public boolean onCreateObject(EReference containingReference, EObject object) {
+		return super.onDeleteObject(containingReference, object);
 	}
 	
 	@Override
-	public boolean onDelete(EObject object) {
-		return super.onCreate(object);
+	public boolean onDeleteObject(EReference containingReference, EObject object) {
+		return super.onCreateObject(containingReference, object);
 	}
 
 	@Override
-	public boolean onCreate(EObject sourceContext, EReference reference) {
-		return super.onDelete(sourceContext, reference);
+	public boolean onCreateReference(EObject sourceContext, EReference reference) {
+		return super.onDeleteReference(sourceContext, reference);
 	}
 
 	@Override
-	public boolean onDelete(EObject sourceContext, EReference reference) {
-		return super.onCreate(sourceContext, reference);
+	public boolean onDeleteReference(EObject sourceContext, EReference reference) {
+		return super.onCreateReference(sourceContext, reference);
 	}
 
 }

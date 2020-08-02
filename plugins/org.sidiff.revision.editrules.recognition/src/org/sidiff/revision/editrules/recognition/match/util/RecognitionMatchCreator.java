@@ -48,17 +48,17 @@ public class RecognitionMatchCreator {
 	/**
 	 * Used to check the impact of << set >> attributes of << create >> nodes.
 	 */
-	private ImpactAnalyzes impact;
+	private ImpactAnalyzes currentImpactAnalysis;
 	
 	/**
 	 * The recognition pattern of an edit rule.
 	 */
 	private RecognitionPattern recognitionPattern;
 	
-	public RecognitionMatchCreator(RecognitionPattern recognitionPattern, IRevision revision, ImpactAnalyzes impact) {
+	public RecognitionMatchCreator(RecognitionPattern recognitionPattern, IRevision revision, ImpactAnalyzes currentImpactAnalysis) {
 		this.recognitionPattern = recognitionPattern;
 		this.revision = revision;
-		this.impact = impact;
+		this.currentImpactAnalysis = currentImpactAnalysis;
 	}
 	
 	public RecognitionMatchCreator(RecognitionPattern recognitionPattern, IRevision revision) {
@@ -236,8 +236,8 @@ public class RecognitionMatchCreator {
 			return constantValue.equals(value);
 		} else {
 			// Variable value:
-			if (impact != null) {
-				return !impact.getCurrentImpactAnalysis().onModify(addedObj, settingAttribute.getType());
+			if (currentImpactAnalysis != null) {
+				return !currentImpactAnalysis.getImpactAnalysis().onModifyAttribute(addedObj, settingAttribute.getType());
 			} else {
 				return true;
 			}

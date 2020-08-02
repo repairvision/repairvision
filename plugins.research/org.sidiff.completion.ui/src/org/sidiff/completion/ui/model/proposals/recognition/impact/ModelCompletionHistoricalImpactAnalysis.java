@@ -1,7 +1,6 @@
 package org.sidiff.completion.ui.model.proposals.recognition.impact;
 
 import java.util.List;
-import java.util.Set;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
@@ -17,19 +16,16 @@ import org.sidiff.revision.difference.RemoveReference;
 import org.sidiff.validation.constraint.impact.ImpactAnalysis;
 import org.sidiff.validation.constraint.impact.PotentialImpactAnalysis;
 
-public class HistoricalImpactAnalysis implements ImpactAnalysis, PotentialImpactAnalysis  {
+public class ModelCompletionHistoricalImpactAnalysis implements PotentialImpactAnalysis, ImpactAnalysis {
 
-	private Set<EObject> context;
-	
 	private List<Change> contextChanges;
 	
-	public HistoricalImpactAnalysis(Set<EObject> context, List<Change> contextChanges) {
-		this.context = context;
+	public ModelCompletionHistoricalImpactAnalysis(List<Change> contextChanges) {
 		this.contextChanges = contextChanges;
 	}
 	
 	@Override
-	public boolean onCreate(EReference containingReference, EClass objectType, boolean strict) {
+	public boolean onCreateObject(EReference containingReference, EClass objectType, boolean strict) {
 		
 		for (Change contextChange : contextChanges) {
 			if (contextChange instanceof AddObject) {
@@ -47,7 +43,7 @@ public class HistoricalImpactAnalysis implements ImpactAnalysis, PotentialImpact
 	}
 	
 	@Override
-	public boolean onDelete(EReference containingReference, EClass objectType, boolean strict) {
+	public boolean onDeleteObject(EReference containingReference, EClass objectType, boolean strict) {
 		
 		for (Change contextChange : contextChanges) {
 			if (contextChange instanceof RemoveObject) {
@@ -65,7 +61,7 @@ public class HistoricalImpactAnalysis implements ImpactAnalysis, PotentialImpact
 	}
 	
 	@Override
-	public boolean onCreate(EClass sourceContextType, EReference reference, boolean strict) {
+	public boolean onCreateReference(EClass sourceContextType, EReference reference, boolean strict) {
 		
 		for (Change contextChange : contextChanges) {
 			if (contextChange instanceof AddReference) {
@@ -81,7 +77,7 @@ public class HistoricalImpactAnalysis implements ImpactAnalysis, PotentialImpact
 	}
 
 	@Override
-	public boolean onDelete(EClass sourceContextType, EReference reference, boolean strict) {
+	public boolean onDeleteReference(EClass sourceContextType, EReference reference, boolean strict) {
 		
 		for (Change contextChange : contextChanges) {
 			if (contextChange instanceof RemoveReference) {
@@ -97,7 +93,7 @@ public class HistoricalImpactAnalysis implements ImpactAnalysis, PotentialImpact
 	}
 
 	@Override
-	public boolean onModify(EClass containerContextType, EAttribute attribute, boolean strict) {
+	public boolean onModifyAttribute(EClass containerContextType, EAttribute attribute, boolean strict) {
 		
 		for (Change contextChange : contextChanges) {
 			if (contextChange instanceof AttributeValueChange) {
@@ -113,7 +109,7 @@ public class HistoricalImpactAnalysis implements ImpactAnalysis, PotentialImpact
 	}
 
 	@Override
-	public boolean onCreate(EObject object) {
+	public boolean onCreateObject(EReference containingReference, EObject object) {
 		
 		for (Change contextChange : contextChanges) {
 			if (contextChange instanceof AddObject) {
@@ -127,7 +123,7 @@ public class HistoricalImpactAnalysis implements ImpactAnalysis, PotentialImpact
 	}
 	
 	@Override
-	public boolean onDelete(EObject object) {
+	public boolean onDeleteObject(EReference containingReference, EObject object) {
 		
 		for (Change contextChange : contextChanges) {
 			if (contextChange instanceof RemoveObject) {
@@ -141,7 +137,7 @@ public class HistoricalImpactAnalysis implements ImpactAnalysis, PotentialImpact
 	}
 	
 	@Override
-	public boolean onCreate(EObject sourceContext, EReference reference) {
+	public boolean onCreateReference(EObject sourceContext, EReference reference) {
 		
 		for (Change contextChange : contextChanges) {
 			if (contextChange instanceof AddReference) {
@@ -157,7 +153,7 @@ public class HistoricalImpactAnalysis implements ImpactAnalysis, PotentialImpact
 	}
 
 	@Override
-	public boolean onDelete(EObject sourceContext, EReference reference) {
+	public boolean onDeleteReference(EObject sourceContext, EReference reference) {
 		
 		for (Change contextChange : contextChanges) {
 			if (contextChange instanceof RemoveReference) {
@@ -173,7 +169,7 @@ public class HistoricalImpactAnalysis implements ImpactAnalysis, PotentialImpact
 	}
 
 	@Override
-	public boolean onModify(EObject containerContext, EAttribute attribute) {
+	public boolean onModifyAttribute(EObject containerContext, EAttribute attribute) {
 		
 		for (Change contextChange : contextChanges) {
 			if (contextChange instanceof AttributeValueChange) {
@@ -187,11 +183,6 @@ public class HistoricalImpactAnalysis implements ImpactAnalysis, PotentialImpact
 		}
 		
 		return false;
-	}
-
-	@Override
-	public Set<EObject> getScope() {
-		return context;
 	}
 
 }

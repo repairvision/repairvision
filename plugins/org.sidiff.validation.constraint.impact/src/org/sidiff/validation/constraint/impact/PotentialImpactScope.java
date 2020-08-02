@@ -1,16 +1,18 @@
 package org.sidiff.validation.constraint.impact;
 
+import java.util.Iterator;
+
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 
 /**
- * Interface for testing specific changes for impact.
+ * Interface for querying model elements by specific change types.
  * 
  * @author Manuel Ohrndorf
  */
-public interface PotentialImpactAnalysis {
+public interface PotentialImpactScope {
 
 	/**
 	 * @param containingReference The containment reference type that contains the
@@ -20,11 +22,10 @@ public interface PotentialImpactAnalysis {
 	 * @param strict              <code>true</code> if the objects type should be
 	 *                            matched exactly or <code>false</code> if the given
 	 *                            type is a super type of the matchable types.
-	 * @return <code>true</code> if the creation of the specified object could have
-	 *         a potential impact; <code>false</code> otherwise.
+	 * @return All elements that are in the impact scope of the specified change.
 	 */
-	boolean onCreateObject(EReference containingReference, EClass objectType, boolean strict);
-
+	Iterator<EObject> onCreateObject(EReference containingReference, EClass objectType, boolean strict);
+	
 	/**
 	 * @param containingReference The containment reference type that contains the
 	 *                            given object (see
@@ -33,11 +34,10 @@ public interface PotentialImpactAnalysis {
 	 * @param strict              <code>true</code> if the objects type should be
 	 *                            matched exactly or <code>false</code> if the given
 	 *                            type is a super type of the matchable types.
-	 * @return <code>true</code> if the deletion of the specified object could have
-	 *         a potential impact; <code>false</code> otherwise.
+	 * @return All elements that are in the impact scope of the specified change.
 	 */
-	boolean onDeleteObject(EReference containingReference, EClass objectType, boolean strict);
-
+	Iterator<EObject> onDeleteObject(EReference containingReference, EClass objectType, boolean strict);
+	
 	/**
 	 * @param sourceContextType The container/context type of the reference.
 	 * @param reference         The reference type to be tested.
@@ -45,11 +45,10 @@ public interface PotentialImpactAnalysis {
 	 *                          should be matched exactly or <code>false</code> if
 	 *                          the given type is a super type of the matchable
 	 *                          types.
-	 * @return <code>true</code> if the creation of a reference of the given type
-	 *         has an impact; <code>false</code> otherwise.
+	 * @return All elements that are in the impact scope of the specified change.
 	 */
-	boolean onCreateReference(EClass sourceContextType, EReference reference, boolean strict);
-
+	Iterator<EObject> onCreateReference(EClass contextType, EReference referenceType, boolean strict);
+	
 	/**
 	 * @param sourceContextType The container/context type of the reference.
 	 * @param reference         The reference type to be tested.
@@ -57,11 +56,10 @@ public interface PotentialImpactAnalysis {
 	 *                          should be matched exactly or <code>false</code> if
 	 *                          the given type is a super type of the matchable
 	 *                          types.
-	 * @return <code>true</code> if the deletion of a reference of the given type
-	 *         has an impact; <code>false</code> otherwise.
+	 * @return All elements that are in the impact scope of the specified change.
 	 */
-	boolean onDeleteReference(EClass sourceContextType, EReference reference, boolean strict);
-
+	Iterator<EObject> onDeleteReference(EClass contextType, EReference referenceType, boolean strict);
+	
 	/**
 	 * @param sourceContextType The container/context type of the reference.
 	 * @param reference         The reference type to be tested.
@@ -69,8 +67,8 @@ public interface PotentialImpactAnalysis {
 	 *                          should be matched exactly or <code>false</code> if
 	 *                          the given type is a super type of the matchable
 	 *                          types.
-	 * @return <code>true</code> if the modification of an attribute of the given
-	 *         type has an impact; <code>false</code> otherwise.
+	 * @return All elements that are in the impact scope of the specified change.
 	 */
-	boolean onModifyAttribute(EClass containerContextType, EAttribute attribute, boolean strict);
+	Iterator<EObject> onModifyAttribute(EClass contextType, EAttribute attributeType, boolean strict);
+
 }

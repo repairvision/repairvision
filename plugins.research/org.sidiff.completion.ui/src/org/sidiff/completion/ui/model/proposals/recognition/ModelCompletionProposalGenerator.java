@@ -1,6 +1,7 @@
 package org.sidiff.completion.ui.model.proposals.recognition;
 import java.util.ArrayList;
-import java.util.Collections;import java.util.Comparator;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import org.eclipse.emf.common.util.URI;
@@ -13,7 +14,8 @@ import org.eclipse.emf.henshin.model.Rule;
 import org.sidiff.common.utilities.emf.Scope;
 import org.sidiff.completion.ui.model.proposals.ModelCompletionProposal;
 import org.sidiff.completion.ui.model.proposals.ModelCompletionProposalCluster;
-import org.sidiff.completion.ui.model.proposals.recognition.impact.ModelCompletionImpactAnalyzes;
+import org.sidiff.completion.ui.model.proposals.recognition.impact.ModelCompletionCurrentImpactAnalyzes;
+import org.sidiff.completion.ui.model.proposals.recognition.impact.ModelCompletionHistoricalImpactAnalyzes;
 import org.sidiff.completion.ui.model.proposals.util.DecompositionTemplates;
 import org.sidiff.completion.ui.proposals.CompletionProposalList;
 import org.sidiff.graphpattern.profile.henshin_extension.RuleExtension;
@@ -88,10 +90,12 @@ public class ModelCompletionProposalGenerator {
 		return editRules;
 	}
 	
-	protected ImpactAnalyzes getImpactAnalyzes(IRevision revision) {
-		// Positive -> Current impact on context:
-		// Negative -> Historic impact on context:
-		return new ModelCompletionImpactAnalyzes(revision, context);
+	protected ImpactAnalyzes getHistoricalImpactAnalyzes(IRevision revision) {
+		return new ModelCompletionHistoricalImpactAnalyzes(revision, context);
+	}
+	
+	protected ImpactAnalyzes getCurrentImpactAnalyzes(IRevision revision) {
+		return new ModelCompletionCurrentImpactAnalyzes(revision, context);
 	}
 	
 	// org.sidiff.revision.repair.api.peo.PEORepairCalculationEngine
@@ -112,13 +116,14 @@ public class ModelCompletionProposalGenerator {
 		IRevision revision = calculateDifference();
 		
 		// Completion change impact:
-		ImpactAnalyzes impactAnalyzes = getImpactAnalyzes(revision);
+		ImpactAnalyzes historicalImpactAnalyzes = getHistoricalImpactAnalyzes(revision);
+		ImpactAnalyzes currentImpactAnalyzes = getCurrentImpactAnalyzes(revision);
 		
 		// Henshin graph:
 		EGraph graphCurrentModel = new EGraphImpl(getCurrentModel());
 		
 		// Calculate proposals:
-		ComplementFinderEngine complementFinderEngine = new ComplementFinderEngine(impactAnalyzes, graphCurrentModel);
+		ComplementFinderEngine complementFinderEngine = new ComplementFinderEngine(currentImpactAnalyzes, graphCurrentModel);
 		complementFinderEngine.start();
 		
 		List<ModelCompletionProposalCluster> propsalClusters = new ArrayList<>();
@@ -127,7 +132,8 @@ public class ModelCompletionProposalGenerator {
 		sortEditRules(getEditRules());
 		
 		for (Rule editRule : getEditRules()) {
-			ModelCompletionProposalCaculation proposalCaculation = new ModelCompletionProposalCaculation(editRule, revision, impactAnalyzes, complementFinderEngine);
+			ModelCompletionProposalCaculation proposalCaculation = new ModelCompletionProposalCaculation(
+					editRule, revision, historicalImpactAnalyzes, currentImpactAnalyzes, complementFinderEngine);
 			RecognitionSettings recognitionSettings = proposalCaculation.getComplementFinderSettings().getRecognitionEngineSettings();
 			
 //			if (editRule.getName().contains("Create: TransitionWithCallEventTriggerAndOperationInClass")) {

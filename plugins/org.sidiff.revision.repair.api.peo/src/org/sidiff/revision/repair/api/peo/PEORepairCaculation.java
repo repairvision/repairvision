@@ -19,7 +19,8 @@ import org.sidiff.revision.repair.complement.peo.finder.ComplementFinder;
 import org.sidiff.revision.repair.complement.peo.finder.ComplementFinderEngine;
 import org.sidiff.revision.repair.complement.repair.RepairPlan;
 import org.sidiff.validation.constraint.impact.ImpactAnalyzes;
-import org.sidiff.validation.constraint.impact.util.GraphActionImpactUtil;
+import org.sidiff.validation.constraint.impact.editrules.GraphActionImpactAnalysis;
+import org.sidiff.validation.constraint.impact.editrules.PotentialGraphActionImpactAnalysis;
 
 public class PEORepairCaculation {
 	
@@ -31,8 +32,10 @@ public class PEORepairCaculation {
 	
 	private int repairCount = 0;
 	
-	public PEORepairCaculation(PEORepairSettings settings, Rule editRule, IRevision revision,
-			ImpactAnalyzes impact, ComplementFinderEngine complementFinderEngine) {
+	public PEORepairCaculation(
+			PEORepairSettings settings, Rule editRule, IRevision revision,
+			ImpactAnalyzes historicalImpactAnalyzes, ImpactAnalyzes currentImpactAnalyzes, 
+			ComplementFinderEngine complementFinderEngine) {
 		
 		this.complementFinderEngine = complementFinderEngine;
 		
@@ -50,7 +53,7 @@ public class PEORepairCaculation {
 		RecognitionSettings recognitionSettings = complementFinderSettings.getRecognitionEngineSettings();
 		recognitionSettings.setEditRule(editRule);
 		recognitionSettings.setRevision(revision);
-		recognitionSettings.setImpactAnalyzes(impact);
+		recognitionSettings.setImpactAnalyzes(historicalImpactAnalyzes, currentImpactAnalyzes);
 		
 		if (recognitionSettings.hasPotentialImpact()) {
 			this.complementFinder = complementFinderEngine.createComplementFinder(settings.getComplementFinderSettings());
@@ -59,7 +62,16 @@ public class PEORepairCaculation {
 	
 	public List<IRepairPlan> findRepairs(LogTime complementMatchingTimer) {
 		RecognitionSettings recognitionSettings = complementFinderSettings.getRecognitionEngineSettings();
-		ImpactAnalyzes impactAnalyzes = recognitionSettings.getImpactAnalyzes();
+		
+		PotentialGraphActionImpactAnalysis historicalPotentialImpact = new PotentialGraphActionImpactAnalysis(
+				recognitionSettings.getHistoricalImpactAnalyzes().getPotentialImpactAnalysis());
+		
+		PotentialGraphActionImpactAnalysis currentPotentialImpact = new PotentialGraphActionImpactAnalysis(
+				recognitionSettings.getCurrentImpactAnalyzes().getPotentialImpactAnalysis());
+		
+		GraphActionImpactAnalysis historicalImpact = new GraphActionImpactAnalysis(
+				recognitionSettings.getHistoricalImpactAnalyzes().getImpactAnalysis());
+		
 		
 		repairCount = 0;
 		
@@ -72,19 +84,11 @@ public class PEORepairCaculation {
 				// Filter complements by abstract repairs:
 				if (complement.getComplementingChanges().size() > 0) {
 					
-					if (GraphActionImpactUtil.potential(
-							impactAnalyzes.getCurrentPotentialImpactAnalysis(), 
-							complement.getComplementingBoundaryChanges()) 
-					 && GraphActionImpactUtil.potential(
-							 impactAnalyzes.getHistoricalPotentialImpactAnalysis(), 
-							 complement.getRecognizedChanges())) {
+					if (currentPotentialImpact.hasImpact(complement.getComplementingBoundaryChanges()) 
+							&& historicalPotentialImpact.hasImpact(complement.getRecognizedChanges())) {
 
 						// Filter complement with pre-match by inconsistency impact:
-						if (GraphActionImpactUtil.real(
-								impactAnalyzes.getHistoricalImpactAnalysis(),
-								complement.getRecognizedChanges(),
-								complement.getRecognitionMatching())) {
-							
+						if (historicalImpact.hasImpact(complement.getRecognizedChanges(), complement.getRecognitionMatching())) {
 							List<Match> repairMatches = complementFinderEngine.findComplementMatches(complement);
 							
 							if (!repairMatches.isEmpty()) {

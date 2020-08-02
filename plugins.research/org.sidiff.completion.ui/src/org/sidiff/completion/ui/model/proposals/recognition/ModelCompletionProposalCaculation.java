@@ -14,7 +14,8 @@ import org.sidiff.revision.repair.complement.peo.configuration.ComplementFinderS
 import org.sidiff.revision.repair.complement.peo.finder.ComplementFinder;
 import org.sidiff.revision.repair.complement.peo.finder.ComplementFinderEngine;
 import org.sidiff.validation.constraint.impact.ImpactAnalyzes;
-import org.sidiff.validation.constraint.impact.util.GraphActionImpactUtil;
+import org.sidiff.validation.constraint.impact.editrules.GraphActionImpactAnalysis;
+import org.sidiff.validation.constraint.impact.editrules.PotentialGraphActionImpactAnalysis;
 
 // org.sidiff.revision.repair.api.peo.PEORepairCaculation
 public class ModelCompletionProposalCaculation {
@@ -25,7 +26,11 @@ public class ModelCompletionProposalCaculation {
 	
 	private ComplementFinder complementFinder;
 	
-	public ModelCompletionProposalCaculation(Rule editRule, IRevision revision, ImpactAnalyzes impact, ComplementFinderEngine complementFinderEngine) {
+	public ModelCompletionProposalCaculation(
+			Rule editRule, IRevision revision,
+			ImpactAnalyzes historicalImpactAnalyzes, ImpactAnalyzes currentImpactAnalyzes,
+			ComplementFinderEngine complementFinderEngine) {
+		
 		this.complementFinderEngine = complementFinderEngine;
 		
 		// Create complement finder:
@@ -33,7 +38,7 @@ public class ModelCompletionProposalCaculation {
 		RecognitionSettings recognitionSettings = complementFinderSettings.getRecognitionEngineSettings();
 		recognitionSettings.setEditRule(editRule);
 		recognitionSettings.setRevision(revision);
-		recognitionSettings.setImpactAnalyzes(impact);
+		recognitionSettings.setImpactAnalyzes(historicalImpactAnalyzes, currentImpactAnalyzes);
 		
 		if (recognitionSettings.hasPotentialImpact()) {
 			this.complementFinder = complementFinderEngine.createComplementFinder(complementFinderSettings);
@@ -42,7 +47,15 @@ public class ModelCompletionProposalCaculation {
 	
 	public List<ModelCompletionProposal> findProposals() {
 		RecognitionSettings recognitionSettings = complementFinderSettings.getRecognitionEngineSettings();
-		ImpactAnalyzes impactAnalyzes = recognitionSettings.getImpactAnalyzes();
+		
+		PotentialGraphActionImpactAnalysis historicalPotentialImpact = new PotentialGraphActionImpactAnalysis(
+				recognitionSettings.getHistoricalImpactAnalyzes().getPotentialImpactAnalysis());
+		
+		PotentialGraphActionImpactAnalysis currentPotentialImpact = new PotentialGraphActionImpactAnalysis(
+				recognitionSettings.getCurrentImpactAnalyzes().getPotentialImpactAnalysis());
+		
+		GraphActionImpactAnalysis historicalImpact = new GraphActionImpactAnalysis(
+				recognitionSettings.getHistoricalImpactAnalyzes().getImpactAnalysis());
 		
 		if (recognitionSettings.hasPotentialImpact()) {
 			List<ModelCompletionProposal> proposals = new ArrayList<>();
@@ -52,19 +65,11 @@ public class ModelCompletionProposalCaculation {
 				// Filter sub-rule/complement by potential impact:
 				if (complement.getComplementingChanges().size() > 0) {
 					
-					if (GraphActionImpactUtil.potential(
-							impactAnalyzes.getCurrentPotentialImpactAnalysis(), 
-							complement.getComplementingChanges()) 
-					 && GraphActionImpactUtil.potential(
-							 impactAnalyzes.getHistoricalPotentialImpactAnalysis(), 
-							 complement.getRecognizedChanges())) {
+					if (currentPotentialImpact.hasImpact(complement.getComplementingChanges())
+							&& historicalPotentialImpact.hasImpact(complement.getRecognizedChanges())) {
 
 						// Filter sub-rule by real impact:
-						if (GraphActionImpactUtil.real(
-								impactAnalyzes.getHistoricalImpactAnalysis(),
-								complement.getRecognizedChanges(),
-								complement.getRecognitionMatching())) {
-							
+						if (historicalImpact.hasImpact(complement.getRecognizedChanges(), complement.getRecognitionMatching())) {
 							List<Match> proposalMatches = complementFinderEngine.findComplementMatches(complement);
 							
 							if (!proposalMatches.isEmpty()) {

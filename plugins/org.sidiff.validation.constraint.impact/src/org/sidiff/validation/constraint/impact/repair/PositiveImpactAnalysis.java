@@ -2,7 +2,6 @@ package org.sidiff.validation.constraint.impact.repair;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
@@ -16,44 +15,39 @@ import org.sidiff.validation.constraint.interpreter.decisiontree.repair.actions.
 
 public class PositiveImpactAnalysis implements ImpactAnalysis {
 
-	protected RepairActionIndex repairActions;
+	protected RepairActionImpactScope repairActions;
 	
-	public PositiveImpactAnalysis(RepairActionIndex repairActions) {
+	public PositiveImpactAnalysis(RepairActionImpactScope repairActions) {
 		this.repairActions = repairActions;
 	}
 	
 	@Override
-	public boolean onCreate(EObject object) {
-		return isObjectRepair(RepairType.CREATE, object);
+	public boolean onCreateObject(EReference containingReference, EObject object) {
+		return isObjectRepair(RepairType.CREATE, containingReference, object);
 	}
 	
 	@Override
-	public boolean onDelete(EObject object) {
-		return isObjectRepair(RepairType.DELETE, object);
+	public boolean onDeleteObject(EReference containingReference, EObject object) {
+		return isObjectRepair(RepairType.DELETE, containingReference, object);
 	}
 	
 	@Override
-	public boolean onCreate(EObject sourceContext, EReference reference) {
+	public boolean onCreateReference(EObject sourceContext, EReference reference) {
 		return isStructuralFeatureRepair(RepairType.CREATE, sourceContext, reference);
 	}
 
 	@Override
-	public boolean onDelete(EObject sourceContext, EReference reference) {
+	public boolean onDeleteReference(EObject sourceContext, EReference reference) {
 		return isStructuralFeatureRepair(RepairType.DELETE, sourceContext, reference);
 	}
 
 	@Override
-	public boolean onModify(EObject containerContext, EAttribute attribute) {
+	public boolean onModifyAttribute(EObject containerContext, EAttribute attribute) {
 		return isStructuralFeatureRepair(RepairType.MODIFY, containerContext, attribute);
 	}
 	
-	@Override
-	public Set<EObject> getScope() {
-		return repairActions.getScope();
-	}
-	
-	protected boolean isObjectRepair(RepairType type, EObject object) {
-		Map<EObject, List<RepairAction>> repairsPerMetaClass = repairActions.getRepairActions(object.eContainmentFeature());
+	protected boolean isObjectRepair(RepairType type, EReference containingReference, EObject object) {
+		Map<EObject, List<RepairAction>> repairsPerMetaClass = repairActions.getRepairActions(containingReference);
 
 		if (repairsPerMetaClass != null) {
 			List<RepairAction> repairsPerObject = repairsPerMetaClass.get(object);

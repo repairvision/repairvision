@@ -89,7 +89,7 @@ public class ObjectRepairAction extends RepairAction {
 
 	@Override
 	public String toString() {
-		return "ObjectRepairAction [type=" + type + ", containingReference=" + containingReference + ", objectType=" + objectType + "]";
+		return "ObjectRepairAction [" + getRepairLabel() + "]";
 	}
 	
 	@Override

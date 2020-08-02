@@ -30,7 +30,7 @@ import org.sidiff.revision.repair.api.util.IMatching;
 import org.sidiff.revision.repair.api.util.RecognitionMatching;
 import org.sidiff.validation.constraint.api.util.RepairValidation;
 import org.sidiff.validation.constraint.impact.repair.PositiveImpactAnalysis;
-import org.sidiff.validation.constraint.impact.repair.RepairActionIndex;
+import org.sidiff.validation.constraint.impact.repair.RepairActionImpactScope;
 
 public class DeveloperIntentionOracle {
 
@@ -76,12 +76,12 @@ public class DeveloperIntentionOracle {
 		}
 
 		// NOTE: Since attribute changes are optional -> re-check repair tree overlapping for observable changes:
-		PositiveImpactAnalysis impact = new PositiveImpactAnalysis(new RepairActionIndex(repairTrees));
+		PositiveImpactAnalysis impact = new PositiveImpactAnalysis(new RepairActionImpactScope(repairTrees));
 		
 		for (GraphElement repairAction : observableChanges) {
 			if (repairAction instanceof Attribute) {
 				for (EObject match : (Iterable<EObject>) () -> editRuleMatching.getMatches(((Attribute) repairAction).getNode())) {
-					if (impact.onModify(match, ((Attribute) repairAction).getType())) {
+					if (impact.onModifyAttribute(match, ((Attribute) repairAction).getType())) {
 						return true;
 					}
 				}
@@ -92,7 +92,7 @@ public class DeveloperIntentionOracle {
 				
 				if (sourceNode.getGraph().isLhs()) {
 					for (EObject match : (Iterable<EObject>) () -> editRuleMatching.getMatches(sourceNode)) {
-						if (impact.onDelete(match, ((Edge) repairAction).getType())) {
+						if (impact.onDeleteReference(match, ((Edge) repairAction).getType())) {
 							return true;
 						}
 					}

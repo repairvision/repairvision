@@ -20,7 +20,6 @@ import org.eclipse.emf.henshin.model.Parameter;
 import org.sidiff.common.utilities.henshin.HenshinRuleAnalysisUtil;
 import org.sidiff.revision.common.logging.util.LogTime;
 import org.sidiff.revision.editrules.recognition.IRecognitionEngineProvider;
-import org.sidiff.revision.editrules.recognition.impact.ImpactScope;
 import org.sidiff.revision.editrules.recognition.impl.RecognitionEngineProvider;
 import org.sidiff.revision.editrules.recognition.match.RecognitionAttributeMatch;
 import org.sidiff.revision.editrules.recognition.match.RecognitionEdgeMatch;
@@ -33,9 +32,9 @@ import org.sidiff.revision.repair.complement.peo.configuration.ComplementFinderS
 import org.sidiff.revision.repair.complement.peo.finder.henshin.ComplementEngine;
 import org.sidiff.revision.repair.complement.peo.finder.henshin.HenshinRuleStructureSorting;
 import org.sidiff.revision.repair.complement.peo.impact.ComplementMatching;
-import org.sidiff.validation.constraint.impact.ImpactAnalysis;
 import org.sidiff.validation.constraint.impact.ImpactAnalyzes;
-import org.sidiff.validation.constraint.impact.util.GraphActionImpactUtil;
+import org.sidiff.validation.constraint.impact.editrules.GraphActionImpactAnalysis;
+import org.sidiff.validation.constraint.impact.editrules.GraphActionImpactScope;
 
 /**
  * Tries to find all complementing operation for a given edit-rule and a model difference. 
@@ -64,7 +63,7 @@ public class ComplementFinderEngine {
 	/**
 	 * Inconsistency impact analysis.
 	 */
-	private ImpactAnalyzes impact;
+	private ImpactAnalyzes currentImpactAnalyzes;
 
 	/**
 	 * The working graph, i.e. the actual version of the model.
@@ -76,8 +75,8 @@ public class ComplementFinderEngine {
 	 */
 	private IRecognitionEngineProvider recognitionEngineProvider;
 
-	public ComplementFinderEngine(ImpactAnalyzes impact, EGraph graphModelB) {
-		this.impact = impact;
+	public ComplementFinderEngine(ImpactAnalyzes currentImpactAnalyzes, EGraph graphModelB) {
+		this.currentImpactAnalyzes = currentImpactAnalyzes;
 		this.graphModelB = graphModelB;
 	}
 	
@@ -204,8 +203,9 @@ public class ComplementFinderEngine {
 	
 	// TODO: Check the repair impact as user defined constraint in the Henshin CSP.  
 	private void checkForUnambiguousRepairContext(ComplementRule complementRule, Match complementMatch) {
-		ImpactAnalysis currentImpactAnalysis = impact.getCurrentImpactAnalysis();
-		ImpactScope currentImpactScope = new ImpactScope(complementRule.getComplementingBoundaryChanges(), currentImpactAnalysis);
+		GraphActionImpactScope currentImpactScope = new GraphActionImpactScope(
+				complementRule.getComplementingBoundaryChanges(), 
+				currentImpactAnalyzes.getPotentialImpactScope());
 
 		Node repairContext = null;
 		EObject repairContextElement = null;
@@ -260,10 +260,9 @@ public class ComplementFinderEngine {
 	}
 	
 	private void findMatches(ComplementRule complementRule, Match complementMatch, ArrayList<Match> complementPreMatches) {
-		Iterator<Match> matchFinder = engine.findMatches(
-				complementRule.getComplementRule(), graphModelB, complementMatch).iterator();
+		Iterator<Match> matchFinder = engine.findMatches(complementRule.getComplementRule(), graphModelB, complementMatch).iterator();
 		
-		ImpactAnalysis currentImpactAnalysis = impact.getCurrentImpactAnalysis();
+		GraphActionImpactAnalysis currentImpact = new GraphActionImpactAnalysis(currentImpactAnalyzes.getImpactAnalysis());
 		List<GraphElement> complementChanges = complementRule.getComplementingChanges();
 		
 //		while (matchFinder.hasNext() && (complementPreMatches.size() < 1)) {
@@ -271,7 +270,7 @@ public class ComplementFinderEngine {
 			Match nextMatch = matchFinder.next();
 			
 			// Filter complement with match by impact:
-			if (GraphActionImpactUtil.real(currentImpactAnalysis, complementChanges, new ComplementMatching(complementMatch))) {
+			if (currentImpact.hasImpact(complementChanges, new ComplementMatching(nextMatch))) {
 				complementPreMatches.add(nextMatch);
 			}
 		}

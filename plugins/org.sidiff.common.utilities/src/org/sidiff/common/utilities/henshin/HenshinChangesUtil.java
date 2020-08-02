@@ -169,4 +169,14 @@ public class HenshinChangesUtil {
 
 		return res;
 	}
+	
+	/**
+	 * @param node A typed node.
+	 * @return <code>true</code> if the type is a concrete (none abstract,
+	 *         interface) creation node, i.e., this allows type
+	 *         parameters/replacements for abstract/interface creation nodes.
+	 */
+	public static boolean isStrictMatchingType(Node node) {
+		return !(node.getType().isAbstract() || node.getType().isInterface()) && HenshinRuleAnalysisUtil.isCreationNode(node);
+	}
 }

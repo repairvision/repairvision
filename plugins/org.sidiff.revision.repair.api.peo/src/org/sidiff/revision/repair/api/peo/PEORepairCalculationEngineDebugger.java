@@ -17,8 +17,13 @@ public class PEORepairCalculationEngineDebugger extends PEORepairCalculationEngi
 	}
 	
 	@Override
-	protected PEORepairCaculation createRepairCalculation(Rule editRule, ImpactAnalyzes impact, IRevision revision, ComplementFinderEngine complementFinderEngine) {
-		PEORepairCaculation repairCaculation = super.createRepairCalculation(editRule, impact, revision, complementFinderEngine);
+	protected PEORepairCaculation createRepairCalculation(
+			Rule editRule, IRevision revision, 
+			ImpactAnalyzes historicalImpactAnalyzes, ImpactAnalyzes currentImpactAnalyzes,
+			ComplementFinderEngine complementFinderEngine) {
+		
+		PEORepairCaculation repairCaculation = super.createRepairCalculation(
+				editRule, revision, historicalImpactAnalyzes, currentImpactAnalyzes, complementFinderEngine);
 		
 		lastComplementFinderMonitor = new ComplementFinderRecorder(repairCaculation.getComplementFinder());
 		lastComplementFinderMonitor.setMatchingPathRecording(true);

@@ -2,6 +2,7 @@ package org.sidiff.validation.constraint.impact.repair;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -10,19 +11,22 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.sidiff.validation.constraint.api.util.RepairValidation;
 import org.sidiff.validation.constraint.api.util.RepairValidationIterator;
+import org.sidiff.validation.constraint.impact.ImpactScope;
 import org.sidiff.validation.constraint.interpreter.IConstraint;
 import org.sidiff.validation.constraint.interpreter.decisiontree.IDecisionBranch;
 import org.sidiff.validation.constraint.interpreter.decisiontree.IDecisionNode;
 import org.sidiff.validation.constraint.interpreter.decisiontree.repair.actions.ObjectRepairAction;
 import org.sidiff.validation.constraint.interpreter.decisiontree.repair.actions.RepairAction;
 import org.sidiff.validation.constraint.interpreter.decisiontree.repair.actions.StructuralFeatureRepairAction;
+import org.sidiff.validation.constraint.interpreter.decisiontree.repair.actions.RepairAction.RepairType;
 
-public class RepairActionIndex {
+public class RepairActionImpactScope implements ImpactScope {
 
 	/**
 	 * Type -> Context -> Repairs:
@@ -39,14 +43,14 @@ public class RepairActionIndex {
 	 */
 	private List<RepairValidation> validations = new ArrayList<>();
 	
-	public RepairActionIndex(Collection<RepairValidation> validations) {
+	public RepairActionImpactScope(Collection<RepairValidation> validations) {
 		for (RepairValidation validation : validations) {
 			addRepair(validation.getRepair());
 			this.validations.add(validation);
 		}
 	}
 	
-	public RepairActionIndex(
+	public RepairActionImpactScope(
 			Iterator<? extends EObject> model, 
 			List<IConstraint> consistencyRules,
 			boolean storeValidation) {
@@ -89,22 +93,22 @@ public class RepairActionIndex {
 	private void addRepair(EStructuralFeature feature, EObject object, RepairAction repair) {
 
 		// Per meta-class:
-		Map<EObject, List<RepairAction>> repairsPerMetaClass = repairs.get(feature);
+		Map<EObject, List<RepairAction>> repairsOfFeature = repairs.get(feature);
 
-		if (repairsPerMetaClass == null) {
-			repairsPerMetaClass = new HashMap<>();
-			repairs.put(feature, repairsPerMetaClass);
+		if (repairsOfFeature == null) {
+			repairsOfFeature = new HashMap<>();
+			repairs.put(feature, repairsOfFeature);
 		}
 
 		// Per repair:
-		List<RepairAction> repairsPerObject = repairsPerMetaClass.get(object);
+		List<RepairAction> repairsOfContext = repairsOfFeature.get(object);
 
-		if (repairsPerObject == null) {
-			repairsPerObject = new ArrayList<>(5);
-			repairsPerMetaClass.put(object, repairsPerObject);
+		if (repairsOfContext == null) {
+			repairsOfContext = new ArrayList<>(5);
+			repairsOfFeature.put(object, repairsOfContext);
 		}
 
-		repairsPerObject.add(repair);
+		repairsOfContext.add(repair);
 
 		// Store context element:
 		scope.add(object);
@@ -114,8 +118,79 @@ public class RepairActionIndex {
 		return repairs.get(structuralFeature);
 	}
 	
+	@Override
 	public Set<EObject> getScope() {
 		return scope;
+	}
+	
+	public boolean isObjectRepair(RepairType type, EReference containingReference, EClass objectType, boolean strict) {
+		Map<EObject, List<RepairAction>> repairsOfFeature = getRepairActions(containingReference);
+		
+		if (repairsOfFeature != null) {
+			for (List<RepairAction> repairsOfContext : repairsOfFeature.values()) {
+				if (matchObjectRepair(repairsOfContext, type, containingReference, objectType, strict)) {
+					return true;
+				}
+			}
+		}
+	
+		return false;
+	}
+
+	public Iterator<EObject> getObjectRepairs(RepairType type, EReference containingReference, EClass objectType, boolean strict) {
+		Map<EObject, List<RepairAction>> repairsOfFeature = getRepairActions(containingReference);
+		
+		if (repairsOfFeature != null) {
+			return repairsOfFeature.entrySet().stream()
+					.filter(entry -> matchObjectRepair(entry.getValue(), type, containingReference, objectType, strict))
+					.map(Map.Entry::getKey).iterator();
+		} else {
+			return Collections.emptyIterator();
+		}
+	}
+	
+	protected boolean matchObjectRepair(List<RepairAction> repairs, RepairType type, EReference containingReference, EClass objectType, boolean strict) {
+		for (RepairAction repair : repairs) {
+			if (repair instanceof ObjectRepairAction) {
+				return ((ObjectRepairAction) repair).match(type, containingReference, objectType, strict);
+			}
+		}
+		return false;
+	}
+
+	public boolean isStructuralFeatureRepair(RepairType type, EClass contextType, EStructuralFeature feature, boolean strict) {
+		Map<EObject, List<RepairAction>> repairsOfFeature = getRepairActions(feature);
+
+		if (repairsOfFeature != null) {
+			for (List<RepairAction> repairsOfContext : repairsOfFeature.values()) {
+				if (matchStructuralFeatureRepair(repairsOfContext, type, contextType, feature, strict)) {
+					return true;
+				}
+			}
+		}
+
+		return false;
+	}
+	
+	public Iterator<EObject> getStructuralFeatureRepairs(RepairType type, EClass contextType, EStructuralFeature feature, boolean strict) {
+		Map<EObject, List<RepairAction>> repairsOfFeature = getRepairActions(feature);
+		
+		if (repairsOfFeature != null) {
+			return repairsOfFeature.entrySet().stream()
+					.filter(entry -> matchStructuralFeatureRepair(entry.getValue(), type, contextType, feature, strict))
+					.map(Map.Entry::getKey).iterator();
+		} else {
+			return Collections.emptyIterator();
+		}
+	}
+	
+	protected boolean matchStructuralFeatureRepair(List<RepairAction> repairs, RepairType type, EClass contextType, EStructuralFeature feature, boolean strict) {
+		for (RepairAction repair : repairs) {
+			if (repair instanceof StructuralFeatureRepairAction) {
+				return ((StructuralFeatureRepairAction) repair).match(type, contextType, feature, strict);
+			}
+		}
+		return false;
 	}
 	
 	@Override

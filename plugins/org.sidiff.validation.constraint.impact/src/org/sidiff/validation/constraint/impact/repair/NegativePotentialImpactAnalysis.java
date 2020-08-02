@@ -5,28 +5,28 @@ import org.eclipse.emf.ecore.EReference;
 
 public class NegativePotentialImpactAnalysis extends PositivePotentialImpactAnalysis {
 
-	public NegativePotentialImpactAnalysis(RepairActionIndex repairActions) {
+	public NegativePotentialImpactAnalysis(RepairActionImpactScope repairActions) {
 		super(repairActions);
 	}
 	
 	@Override
-	public boolean onCreate(EReference containingReference, EClass objectType, boolean strict) {
-		return super.onDelete(containingReference, objectType, strict);
+	public boolean onCreateObject(EReference containingReference, EClass objectType, boolean strict) {
+		return super.onDeleteObject(containingReference, objectType, strict);
 	}
 	
 	@Override
-	public boolean onDelete(EReference containingReference, EClass objectType, boolean strict) {
-		return super.onCreate(containingReference, objectType, strict);
+	public boolean onDeleteObject(EReference containingReference, EClass objectType, boolean strict) {
+		return super.onCreateObject(containingReference, objectType, strict);
 	}
 
 	@Override
-	public boolean onCreate(EClass sourceContextType, EReference reference, boolean strict) {
-		return super.onDelete(sourceContextType, reference, strict);
+	public boolean onCreateReference(EClass sourceContextType, EReference reference, boolean strict) {
+		return super.onDeleteReference(sourceContextType, reference, strict);
 	}
 
 	@Override
-	public boolean onDelete(EClass sourceContextType, EReference reference, boolean strict) {
-		return super.onCreate(sourceContextType, reference, strict);
+	public boolean onDeleteReference(EClass sourceContextType, EReference reference, boolean strict) {
+		return super.onCreateReference(sourceContextType, reference, strict);
 	}
 
 }
