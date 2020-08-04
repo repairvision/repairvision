@@ -1,6 +1,6 @@
 package org.sidiff.repair.history.editrules.ui;
 
-import org.sidiff.revision.repair.api.peo.PEORepairFacade;
+import org.sidiff.revision.repair.api.RepairFacade;
 import org.sidiff.revision.repair.ui.presentation.IRepairPresentation;
 
 public class HistoryEditRuleLearnPresentation implements IRepairPresentation {
@@ -10,7 +10,7 @@ public class HistoryEditRuleLearnPresentation implements IRepairPresentation {
 		
 		// Create application logic:
 		HistoryEditRuleLearnApplication application = new HistoryEditRuleLearnApplication();
-		application.initialize(new PEORepairFacade());
+		application.initialize(new RepairFacade());
 		
 		// Create UI:
 		HistoryEditRuleLearnUI repairUI = new HistoryEditRuleLearnUI();

@@ -27,21 +27,21 @@ import org.sidiff.revision.api.IComplementationFacade;
 import org.sidiff.revision.api.IComplementationPlan;
 import org.sidiff.revision.difference.api.settings.DifferenceSettings;
 import org.sidiff.revision.editrules.project.registry.util.RulebaseUtil;
-import org.sidiff.revision.repair.api.peo.PEORepairJob;
-import org.sidiff.revision.repair.api.peo.configuration.PEORepairSettings;
+import org.sidiff.revision.repair.api.RepairJob;
+import org.sidiff.revision.repair.api.configuration.RepairSettings;
 import org.sidiff.revision.repair.ui.app.impl.EMFResourceRepairApplication;
 import org.sidiff.revision.ui.editors.integration.access.ActiveModelEditorAccess;
 import org.sidiff.validation.constraint.api.ValidationFacade;
 import org.sidiff.validation.constraint.api.util.RepairValidation;
 import org.sidiff.validation.constraint.api.util.Validation;
 
-public class IntegratedRepairApplication extends EMFResourceRepairApplication<PEORepairJob, PEORepairSettings> {
+public class IntegratedRepairApplication extends EMFResourceRepairApplication<RepairJob, RepairSettings> {
 
 	private Job modelValidation;
 	
 	private Job repairCalculation;
 	
-	private IComplementationFacade<PEORepairJob, PEORepairSettings> complementationFacade;
+	private IComplementationFacade<RepairJob, RepairSettings> complementationFacade;
 	
 	private DifferenceSettings settings;
 	
@@ -51,12 +51,12 @@ public class IntegratedRepairApplication extends EMFResourceRepairApplication<PE
 	
 	private List<Validation> validations;
 	
-	private PEORepairJob repairJob;
+	private RepairJob repairJob;
 	
 	private boolean autoSaveModel = false;
 	
 	@Override
-	public void initialize(IComplementationFacade<PEORepairJob, PEORepairSettings> repairFacade) {
+	public void initialize(IComplementationFacade<RepairJob, RepairSettings> repairFacade) {
 		this.complementationFacade = repairFacade;
 	}
 	
@@ -134,7 +134,7 @@ public class IntegratedRepairApplication extends EMFResourceRepairApplication<PE
 			@Override
 			protected IStatus run(IProgressMonitor monitor) {
 				repairCalculation.setName("Analyze Model History");
-				PEORepairJob lastRepairJob = repairJob;
+				RepairJob lastRepairJob = repairJob;
 				
 				// Matching-Settings:
 				settings = getMatchingSettings();
@@ -151,7 +151,7 @@ public class IntegratedRepairApplication extends EMFResourceRepairApplication<PE
 				// Calculate repairs:
 				repairCalculation.setName("Calculate Repairs");
 				
-				PEORepairSettings repairSettings = new PEORepairSettings(
+				RepairSettings repairSettings = new RepairSettings(
 						Collections.singletonList(inconsistency.getContext()), editRules, settings);
 				repairSettings.setConsistencyRules(Collections.singletonList(inconsistency.getRule()));
 				
@@ -200,10 +200,10 @@ public class IntegratedRepairApplication extends EMFResourceRepairApplication<PE
 				@Override
 				protected IStatus run(IProgressMonitor monitor) {
 					if (inconsistency.getContext().eContainer() != null) {
-						PEORepairJob lastRepairJob = repairJob;
+						RepairJob lastRepairJob = repairJob;
 						
 						// Calculate repairs:
-						PEORepairSettings repairSettings = new PEORepairSettings(
+						RepairSettings repairSettings = new RepairSettings(
 								Collections.singletonList(inconsistency.getContext()), editRules, settings);
 						repairSettings.setConsistencyRules(Collections.singletonList(inconsistency.getRule()));
 						
@@ -391,7 +391,7 @@ public class IntegratedRepairApplication extends EMFResourceRepairApplication<PE
 	}
 	
 	@Override
-	public PEORepairJob getRepairJob() {
+	public RepairJob getRepairJob() {
 		return repairJob;
 	}
 	

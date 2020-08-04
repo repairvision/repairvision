@@ -1,4 +1,4 @@
-package org.sidiff.revision.repair.api.peo;
+package org.sidiff.revision.repair.api;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -15,14 +15,14 @@ import org.sidiff.revision.editrules.impact.graph.GraphActionImpactAnalysis;
 import org.sidiff.revision.editrules.impact.graph.PotentialGraphActionImpactAnalysis;
 import org.sidiff.revision.editrules.recognition.configuration.RecognitionSettings;
 import org.sidiff.revision.impact.analysis.ImpactAnalyzes;
-import org.sidiff.revision.repair.api.peo.configuration.PEORepairSettings;
+import org.sidiff.revision.repair.api.configuration.RepairSettings;
 import org.sidiff.revision.repair.complement.construction.ComplementRule;
 import org.sidiff.revision.repair.complement.peo.configuration.ComplementFinderSettings;
 import org.sidiff.revision.repair.complement.peo.finder.ComplementFinder;
 import org.sidiff.revision.repair.complement.peo.finder.ComplementFinderEngine;
 import org.sidiff.revision.repair.complement.repair.RepairPlan;
 
-public class PEORepairCaculation {
+public class RepairCaculation {
 	
 	private ComplementFinderEngine complementFinderEngine;
 	
@@ -32,8 +32,8 @@ public class PEORepairCaculation {
 	
 	private int repairCount = 0;
 	
-	public PEORepairCaculation(
-			PEORepairSettings settings, Rule editRule, IRevision revision,
+	public RepairCaculation(
+			RepairSettings settings, Rule editRule, IRevision revision,
 			ImpactAnalyzes historicalImpactAnalyzes, ImpactAnalyzes currentImpactAnalyzes, 
 			ComplementFinderEngine complementFinderEngine) {
 		

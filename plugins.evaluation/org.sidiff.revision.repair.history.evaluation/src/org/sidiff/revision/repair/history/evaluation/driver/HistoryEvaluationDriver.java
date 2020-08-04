@@ -12,8 +12,8 @@ import org.sidiff.revision.api.IComplementationFacade;
 import org.sidiff.revision.common.logging.table.LogTable;
 import org.sidiff.revision.common.logging.util.LogUtil;
 import org.sidiff.revision.difference.api.settings.DifferenceSettings;
-import org.sidiff.revision.repair.api.peo.PEORepairJob;
-import org.sidiff.revision.repair.api.peo.configuration.PEORepairSettings;
+import org.sidiff.revision.repair.api.RepairJob;
+import org.sidiff.revision.repair.api.configuration.RepairSettings;
 import org.sidiff.revision.repair.history.evaluation.driver.data.HistoryInfo;
 import org.sidiff.revision.repair.history.evaluation.report.EditRulesLog;
 import org.sidiff.revision.repair.history.evaluation.report.HistoryLog;
@@ -26,7 +26,7 @@ public class HistoryEvaluationDriver {
 	public static int START_WITH_VERSION = 0;
 	
 	public static void calculateRepairs(
-			IComplementationFacade<PEORepairJob, PEORepairSettings> repairFacade,
+			IComplementationFacade<RepairJob, RepairSettings> repairFacade,
 			HistoryInfo history,  
 			Collection<Rule> editRules, 
 			DifferenceSettings matchingSettings) {

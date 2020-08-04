@@ -10,7 +10,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.part.ViewPart;
 import org.sidiff.common.utilities.ui.util.WorkbenchUtil;
-import org.sidiff.revision.repair.api.peo.PEORepairCalculationEngineDebugger;
+import org.sidiff.revision.repair.api.RepairCalculationEngineDebugger;
 import org.sidiff.revision.repair.ui.peo.debugger.model.DebuggingSession;
 
 public class EditRuleMatcherDebugger extends ViewPart {
@@ -30,7 +30,7 @@ public class EditRuleMatcherDebugger extends ViewPart {
 	public EditRuleMatcherDebugger() {
 	}
 	
-	public void setDebugger(PEORepairCalculationEngineDebugger debugger) {
+	public void setDebugger(RepairCalculationEngineDebugger debugger) {
 		Display.getDefault().syncExec(new Runnable() {
 			@Override
 			public void run() {

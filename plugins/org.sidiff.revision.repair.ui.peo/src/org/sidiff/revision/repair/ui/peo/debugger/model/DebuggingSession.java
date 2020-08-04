@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.swt.graphics.Image;
-import org.sidiff.revision.repair.api.peo.PEORepairCalculationEngineDebugger;
+import org.sidiff.revision.repair.api.RepairCalculationEngineDebugger;
 import org.sidiff.revision.repair.ui.peo.Activator;
 import org.sidiff.revision.repair.ui.peo.debugger.ITreeItem;
 
@@ -12,11 +12,11 @@ public class DebuggingSession implements ITreeItem {
 	
 	private static Image icon = Activator.getImageDescriptor("icons/debug_exc.gif").createImage();
 	
-	private PEORepairCalculationEngineDebugger debugger;
+	private RepairCalculationEngineDebugger debugger;
 
 	private List<DebuggingSnapshotItem> snapshots = new ArrayList<>();
 	
-	public DebuggingSession(PEORepairCalculationEngineDebugger debugger) {
+	public DebuggingSession(RepairCalculationEngineDebugger debugger) {
 		this.debugger = debugger;
 	}
 	

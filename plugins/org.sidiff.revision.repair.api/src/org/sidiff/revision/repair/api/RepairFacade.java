@@ -1,4 +1,4 @@
-package org.sidiff.revision.repair.api.peo;
+package org.sidiff.revision.repair.api;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -6,34 +6,34 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.sidiff.history.revision.impl.Revision;
 import org.sidiff.revision.api.IComplementationFacade;
-import org.sidiff.revision.repair.api.peo.configuration.PEORepairSettings;
+import org.sidiff.revision.repair.api.configuration.RepairSettings;
 
 /**
  * API for the repair engine functions.
  * 
  * @author Manuel Ohrndorf
  */
-public class PEORepairFacade implements IComplementationFacade<PEORepairJob, PEORepairSettings> {
+public class RepairFacade implements IComplementationFacade<RepairJob, RepairSettings> {
 
 	@Override
-	public PEORepairJob getComplementations(URI uriModelA, URI uriModelB, PEORepairSettings settings) {
+	public RepairJob getComplementations(URI uriModelA, URI uriModelB, RepairSettings settings) {
 		
 		// Initialize:
 		ResourceSet differenceRSS = new ResourceSetImpl();
 		Resource modelA = differenceRSS.getResource(uriModelA, true);
 		Resource modelB = (uriModelB != null) ? differenceRSS.getResource(uriModelB, true) : null;
 	
-		return new PEORepairCalculationEngine(settings, modelA, modelB).getRepairs();
+		return new RepairCalculationEngine(settings, modelA, modelB).getRepairs();
 	}
 	
 	@Override
-	public PEORepairJob getComplementations(Resource modelA, Resource modelB, PEORepairSettings settings) {
+	public RepairJob getComplementations(Resource modelA, Resource modelB, RepairSettings settings) {
 		
 		if (modelA == null) {
 			modelA = Revision.createEmptyModel(modelB);
 		}
 		
-		return new PEORepairCalculationEngine(settings, modelA, modelB).getRepairs();
+		return new RepairCalculationEngine(settings, modelA, modelB).getRepairs();
 	}
 
 }

@@ -22,9 +22,9 @@ import org.sidiff.revision.difference.builder.IDifferenceBuilderProvider;
 import org.sidiff.revision.difference.matcher.IMatcherProvider;
 import org.sidiff.revision.editrules.project.registry.RulebaseRegistry;
 import org.sidiff.revision.editrules.project.registry.util.RulebaseUtil;
-import org.sidiff.revision.repair.api.peo.PEORepairFacade;
-import org.sidiff.revision.repair.api.peo.PEORepairJob;
-import org.sidiff.revision.repair.api.peo.configuration.PEORepairSettings;
+import org.sidiff.revision.repair.api.RepairFacade;
+import org.sidiff.revision.repair.api.RepairJob;
+import org.sidiff.revision.repair.api.configuration.RepairSettings;
 import org.sidiff.revision.repair.history.evaluation.EvaluationDataSets;
 import org.sidiff.revision.repair.history.evaluation.driver.HistoryEvaluationDriver;
 import org.sidiff.revision.repair.history.evaluation.driver.data.HistoryInfo;
@@ -57,7 +57,7 @@ public class HistoryEvaluationApplication implements IApplication {
 				System.out.println("EDIT RULES: " + editRules.size());
 				
 				// repair algorithm:
-				IComplementationFacade<PEORepairJob, PEORepairSettings> repairFacade = new PEORepairFacade();
+				IComplementationFacade<RepairJob, RepairSettings> repairFacade = new RepairFacade();
 
 				// start evaluation:
 				System.out.println("STARTING EVALUATION");

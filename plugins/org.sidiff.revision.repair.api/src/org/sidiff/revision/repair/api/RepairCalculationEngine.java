@@ -1,4 +1,4 @@
-package org.sidiff.revision.repair.api.peo;
+package org.sidiff.revision.repair.api;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -16,19 +16,19 @@ import org.sidiff.revision.api.IComplementationPlan;
 import org.sidiff.revision.common.logging.util.LogTime;
 import org.sidiff.revision.editrules.recognition.configuration.RecognitionSettings;
 import org.sidiff.revision.impact.analysis.ImpactAnalyzes;
-import org.sidiff.revision.repair.api.peo.configuration.PEORepairSettings;
+import org.sidiff.revision.repair.api.configuration.RepairSettings;
 import org.sidiff.revision.repair.complement.peo.finder.ComplementFinderEngine;
 import org.sidiff.revision.repair.impact.RepairActionImpactScope;
 import org.sidiff.revision.repair.impact.negative.NegativeImpactAnalyzes;
 import org.sidiff.revision.repair.impact.positive.PositiveImpactAnalyzes;
 
-public class PEORepairCalculationEngine {
+public class RepairCalculationEngine {
 	
-	protected PEORepairSettings settings;
+	protected RepairSettings settings;
 	
 	protected IRevision revision;
 	
-	public PEORepairCalculationEngine(PEORepairSettings settings, Resource modelA, Resource modelB) {
+	public RepairCalculationEngine(RepairSettings settings, Resource modelA, Resource modelB) {
 		this.settings = settings;
 		this.revision = calculateDifference(modelA, modelB);
 	}
@@ -58,7 +58,7 @@ public class PEORepairCalculationEngine {
 		return revision;
 	}
 	
-	public PEORepairJob getRepairs() {
+	public RepairJob getRepairs() {
 		
 		// Setup consistency rules?
 		if (settings.getConsistencyRules() == null) {
@@ -102,7 +102,7 @@ public class PEORepairCalculationEngine {
 			
 			// BREAKPOINT CONDITION: editRule.getName().contains("The name of the edit rule")
 			
-			PEORepairCaculation repairCaculation = createRepairCalculation(
+			RepairCaculation repairCaculation = createRepairCalculation(
 					editRule, revision, historicalImpactAnalyzes, currentImpactAnalyzes, complementFinderEngine);
 			RecognitionSettings recognitionSettings = repairCaculation.getComplementFinderSettings().getRecognitionEngineSettings();
 			
@@ -128,15 +128,15 @@ public class PEORepairCalculationEngine {
 		}
 		
 		// Create repair job:
-		PEORepairJob repairJob = new PEORepairJob(repairActionImpactScope.getValidations(), repairs, revision, graphModelB);
+		RepairJob repairJob = new RepairJob(repairActionImpactScope.getValidations(), repairs, revision, graphModelB);
 		return repairJob;
 	}
 	
-	protected PEORepairCaculation createRepairCalculation(
+	protected RepairCaculation createRepairCalculation(
 			Rule editRule, IRevision revision, 
 			ImpactAnalyzes historicalImpactAnalyzes, ImpactAnalyzes currentImpactAnalyzes,
 			ComplementFinderEngine complementFinderEngine) {
 		
-		return new PEORepairCaculation(settings, editRule, revision, historicalImpactAnalyzes, currentImpactAnalyzes, complementFinderEngine);
+		return new RepairCaculation(settings, editRule, revision, historicalImpactAnalyzes, currentImpactAnalyzes, complementFinderEngine);
 	}
 }

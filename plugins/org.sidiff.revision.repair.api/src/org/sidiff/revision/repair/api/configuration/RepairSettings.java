@@ -1,4 +1,4 @@
-package org.sidiff.revision.repair.api.peo.configuration;
+package org.sidiff.revision.repair.api.configuration;
 
 import java.util.Collection;
 import java.util.List;
@@ -14,12 +14,12 @@ import org.sidiff.validation.constraint.interpreter.IConstraint;
 import org.sidiff.validation.constraint.project.registry.ConstraintLibraryRegistry;
 import org.sidiff.validation.constraint.project.registry.util.ConstraintLibraryUtil;
 
-public class PEORepairSettings extends BasicComplementationSettings {
+public class RepairSettings extends BasicComplementationSettings {
 
 	/**
 	 * Monitor for the repair process.
 	 */
-	private PEORepairLogger logger = new PEORepairLogger();
+	private RepairLogger logger = new RepairLogger();
 	
 	/**
 	 * All edit-rules which are to be investigated for partial executions.
@@ -46,18 +46,18 @@ public class PEORepairSettings extends BasicComplementationSettings {
 	 */
 	private ComplementFinderSettings complementFinderSettings = new ComplementFinderSettings();
 
-	public PEORepairSettings(Iterable<EObject> validationScope, Collection<Rule> editRules, DifferenceSettings differenceSettings) {
+	public RepairSettings(Iterable<EObject> validationScope, Collection<Rule> editRules, DifferenceSettings differenceSettings) {
 		super();
 		this.validationScope = validationScope;
 		this.editRules = editRules;
 		this.differenceSettings = differenceSettings;
 	}
 	
-	public PEORepairLogger getLogger() {
+	public RepairLogger getLogger() {
 		return logger;
 	}
 	
-	public void setLogger(PEORepairLogger monitor) {
+	public void setLogger(RepairLogger monitor) {
 		this.logger = monitor;
 	}
 	

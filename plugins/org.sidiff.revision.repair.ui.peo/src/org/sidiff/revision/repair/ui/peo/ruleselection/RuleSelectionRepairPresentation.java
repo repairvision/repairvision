@@ -1,6 +1,6 @@
 package org.sidiff.revision.repair.ui.peo.ruleselection;
 
-import org.sidiff.revision.repair.api.peo.PEORepairFacade;
+import org.sidiff.revision.repair.api.RepairFacade;
 import org.sidiff.revision.repair.ui.presentation.IRepairPresentation;
 
 public class RuleSelectionRepairPresentation implements IRepairPresentation {
@@ -10,7 +10,7 @@ public class RuleSelectionRepairPresentation implements IRepairPresentation {
 		
 		// Create application logic:
 		RuleSelectionRepairApplication application = new RuleSelectionRepairApplication();
-		application.initialize(new PEORepairFacade());
+		application.initialize(new RepairFacade());
 		
 		// Create UI:
 		RuleSelectionRepairUI repairUI = new RuleSelectionRepairUI();

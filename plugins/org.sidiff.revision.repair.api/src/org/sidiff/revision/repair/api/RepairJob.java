@@ -1,4 +1,4 @@
-package org.sidiff.revision.repair.api.peo;
+package org.sidiff.revision.repair.api;
 
 import java.util.Collection;
 import java.util.List;
@@ -10,11 +10,11 @@ import org.sidiff.revision.api.IComplementationPlan;
 import org.sidiff.validation.constraint.api.util.RepairValidation;
 import org.sidiff.validation.constraint.api.util.Validation;
 
-public class PEORepairJob extends ComplementationJob<IComplementationPlan> {
+public class RepairJob extends ComplementationJob<IComplementationPlan> {
 
 	protected Collection<? extends Validation> validations;
 	
-	public PEORepairJob(List<? extends Validation> validations, 
+	public RepairJob(List<? extends Validation> validations, 
 			List<IComplementationPlan> repairs, IRevision revision, EGraph targetGraph) {
 		super(repairs, revision, targetGraph);
 		this.validations = validations;

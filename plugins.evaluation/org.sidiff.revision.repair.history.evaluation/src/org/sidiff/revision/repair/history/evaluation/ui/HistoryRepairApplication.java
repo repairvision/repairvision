@@ -24,8 +24,8 @@ import org.sidiff.revision.common.logging.table.LogTable;
 import org.sidiff.revision.difference.api.registry.DifferenceBuilderRegistry;
 import org.sidiff.revision.difference.api.settings.DifferenceSettings;
 import org.sidiff.revision.editrules.project.registry.util.RulebaseUtil;
-import org.sidiff.revision.repair.api.peo.PEORepairJob;
-import org.sidiff.revision.repair.api.peo.configuration.PEORepairSettings;
+import org.sidiff.revision.repair.api.RepairJob;
+import org.sidiff.revision.repair.api.configuration.RepairSettings;
 import org.sidiff.revision.repair.history.evaluation.driver.HistoryEvaluationDriver;
 import org.sidiff.revision.repair.history.evaluation.driver.InconsistencyEvaluationDriver;
 import org.sidiff.revision.repair.history.evaluation.driver.PrintHistoryInfoDriver;
@@ -35,11 +35,11 @@ import org.sidiff.revision.repair.ui.app.IRepairApplication;
 import org.sidiff.revision.repair.ui.app.IResultChangedListener;
 import org.sidiff.revision.repair.ui.config.RepairPreferencePage;
 
-public class HistoryRepairApplication implements IRepairApplication<PEORepairJob, PEORepairSettings> {
+public class HistoryRepairApplication implements IRepairApplication<RepairJob, RepairSettings> {
 
-	protected IComplementationFacade<PEORepairJob, PEORepairSettings> complementationFacade;
+	protected IComplementationFacade<RepairJob, RepairSettings> complementationFacade;
 	
-	protected List<IResultChangedListener<PEORepairJob>> listeners = new ArrayList<>();
+	protected List<IResultChangedListener<RepairJob>> listeners = new ArrayList<>();
 
 	protected Collection<IResource> editRuleFiles = new ArrayList<>();
 	
@@ -47,7 +47,7 @@ public class HistoryRepairApplication implements IRepairApplication<PEORepairJob
 	
 	protected HistoryInfo history;
 	
-	protected PEORepairJob repairJob;
+	protected RepairJob repairJob;
 	
 	public void setHistory(History history) {
 		this.history = new HistoryInfo(history);
@@ -60,17 +60,17 @@ public class HistoryRepairApplication implements IRepairApplication<PEORepairJob
 	}
 	
 	@Override
-	public void initialize(IComplementationFacade<PEORepairJob, PEORepairSettings> repairFacade) {
+	public void initialize(IComplementationFacade<RepairJob, RepairSettings> repairFacade) {
 		this.complementationFacade = repairFacade;
 	}
 	
 	@Override
-	public void addResultChangedListener(IResultChangedListener<PEORepairJob> listener) {
+	public void addResultChangedListener(IResultChangedListener<RepairJob> listener) {
 		listeners.add(listener);
 	}
 	
 	@Override
-	public void removeResultChangeListener(IResultChangedListener<PEORepairJob> listener) {
+	public void removeResultChangeListener(IResultChangedListener<RepairJob> listener) {
 		listeners.remove(listener);
 	}
 	
@@ -199,7 +199,7 @@ public class HistoryRepairApplication implements IRepairApplication<PEORepairJob
 	}
 
 	@Override
-	public PEORepairJob getRepairJob() {
+	public RepairJob getRepairJob() {
 		return repairJob;
 	}
 	

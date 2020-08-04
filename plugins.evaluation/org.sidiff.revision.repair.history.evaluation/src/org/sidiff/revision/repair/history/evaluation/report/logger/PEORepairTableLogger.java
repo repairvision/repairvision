@@ -4,10 +4,10 @@ import java.util.logging.Level;
 
 import org.sidiff.revision.common.logging.table.LogTable;
 import org.sidiff.revision.common.logging.util.LogTime;
-import org.sidiff.revision.repair.api.peo.configuration.PEORepairLogger;
+import org.sidiff.revision.repair.api.configuration.RepairLogger;
 import org.sidiff.revision.repair.history.evaluation.report.InconsistenciesLog;
 
-public class PEORepairTableLogger extends PEORepairLogger {
+public class PEORepairTableLogger extends RepairLogger {
 
 	private static final boolean DEBUG = false;
 	

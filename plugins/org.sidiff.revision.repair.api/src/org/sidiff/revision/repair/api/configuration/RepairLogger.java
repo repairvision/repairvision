@@ -1,4 +1,4 @@
-package org.sidiff.revision.repair.api.peo.configuration;
+package org.sidiff.revision.repair.api.configuration;
 
 import java.util.logging.Level;
 
@@ -7,7 +7,7 @@ import org.sidiff.revision.common.logging.util.LogTime;
 import org.sidiff.revision.common.logging.util.LogUtil;
 import org.sidiff.revision.difference.Change;
 
-public class PEORepairLogger extends ReVisionLogger {
+public class RepairLogger extends ReVisionLogger {
 
 	/**
 	 * @param diffTimer [Time (ms)] Load/Calculate Revision

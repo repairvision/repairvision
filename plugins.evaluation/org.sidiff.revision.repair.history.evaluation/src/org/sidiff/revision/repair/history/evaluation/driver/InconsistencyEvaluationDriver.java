@@ -20,8 +20,8 @@ import org.sidiff.revision.common.logging.table.LogTable;
 import org.sidiff.revision.difference.api.settings.DifferenceSettings;
 import org.sidiff.revision.impact.changetree.IDecisionNode;
 import org.sidiff.revision.impact.changetree.change.actions.ChangeAction;
-import org.sidiff.revision.repair.api.peo.PEORepairJob;
-import org.sidiff.revision.repair.api.peo.configuration.PEORepairSettings;
+import org.sidiff.revision.repair.api.RepairJob;
+import org.sidiff.revision.repair.api.configuration.RepairSettings;
 import org.sidiff.revision.repair.history.evaluation.driver.DeveloperIntentionOracleDriver.HistoricalObservable;
 import org.sidiff.revision.repair.history.evaluation.driver.data.HistoryInfo;
 import org.sidiff.revision.repair.history.evaluation.report.InconsistenciesLog;
@@ -35,10 +35,10 @@ import org.sidiff.validation.constraint.interpreter.IConstraint;
 
 public class InconsistencyEvaluationDriver {
 	
-	public static PEORepairJob calculateRepairs(
+	public static RepairJob calculateRepairs(
 			boolean saveDifference, boolean validateDifference, boolean searchOnlyFirstObservable,
 			HistoryInfo history, 
-			IComplementationFacade<PEORepairJob, PEORepairSettings> repairFacade,
+			IComplementationFacade<RepairJob, RepairSettings> repairFacade,
 			InconsistencyTrace repaired, 
 			Collection<Rule> editRules, 
 			DifferenceSettings matchingSettings, 
@@ -58,7 +58,7 @@ public class InconsistencyEvaluationDriver {
 		logInconsistency(history, repaired, inconsistencies);
 		
 		// Calculate repairs (filtered by validation):
-		PEORepairSettings settings = new PEORepairSettings(
+		RepairSettings settings = new RepairSettings(
 				Collections.singleton(repaired.getProblemCurrentModel().getContextElement()), editRules, matchingSettings);
 		settings.setConsistencyRules(constraint);
 		settings.setSaveDifference(saveDifference);
@@ -69,7 +69,7 @@ public class InconsistencyEvaluationDriver {
 		settings.getComplementFinderSettings().setMonitor(new ComplementFinderTableLogger(inconsistencies));
 		settings.getComplementFinderSettings().getRecognitionEngineSettings().setLogger(new RecognitionTableLogger(runtimeComplexityLog));
 		
-		PEORepairJob repairJob = repairFacade.getComplementations(
+		RepairJob repairJob = repairFacade.getComplementations(
 				repaired.getModelHistorical(), repaired.getModelCurrent(), settings);
 		
 		// Evaluate repairs for inconsistency:
@@ -115,7 +115,7 @@ public class InconsistencyEvaluationDriver {
 	}
 	
 	private static void evaluateRepairs(LogTable log, HistoryInfo history,
-			InconsistencyTrace repaired, PEORepairJob repairJob,  
+			InconsistencyTrace repaired, RepairJob repairJob,  
 			DifferenceSettings matchingSettings, boolean searchOnlyFirstObservable) {
 		
 		// evaluate repair results:
