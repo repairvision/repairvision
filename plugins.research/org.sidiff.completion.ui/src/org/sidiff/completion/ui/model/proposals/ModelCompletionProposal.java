@@ -22,7 +22,7 @@ import org.sidiff.completion.ui.model.proposals.util.DecompositionTemplates;
 import org.sidiff.completion.ui.proposals.ICompletionPreview;
 import org.sidiff.completion.ui.proposals.ICompletionProposal;
 import org.sidiff.graphpattern.profile.henshin_extension.RuleExtension;
-import org.sidiff.revision.repair.complement.construction.ComplementRule;
+import org.sidiff.revision.editrules.complement.construction.ComplementRule;
 
 public class ModelCompletionProposal implements ICompletionProposal {
 

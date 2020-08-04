@@ -5,7 +5,7 @@ import java.util.logging.Level;
 import org.sidiff.revision.common.logging.table.LogTable;
 import org.sidiff.revision.common.logging.util.LogTime;
 import org.sidiff.revision.common.logging.util.LogUtil;
-import org.sidiff.revision.repair.complement.peo.configuration.ComplementFinderLogger;
+import org.sidiff.revision.editrules.complement.matching.configuration.ComplementFinderLogger;
 import org.sidiff.revision.repair.history.evaluation.report.InconsistenciesLog;
 
 public class ComplementFinderTableLogger extends ComplementFinderLogger {

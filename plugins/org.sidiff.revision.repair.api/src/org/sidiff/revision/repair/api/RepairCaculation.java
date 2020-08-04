@@ -11,16 +11,16 @@ import org.sidiff.history.revision.util.SymmetricDifferenceUtil;
 import org.sidiff.revision.api.IComplementationPlan;
 import org.sidiff.revision.common.logging.util.LogTime;
 import org.sidiff.revision.difference.Change;
+import org.sidiff.revision.editrules.complement.construction.ComplementRule;
+import org.sidiff.revision.editrules.complement.matching.configuration.ComplementFinderSettings;
+import org.sidiff.revision.editrules.complement.matching.finder.ComplementFinder;
+import org.sidiff.revision.editrules.complement.matching.finder.ComplementFinderEngine;
+import org.sidiff.revision.editrules.complement.plan.ComplementationPlan;
 import org.sidiff.revision.editrules.impact.graph.GraphActionImpactAnalysis;
 import org.sidiff.revision.editrules.impact.graph.PotentialGraphActionImpactAnalysis;
 import org.sidiff.revision.editrules.recognition.configuration.RecognitionSettings;
 import org.sidiff.revision.impact.analysis.ImpactAnalyzes;
 import org.sidiff.revision.repair.api.configuration.RepairSettings;
-import org.sidiff.revision.repair.complement.construction.ComplementRule;
-import org.sidiff.revision.repair.complement.peo.configuration.ComplementFinderSettings;
-import org.sidiff.revision.repair.complement.peo.finder.ComplementFinder;
-import org.sidiff.revision.repair.complement.peo.finder.ComplementFinderEngine;
-import org.sidiff.revision.repair.complement.repair.RepairPlan;
 
 public class RepairCaculation {
 	
@@ -92,7 +92,7 @@ public class RepairCaculation {
 							List<Match> repairMatches = complementFinderEngine.findComplementMatches(complement);
 							
 							if (!repairMatches.isEmpty()) {
-								repairs.add(new RepairPlan(complement, repairMatches));
+								repairs.add(new ComplementationPlan(complement, repairMatches));
 								repairCount += repairMatches.size();
 							}
 						}

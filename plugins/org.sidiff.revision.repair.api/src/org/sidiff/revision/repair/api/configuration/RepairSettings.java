@@ -9,7 +9,7 @@ import org.eclipse.emf.henshin.model.Rule;
 import org.sidiff.common.utilities.emf.DocumentType;
 import org.sidiff.revision.api.BasicComplementationSettings;
 import org.sidiff.revision.difference.api.settings.DifferenceSettings;
-import org.sidiff.revision.repair.complement.peo.configuration.ComplementFinderSettings;
+import org.sidiff.revision.editrules.complement.matching.configuration.ComplementFinderSettings;
 import org.sidiff.validation.constraint.interpreter.IConstraint;
 import org.sidiff.validation.constraint.project.registry.ConstraintLibraryRegistry;
 import org.sidiff.validation.constraint.project.registry.util.ConstraintLibraryUtil;

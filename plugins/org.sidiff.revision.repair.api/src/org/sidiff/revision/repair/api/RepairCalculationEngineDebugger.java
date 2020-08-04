@@ -3,10 +3,10 @@ package org.sidiff.revision.repair.api;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.henshin.model.Rule;
 import org.sidiff.history.revision.IRevision;
+import org.sidiff.revision.editrules.complement.matching.finder.ComplementFinderEngine;
+import org.sidiff.revision.editrules.complement.matching.finder.ComplementFinderRecorder;
 import org.sidiff.revision.impact.analysis.ImpactAnalyzes;
 import org.sidiff.revision.repair.api.configuration.RepairSettings;
-import org.sidiff.revision.repair.complement.peo.finder.ComplementFinderEngine;
-import org.sidiff.revision.repair.complement.peo.finder.ComplementFinderRecorder;
 
 public class RepairCalculationEngineDebugger extends RepairCalculationEngine {
 

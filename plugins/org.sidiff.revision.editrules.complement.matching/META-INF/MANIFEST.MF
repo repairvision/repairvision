@@ -1,0 +1,24 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Partial Edit Operation Complement Construction
+Bundle-SymbolicName: org.sidiff.revision.editrules.complement.matching
+Bundle-Version: 1.0.0.qualifier
+Bundle-Activator: org.sidiff.revision.editrules.complement.matching.Activator
+Bundle-Vendor: Software Engineering Group
+Export-Package: org.sidiff.revision.editrules.complement.matching.configuration,
+ org.sidiff.revision.editrules.complement.matching.finder,
+ org.sidiff.revision.editrules.complement.matching.impact
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.eclipse.emf.henshin.interpreter;visibility:=reexport,
+ org.sidiff.revision.editrules.complement,
+ org.sidiff.revision.api,
+ org.sidiff.revision.editrules.recognition,
+ org.sidiff.common.utilities;visibility:=reexport,
+ org.sidiff.graphpattern,
+ org.sidiff.history.revision,
+ org.sidiff.revision.common.logging,
+ org.sidiff.revision.editrules.impact
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Automatic-Module-Name: org.sidiff.revision.repair.complement.peo
+Bundle-ActivationPolicy: lazy

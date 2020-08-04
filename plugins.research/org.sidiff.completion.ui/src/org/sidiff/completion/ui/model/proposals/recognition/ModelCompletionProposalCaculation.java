@@ -8,14 +8,14 @@ import org.eclipse.emf.henshin.interpreter.Match;
 import org.eclipse.emf.henshin.model.Rule;
 import org.sidiff.completion.ui.model.proposals.ModelCompletionProposal;
 import org.sidiff.history.revision.IRevision;
+import org.sidiff.revision.editrules.complement.construction.ComplementRule;
+import org.sidiff.revision.editrules.complement.matching.configuration.ComplementFinderSettings;
+import org.sidiff.revision.editrules.complement.matching.finder.ComplementFinder;
+import org.sidiff.revision.editrules.complement.matching.finder.ComplementFinderEngine;
 import org.sidiff.revision.editrules.impact.graph.GraphActionImpactAnalysis;
 import org.sidiff.revision.editrules.impact.graph.PotentialGraphActionImpactAnalysis;
 import org.sidiff.revision.editrules.recognition.configuration.RecognitionSettings;
 import org.sidiff.revision.impact.analysis.ImpactAnalyzes;
-import org.sidiff.revision.repair.complement.construction.ComplementRule;
-import org.sidiff.revision.repair.complement.peo.configuration.ComplementFinderSettings;
-import org.sidiff.revision.repair.complement.peo.finder.ComplementFinder;
-import org.sidiff.revision.repair.complement.peo.finder.ComplementFinderEngine;
 
 // org.sidiff.revision.repair.api.peo.PEORepairCaculation
 public class ModelCompletionProposalCaculation {

@@ -1,0 +1,20 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Complement-Rule Calculation
+Bundle-SymbolicName: org.sidiff.revision.editrules.complement
+Bundle-Version: 0.0.1.qualifier
+Bundle-Activator: org.sidiff.revision.editrules.complement.Activator
+Export-Package: org.sidiff.revision.editrules.complement.construction,
+ org.sidiff.revision.editrules.complement.plan,
+ org.sidiff.revision.editrules.complement.util
+Require-Bundle: org.eclipse.core.runtime,
+ org.eclipse.ui,
+ org.sidiff.common.utilities,
+ org.sidiff.revision.api,
+ org.sidiff.graphpattern,
+ org.sidiff.revision.editrules.recognition,
+ org.eclipse.emf.henshin.interpreter,
+ org.sidiff.revision.editrules.impact
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-ActivationPolicy: lazy
+Automatic-Module-Name: org.sidiff.revision.repair.complement
