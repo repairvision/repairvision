@@ -19,6 +19,8 @@ import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Parameter;
 import org.sidiff.common.utilities.henshin.HenshinRuleAnalysisUtil;
 import org.sidiff.revision.common.logging.util.LogTime;
+import org.sidiff.revision.editrules.impact.graph.GraphActionImpactAnalysis;
+import org.sidiff.revision.editrules.impact.graph.GraphActionImpactScope;
 import org.sidiff.revision.editrules.recognition.IRecognitionEngineProvider;
 import org.sidiff.revision.editrules.recognition.impl.RecognitionEngineProvider;
 import org.sidiff.revision.editrules.recognition.match.RecognitionAttributeMatch;
@@ -26,15 +28,13 @@ import org.sidiff.revision.editrules.recognition.match.RecognitionEdgeMatch;
 import org.sidiff.revision.editrules.recognition.match.RecognitionMatch;
 import org.sidiff.revision.editrules.recognition.match.RecognitionNodeSingleMatch;
 import org.sidiff.revision.editrules.recognition.match.RecognitionParameterMatch;
+import org.sidiff.revision.impact.analysis.ImpactAnalyzes;
 import org.sidiff.revision.repair.complement.construction.ComplementConstructor;
 import org.sidiff.revision.repair.complement.construction.ComplementRule;
 import org.sidiff.revision.repair.complement.peo.configuration.ComplementFinderSettings;
 import org.sidiff.revision.repair.complement.peo.finder.henshin.ComplementEngine;
 import org.sidiff.revision.repair.complement.peo.finder.henshin.HenshinRuleStructureSorting;
 import org.sidiff.revision.repair.complement.peo.impact.ComplementMatching;
-import org.sidiff.validation.constraint.impact.ImpactAnalyzes;
-import org.sidiff.validation.constraint.impact.editrules.GraphActionImpactAnalysis;
-import org.sidiff.validation.constraint.impact.editrules.GraphActionImpactScope;
 
 /**
  * Tries to find all complementing operation for a given edit-rule and a model difference. 

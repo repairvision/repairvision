@@ -1,0 +1,17 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Edit Rule Impact Analysis
+Bundle-SymbolicName: org.sidiff.revision.editrules.impact
+Bundle-Version: 1.0.0.qualifier
+Bundle-Activator: org.sidiff.revision.editrules.impact.Activator
+Require-Bundle: org.eclipse.core.runtime,
+ org.eclipse.emf.ecore,
+ org.eclipse.emf.henshin.model,
+ org.sidiff.revision.impact.analysis,
+ org.sidiff.common.utilities
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Automatic-Module-Name: org.sidiff.revision.editrules.impact
+Bundle-ActivationPolicy: lazy
+Export-Package: org.sidiff.revision.editrules.impact,
+ org.sidiff.revision.editrules.impact.graph,
+ org.sidiff.revision.editrules.impact.util

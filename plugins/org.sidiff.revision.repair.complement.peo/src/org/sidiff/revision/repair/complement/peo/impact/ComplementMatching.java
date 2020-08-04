@@ -3,7 +3,7 @@ package org.sidiff.revision.repair.complement.peo.impact;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.henshin.interpreter.Match;
 import org.eclipse.emf.henshin.model.Node;
-import org.sidiff.validation.constraint.impact.editrules.GraphMatching;
+import org.sidiff.revision.editrules.impact.util.GraphMatching;
 
 public class ComplementMatching implements GraphMatching {
 

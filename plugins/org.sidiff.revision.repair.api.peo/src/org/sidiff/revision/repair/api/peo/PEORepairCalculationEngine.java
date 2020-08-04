@@ -14,13 +14,13 @@ import org.sidiff.history.revision.IRevision;
 import org.sidiff.history.revision.impl.Revision;
 import org.sidiff.revision.common.logging.util.LogTime;
 import org.sidiff.revision.editrules.recognition.configuration.RecognitionSettings;
+import org.sidiff.revision.impact.analysis.ImpactAnalyzes;
 import org.sidiff.revision.repair.api.IRepairPlan;
 import org.sidiff.revision.repair.api.peo.configuration.PEORepairSettings;
 import org.sidiff.revision.repair.complement.peo.finder.ComplementFinderEngine;
-import org.sidiff.validation.constraint.impact.ImpactAnalyzes;
-import org.sidiff.validation.constraint.impact.repair.NegativeImpactAnalyzes;
-import org.sidiff.validation.constraint.impact.repair.PositiveImpactAnalyzes;
-import org.sidiff.validation.constraint.impact.repair.RepairActionImpactScope;
+import org.sidiff.revision.repair.impact.RepairActionImpactScope;
+import org.sidiff.revision.repair.impact.negative.NegativeImpactAnalyzes;
+import org.sidiff.revision.repair.impact.positive.PositiveImpactAnalyzes;
 
 public class PEORepairCalculationEngine {
 	

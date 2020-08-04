@@ -8,11 +8,11 @@ import java.util.Set;
 import org.eclipse.emf.ecore.EObject;
 import org.sidiff.history.revision.IRevision;
 import org.sidiff.revision.difference.Change;
-import org.sidiff.validation.constraint.impact.ImpactAnalysis;
-import org.sidiff.validation.constraint.impact.ImpactAnalyzes;
-import org.sidiff.validation.constraint.impact.ImpactScope;
-import org.sidiff.validation.constraint.impact.PotentialImpactAnalysis;
-import org.sidiff.validation.constraint.impact.PotentialImpactScope;
+import org.sidiff.revision.impact.analysis.ImpactAnalysis;
+import org.sidiff.revision.impact.analysis.ImpactAnalyzes;
+import org.sidiff.revision.impact.analysis.ImpactScope;
+import org.sidiff.revision.impact.analysis.PotentialImpactAnalysis;
+import org.sidiff.revision.impact.analysis.PotentialImpactScope;
 
 public class ModelCompletionCurrentImpactAnalyzes implements ImpactAnalyzes {
 

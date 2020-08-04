@@ -7,8 +7,8 @@ import org.eclipse.emf.henshin.model.GraphElement;
 import org.eclipse.emf.henshin.model.Rule;
 import org.sidiff.common.utilities.henshin.HenshinChangesUtil;
 import org.sidiff.history.revision.IRevision;
-import org.sidiff.validation.constraint.impact.ImpactAnalyzes;
-import org.sidiff.validation.constraint.impact.editrules.GraphActionImpactScope;
+import org.sidiff.revision.editrules.impact.graph.GraphActionImpactScope;
+import org.sidiff.revision.impact.analysis.ImpactAnalyzes;
 
 public class RecognitionSettings {
 

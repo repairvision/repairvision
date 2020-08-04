@@ -9,9 +9,9 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.sidiff.common.utilities.emf.MetaModelUtil;
-import org.sidiff.validation.constraint.impact.ImpactAnalysis;
-import org.sidiff.validation.constraint.impact.ImpactScope;
-import org.sidiff.validation.constraint.impact.PotentialImpactScope;
+import org.sidiff.revision.impact.analysis.ImpactAnalysis;
+import org.sidiff.revision.impact.analysis.ImpactScope;
+import org.sidiff.revision.impact.analysis.PotentialImpactScope;
 
 public class ModelCompletionImpactScope implements PotentialImpactScope, ImpactScope {
 

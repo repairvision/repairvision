@@ -28,9 +28,9 @@ import org.sidiff.revision.difference.Difference;
 import org.sidiff.revision.repair.api.util.ComplementMatching;
 import org.sidiff.revision.repair.api.util.IMatching;
 import org.sidiff.revision.repair.api.util.RecognitionMatching;
+import org.sidiff.revision.repair.impact.PositiveImpactAnalysis;
+import org.sidiff.revision.repair.impact.RepairActionImpactScope;
 import org.sidiff.validation.constraint.api.util.RepairValidation;
-import org.sidiff.validation.constraint.impact.repair.PositiveImpactAnalysis;
-import org.sidiff.validation.constraint.impact.repair.RepairActionImpactScope;
 
 public class DeveloperIntentionOracle {
 

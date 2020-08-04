@@ -36,7 +36,7 @@ import org.sidiff.revision.editrules.recognition.pattern.graph.ChangePatternAttr
 import org.sidiff.revision.editrules.recognition.pattern.graph.ChangePatternRemoveObject;
 import org.sidiff.revision.editrules.recognition.pattern.graph.ChangePatternRemoveReference;
 import org.sidiff.revision.editrules.recognition.solver.IMatching;
-import org.sidiff.validation.constraint.impact.ImpactAnalyzes;
+import org.sidiff.revision.impact.analysis.ImpactAnalyzes;
 
 public class RecognitionMatchCreator {
 

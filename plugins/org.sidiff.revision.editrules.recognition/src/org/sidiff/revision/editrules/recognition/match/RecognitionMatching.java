@@ -9,7 +9,7 @@ import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.Node;
 import org.sidiff.common.utilities.henshin.HenshinRuleAnalysisUtil;
 import org.sidiff.revision.difference.Change;
-import org.sidiff.validation.constraint.impact.editrules.GraphMatching;
+import org.sidiff.revision.editrules.impact.util.GraphMatching;
 
 public class RecognitionMatching extends ArrayList<RecognitionMatch> implements GraphMatching {
 

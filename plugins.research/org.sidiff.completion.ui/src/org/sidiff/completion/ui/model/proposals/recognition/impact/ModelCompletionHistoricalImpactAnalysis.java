@@ -13,8 +13,8 @@ import org.sidiff.revision.difference.AttributeValueChange;
 import org.sidiff.revision.difference.Change;
 import org.sidiff.revision.difference.RemoveObject;
 import org.sidiff.revision.difference.RemoveReference;
-import org.sidiff.validation.constraint.impact.ImpactAnalysis;
-import org.sidiff.validation.constraint.impact.PotentialImpactAnalysis;
+import org.sidiff.revision.impact.analysis.ImpactAnalysis;
+import org.sidiff.revision.impact.analysis.PotentialImpactAnalysis;
 
 public class ModelCompletionHistoricalImpactAnalysis implements PotentialImpactAnalysis, ImpactAnalysis {
 

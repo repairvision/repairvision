@@ -14,9 +14,9 @@ import org.eclipse.emf.henshin.model.GraphElement;
 import org.eclipse.emf.henshin.model.Node;
 import org.sidiff.common.utilities.henshin.HenshinRuleAnalysisUtil;
 import org.sidiff.graphpattern.NodePattern;
+import org.sidiff.revision.editrules.impact.graph.GraphActionImpactScope;
 import org.sidiff.revision.editrules.recognition.pattern.RecognitionPattern;
 import org.sidiff.revision.editrules.recognition.pattern.domain.Domain;
-import org.sidiff.validation.constraint.impact.editrules.GraphActionImpactScope;
 
 public class ImpactScopeConstraint {
 

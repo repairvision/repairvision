@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.sidiff.graphpattern.NodePattern;
 import org.sidiff.revision.common.logging.util.LogTime;
+import org.sidiff.revision.editrules.impact.graph.GraphActionImpactScope;
 import org.sidiff.revision.editrules.recognition.IRecognitionEngine;
 import org.sidiff.revision.editrules.recognition.configuration.RecognitionLogger;
 import org.sidiff.revision.editrules.recognition.configuration.RecognitionSettings;
@@ -22,7 +23,6 @@ import org.sidiff.revision.editrules.recognition.selection.IMatchSelector;
 import org.sidiff.revision.editrules.recognition.selection.MatchSelector;
 import org.sidiff.revision.editrules.recognition.solver.PartialCSPSolver;
 import org.sidiff.revision.editrules.recognition.util.debug.IRecognitionPatternSerializer;
-import org.sidiff.validation.constraint.impact.editrules.GraphActionImpactScope;
 
 public class RecognitionEngine implements IRecognitionEngine {
 

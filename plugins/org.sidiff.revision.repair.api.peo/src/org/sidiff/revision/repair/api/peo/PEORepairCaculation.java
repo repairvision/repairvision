@@ -10,7 +10,10 @@ import org.sidiff.history.revision.IRevision;
 import org.sidiff.history.revision.util.SymmetricDifferenceUtil;
 import org.sidiff.revision.common.logging.util.LogTime;
 import org.sidiff.revision.difference.Change;
+import org.sidiff.revision.editrules.impact.graph.GraphActionImpactAnalysis;
+import org.sidiff.revision.editrules.impact.graph.PotentialGraphActionImpactAnalysis;
 import org.sidiff.revision.editrules.recognition.configuration.RecognitionSettings;
+import org.sidiff.revision.impact.analysis.ImpactAnalyzes;
 import org.sidiff.revision.repair.api.IRepairPlan;
 import org.sidiff.revision.repair.api.peo.configuration.PEORepairSettings;
 import org.sidiff.revision.repair.complement.construction.ComplementRule;
@@ -18,9 +21,6 @@ import org.sidiff.revision.repair.complement.peo.configuration.ComplementFinderS
 import org.sidiff.revision.repair.complement.peo.finder.ComplementFinder;
 import org.sidiff.revision.repair.complement.peo.finder.ComplementFinderEngine;
 import org.sidiff.revision.repair.complement.repair.RepairPlan;
-import org.sidiff.validation.constraint.impact.ImpactAnalyzes;
-import org.sidiff.validation.constraint.impact.editrules.GraphActionImpactAnalysis;
-import org.sidiff.validation.constraint.impact.editrules.PotentialGraphActionImpactAnalysis;
 
 public class PEORepairCaculation {
 	

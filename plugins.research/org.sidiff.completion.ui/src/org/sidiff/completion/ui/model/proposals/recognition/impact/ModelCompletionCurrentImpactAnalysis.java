@@ -6,8 +6,8 @@ import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
-import org.sidiff.validation.constraint.impact.ImpactAnalysis;
-import org.sidiff.validation.constraint.impact.PotentialImpactAnalysis;
+import org.sidiff.revision.impact.analysis.ImpactAnalysis;
+import org.sidiff.revision.impact.analysis.PotentialImpactAnalysis;
 
 public class ModelCompletionCurrentImpactAnalysis implements PotentialImpactAnalysis, ImpactAnalysis {
 
