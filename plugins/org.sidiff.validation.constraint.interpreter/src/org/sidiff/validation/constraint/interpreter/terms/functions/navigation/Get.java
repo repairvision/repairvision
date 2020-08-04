@@ -8,14 +8,14 @@ import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.sidiff.validation.constraint.interpreter.decisiontree.Alternative;
-import org.sidiff.validation.constraint.interpreter.decisiontree.IDecisionBranch;
-import org.sidiff.validation.constraint.interpreter.decisiontree.Sequence;
-import org.sidiff.validation.constraint.interpreter.decisiontree.analyze.ConstraintAction;
-import org.sidiff.validation.constraint.interpreter.decisiontree.analyze.ConstraintAction.ConstraintType;
-import org.sidiff.validation.constraint.interpreter.decisiontree.repair.RepairActionFactory;
-import org.sidiff.validation.constraint.interpreter.decisiontree.repair.actions.RepairAction;
-import org.sidiff.validation.constraint.interpreter.decisiontree.repair.actions.RepairAction.RepairType;
+import org.sidiff.revision.impact.changetree.Alternative;
+import org.sidiff.revision.impact.changetree.IDecisionBranch;
+import org.sidiff.revision.impact.changetree.Sequence;
+import org.sidiff.revision.impact.changetree.analyze.ConstraintAction;
+import org.sidiff.revision.impact.changetree.analyze.ConstraintAction.ConstraintType;
+import org.sidiff.revision.impact.changetree.change.ChangeActionFactory;
+import org.sidiff.revision.impact.changetree.change.actions.ChangeAction;
+import org.sidiff.revision.impact.changetree.change.actions.ChangeAction.RepairType;
 import org.sidiff.validation.constraint.interpreter.scope.IScopeRecorder;
 import org.sidiff.validation.constraint.interpreter.scope.ScopeNode;
 import org.sidiff.validation.constraint.interpreter.terms.Term;
@@ -132,7 +132,7 @@ public class Get extends Function {
 		context.repair(alternative, RepairType.MODIFY);
 		
 		if (context.getValue() != null) {
-			RepairAction newRepair = RepairActionFactory.getInstance().create(type, (EObject) context.getValue(), feature); 
+			ChangeAction newRepair = ChangeActionFactory.getInstance().create(type, (EObject) context.getValue(), feature); 
 			alternative.appendChildDecisions(newRepair);
 		}
 	}

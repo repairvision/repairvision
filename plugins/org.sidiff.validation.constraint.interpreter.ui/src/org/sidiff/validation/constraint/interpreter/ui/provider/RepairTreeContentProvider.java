@@ -5,9 +5,9 @@ import java.util.Collection;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
+import org.sidiff.revision.impact.changetree.IDecisionBranch;
 import org.sidiff.validation.constraint.api.util.RepairValidation;
 import org.sidiff.validation.constraint.api.util.Validation;
-import org.sidiff.validation.constraint.interpreter.decisiontree.IDecisionBranch;
 
 public class RepairTreeContentProvider implements IStructuredContentProvider, ITreeContentProvider {
 

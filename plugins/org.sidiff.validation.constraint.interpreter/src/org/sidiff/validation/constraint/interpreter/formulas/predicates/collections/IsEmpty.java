@@ -2,10 +2,10 @@ package org.sidiff.validation.constraint.interpreter.formulas.predicates.collect
 
 import java.util.Collection;
 
-import org.sidiff.validation.constraint.interpreter.decisiontree.IDecisionBranch;
-import org.sidiff.validation.constraint.interpreter.decisiontree.Sequence;
-import org.sidiff.validation.constraint.interpreter.decisiontree.analyze.ConstraintAction.ConstraintType;
-import org.sidiff.validation.constraint.interpreter.decisiontree.repair.actions.RepairAction.RepairType;
+import org.sidiff.revision.impact.changetree.IDecisionBranch;
+import org.sidiff.revision.impact.changetree.Sequence;
+import org.sidiff.revision.impact.changetree.analyze.ConstraintAction.ConstraintType;
+import org.sidiff.revision.impact.changetree.change.actions.ChangeAction.RepairType;
 import org.sidiff.validation.constraint.interpreter.formulas.predicates.PredicateImpl;
 import org.sidiff.validation.constraint.interpreter.scope.IScopeRecorder;
 import org.sidiff.validation.constraint.interpreter.terms.Term;

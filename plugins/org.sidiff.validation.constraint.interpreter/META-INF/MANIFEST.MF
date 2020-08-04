@@ -4,12 +4,6 @@ Bundle-Name: Abstract Repair Generator
 Bundle-SymbolicName: org.sidiff.validation.constraint.interpreter;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Export-Package: org.sidiff.validation.constraint.interpreter,
- org.sidiff.validation.constraint.interpreter.decisiontree,
- org.sidiff.validation.constraint.interpreter.decisiontree.analyze,
- org.sidiff.validation.constraint.interpreter.decisiontree.repair,
- org.sidiff.validation.constraint.interpreter.decisiontree.repair.actions,
- org.sidiff.validation.constraint.interpreter.decisiontree.test,
- org.sidiff.validation.constraint.interpreter.decisiontree.util,
  org.sidiff.validation.constraint.interpreter.formulas,
  org.sidiff.validation.constraint.interpreter.formulas.binary,
  org.sidiff.validation.constraint.interpreter.formulas.predicates,
@@ -28,6 +22,7 @@ Export-Package: org.sidiff.validation.constraint.interpreter,
 Require-Bundle: org.eclipse.emf.ecore,
  org.eclipse.equinox.app,
  org.eclipse.uml2.uml,
- org.sidiff.common.utilities
+ org.sidiff.common.utilities,
+ org.sidiff.revision.impact.changetree
 Automatic-Module-Name: org.sidiff.validation.constraint.interpreter
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8

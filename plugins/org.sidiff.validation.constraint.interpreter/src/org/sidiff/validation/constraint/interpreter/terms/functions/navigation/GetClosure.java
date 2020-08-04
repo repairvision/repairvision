@@ -7,14 +7,14 @@ import java.util.List;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
-import org.sidiff.validation.constraint.interpreter.decisiontree.Alternative;
-import org.sidiff.validation.constraint.interpreter.decisiontree.IDecisionBranch;
-import org.sidiff.validation.constraint.interpreter.decisiontree.Sequence;
-import org.sidiff.validation.constraint.interpreter.decisiontree.analyze.ConstraintAction;
-import org.sidiff.validation.constraint.interpreter.decisiontree.analyze.ConstraintAction.ConstraintType;
-import org.sidiff.validation.constraint.interpreter.decisiontree.repair.RepairActionFactory;
-import org.sidiff.validation.constraint.interpreter.decisiontree.repair.actions.RepairAction;
-import org.sidiff.validation.constraint.interpreter.decisiontree.repair.actions.RepairAction.RepairType;
+import org.sidiff.revision.impact.changetree.Alternative;
+import org.sidiff.revision.impact.changetree.IDecisionBranch;
+import org.sidiff.revision.impact.changetree.Sequence;
+import org.sidiff.revision.impact.changetree.analyze.ConstraintAction;
+import org.sidiff.revision.impact.changetree.analyze.ConstraintAction.ConstraintType;
+import org.sidiff.revision.impact.changetree.change.ChangeActionFactory;
+import org.sidiff.revision.impact.changetree.change.actions.ChangeAction;
+import org.sidiff.revision.impact.changetree.change.actions.ChangeAction.RepairType;
 import org.sidiff.validation.constraint.interpreter.scope.IScopeRecorder;
 import org.sidiff.validation.constraint.interpreter.scope.ScopeNode;
 import org.sidiff.validation.constraint.interpreter.terms.Term;
@@ -190,7 +190,7 @@ public class GetClosure extends Function {
 				
 				for (EObject target : targets) {
 					if (getRepairNext(target, closure, sequence, type, invalid)) {
-						RepairAction newRepair = RepairActionFactory.getInstance().create(type, element, feature); 
+						ChangeAction newRepair = ChangeActionFactory.getInstance().create(type, element, feature); 
 						parent.appendChildDecisions(newRepair);
 						invalidElementReachable = true;
 					}
@@ -198,7 +198,7 @@ public class GetClosure extends Function {
 			} else {
 				EObject target = (EObject) element.eGet(feature);
 				if (getRepairNext(target, closure, parent, type, invalid)) {
-					RepairAction newRepair = RepairActionFactory.getInstance().create(type, element, feature); 
+					ChangeAction newRepair = ChangeActionFactory.getInstance().create(type, element, feature); 
 					parent.appendChildDecisions(newRepair);
 					invalidElementReachable = true;
 				}

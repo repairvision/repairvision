@@ -1,8 +1,8 @@
 package org.sidiff.validation.constraint.interpreter.formulas.binary;
 
-import org.sidiff.validation.constraint.interpreter.decisiontree.Alternative;
-import org.sidiff.validation.constraint.interpreter.decisiontree.IDecisionBranch;
-import org.sidiff.validation.constraint.interpreter.decisiontree.Sequence;
+import org.sidiff.revision.impact.changetree.Alternative;
+import org.sidiff.revision.impact.changetree.IDecisionBranch;
+import org.sidiff.revision.impact.changetree.Sequence;
 import org.sidiff.validation.constraint.interpreter.formulas.Formula;
 import org.sidiff.validation.constraint.interpreter.scope.IScopeRecorder;
 

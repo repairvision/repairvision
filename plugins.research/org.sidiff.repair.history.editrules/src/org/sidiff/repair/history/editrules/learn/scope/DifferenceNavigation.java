@@ -13,9 +13,9 @@ import org.sidiff.revision.difference.AddReference;
 import org.sidiff.revision.difference.AttributeValueChange;
 import org.sidiff.revision.difference.Change;
 import org.sidiff.revision.difference.Correspondence;
+import org.sidiff.revision.difference.Difference;
 import org.sidiff.revision.difference.RemoveObject;
 import org.sidiff.revision.difference.RemoveReference;
-import org.sidiff.revision.difference.Difference;
 
 public class DifferenceNavigation {
 	

@@ -16,6 +16,8 @@ import org.sidiff.generic.matcher.uuid.UUIDResource;
 import org.sidiff.history.analysis.tracing.InconsistencyTrace;
 import org.sidiff.revision.common.logging.table.LogTable;
 import org.sidiff.revision.difference.api.settings.DifferenceSettings;
+import org.sidiff.revision.impact.changetree.IDecisionNode;
+import org.sidiff.revision.impact.changetree.change.actions.ChangeAction;
 import org.sidiff.revision.repair.api.IRepairFacade;
 import org.sidiff.revision.repair.api.IRepairPlan;
 import org.sidiff.revision.repair.api.peo.PEORepairJob;
@@ -30,8 +32,6 @@ import org.sidiff.validation.constraint.api.ValidationFacade;
 import org.sidiff.validation.constraint.api.util.RepairValidation;
 import org.sidiff.validation.constraint.api.util.ScopeValidation;
 import org.sidiff.validation.constraint.interpreter.IConstraint;
-import org.sidiff.validation.constraint.interpreter.decisiontree.IDecisionNode;
-import org.sidiff.validation.constraint.interpreter.decisiontree.repair.actions.RepairAction;
 
 public class InconsistencyEvaluationDriver {
 	
@@ -233,7 +233,7 @@ public class InconsistencyEvaluationDriver {
 			for (Iterator<? extends IDecisionNode> iterator = validation.getRepair().traversal(); iterator.hasNext();) {
 				IDecisionNode treeNode = iterator.next();
 				
-				if (treeNode instanceof RepairAction) {
+				if (treeNode instanceof ChangeAction) {
 					++repairActions;
 				}
 			}

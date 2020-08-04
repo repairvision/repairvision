@@ -1,6 +1,6 @@
 package org.sidiff.validation.constraint.interpreter.formulas.unary;
 
-import org.sidiff.validation.constraint.interpreter.decisiontree.IDecisionBranch;
+import org.sidiff.revision.impact.changetree.IDecisionBranch;
 import org.sidiff.validation.constraint.interpreter.formulas.Formula;
 import org.sidiff.validation.constraint.interpreter.scope.IScopeRecorder;
 

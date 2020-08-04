@@ -6,11 +6,11 @@ import org.eclipse.emf.edit.provider.resource.ResourceItemProviderAdapterFactory
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.swt.graphics.Image;
+import org.sidiff.revision.impact.changetree.Alternative;
+import org.sidiff.revision.impact.changetree.IDecisionNode;
+import org.sidiff.revision.impact.changetree.Sequence;
+import org.sidiff.revision.impact.changetree.change.actions.ChangeAction;
 import org.sidiff.validation.constraint.api.util.Validation;
-import org.sidiff.validation.constraint.interpreter.decisiontree.Alternative;
-import org.sidiff.validation.constraint.interpreter.decisiontree.IDecisionNode;
-import org.sidiff.validation.constraint.interpreter.decisiontree.Sequence;
-import org.sidiff.validation.constraint.interpreter.decisiontree.repair.actions.RepairAction;
 import org.sidiff.validation.constraint.interpreter.ui.Activator;
 
 public class RepairTreeLabelProvider extends LabelProvider {
@@ -54,8 +54,8 @@ public class RepairTreeLabelProvider extends LabelProvider {
 		
 		else if (element instanceof IDecisionNode) {
 			
-			if (element instanceof RepairAction) {
-				return "Repair(" + ((RepairAction) element).getRepairLabel() + ")";
+			if (element instanceof ChangeAction) {
+				return "Repair(" + ((ChangeAction) element).getRepairLabel() + ")";
 			}
 			
 			else if (element instanceof Alternative) {
@@ -81,7 +81,7 @@ public class RepairTreeLabelProvider extends LabelProvider {
 		
 		else if (element instanceof IDecisionNode) {
 			
-			if (element instanceof RepairAction) {
+			if (element instanceof ChangeAction) {
 				return IMG_REPAIR;
 			}
 			

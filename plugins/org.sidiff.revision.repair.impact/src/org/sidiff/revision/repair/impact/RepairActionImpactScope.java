@@ -16,22 +16,22 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.sidiff.revision.impact.analysis.ImpactScope;
+import org.sidiff.revision.impact.changetree.IDecisionBranch;
+import org.sidiff.revision.impact.changetree.IDecisionNode;
+import org.sidiff.revision.impact.changetree.change.actions.ChangeAction;
+import org.sidiff.revision.impact.changetree.change.actions.ObjectChangeAction;
+import org.sidiff.revision.impact.changetree.change.actions.StructuralFeatureChangeAction;
+import org.sidiff.revision.impact.changetree.change.actions.ChangeAction.RepairType;
 import org.sidiff.validation.constraint.api.util.RepairValidation;
 import org.sidiff.validation.constraint.api.util.RepairValidationIterator;
 import org.sidiff.validation.constraint.interpreter.IConstraint;
-import org.sidiff.validation.constraint.interpreter.decisiontree.IDecisionBranch;
-import org.sidiff.validation.constraint.interpreter.decisiontree.IDecisionNode;
-import org.sidiff.validation.constraint.interpreter.decisiontree.repair.actions.ObjectRepairAction;
-import org.sidiff.validation.constraint.interpreter.decisiontree.repair.actions.RepairAction;
-import org.sidiff.validation.constraint.interpreter.decisiontree.repair.actions.StructuralFeatureRepairAction;
-import org.sidiff.validation.constraint.interpreter.decisiontree.repair.actions.RepairAction.RepairType;
 
 public class RepairActionImpactScope implements ImpactScope {
 
 	/**
 	 * Type -> Context -> Repairs:
 	 */
-	private Map<EStructuralFeature, Map<EObject, List<RepairAction>>> repairs = new HashMap<>();
+	private Map<EStructuralFeature, Map<EObject, List<ChangeAction>>> repairs = new HashMap<>();
 	
 	/**
 	 * All context elements:
@@ -75,14 +75,14 @@ public class RepairActionImpactScope implements ImpactScope {
 	}
 
 	private void addRepair(IDecisionNode repairDecision) {
-		if (repairDecision instanceof StructuralFeatureRepairAction) {
-			EObject context = ((StructuralFeatureRepairAction) repairDecision).getContext();
-			EStructuralFeature type = ((StructuralFeatureRepairAction) repairDecision).getFeature();
-			addRepair(type, context, (RepairAction) repairDecision);
-		} else if (repairDecision instanceof ObjectRepairAction) {
-			EObject object = ((ObjectRepairAction) repairDecision).getObject();
-			EReference containingReference = ((ObjectRepairAction) repairDecision).getContainingReference();
-			addRepair(containingReference, object, (RepairAction) repairDecision);
+		if (repairDecision instanceof StructuralFeatureChangeAction) {
+			EObject context = ((StructuralFeatureChangeAction) repairDecision).getContext();
+			EStructuralFeature type = ((StructuralFeatureChangeAction) repairDecision).getFeature();
+			addRepair(type, context, (ChangeAction) repairDecision);
+		} else if (repairDecision instanceof ObjectChangeAction) {
+			EObject object = ((ObjectChangeAction) repairDecision).getObject();
+			EReference containingReference = ((ObjectChangeAction) repairDecision).getContainingReference();
+			addRepair(containingReference, object, (ChangeAction) repairDecision);
 		} else if (repairDecision instanceof IDecisionBranch) {
 			for (IDecisionNode childDecision : ((IDecisionBranch) repairDecision).getChildDecisions()) {
 				addRepair(childDecision);
@@ -90,10 +90,10 @@ public class RepairActionImpactScope implements ImpactScope {
 		}
 	}
 	
-	private void addRepair(EStructuralFeature feature, EObject object, RepairAction repair) {
+	private void addRepair(EStructuralFeature feature, EObject object, ChangeAction repair) {
 
 		// Per meta-class:
-		Map<EObject, List<RepairAction>> repairsOfFeature = repairs.get(feature);
+		Map<EObject, List<ChangeAction>> repairsOfFeature = repairs.get(feature);
 
 		if (repairsOfFeature == null) {
 			repairsOfFeature = new HashMap<>();
@@ -101,7 +101,7 @@ public class RepairActionImpactScope implements ImpactScope {
 		}
 
 		// Per repair:
-		List<RepairAction> repairsOfContext = repairsOfFeature.get(object);
+		List<ChangeAction> repairsOfContext = repairsOfFeature.get(object);
 
 		if (repairsOfContext == null) {
 			repairsOfContext = new ArrayList<>(5);
@@ -114,7 +114,7 @@ public class RepairActionImpactScope implements ImpactScope {
 		scope.add(object);
 	}
 
-	public Map<EObject, List<RepairAction>> getRepairActions(EStructuralFeature structuralFeature) {
+	public Map<EObject, List<ChangeAction>> getRepairActions(EStructuralFeature structuralFeature) {
 		return repairs.get(structuralFeature);
 	}
 	
@@ -124,10 +124,10 @@ public class RepairActionImpactScope implements ImpactScope {
 	}
 	
 	public boolean isObjectRepair(RepairType type, EReference containingReference, EClass objectType, boolean strict) {
-		Map<EObject, List<RepairAction>> repairsOfFeature = getRepairActions(containingReference);
+		Map<EObject, List<ChangeAction>> repairsOfFeature = getRepairActions(containingReference);
 		
 		if (repairsOfFeature != null) {
-			for (List<RepairAction> repairsOfContext : repairsOfFeature.values()) {
+			for (List<ChangeAction> repairsOfContext : repairsOfFeature.values()) {
 				if (matchObjectRepair(repairsOfContext, type, containingReference, objectType, strict)) {
 					return true;
 				}
@@ -138,7 +138,7 @@ public class RepairActionImpactScope implements ImpactScope {
 	}
 
 	public Iterator<EObject> getObjectRepairs(RepairType type, EReference containingReference, EClass objectType, boolean strict) {
-		Map<EObject, List<RepairAction>> repairsOfFeature = getRepairActions(containingReference);
+		Map<EObject, List<ChangeAction>> repairsOfFeature = getRepairActions(containingReference);
 		
 		if (repairsOfFeature != null) {
 			return repairsOfFeature.entrySet().stream()
@@ -149,20 +149,20 @@ public class RepairActionImpactScope implements ImpactScope {
 		}
 	}
 	
-	protected boolean matchObjectRepair(List<RepairAction> repairs, RepairType type, EReference containingReference, EClass objectType, boolean strict) {
-		for (RepairAction repair : repairs) {
-			if (repair instanceof ObjectRepairAction) {
-				return ((ObjectRepairAction) repair).match(type, containingReference, objectType, strict);
+	protected boolean matchObjectRepair(List<ChangeAction> repairs, RepairType type, EReference containingReference, EClass objectType, boolean strict) {
+		for (ChangeAction repair : repairs) {
+			if (repair instanceof ObjectChangeAction) {
+				return ((ObjectChangeAction) repair).match(type, containingReference, objectType, strict);
 			}
 		}
 		return false;
 	}
 
 	public boolean isStructuralFeatureRepair(RepairType type, EClass contextType, EStructuralFeature feature, boolean strict) {
-		Map<EObject, List<RepairAction>> repairsOfFeature = getRepairActions(feature);
+		Map<EObject, List<ChangeAction>> repairsOfFeature = getRepairActions(feature);
 
 		if (repairsOfFeature != null) {
-			for (List<RepairAction> repairsOfContext : repairsOfFeature.values()) {
+			for (List<ChangeAction> repairsOfContext : repairsOfFeature.values()) {
 				if (matchStructuralFeatureRepair(repairsOfContext, type, contextType, feature, strict)) {
 					return true;
 				}
@@ -173,7 +173,7 @@ public class RepairActionImpactScope implements ImpactScope {
 	}
 	
 	public Iterator<EObject> getStructuralFeatureRepairs(RepairType type, EClass contextType, EStructuralFeature feature, boolean strict) {
-		Map<EObject, List<RepairAction>> repairsOfFeature = getRepairActions(feature);
+		Map<EObject, List<ChangeAction>> repairsOfFeature = getRepairActions(feature);
 		
 		if (repairsOfFeature != null) {
 			return repairsOfFeature.entrySet().stream()
@@ -184,10 +184,10 @@ public class RepairActionImpactScope implements ImpactScope {
 		}
 	}
 	
-	protected boolean matchStructuralFeatureRepair(List<RepairAction> repairs, RepairType type, EClass contextType, EStructuralFeature feature, boolean strict) {
-		for (RepairAction repair : repairs) {
-			if (repair instanceof StructuralFeatureRepairAction) {
-				return ((StructuralFeatureRepairAction) repair).match(type, contextType, feature, strict);
+	protected boolean matchStructuralFeatureRepair(List<ChangeAction> repairs, RepairType type, EClass contextType, EStructuralFeature feature, boolean strict) {
+		for (ChangeAction repair : repairs) {
+			if (repair instanceof StructuralFeatureChangeAction) {
+				return ((StructuralFeatureChangeAction) repair).match(type, contextType, feature, strict);
 			}
 		}
 		return false;
@@ -208,13 +208,13 @@ public class RepairActionImpactScope implements ImpactScope {
 		
 		toString.append("Repair Actions:\n");
 		
-		Set<RepairAction> repairSet = repairs.values().stream()
+		Set<ChangeAction> repairSet = repairs.values().stream()
 				.flatMap((objToRepairs) -> objToRepairs.values().stream())
 				.flatMap(List::stream).collect(Collectors.toSet());
 		
-		for (RepairAction repairAction : repairSet) {
+		for (ChangeAction changeAction : repairSet) {
 			toString.append(" ");
-			toString.append(repairAction);
+			toString.append(changeAction);
 			toString.append("\n");
 		}
 		

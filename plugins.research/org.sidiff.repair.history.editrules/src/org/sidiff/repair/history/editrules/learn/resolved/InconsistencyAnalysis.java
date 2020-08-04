@@ -32,17 +32,17 @@ import org.sidiff.revision.difference.RemoveReference;
 import org.sidiff.revision.difference.api.DifferenceFacade;
 import org.sidiff.revision.difference.api.settings.DifferenceSettings;
 import org.sidiff.revision.difference.matcher.IMatcherProvider;
+import org.sidiff.revision.impact.changetree.IDecisionNode;
+import org.sidiff.revision.impact.changetree.change.actions.AttributeChangeAction;
+import org.sidiff.revision.impact.changetree.change.actions.ChangeAction;
+import org.sidiff.revision.impact.changetree.change.actions.ObjectChangeAction;
+import org.sidiff.revision.impact.changetree.change.actions.ReferenceChangeAction;
+import org.sidiff.revision.impact.changetree.change.actions.StructuralFeatureChangeAction;
+import org.sidiff.revision.impact.changetree.change.actions.ChangeAction.RepairType;
 import org.sidiff.validation.constraint.api.ValidationFacade;
 import org.sidiff.validation.constraint.api.util.RepairValidation;
 import org.sidiff.validation.constraint.api.util.Validation;
 import org.sidiff.validation.constraint.interpreter.IConstraint;
-import org.sidiff.validation.constraint.interpreter.decisiontree.IDecisionNode;
-import org.sidiff.validation.constraint.interpreter.decisiontree.repair.actions.AttributeRepairAction;
-import org.sidiff.validation.constraint.interpreter.decisiontree.repair.actions.ObjectRepairAction;
-import org.sidiff.validation.constraint.interpreter.decisiontree.repair.actions.ReferenceRepairAction;
-import org.sidiff.validation.constraint.interpreter.decisiontree.repair.actions.RepairAction;
-import org.sidiff.validation.constraint.interpreter.decisiontree.repair.actions.RepairAction.RepairType;
-import org.sidiff.validation.constraint.interpreter.decisiontree.repair.actions.StructuralFeatureRepairAction;
 
 /*
  * TODO: Es sollte auch ermittelt werden, ob während einer Reparatur 
@@ -156,7 +156,7 @@ public class InconsistencyAnalysis {
 	}
 
 	protected void explore(
-			IConstraint constraint, List<RepairAction> repairFilter, 
+			IConstraint constraint, List<ChangeAction> repairFilter, 
 			EObject context, Resource inconsistent, Stack<DifferenceExecutor> exploration,
 			Difference difference, IRevision revision, 
 			List<Set<Change>> repairSteps, Set<Change> currentRepairStep) {
@@ -222,7 +222,7 @@ public class InconsistencyAnalysis {
 								repairSteps.add(finalRepairStep);
 							} else {
 								// Next step:
-								List<RepairAction> addedRepairs = addMissingRepairs(validation.getRepair(), repairFilter);
+								List<ChangeAction> addedRepairs = addMissingRepairs(validation.getRepair(), repairFilter);
 								
 								explore(constraint, repairFilter, 
 										context, inconsistent, exploration,
@@ -252,9 +252,9 @@ public class InconsistencyAnalysis {
 		List<List<Change>> observableRepair = new ArrayList<>();
 		
 		for (IDecisionNode node : repair) {
-			if (node instanceof RepairAction) {
-				RepairAction repairAction = (RepairAction) node; 
-				List<Change> observedRepair = getObservable(repairAction, revision, changeFilter, exploration);
+			if (node instanceof ChangeAction) {
+				ChangeAction changeAction = (ChangeAction) node; 
+				List<Change> observedRepair = getObservable(changeAction, revision, changeFilter, exploration);
 				
 				if (!observedRepair.isEmpty()) {
 					observableRepair.add(observedRepair);
@@ -269,7 +269,7 @@ public class InconsistencyAnalysis {
 		return observableRepair;
 	}
 	
-	private List<Change> getObservable(RepairAction repairAction, 
+	private List<Change> getObservable(ChangeAction changeAction, 
 			IRevision revision, Set<Change> changeFilter, 
 			Collection<DifferenceExecutor> exploration) {
 		
@@ -277,42 +277,42 @@ public class InconsistencyAnalysis {
 		
 		EObject repairContextA = null;
 		
-		if (repairAction instanceof StructuralFeatureRepairAction) {
-			repairContextA = ((StructuralFeatureRepairAction) repairAction).getContext();
-		} else if (repairAction instanceof ObjectRepairAction) {
-			repairContextA = ((ObjectRepairAction) repairAction).getObject();
+		if (changeAction instanceof StructuralFeatureChangeAction) {
+			repairContextA = ((StructuralFeatureChangeAction) changeAction).getContext();
+		} else if (changeAction instanceof ObjectChangeAction) {
+			repairContextA = ((ObjectChangeAction) changeAction).getObject();
 		}
 		
 		for (Change localChange : revision.getDifference().getLocalChanges(repairContextA)) {
 			if (!changeFilter.contains(localChange)) {
 				
-				if ((localChange instanceof RemoveReference) && (repairAction instanceof ReferenceRepairAction)){
-					ReferenceRepairAction referenceRepairAction = (ReferenceRepairAction) repairAction;
+				if ((localChange instanceof RemoveReference) && (changeAction instanceof ReferenceChangeAction)){
+					ReferenceChangeAction referenceChangeAction = (ReferenceChangeAction) changeAction;
 					
-					if (referenceRepairAction.getType().equals(RepairType.DELETE) || referenceRepairAction.getType().equals(RepairType.MODIFY)) {
-						if (referenceRepairAction.getFeature().equals(((RemoveReference) localChange).getType())) {
-							if (referenceRepairAction.getContext() == ((RemoveReference) localChange).getSrc()) {
+					if (referenceChangeAction.getType().equals(RepairType.DELETE) || referenceChangeAction.getType().equals(RepairType.MODIFY)) {
+						if (referenceChangeAction.getFeature().equals(((RemoveReference) localChange).getType())) {
+							if (referenceChangeAction.getContext() == ((RemoveReference) localChange).getSrc()) {
 								observedRepair.add(localChange);
 							}
 						}
 					}
 				}
 				
-				else if ((localChange instanceof AttributeValueChange) && (repairAction instanceof AttributeRepairAction)) {
-					AttributeRepairAction attributeRepairAction = (AttributeRepairAction) repairAction;
+				else if ((localChange instanceof AttributeValueChange) && (changeAction instanceof AttributeChangeAction)) {
+					AttributeChangeAction attributeChangeAction = (AttributeChangeAction) changeAction;
 					
-					if (attributeRepairAction.getType().equals(RepairType.MODIFY)) {
-						if (attributeRepairAction.getFeature().equals(((AttributeValueChange) localChange).getType())) {
+					if (attributeChangeAction.getType().equals(RepairType.MODIFY)) {
+						if (attributeChangeAction.getFeature().equals(((AttributeValueChange) localChange).getType())) {
 							observedRepair.add(localChange);
 						}
 					}
 				}
 				
-				else if ((localChange instanceof RemoveObject) && (repairAction instanceof ObjectRepairAction)){
-					ObjectRepairAction objectRepairAction = (ObjectRepairAction) repairAction;
+				else if ((localChange instanceof RemoveObject) && (changeAction instanceof ObjectChangeAction)){
+					ObjectChangeAction objectChangeAction = (ObjectChangeAction) changeAction;
 					
-					if (objectRepairAction.getType().equals(RepairType.DELETE) || objectRepairAction.getType().equals(RepairType.MODIFY)) {
-						if (objectRepairAction.getObject().equals(((RemoveObject) localChange).getObj())) {
+					if (objectChangeAction.getType().equals(RepairType.DELETE) || objectChangeAction.getType().equals(RepairType.MODIFY)) {
+						if (objectChangeAction.getObject().equals(((RemoveObject) localChange).getObj())) {
 							observedRepair.add(localChange);
 						}
 					}
@@ -326,11 +326,11 @@ public class InconsistencyAnalysis {
 			for (Change localChange : revision.getDifference().getLocalChanges(repairContextB)) {
 				if (!changeFilter.contains(localChange)) {
 					
-					if ((localChange instanceof AddReference) && (repairAction instanceof ReferenceRepairAction)) {
-						ReferenceRepairAction referenceRepairAction = (ReferenceRepairAction) repairAction;
+					if ((localChange instanceof AddReference) && (changeAction instanceof ReferenceChangeAction)) {
+						ReferenceChangeAction referenceChangeAction = (ReferenceChangeAction) changeAction;
 						
-						if (referenceRepairAction.getType().equals(RepairType.CREATE) || referenceRepairAction.getType().equals(RepairType.MODIFY)) {
-							if (referenceRepairAction.getFeature().equals(((AddReference) localChange).getType())) {
+						if (referenceChangeAction.getType().equals(RepairType.CREATE) || referenceChangeAction.getType().equals(RepairType.MODIFY)) {
+							if (referenceChangeAction.getFeature().equals(((AddReference) localChange).getType())) {
 								if (repairContextB == ((AddReference) localChange).getSrc()) {
 									observedRepair.add(localChange);
 								}
@@ -338,11 +338,11 @@ public class InconsistencyAnalysis {
 						}
 					}
 					
-					else if ((localChange instanceof AddObject) && (repairAction instanceof ObjectRepairAction)){
-						ObjectRepairAction objectRepairAction = (ObjectRepairAction) repairAction;
+					else if ((localChange instanceof AddObject) && (changeAction instanceof ObjectChangeAction)){
+						ObjectChangeAction objectChangeAction = (ObjectChangeAction) changeAction;
 						
-						if (objectRepairAction.getType().equals(RepairType.CREATE) || objectRepairAction.getType().equals(RepairType.MODIFY)) {
-							if (objectRepairAction.getObject().equals(((AddObject) localChange).getObj())) {
+						if (objectChangeAction.getType().equals(RepairType.CREATE) || objectChangeAction.getType().equals(RepairType.MODIFY)) {
+							if (objectChangeAction.getObject().equals(((AddObject) localChange).getObj())) {
 								observedRepair.add(localChange);
 							}
 						}
@@ -421,9 +421,9 @@ public class InconsistencyAnalysis {
 							while (repairTree.hasNext()) {
 								IDecisionNode repairTreeNode = repairTree.next();
 								
-								if (repairTreeNode instanceof RepairAction) {
+								if (repairTreeNode instanceof ChangeAction) {
 									List<Change> observables = getObservable(
-											(RepairAction) repairTreeNode,
+											(ChangeAction) repairTreeNode,
 											revision, Collections.emptySet(),
 											Collections.emptyList());
 									
@@ -461,12 +461,12 @@ public class InconsistencyAnalysis {
 	}
 	
 	
-	private List<RepairAction> addMissingRepairs(IDecisionNode repairTree, List<RepairAction> repairs) {
-		List<RepairAction> missingRepairs = new ArrayList<>();
+	private List<ChangeAction> addMissingRepairs(IDecisionNode repairTree, List<ChangeAction> repairs) {
+		List<ChangeAction> missingRepairs = new ArrayList<>();
 		
 		repairTree.traversal().forEachRemaining(decision -> {
-			if (decision instanceof RepairAction) {
-				RepairAction repair = (RepairAction) decision;
+			if (decision instanceof ChangeAction) {
+				ChangeAction repair = (ChangeAction) decision;
 				
 				if (!containsRepair(repairs, repair)) {
 					repairs.add(repair);
@@ -481,10 +481,10 @@ public class InconsistencyAnalysis {
 	private boolean overlappingRepairs(List<? extends IDecisionNode> repair, List<? extends IDecisionNode> repairsB) {
 		
 		for (IDecisionNode repairA : repair) {
-			if (repairA instanceof RepairAction) {
+			if (repairA instanceof ChangeAction) {
 				for (IDecisionNode repairB : repairsB) {
-					if (repairB instanceof RepairAction) {
-						if (equalsRepair((RepairAction) repairA, (RepairAction) repairB)) {
+					if (repairB instanceof ChangeAction) {
+						if (equalsRepair((ChangeAction) repairA, (ChangeAction) repairB)) {
 							return true;
 						}
 					}
@@ -495,9 +495,9 @@ public class InconsistencyAnalysis {
 		return false;
 	}
 	
-	private boolean containsRepair(List<RepairAction> repairs, RepairAction repair) {
+	private boolean containsRepair(List<ChangeAction> repairs, ChangeAction repair) {
 		
-		for (RepairAction otherRepair : repairs) {
+		for (ChangeAction otherRepair : repairs) {
 			if (equalsRepair(repair, otherRepair)) {
 				return true;
 			}
@@ -506,11 +506,11 @@ public class InconsistencyAnalysis {
 		return false;
 	}
 	
-	private boolean equalsRepair(RepairAction repairA, RepairAction repairB) {
+	private boolean equalsRepair(ChangeAction repairA, ChangeAction repairB) {
 		
-		if ((repairA instanceof ReferenceRepairAction) && (repairB instanceof ReferenceRepairAction)) {
-			ReferenceRepairAction structuralRepairA = (ReferenceRepairAction) repairA;
-			ReferenceRepairAction structuralRepairB = (ReferenceRepairAction) repairB;
+		if ((repairA instanceof ReferenceChangeAction) && (repairB instanceof ReferenceChangeAction)) {
+			ReferenceChangeAction structuralRepairA = (ReferenceChangeAction) repairA;
+			ReferenceChangeAction structuralRepairB = (ReferenceChangeAction) repairB;
 			
 			if (structuralRepairA.getType().equals(structuralRepairB.getType())) {
 				if (structuralRepairA.getContext().equals(structuralRepairB.getContext())) {
@@ -521,9 +521,9 @@ public class InconsistencyAnalysis {
 					}
 				}
 			}
-		} else if ((repairA instanceof AttributeRepairAction) && (repairB instanceof AttributeRepairAction)) {
-			AttributeRepairAction structuralRepairA = (AttributeRepairAction) repairA;
-			AttributeRepairAction structuralRepairB = (AttributeRepairAction) repairB;
+		} else if ((repairA instanceof AttributeChangeAction) && (repairB instanceof AttributeChangeAction)) {
+			AttributeChangeAction structuralRepairA = (AttributeChangeAction) repairA;
+			AttributeChangeAction structuralRepairB = (AttributeChangeAction) repairB;
 			
 			if (structuralRepairA.getType().equals(structuralRepairB.getType())) {
 				if (structuralRepairA.getContext().equals(structuralRepairB.getContext())) {
@@ -534,9 +534,9 @@ public class InconsistencyAnalysis {
 					}
 				}
 			}
-		}  else if ((repairA instanceof ObjectRepairAction) && (repairB instanceof ObjectRepairAction)) {
-			ObjectRepairAction objectRepairA = (ObjectRepairAction) repairA;
-			ObjectRepairAction objectRepairB = (ObjectRepairAction) repairB;
+		}  else if ((repairA instanceof ObjectChangeAction) && (repairB instanceof ObjectChangeAction)) {
+			ObjectChangeAction objectRepairA = (ObjectChangeAction) repairA;
+			ObjectChangeAction objectRepairB = (ObjectChangeAction) repairB;
 			
 			if (objectRepairA.getType().equals(objectRepairB.getType())) {
 				if (objectRepairA.getContainingReference().equals(objectRepairB.getContainingReference())) {

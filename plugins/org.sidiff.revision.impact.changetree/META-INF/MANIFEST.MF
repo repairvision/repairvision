@@ -1,0 +1,18 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Change Decision Tree
+Bundle-SymbolicName: org.sidiff.revision.impact.changetree;singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Bundle-Activator: org.sidiff.revision.impact.changetree.Activator
+Require-Bundle: org.eclipse.core.runtime,
+ org.eclipse.emf.ecore,
+ org.sidiff.common.utilities
+Automatic-Module-Name: org.sidiff.revision.impact.changetree
+Bundle-ActivationPolicy: lazy
+Export-Package: org.sidiff.revision.impact.changetree,
+ org.sidiff.revision.impact.changetree.analyze,
+ org.sidiff.revision.impact.changetree.change,
+ org.sidiff.revision.impact.changetree.change.actions,
+ org.sidiff.revision.impact.changetree.test,
+ org.sidiff.revision.impact.changetree.util
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8

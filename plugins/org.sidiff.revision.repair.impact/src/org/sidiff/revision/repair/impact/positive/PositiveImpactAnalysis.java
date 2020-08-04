@@ -8,11 +8,11 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.sidiff.revision.impact.analysis.ImpactAnalysis;
+import org.sidiff.revision.impact.changetree.change.actions.ChangeAction;
+import org.sidiff.revision.impact.changetree.change.actions.ObjectChangeAction;
+import org.sidiff.revision.impact.changetree.change.actions.StructuralFeatureChangeAction;
+import org.sidiff.revision.impact.changetree.change.actions.ChangeAction.RepairType;
 import org.sidiff.revision.repair.impact.RepairActionImpactScope;
-import org.sidiff.validation.constraint.interpreter.decisiontree.repair.actions.ObjectRepairAction;
-import org.sidiff.validation.constraint.interpreter.decisiontree.repair.actions.RepairAction;
-import org.sidiff.validation.constraint.interpreter.decisiontree.repair.actions.RepairAction.RepairType;
-import org.sidiff.validation.constraint.interpreter.decisiontree.repair.actions.StructuralFeatureRepairAction;
 
 public class PositiveImpactAnalysis implements ImpactAnalysis {
 
@@ -48,15 +48,15 @@ public class PositiveImpactAnalysis implements ImpactAnalysis {
 	}
 	
 	protected boolean isObjectRepair(RepairType type, EReference containingReference, EObject object) {
-		Map<EObject, List<RepairAction>> repairsPerMetaClass = repairActions.getRepairActions(containingReference);
+		Map<EObject, List<ChangeAction>> repairsPerMetaClass = repairActions.getRepairActions(containingReference);
 
 		if (repairsPerMetaClass != null) {
-			List<RepairAction> repairsPerObject = repairsPerMetaClass.get(object);
+			List<ChangeAction> repairsPerObject = repairsPerMetaClass.get(object);
 			
 			if (repairsPerObject != null) {
-				for (RepairAction repair : repairsPerObject) {
-					if (repair instanceof ObjectRepairAction) {
-						return ((ObjectRepairAction) repair).match(type, object);
+				for (ChangeAction repair : repairsPerObject) {
+					if (repair instanceof ObjectChangeAction) {
+						return ((ObjectChangeAction) repair).match(type, object);
 					}
 				}
 			}
@@ -66,15 +66,15 @@ public class PositiveImpactAnalysis implements ImpactAnalysis {
 	}
 	
 	protected boolean isStructuralFeatureRepair(RepairType type, EObject context, EStructuralFeature feature) {
-		Map<EObject, List<RepairAction>> repairsPerMetaClass = repairActions.getRepairActions(feature);
+		Map<EObject, List<ChangeAction>> repairsPerMetaClass = repairActions.getRepairActions(feature);
 
 		if (repairsPerMetaClass != null) {
-			List<RepairAction> repairsPerObject = repairsPerMetaClass.get(context);
+			List<ChangeAction> repairsPerObject = repairsPerMetaClass.get(context);
 			
 			if (repairsPerObject != null) {
-				for (RepairAction repair : repairsPerObject) {
-					if (repair instanceof StructuralFeatureRepairAction) {
-						return ((StructuralFeatureRepairAction) repair).match(type, context, feature);
+				for (ChangeAction repair : repairsPerObject) {
+					if (repair instanceof StructuralFeatureChangeAction) {
+						return ((StructuralFeatureChangeAction) repair).match(type, context, feature);
 					}
 				}
 			}

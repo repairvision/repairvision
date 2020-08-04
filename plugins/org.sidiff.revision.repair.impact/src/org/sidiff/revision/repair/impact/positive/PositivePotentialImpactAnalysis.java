@@ -4,8 +4,8 @@ import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EReference;
 import org.sidiff.revision.impact.analysis.PotentialImpactAnalysis;
+import org.sidiff.revision.impact.changetree.change.actions.ChangeAction.RepairType;
 import org.sidiff.revision.repair.impact.RepairActionImpactScope;
-import org.sidiff.validation.constraint.interpreter.decisiontree.repair.actions.RepairAction.RepairType;
 
 public class PositivePotentialImpactAnalysis implements PotentialImpactAnalysis {
 

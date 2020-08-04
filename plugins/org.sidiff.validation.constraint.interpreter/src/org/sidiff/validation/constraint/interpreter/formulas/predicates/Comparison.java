@@ -1,8 +1,8 @@
 package org.sidiff.validation.constraint.interpreter.formulas.predicates;
 
-import org.sidiff.validation.constraint.interpreter.decisiontree.IDecisionBranch;
-import org.sidiff.validation.constraint.interpreter.decisiontree.Sequence;
-import org.sidiff.validation.constraint.interpreter.decisiontree.analyze.ConstraintAction.ConstraintType;
+import org.sidiff.revision.impact.changetree.IDecisionBranch;
+import org.sidiff.revision.impact.changetree.Sequence;
+import org.sidiff.revision.impact.changetree.analyze.ConstraintAction.ConstraintType;
 import org.sidiff.validation.constraint.interpreter.terms.Term;
 
 public abstract class Comparison extends PredicateImpl {

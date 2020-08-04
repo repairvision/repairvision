@@ -12,11 +12,11 @@ import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.sidiff.common.utilities.ui.widgets.IDisposableControl;
 import org.sidiff.common.utilities.ui.widgets.IUnsetableControl;
+import org.sidiff.revision.impact.changetree.change.actions.ObjectChangeAction;
+import org.sidiff.revision.impact.changetree.change.actions.StructuralFeatureChangeAction;
 import org.sidiff.revision.ui.editors.highlighting.EditorHighlighting;
 import org.sidiff.revision.ui.editors.highlighting.ISelectionHighlightingAdapter;
 import org.sidiff.validation.constraint.api.util.Validation;
-import org.sidiff.validation.constraint.interpreter.decisiontree.repair.actions.ObjectRepairAction;
-import org.sidiff.validation.constraint.interpreter.decisiontree.repair.actions.StructuralFeatureRepairAction;
 import org.sidiff.validation.constraint.interpreter.ui.provider.RepairTreeContentProvider;
 import org.sidiff.validation.constraint.interpreter.ui.provider.RepairTreeLabelProvider;
 
@@ -56,13 +56,13 @@ public class ValidationWidget implements IUnsetableControl, IDisposableControl {
 						return Collections.singletonList(validation.getContext()).iterator();
 					}
 					
-					else if (selectedElement instanceof StructuralFeatureRepairAction) {
-						StructuralFeatureRepairAction repair = (StructuralFeatureRepairAction) selectedElement;
+					else if (selectedElement instanceof StructuralFeatureChangeAction) {
+						StructuralFeatureChangeAction repair = (StructuralFeatureChangeAction) selectedElement;
 						return Collections.singletonList(repair.getContext()).iterator();
 					}
 					
-					else if (selectedElement instanceof ObjectRepairAction) {
-						ObjectRepairAction repair = (ObjectRepairAction) selectedElement;
+					else if (selectedElement instanceof ObjectChangeAction) {
+						ObjectChangeAction repair = (ObjectChangeAction) selectedElement;
 						return Collections.singletonList(repair.getObject()).iterator();
 					}
 				}

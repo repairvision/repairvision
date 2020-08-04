@@ -2,11 +2,11 @@ package org.sidiff.validation.constraint.interpreter;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
-import org.sidiff.validation.constraint.interpreter.decisiontree.IDecisionBranch;
-import org.sidiff.validation.constraint.interpreter.decisiontree.Sequence;
-import org.sidiff.validation.constraint.interpreter.decisiontree.repair.RepairActionFactory;
-import org.sidiff.validation.constraint.interpreter.decisiontree.repair.RepairTree;
-import org.sidiff.validation.constraint.interpreter.decisiontree.repair.actions.RepairAction.RepairType;
+import org.sidiff.revision.impact.changetree.IDecisionBranch;
+import org.sidiff.revision.impact.changetree.Sequence;
+import org.sidiff.revision.impact.changetree.change.ChangeActionFactory;
+import org.sidiff.revision.impact.changetree.change.ChangeTree;
+import org.sidiff.revision.impact.changetree.change.actions.ChangeAction.RepairType;
 import org.sidiff.validation.constraint.interpreter.formulas.Formula;
 import org.sidiff.validation.constraint.interpreter.scope.IScopeRecorder;
 import org.sidiff.validation.constraint.interpreter.scope.ScopeNode;
@@ -57,22 +57,22 @@ public class Constraint extends NamedElement implements IConstraint {
 	@Override
 	public IDecisionBranch repair() {
 		formula.evaluate(IScopeRecorder.DUMMY, false);
-		RepairTree repairTree = new RepairTree();
+		ChangeTree changeTree = new ChangeTree();
 		
 		if (getResult() != true) {
 			
 			// Repair which deletes the root element:
-			repairTree.appendChildDecisions(RepairActionFactory.getInstance().create(
+			changeTree.appendChildDecisions(ChangeActionFactory.getInstance().create(
 					RepairType.DELETE, 
 					getContext().eContainmentFeature(),
 					getContext().eClass(),
 					getContext()));
 			
-			formula.repair(repairTree, true);
-			return repairTree;
+			formula.repair(changeTree, true);
+			return changeTree;
 		}
 		
-		return repairTree;
+		return changeTree;
 	}
 	
 	@Override

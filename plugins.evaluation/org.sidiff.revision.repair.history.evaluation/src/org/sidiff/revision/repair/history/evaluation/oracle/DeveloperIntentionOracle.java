@@ -22,14 +22,14 @@ import org.sidiff.revision.difference.AddObject;
 import org.sidiff.revision.difference.AddReference;
 import org.sidiff.revision.difference.AttributeValueChange;
 import org.sidiff.revision.difference.Change;
+import org.sidiff.revision.difference.Difference;
 import org.sidiff.revision.difference.RemoveObject;
 import org.sidiff.revision.difference.RemoveReference;
-import org.sidiff.revision.difference.Difference;
 import org.sidiff.revision.repair.api.util.ComplementMatching;
 import org.sidiff.revision.repair.api.util.IMatching;
 import org.sidiff.revision.repair.api.util.RecognitionMatching;
-import org.sidiff.revision.repair.impact.PositiveImpactAnalysis;
 import org.sidiff.revision.repair.impact.RepairActionImpactScope;
+import org.sidiff.revision.repair.impact.positive.PositiveImpactAnalysis;
 import org.sidiff.validation.constraint.api.util.RepairValidation;
 
 public class DeveloperIntentionOracle {
