@@ -23,10 +23,10 @@ import org.eclipse.swt.widgets.Display;
 import org.sidiff.common.utilities.ui.util.WorkbenchUtil;
 import org.sidiff.history.analysis.tracing.HistoryModelDatabase;
 import org.sidiff.history.analysis.validation.FOLValidator;
+import org.sidiff.revision.api.IComplementationFacade;
+import org.sidiff.revision.api.IComplementationPlan;
 import org.sidiff.revision.difference.api.settings.DifferenceSettings;
 import org.sidiff.revision.editrules.project.registry.util.RulebaseUtil;
-import org.sidiff.revision.repair.api.IRepairFacade;
-import org.sidiff.revision.repair.api.IRepairPlan;
 import org.sidiff.revision.repair.api.peo.PEORepairJob;
 import org.sidiff.revision.repair.api.peo.configuration.PEORepairSettings;
 import org.sidiff.revision.repair.ui.app.impl.EMFResourceRepairApplication;
@@ -41,7 +41,7 @@ public class IntegratedRepairApplication extends EMFResourceRepairApplication<PE
 	
 	private Job repairCalculation;
 	
-	private IRepairFacade<PEORepairJob, PEORepairSettings> repairFacade;
+	private IComplementationFacade<PEORepairJob, PEORepairSettings> complementationFacade;
 	
 	private DifferenceSettings settings;
 	
@@ -56,8 +56,8 @@ public class IntegratedRepairApplication extends EMFResourceRepairApplication<PE
 	private boolean autoSaveModel = false;
 	
 	@Override
-	public void initialize(IRepairFacade<PEORepairJob, PEORepairSettings> repairFacade) {
-		this.repairFacade = repairFacade;
+	public void initialize(IComplementationFacade<PEORepairJob, PEORepairSettings> repairFacade) {
+		this.complementationFacade = repairFacade;
 	}
 	
 	@Override
@@ -72,7 +72,7 @@ public class IntegratedRepairApplication extends EMFResourceRepairApplication<PE
 			repairJob = null;
 		} else {
 			if (repairJob != null) {
-				repairJob.setRepairs(new ArrayList<>());
+				repairJob.setComplementationPlans(new ArrayList<>());
 			}
 		}
 		
@@ -155,7 +155,7 @@ public class IntegratedRepairApplication extends EMFResourceRepairApplication<PE
 						Collections.singletonList(inconsistency.getContext()), editRules, settings);
 				repairSettings.setConsistencyRules(Collections.singletonList(inconsistency.getRule()));
 				
-				repairJob = repairFacade.getRepairs(getModelA(), getModelB(), repairSettings);
+				repairJob = complementationFacade.getComplementations(getModelA(), getModelB(), repairSettings);
 				
 				// Copy undo history:
 				if (lastRepairJob != null) {
@@ -207,7 +207,7 @@ public class IntegratedRepairApplication extends EMFResourceRepairApplication<PE
 								Collections.singletonList(inconsistency.getContext()), editRules, settings);
 						repairSettings.setConsistencyRules(Collections.singletonList(inconsistency.getRule()));
 						
-						repairJob = repairFacade.getRepairs(
+						repairJob = complementationFacade.getComplementations(
 								repairJob.getRevision().getVersionA().getTargetResource(), 
 								repairJob.getRevision().getVersionB().getTargetResource(), 
 								repairSettings);
@@ -234,7 +234,7 @@ public class IntegratedRepairApplication extends EMFResourceRepairApplication<PE
 	}
 	
 	@Override
-	public boolean applyRepair(IRepairPlan repair, Match match) {
+	public boolean applyRepair(IComplementationPlan repair, Match match) {
 		boolean[] result = new boolean[1];
 		TransactionalEditingDomain transactionalEditingDomain = TransactionUtil.getEditingDomain(getModelB());
 		
@@ -243,7 +243,7 @@ public class IntegratedRepairApplication extends EMFResourceRepairApplication<PE
 
 				@Override
 				protected void doExecute() {
-					result[0] = repairJob.applyRepair(repair, match, false);
+					result[0] = repairJob.applyComplement(repair, match, false);
 				}
 			});
 		} else {
@@ -263,7 +263,7 @@ public class IntegratedRepairApplication extends EMFResourceRepairApplication<PE
 					
 					@Override
 					public void execute() {
-						result[0] = repairJob.applyRepair(repair, match, false);
+						result[0] = repairJob.applyComplement(repair, match, false);
 					}
 					
 					@Override
@@ -272,7 +272,7 @@ public class IntegratedRepairApplication extends EMFResourceRepairApplication<PE
 					}
 				});
 			} else {
-				result[0] = repairJob.applyRepair(repair, match, false);
+				result[0] = repairJob.applyComplement(repair, match, false);
 			}
 		}
 		
@@ -308,7 +308,7 @@ public class IntegratedRepairApplication extends EMFResourceRepairApplication<PE
 
 				@Override
 				protected void doExecute() {
-					result[0] = repairJob.undoRepair(false);
+					result[0] = repairJob.undoUncomplete(false);
 				}
 
 				@Override
@@ -320,7 +320,7 @@ public class IntegratedRepairApplication extends EMFResourceRepairApplication<PE
 		} 
 		
 		else {
-			result[0] =  repairJob.undoRepair(false);
+			result[0] =  repairJob.undoUncomplete(false);
 		}
 		
 		// save the applied repair?
@@ -336,7 +336,7 @@ public class IntegratedRepairApplication extends EMFResourceRepairApplication<PE
 	}
 	
 	@Override
-	public boolean rollbackInconsistencyInducingChanges(IRepairPlan repair) {
+	public boolean rollbackInconsistencyInducingChanges(IComplementationPlan repair) {
 		boolean[] result = new boolean[1];
 		TransactionalEditingDomain transactionalEditingDomain = TransactionUtil.getEditingDomain(getModelB());
 		

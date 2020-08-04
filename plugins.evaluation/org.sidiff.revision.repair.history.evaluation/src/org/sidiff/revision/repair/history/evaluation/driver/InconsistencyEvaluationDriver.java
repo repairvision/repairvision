@@ -14,12 +14,12 @@ import org.sidiff.common.utilities.java.JUtil;
 import org.sidiff.common.utilities.ui.util.InfoConsole;
 import org.sidiff.generic.matcher.uuid.UUIDResource;
 import org.sidiff.history.analysis.tracing.InconsistencyTrace;
+import org.sidiff.revision.api.IComplementationFacade;
+import org.sidiff.revision.api.IComplementationPlan;
 import org.sidiff.revision.common.logging.table.LogTable;
 import org.sidiff.revision.difference.api.settings.DifferenceSettings;
 import org.sidiff.revision.impact.changetree.IDecisionNode;
 import org.sidiff.revision.impact.changetree.change.actions.ChangeAction;
-import org.sidiff.revision.repair.api.IRepairFacade;
-import org.sidiff.revision.repair.api.IRepairPlan;
 import org.sidiff.revision.repair.api.peo.PEORepairJob;
 import org.sidiff.revision.repair.api.peo.configuration.PEORepairSettings;
 import org.sidiff.revision.repair.history.evaluation.driver.DeveloperIntentionOracleDriver.HistoricalObservable;
@@ -38,7 +38,7 @@ public class InconsistencyEvaluationDriver {
 	public static PEORepairJob calculateRepairs(
 			boolean saveDifference, boolean validateDifference, boolean searchOnlyFirstObservable,
 			HistoryInfo history, 
-			IRepairFacade<PEORepairJob, PEORepairSettings> repairFacade,
+			IComplementationFacade<PEORepairJob, PEORepairSettings> repairFacade,
 			InconsistencyTrace repaired, 
 			Collection<Rule> editRules, 
 			DifferenceSettings matchingSettings, 
@@ -69,7 +69,7 @@ public class InconsistencyEvaluationDriver {
 		settings.getComplementFinderSettings().setMonitor(new ComplementFinderTableLogger(inconsistencies));
 		settings.getComplementFinderSettings().getRecognitionEngineSettings().setLogger(new RecognitionTableLogger(runtimeComplexityLog));
 		
-		PEORepairJob repairJob = repairFacade.getRepairs(
+		PEORepairJob repairJob = repairFacade.getComplementations(
 				repaired.getModelHistorical(), repaired.getModelCurrent(), settings);
 		
 		// Evaluate repairs for inconsistency:
@@ -119,10 +119,10 @@ public class InconsistencyEvaluationDriver {
 			DifferenceSettings matchingSettings, boolean searchOnlyFirstObservable) {
 		
 		// evaluate repair results:
-		InfoConsole.printInfo("Repairs Found: " + repairJob.getRepairs().size());
+		InfoConsole.printInfo("Repairs Found: " + repairJob.getComplementationPlans().size());
 		
 		// calculate Ranking:
-		List<IRepairPlan> repairRanking = new LinkedList<>(repairJob.getRepairs());
+		List<IComplementationPlan> repairRanking = new LinkedList<>(repairJob.getComplementationPlans());
 		repairRanking.sort(repairJob.getRanking());
 		
 		// search historical observable repair:
@@ -143,7 +143,7 @@ public class InconsistencyEvaluationDriver {
 		InfoConsole.printInfo("Best Observable Repair/Undo Positions: " + bestPositionOfObservable);
 		
 		if (bestPositionOfObservable != -1) {
-			IRepairPlan bestObservableRepair = (IRepairPlan) bestObservable[1];
+			IComplementationPlan bestObservableRepair = (IComplementationPlan) bestObservable[1];
 			
 			log.append(InconsistenciesLog.COL_RANKING_OF_BEST_HOR, bestPositionOfObservable);
 			log.append(InconsistenciesLog.COL_BEST_HOR_IS_UNDO, bestObservable[2]);
@@ -166,10 +166,10 @@ public class InconsistencyEvaluationDriver {
 //		log.append("Count of Repair Tree Combinations", countRepairTreeCombinations(repairJob.getValidations()));
 	}
 	
-	private static String printPositions(List<IRepairPlan> selectedRepairs, List<IRepairPlan> allRepairs) {
+	private static String printPositions(List<IComplementationPlan> selectedRepairs, List<IComplementationPlan> allRepairs) {
 		StringBuilder positions = new StringBuilder();
 		
-		for (IRepairPlan selectedRepair : selectedRepairs) {
+		for (IComplementationPlan selectedRepair : selectedRepairs) {
 			if (selectedRepair != selectedRepairs.get(0)) {
 				positions.append("; ");
 			}
@@ -179,15 +179,15 @@ public class InconsistencyEvaluationDriver {
 		return positions.toString();
 	}
 
-	private static Object[] findBestObservableRepair(HistoricalObservable observable, List<IRepairPlan> repairRanking) {
+	private static Object[] findBestObservableRepair(HistoricalObservable observable, List<IComplementationPlan> repairRanking) {
 		
 		// Find best observable:
 		int bestPositionOfObservable = Integer.MAX_VALUE;
-		IRepairPlan bestObservableRepair =  null;
+		IComplementationPlan bestObservableRepair =  null;
 		boolean isUndo = false;
 		
 
-		for (IRepairPlan observableUndo : observable.undos) {
+		for (IComplementationPlan observableUndo : observable.undos) {
 			int positionOfObservable = repairRanking.indexOf(observableUndo);
 			
 			if (positionOfObservable < bestPositionOfObservable) {
@@ -197,7 +197,7 @@ public class InconsistencyEvaluationDriver {
 			}
 		}
 		
-		for (IRepairPlan observableRepair : observable.repairs) {
+		for (IComplementationPlan observableRepair : observable.repairs) {
 			int positionOfObservable = repairRanking.indexOf(observableRepair);
 			
 			if (positionOfObservable < bestPositionOfObservable) {
@@ -214,7 +214,7 @@ public class InconsistencyEvaluationDriver {
 		}
 	}
 	
-	private static int countUnboudParameters(IRepairPlan repair) {
+	private static int countUnboudParameters(IComplementationPlan repair) {
 		int count = 0;
 
 		for (Parameter parameter : repair.getParameters()) {

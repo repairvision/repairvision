@@ -18,12 +18,12 @@ import org.sidiff.generic.matcher.uuid.UUIDMatcherProvider;
 import org.sidiff.history.analysis.tracing.InconsistencyTrace;
 import org.sidiff.historymodel.History;
 import org.sidiff.historymodel.Problem;
+import org.sidiff.revision.api.IComplementationFacade;
+import org.sidiff.revision.api.IComplementationPlan;
 import org.sidiff.revision.common.logging.table.LogTable;
 import org.sidiff.revision.difference.api.registry.DifferenceBuilderRegistry;
 import org.sidiff.revision.difference.api.settings.DifferenceSettings;
 import org.sidiff.revision.editrules.project.registry.util.RulebaseUtil;
-import org.sidiff.revision.repair.api.IRepairFacade;
-import org.sidiff.revision.repair.api.IRepairPlan;
 import org.sidiff.revision.repair.api.peo.PEORepairJob;
 import org.sidiff.revision.repair.api.peo.configuration.PEORepairSettings;
 import org.sidiff.revision.repair.history.evaluation.driver.HistoryEvaluationDriver;
@@ -37,7 +37,7 @@ import org.sidiff.revision.repair.ui.config.RepairPreferencePage;
 
 public class HistoryRepairApplication implements IRepairApplication<PEORepairJob, PEORepairSettings> {
 
-	protected IRepairFacade<PEORepairJob, PEORepairSettings> repairFacade;
+	protected IComplementationFacade<PEORepairJob, PEORepairSettings> complementationFacade;
 	
 	protected List<IResultChangedListener<PEORepairJob>> listeners = new ArrayList<>();
 
@@ -60,8 +60,8 @@ public class HistoryRepairApplication implements IRepairApplication<PEORepairJob
 	}
 	
 	@Override
-	public void initialize(IRepairFacade<PEORepairJob, PEORepairSettings> repairFacade) {
-		this.repairFacade = repairFacade;
+	public void initialize(IComplementationFacade<PEORepairJob, PEORepairSettings> repairFacade) {
+		this.complementationFacade = repairFacade;
 	}
 	
 	@Override
@@ -90,7 +90,7 @@ public class HistoryRepairApplication implements IRepairApplication<PEORepairJob
 			
 			@Override
 			protected IStatus run(IProgressMonitor monitor) {
-				HistoryEvaluationDriver.calculateRepairs(repairFacade, history, getEditRules(), getMatchingSettings());
+				HistoryEvaluationDriver.calculateRepairs(complementationFacade, history, getEditRules(), getMatchingSettings());
 				return Status.OK_STATUS;
 			}
 		};
@@ -121,7 +121,7 @@ public class HistoryRepairApplication implements IRepairApplication<PEORepairJob
 
 				// Calculate repairs:
 				repairJob = InconsistencyEvaluationDriver.calculateRepairs(
-						true, true, false, history, repairFacade, repaired, 
+						true, true, false, history, complementationFacade, repaired, 
 						getEditRules(), getMatchingSettings(),
 						inconsistenciesLog, runtimeComplexityLog);
 				
@@ -140,7 +140,7 @@ public class HistoryRepairApplication implements IRepairApplication<PEORepairJob
 					// Show results:
 					fireResultChangeListener();
 
-					if (repairJob.getRepairs().isEmpty()) {
+					if (repairJob.getComplementationPlans().isEmpty()) {
 						WorkbenchUtil.showMessage("No repairs found!");
 					}
 				});
@@ -164,8 +164,8 @@ public class HistoryRepairApplication implements IRepairApplication<PEORepairJob
 	}
 	
 	@Override
-	public boolean applyRepair(IRepairPlan repair, Match match) {
-		return repairJob.applyRepair(repair, match, true);
+	public boolean applyRepair(IComplementationPlan repair, Match match) {
+		return repairJob.applyComplement(repair, match, true);
 	}
 	
 	@Override
@@ -181,11 +181,11 @@ public class HistoryRepairApplication implements IRepairApplication<PEORepairJob
 			return true;
 		}
 		
-		return repairJob.undoRepair(true);
+		return repairJob.undoUncomplete(true);
 	}
 	
 	@Override
-	public boolean rollbackInconsistencyInducingChanges(IRepairPlan repair) {
+	public boolean rollbackInconsistencyInducingChanges(IComplementationPlan repair) {
 		return repairJob.rollbackInconsistencyInducingChanges(repair, true);
 	}
 

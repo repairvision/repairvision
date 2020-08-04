@@ -8,13 +8,13 @@ import org.eclipse.emf.henshin.interpreter.Match;
 import org.eclipse.emf.henshin.model.Rule;
 import org.sidiff.history.revision.IRevision;
 import org.sidiff.history.revision.util.SymmetricDifferenceUtil;
+import org.sidiff.revision.api.IComplementationPlan;
 import org.sidiff.revision.common.logging.util.LogTime;
 import org.sidiff.revision.difference.Change;
 import org.sidiff.revision.editrules.impact.graph.GraphActionImpactAnalysis;
 import org.sidiff.revision.editrules.impact.graph.PotentialGraphActionImpactAnalysis;
 import org.sidiff.revision.editrules.recognition.configuration.RecognitionSettings;
 import org.sidiff.revision.impact.analysis.ImpactAnalyzes;
-import org.sidiff.revision.repair.api.IRepairPlan;
 import org.sidiff.revision.repair.api.peo.configuration.PEORepairSettings;
 import org.sidiff.revision.repair.complement.construction.ComplementRule;
 import org.sidiff.revision.repair.complement.peo.configuration.ComplementFinderSettings;
@@ -60,7 +60,7 @@ public class PEORepairCaculation {
 		}
 	}
 	
-	public List<IRepairPlan> findRepairs(LogTime complementMatchingTimer) {
+	public List<IComplementationPlan> findRepairs(LogTime complementMatchingTimer) {
 		RecognitionSettings recognitionSettings = complementFinderSettings.getRecognitionEngineSettings();
 		
 		PotentialGraphActionImpactAnalysis historicalPotentialImpact = new PotentialGraphActionImpactAnalysis(
@@ -76,7 +76,7 @@ public class PEORepairCaculation {
 		repairCount = 0;
 		
 		if (recognitionSettings.hasPotentialImpact()) {
-			List<IRepairPlan> repairs = new ArrayList<>();
+			List<IComplementationPlan> repairs = new ArrayList<>();
 			
 			for(ComplementRule complement : complementFinder.findComplementRules()) {
 				complementMatchingTimer.start();

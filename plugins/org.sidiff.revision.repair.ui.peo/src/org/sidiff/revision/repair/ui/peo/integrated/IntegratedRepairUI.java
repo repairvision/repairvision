@@ -7,7 +7,7 @@ import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.IWorkbenchPartSite;
-import org.sidiff.revision.repair.api.RepairJob;
+import org.sidiff.revision.api.ComplementationJob;
 import org.sidiff.revision.repair.ui.controls.basic.BasicRepairViewerUI;
 import org.sidiff.validation.constraint.api.util.Validation;
 import org.sidiff.validation.constraint.interpreter.ui.widgets.ValidationWidget;
@@ -66,7 +66,7 @@ public class IntegratedRepairUI extends BasicRepairViewerUI<IntegratedRepairAppl
 	}
 
 	@Override
-	public void resultChanged(RepairJob<?> repairJob) {
+	public void resultChanged(ComplementationJob<?> repairJob) {
 		assert (repairJob == application.getRepairJob());
 
 		super.resultChanged(repairJob);

@@ -29,7 +29,7 @@ import org.sidiff.common.utilities.ui.util.WorkbenchUtil;
 import org.sidiff.history.analysis.tracing.InconsistencyTrace;
 import org.sidiff.historymodel.History;
 import org.sidiff.historymodel.Problem;
-import org.sidiff.revision.repair.api.RepairJob;
+import org.sidiff.revision.api.ComplementationJob;
 import org.sidiff.revision.repair.ui.controls.basic.BasicRepairViewerUI;
 import org.sidiff.revision.repair.ui.controls.basic.ModelDropWidget;
 import org.sidiff.revision.ui.editors.highlighting.EditorHighlighting;
@@ -196,7 +196,7 @@ public class HistoryRepairUI extends BasicRepairViewerUI<HistoryRepairApplicatio
 	}
 	
 	@Override
-	public void resultChanged(RepairJob<?> repairJob) {
+	public void resultChanged(ComplementationJob<?> repairJob) {
 		assert (repairJob  == application.getRepairJob());
 		
 		super.resultChanged(repairJob);

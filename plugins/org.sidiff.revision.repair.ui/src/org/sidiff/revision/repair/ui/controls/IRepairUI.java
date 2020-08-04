@@ -8,7 +8,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.IWorkbenchPartSite;
 import org.sidiff.common.utilities.ui.widgets.IDisposableControl;
 import org.sidiff.common.utilities.ui.widgets.IUnsetableControl;
-import org.sidiff.revision.repair.api.RepairJob;
+import org.sidiff.revision.api.ComplementationJob;
 import org.sidiff.revision.repair.ui.app.IRepairApplication;
 import org.sidiff.revision.repair.ui.app.IResultChangedListener;
 
@@ -21,7 +21,7 @@ import org.sidiff.revision.repair.ui.app.IResultChangedListener;
  *            The application which controls the UI access.
  */
 public interface IRepairUI<A extends IRepairApplication<?, ?>> 
-			extends IUnsetableControl, IResultChangedListener<RepairJob<?>>, IDisposableControl {
+			extends IUnsetableControl, IResultChangedListener<ComplementationJob<?>>, IDisposableControl {
 
 	/**
 	 * @param application

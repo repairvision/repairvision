@@ -7,7 +7,7 @@ import java.util.List;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.henshin.model.Parameter;
 import org.eclipse.swt.graphics.Image;
-import org.sidiff.revision.repair.api.IRepairPlan;
+import org.sidiff.revision.api.IComplementationPlan;
 import org.sidiff.revision.repair.ui.Activator;
 import org.sidiff.revision.repair.ui.provider.IHighlightableElement;
 
@@ -31,10 +31,10 @@ public class ParameterItem implements IItemProvider, IHighlightableElement {
 
 	@Override
 	public String getText() {
-		IRepairPlan repairPlan = parent.getRepairPlanItem().getRepairPlan();
+		IComplementationPlan complementationPlan = parent.getRepairPlanItem().getRepairPlan();
 		int currentDomainSize = parent.getRepairPlanItem().getRepairPlan().getParameterDomain(parameter).size();
 		
-		if (repairPlan.isSetParameter(parameter)) {
+		if (complementationPlan.isSetParameter(parameter)) {
 			return "Assigned Parameter [" + currentDomainSize + " out of " + domainSize + "]: " + parameter.getName();
 		} else {
 			return "Unassigned Parameter [" + currentDomainSize + " out of " +  domainSize + "]: " + parameter.getName();
@@ -83,7 +83,7 @@ public class ParameterItem implements IItemProvider, IHighlightableElement {
 		return parameter;
 	}
 	
-	public IRepairPlan getRepairPlan() {
+	public IComplementationPlan getRepairPlan() {
 		return parent.getRepairPlanItem().getRepairPlan();
 	}
 	

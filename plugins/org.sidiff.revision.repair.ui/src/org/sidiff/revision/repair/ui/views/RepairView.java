@@ -14,13 +14,13 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.part.ViewPart;
-import org.sidiff.revision.repair.api.RepairJob;
+import org.sidiff.revision.api.ComplementationJob;
 import org.sidiff.revision.repair.ui.app.IResultChangedListener;
 import org.sidiff.revision.repair.ui.config.UserInterfaceProvider;
 import org.sidiff.revision.repair.ui.config.RepairPreferencePage;
 import org.sidiff.revision.repair.ui.controls.IRepairUI;
 
-public class RepairView extends ViewPart implements IResultChangedListener<RepairJob<?>> {
+public class RepairView extends ViewPart implements IResultChangedListener<ComplementationJob<?>> {
 
 	public static final String ID = "org.sidiff.revision.repair.lifting.ui.views.RepairView";
 
@@ -124,7 +124,7 @@ public class RepairView extends ViewPart implements IResultChangedListener<Repai
 	}
 
 	@Override
-	public void resultChanged(RepairJob<?> repairJob) {
+	public void resultChanged(ComplementationJob<?> repairJob) {
 		presentation.resultChanged(repairJob);
 	}
 	

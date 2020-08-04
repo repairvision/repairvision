@@ -14,13 +14,13 @@ import org.eclipse.emf.henshin.model.Parameter;
 import org.eclipse.emf.henshin.model.ParameterKind;
 import org.eclipse.emf.henshin.model.Rule;
 import org.sidiff.common.utilities.henshin.HenshinRuleAnalysisUtil;
+import org.sidiff.revision.api.IComplementationPlan;
 import org.sidiff.revision.difference.Change;
 import org.sidiff.revision.editrules.recognition.match.RecognitionEdgeMatch;
 import org.sidiff.revision.editrules.recognition.match.RecognitionMatch;
 import org.sidiff.revision.editrules.recognition.match.RecognitionNodeMatch;
 import org.sidiff.revision.editrules.recognition.match.RecognitionNodeMultiMatch;
 import org.sidiff.revision.editrules.recognition.match.RecognitionNodeSingleMatch;
-import org.sidiff.revision.repair.api.IRepairPlan;
 import org.sidiff.revision.repair.complement.construction.ComplementRule;
 import org.sidiff.revision.repair.complement.util.ParameterBinding;
 
@@ -29,7 +29,7 @@ import org.sidiff.revision.repair.complement.util.ParameterBinding;
  * 
  * @author Manuel Ohrndorf
  */
-public class RepairPlan implements IRepairPlan {
+public class RepairPlan implements IComplementationPlan {
 	
 	/**
 	 * The rule that contains the repair changes.

@@ -1,13 +1,13 @@
 package org.sidiff.revision.repair.ui.app;
 
 import org.eclipse.emf.henshin.interpreter.Match;
-import org.sidiff.revision.repair.api.IRepairFacade;
-import org.sidiff.revision.repair.api.IRepairPlan;
-import org.sidiff.revision.repair.api.IRepairSettings;
-import org.sidiff.revision.repair.api.RepairJob;
+import org.sidiff.revision.api.ComplementationJob;
+import org.sidiff.revision.api.IComplementationFacade;
+import org.sidiff.revision.api.IComplementationPlan;
+import org.sidiff.revision.api.IComplementationSettings;
 
 /**
- * Interface between the UI and the {@link IRepairFacade}.
+ * Interface between the UI and the {@link IComplementationFacade}.
  * 
  * @author Manuel Ohrndorf
  *
@@ -16,13 +16,13 @@ import org.sidiff.revision.repair.api.RepairJob;
  * @param <F>
  *            The kind of repair settings.
  */
-public interface IRepairApplication<J extends RepairJob<?>, F extends IRepairSettings> {
+public interface IRepairApplication<J extends ComplementationJob<?>, F extends IComplementationSettings> {
 
 	/**
 	 * @param repairFacade
 	 *            Access to the Repair calculation.
 	 */
-	void initialize(IRepairFacade<J, F> repairFacade);
+	void initialize(IComplementationFacade<J, F> repairFacade);
 	
 	/**
 	 * @return The actual repair job.
@@ -69,7 +69,7 @@ public interface IRepairApplication<J extends RepairJob<?>, F extends IRepairSet
 	 *            The (full) match of the complement rule.
 	 * @return <code>true</code> if everything was fine; <code>false</code> otherwise.
 	 */
-	boolean applyRepair(IRepairPlan repair, Match match);
+	boolean applyRepair(IComplementationPlan repair, Match match);
 	
 	/**
 	 * Reverts the last repairs.
@@ -80,7 +80,7 @@ public interface IRepairApplication<J extends RepairJob<?>, F extends IRepairSet
 	 * @param repair  The repair based on the inconsistency-inducing change to be rolled back.
 	 * @return <code>true</code> if everything was fine; <code>false</code> otherwise.
 	 */
-	boolean rollbackInconsistencyInducingChanges(IRepairPlan repair);
+	boolean rollbackInconsistencyInducingChanges(IComplementationPlan repair);
 	
 	/**
 	 * Clear application state.

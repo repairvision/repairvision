@@ -8,7 +8,7 @@ import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
-import org.sidiff.revision.repair.api.RepairJob;
+import org.sidiff.revision.api.ComplementationJob;
 import org.sidiff.revision.repair.ui.provider.model.IItemProvider;
 import org.sidiff.revision.repair.ui.provider.model.ParameterValueObjectItem;
 import org.sidiff.revision.repair.ui.provider.model.RepairJobItem;
@@ -45,8 +45,8 @@ public class RepairContentProvider implements IStructuredContentProvider, ITreeC
 		this.viewer = (TreeViewer) viewer;
 		
 		// Initialize repair model:
-		if (newInput instanceof RepairJob) {
-			RepairJob<?> repairJob = (RepairJob<?>) newInput;
+		if (newInput instanceof ComplementationJob) {
+			ComplementationJob<?> repairJob = (ComplementationJob<?>) newInput;
 			this.input = new RepairJobItem(this.viewer, repairJob);
 		}
 	}
@@ -97,7 +97,7 @@ public class RepairContentProvider implements IStructuredContentProvider, ITreeC
 	public Object[] getElements(Object inputElement) {
 		
 		// Repairs:
-		if (inputElement instanceof RepairJob) {
+		if (inputElement instanceof ComplementationJob) {
 			return input.getChildren();
 		}
 		

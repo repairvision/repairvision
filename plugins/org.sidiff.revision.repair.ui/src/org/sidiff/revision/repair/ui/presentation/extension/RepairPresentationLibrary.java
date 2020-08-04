@@ -7,7 +7,7 @@ import java.util.Map;
 
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.Platform;
-import org.sidiff.revision.repair.api.IRepairFacade;
+import org.sidiff.revision.api.IComplementationFacade;
 import org.sidiff.revision.repair.ui.controls.IRepairUI;
 
 /**
@@ -53,7 +53,7 @@ public class RepairPresentationLibrary {
 
 	/**
 	 * @param id
-	 *            The unique identifier of the {@link IRepairFacade}.
+	 *            The unique identifier of the {@link IComplementationFacade}.
 	 * @return The corresponding {@link IRepairUI} extensions or <code>null</code>.
 	 */
 	public static RepairPresentationEntry getEntry(String id) {

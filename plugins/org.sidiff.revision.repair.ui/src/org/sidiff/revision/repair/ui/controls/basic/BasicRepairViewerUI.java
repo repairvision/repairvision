@@ -28,8 +28,8 @@ import org.eclipse.ui.dialogs.PreferencesUtil;
 import org.eclipse.ui.part.DrillDownAdapter;
 import org.sidiff.common.utilities.emf.EMFStorage;
 import org.sidiff.common.utilities.ui.util.WorkbenchUtil;
-import org.sidiff.revision.repair.api.IRepairPlan;
-import org.sidiff.revision.repair.api.RepairJob;
+import org.sidiff.revision.api.ComplementationJob;
+import org.sidiff.revision.api.IComplementationPlan;
 import org.sidiff.revision.repair.ui.Activator;
 import org.sidiff.revision.repair.ui.app.IRepairApplication;
 import org.sidiff.revision.repair.ui.config.RepairPreferencePage;
@@ -179,7 +179,7 @@ public class BasicRepairViewerUI<A extends IRepairApplication<?, ?>> extends Bas
 					Object selected = ((IStructuredSelection) selection).getFirstElement();
 
 					if (selected instanceof RepairPlanItem) {
-						IRepairPlan repair = ((RepairPlanItem) selected).getRepairPlan();
+						IComplementationPlan repair = ((RepairPlanItem) selected).getRepairPlan();
 						List<Match> matches = repair.getComplementMatches();
 						
 						if (matches.size() == 1) {
@@ -229,7 +229,7 @@ public class BasicRepairViewerUI<A extends IRepairApplication<?, ?>> extends Bas
 					Object selected = ((IStructuredSelection) selection).getFirstElement();
 
 					if (selected instanceof RepairPlanItem) {
-						IRepairPlan repair = ((RepairPlanItem) selected).getRepairPlan();
+						IComplementationPlan repair = ((RepairPlanItem) selected).getRepairPlan();
 						
 						if (application.rollbackInconsistencyInducingChanges(repair)) {
 							WorkbenchUtil.showMessage("Inconsistency-inducing changes successfully undone!");
@@ -446,7 +446,7 @@ public class BasicRepairViewerUI<A extends IRepairApplication<?, ?>> extends Bas
 	}
 	
 	@Override
-	public void resultChanged(RepairJob<?> repairJob) {
+	public void resultChanged(ComplementationJob<?> repairJob) {
 		
 		// NOTE: Unset old comparator:
 		// - set input triggers compare -> new data with old comparator

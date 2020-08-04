@@ -1,0 +1,21 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: ReVision API
+Bundle-SymbolicName: org.sidiff.revision.api;singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Bundle-Activator: org.sidiff.revision.api.Activator
+Export-Package: org.sidiff.revision.api,
+ org.sidiff.revision.api.extensions,
+ org.sidiff.revision.api.ranking,
+ org.sidiff.revision.api.undo,
+ org.sidiff.revision.api.util
+Require-Bundle: org.eclipse.core.runtime,
+ org.eclipse.ui,
+ org.sidiff.common.utilities;visibility:=reexport,
+ org.sidiff.revision.difference.api;visibility:=reexport,
+ org.sidiff.history.revision;visibility:=reexport,
+ org.sidiff.revision.editrules.rollback,
+ org.eclipse.emf.henshin.interpreter
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-ActivationPolicy: lazy
+Automatic-Module-Name: org.sidiff.revision.api

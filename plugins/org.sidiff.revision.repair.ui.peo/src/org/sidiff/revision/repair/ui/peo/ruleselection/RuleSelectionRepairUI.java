@@ -12,7 +12,7 @@ import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.IWorkbenchPartSite;
-import org.sidiff.revision.repair.api.RepairJob;
+import org.sidiff.revision.api.ComplementationJob;
 import org.sidiff.revision.repair.ui.controls.basic.BasicRepairViewerUI;
 import org.sidiff.revision.repair.ui.controls.basic.ModelDropWidget;
 import org.sidiff.revision.repair.ui.controls.basic.ModelVersionsDropWidget;
@@ -140,7 +140,7 @@ public class RuleSelectionRepairUI extends BasicRepairViewerUI<RuleSelectionRepa
 	}
 	
 	@Override
-	public void resultChanged(RepairJob<?> repairJob) {
+	public void resultChanged(ComplementationJob<?> repairJob) {
 		assert (repairJob  == application.getRepairJob());
 		
 		super.resultChanged(repairJob);

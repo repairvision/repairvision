@@ -8,17 +8,17 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.sidiff.common.utilities.ui.util.WorkbenchUtil;
+import org.sidiff.revision.api.ComplementationJob;
+import org.sidiff.revision.api.IComplementationSettings;
 import org.sidiff.revision.difference.api.settings.DifferenceSettings;
 import org.sidiff.revision.editrules.project.registry.RulebaseRegistry;
-import org.sidiff.revision.repair.api.IRepairSettings;
-import org.sidiff.revision.repair.api.RepairJob;
 import org.sidiff.revision.repair.ui.app.IRepairApplication;
 import org.sidiff.revision.repair.ui.app.IResultChangedListener;
 import org.sidiff.revision.repair.ui.config.RepairPreferencePage;
 import org.sidiff.validation.constraint.interpreter.IConstraint;
 import org.sidiff.validation.constraint.project.registry.ConstraintLibraryRegistry;
 
-public abstract class EclipseResourceRepairApplication<J extends RepairJob<?>, F extends IRepairSettings> implements IRepairApplication<J, F> {
+public abstract class EclipseResourceRepairApplication<J extends ComplementationJob<?>, F extends IComplementationSettings> implements IRepairApplication<J, F> {
 
 	protected List<IResultChangedListener<J>> listeners = new ArrayList<>();
 	

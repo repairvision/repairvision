@@ -7,7 +7,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.henshin.interpreter.Match;
 import org.eclipse.swt.graphics.Image;
 import org.sidiff.common.utilities.ui.util.NameUtil;
-import org.sidiff.revision.repair.api.IRepairPlan;
+import org.sidiff.revision.api.IComplementationPlan;
 import org.sidiff.revision.repair.ui.Activator;
 import org.sidiff.revision.repair.ui.provider.IHighlightableElement;
 
@@ -17,7 +17,7 @@ public class RepairPlanItem implements IItemProvider, IHighlightableElement {
 	
 	protected RepairJobItem repairJob;
 	
-	protected IRepairPlan repairPlan;
+	protected IComplementationPlan complementationPlan;
 	
 	protected ParametersItem parameters;
 	
@@ -27,9 +27,9 @@ public class RepairPlanItem implements IItemProvider, IHighlightableElement {
 	
 	protected IItemProvider[] children;
 	
-	public RepairPlanItem(RepairJobItem repairJob, IRepairPlan repairPlan) {
+	public RepairPlanItem(RepairJobItem repairJob, IComplementationPlan complementationPlan) {
 		this.repairJob = repairJob;
-		this.repairPlan = repairPlan;
+		this.complementationPlan = complementationPlan;
 		this.parameters = new ParametersItem(this);
 		this.historic = new ChangeSetRecognized(this);
 		this.complementing = new ChangeSetComplementing(this);
@@ -38,9 +38,9 @@ public class RepairPlanItem implements IItemProvider, IHighlightableElement {
 	@Override
 	public String getText() {
 		return "Repair "
-				+ "[" + repairPlan.getRecognizedChanges().size() + "/" + 
-				+ repairPlan.getComplementingChanges().size() + "] "
-				+ NameUtil.beautifyName(repairPlan.getRecognizedEditRule().getName());
+				+ "[" + complementationPlan.getRecognizedChanges().size() + "/" + 
+				+ complementationPlan.getComplementingChanges().size() + "] "
+				+ NameUtil.beautifyName(complementationPlan.getRecognizedEditRule().getName());
 	}
 
 	@Override
@@ -68,8 +68,8 @@ public class RepairPlanItem implements IItemProvider, IHighlightableElement {
 		return repairJob;
 	}
 	
-	public IRepairPlan getRepairPlan() {
-		return repairPlan;
+	public IComplementationPlan getRepairPlan() {
+		return complementationPlan;
 	}
 
 	@Override

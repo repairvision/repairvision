@@ -7,10 +7,10 @@ import java.util.List;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.sidiff.history.analysis.tracing.InconsistencyTrace;
 import org.sidiff.history.revision.impl.Revision;
+import org.sidiff.revision.api.IComplementationPlan;
+import org.sidiff.revision.api.util.ComplementMatching;
+import org.sidiff.revision.api.util.RecognitionMatching;
 import org.sidiff.revision.difference.api.settings.DifferenceSettings;
-import org.sidiff.revision.repair.api.IRepairPlan;
-import org.sidiff.revision.repair.api.util.ComplementMatching;
-import org.sidiff.revision.repair.api.util.RecognitionMatching;
 import org.sidiff.revision.repair.history.evaluation.oracle.DeveloperIntentionOracle;
 import org.sidiff.validation.constraint.api.util.RepairValidation;
 
@@ -22,12 +22,12 @@ import org.sidiff.validation.constraint.api.util.RepairValidation;
 public class DeveloperIntentionOracleDriver {
 	
 	public static class HistoricalObservable {
-		List<IRepairPlan> repairs;
-		List<IRepairPlan> undos;
+		List<IComplementationPlan> repairs;
+		List<IComplementationPlan> undos;
 	}
 	
 	public static HistoricalObservable getHistoricallyObservable(InconsistencyTrace repaired, 
-			List<IRepairPlan> repairs, Collection<RepairValidation> repairActions, 
+			List<IComplementationPlan> repairs, Collection<RepairValidation> repairActions, 
 			boolean findFirst, DifferenceSettings settings) {
 		
 		return getHistoricallyObservable(
@@ -37,7 +37,7 @@ public class DeveloperIntentionOracleDriver {
 	
 	private static HistoricalObservable getHistoricallyObservable(
 			Resource modelCurrent, Resource modelResolved, 
-			List<IRepairPlan> repairs, Collection<RepairValidation> repairActions, 
+			List<IComplementationPlan> repairs, Collection<RepairValidation> repairActions, 
 			boolean findFirst, DifferenceSettings settings) {
 		
 		HistoricalObservable observable = new HistoricalObservable();
@@ -52,14 +52,14 @@ public class DeveloperIntentionOracleDriver {
 		return observable;
 	}
 	
-	private static List<IRepairPlan> getHistoricallyObservableRepair(
-			DeveloperIntentionOracle oracle, List<IRepairPlan> repairs, 
+	private static List<IComplementationPlan> getHistoricallyObservableRepair(
+			DeveloperIntentionOracle oracle, List<IComplementationPlan> repairs, 
 			Collection<RepairValidation> repairActions, boolean findFirst) {
 		
-		List<IRepairPlan> observable = new ArrayList<>();
+		List<IComplementationPlan> observable = new ArrayList<>();
 		
 		// The evolutionStep in which inconsistency has been resolved historically
-		for (IRepairPlan repair : repairs) {
+		for (IComplementationPlan repair : repairs) {
 			if (oracle.isHistoricallyObservableRepair(
 					new ComplementMatching(repair),
 					repairActions)) {
@@ -74,14 +74,14 @@ public class DeveloperIntentionOracleDriver {
 		return observable;
 	}
 	
-	private static List<IRepairPlan> getHistoricallyObservableUndos(
-			DeveloperIntentionOracle oracle, List<IRepairPlan> repairs, 
+	private static List<IComplementationPlan> getHistoricallyObservableUndos(
+			DeveloperIntentionOracle oracle, List<IComplementationPlan> repairs, 
 			Collection<RepairValidation> repairActions, boolean findFirst) {
 		
-		List<IRepairPlan> observable = new ArrayList<>();
+		List<IComplementationPlan> observable = new ArrayList<>();
 		
 		// The evolutionStep in which inconsistency has been resolved historically
-		for (IRepairPlan repair : repairs) {
+		for (IComplementationPlan repair : repairs) {
 			if (oracle.isHistoricallyObservableUndo(
 					new RecognitionMatching(repair),
 					repairActions)) {

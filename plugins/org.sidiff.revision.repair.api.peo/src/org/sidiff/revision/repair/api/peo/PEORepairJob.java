@@ -5,17 +5,17 @@ import java.util.List;
 
 import org.eclipse.emf.henshin.interpreter.EGraph;
 import org.sidiff.history.revision.IRevision;
-import org.sidiff.revision.repair.api.IRepairPlan;
-import org.sidiff.revision.repair.api.RepairJob;
+import org.sidiff.revision.api.ComplementationJob;
+import org.sidiff.revision.api.IComplementationPlan;
 import org.sidiff.validation.constraint.api.util.RepairValidation;
 import org.sidiff.validation.constraint.api.util.Validation;
 
-public class PEORepairJob extends RepairJob<IRepairPlan> {
+public class PEORepairJob extends ComplementationJob<IComplementationPlan> {
 
 	protected Collection<? extends Validation> validations;
 	
 	public PEORepairJob(List<? extends Validation> validations, 
-			List<IRepairPlan> repairs, IRevision revision, EGraph targetGraph) {
+			List<IComplementationPlan> repairs, IRevision revision, EGraph targetGraph) {
 		super(repairs, revision, targetGraph);
 		this.validations = validations;
 	}

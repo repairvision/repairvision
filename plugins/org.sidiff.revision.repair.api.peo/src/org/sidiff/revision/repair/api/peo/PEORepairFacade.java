@@ -5,7 +5,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.sidiff.history.revision.impl.Revision;
-import org.sidiff.revision.repair.api.IRepairFacade;
+import org.sidiff.revision.api.IComplementationFacade;
 import org.sidiff.revision.repair.api.peo.configuration.PEORepairSettings;
 
 /**
@@ -13,10 +13,10 @@ import org.sidiff.revision.repair.api.peo.configuration.PEORepairSettings;
  * 
  * @author Manuel Ohrndorf
  */
-public class PEORepairFacade implements IRepairFacade<PEORepairJob, PEORepairSettings> {
+public class PEORepairFacade implements IComplementationFacade<PEORepairJob, PEORepairSettings> {
 
 	@Override
-	public PEORepairJob getRepairs(URI uriModelA, URI uriModelB, PEORepairSettings settings) {
+	public PEORepairJob getComplementations(URI uriModelA, URI uriModelB, PEORepairSettings settings) {
 		
 		// Initialize:
 		ResourceSet differenceRSS = new ResourceSetImpl();
@@ -27,7 +27,7 @@ public class PEORepairFacade implements IRepairFacade<PEORepairJob, PEORepairSet
 	}
 	
 	@Override
-	public PEORepairJob getRepairs(Resource modelA, Resource modelB, PEORepairSettings settings) {
+	public PEORepairJob getComplementations(Resource modelA, Resource modelB, PEORepairSettings settings) {
 		
 		if (modelA == null) {
 			modelA = Revision.createEmptyModel(modelB);
@@ -35,4 +35,5 @@ public class PEORepairFacade implements IRepairFacade<PEORepairJob, PEORepairSet
 		
 		return new PEORepairCalculationEngine(settings, modelA, modelB).getRepairs();
 	}
+
 }

@@ -4,8 +4,8 @@ import java.util.List;
 
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.graphics.Image;
-import org.sidiff.revision.repair.api.IRepairPlan;
-import org.sidiff.revision.repair.api.RepairJob;
+import org.sidiff.revision.api.ComplementationJob;
+import org.sidiff.revision.api.IComplementationPlan;
 import org.sidiff.revision.repair.ui.Activator;
 
 public class RepairJobItem implements IItemProvider {
@@ -16,13 +16,13 @@ public class RepairJobItem implements IItemProvider {
 	
 	protected TreeViewer viewer;
 	
-	protected RepairJob<? extends IRepairPlan> repairJob;
+	protected ComplementationJob<? extends IComplementationPlan> complementationJob;
 	
 	protected RepairPlanItem[] repairs;
 
-	public RepairJobItem(TreeViewer viewer, RepairJob<? extends IRepairPlan> repairJob) {
+	public RepairJobItem(TreeViewer viewer, ComplementationJob<? extends IComplementationPlan> repairJob) {
 		this.viewer = viewer;
-		this.repairJob = repairJob;
+		this.complementationJob = repairJob;
 	}
 
 	@Override
@@ -37,18 +37,18 @@ public class RepairJobItem implements IItemProvider {
 	
 	@Override
 	public boolean hasChildren(Object element) {
-		return repairJob.getRepairs().size() > 0;
+		return complementationJob.getComplementationPlans().size() > 0;
 	}
 
 	@Override
 	public Object[] getChildren() {
 		
 		if (repairs == null) {
-			List<? extends IRepairPlan> repairPlans = repairJob.getRepairs();
-			this.repairs = new RepairPlanItem[repairPlans.size()];
+			List<? extends IComplementationPlan> complementationPlans = complementationJob.getComplementationPlans();
+			this.repairs = new RepairPlanItem[complementationPlans.size()];
 			
 			for (int i = 0; i < repairs.length; i++) {
-				repairs[i] = new RepairPlanItem(this, repairPlans.get(i));
+				repairs[i] = new RepairPlanItem(this, complementationPlans.get(i));
 			}
 		}
 		

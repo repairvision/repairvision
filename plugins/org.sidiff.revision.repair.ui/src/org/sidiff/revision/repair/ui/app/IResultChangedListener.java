@@ -1,8 +1,8 @@
 package org.sidiff.revision.repair.ui.app;
 
-import org.sidiff.revision.repair.api.RepairJob;
+import org.sidiff.revision.api.ComplementationJob;
 
-public interface IResultChangedListener<J extends RepairJob<?>> {
+public interface IResultChangedListener<J extends ComplementationJob<?>> {
 
 	void resultChanged(J repairJob);
 }

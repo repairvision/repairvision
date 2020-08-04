@@ -12,10 +12,10 @@ import org.eclipse.emf.henshin.interpreter.impl.EGraphImpl;
 import org.eclipse.emf.henshin.model.Rule;
 import org.sidiff.history.revision.IRevision;
 import org.sidiff.history.revision.impl.Revision;
+import org.sidiff.revision.api.IComplementationPlan;
 import org.sidiff.revision.common.logging.util.LogTime;
 import org.sidiff.revision.editrules.recognition.configuration.RecognitionSettings;
 import org.sidiff.revision.impact.analysis.ImpactAnalyzes;
-import org.sidiff.revision.repair.api.IRepairPlan;
 import org.sidiff.revision.repair.api.peo.configuration.PEORepairSettings;
 import org.sidiff.revision.repair.complement.peo.finder.ComplementFinderEngine;
 import org.sidiff.revision.repair.impact.RepairActionImpactScope;
@@ -91,7 +91,7 @@ public class PEORepairCalculationEngine {
 		ComplementFinderEngine complementFinderEngine = new ComplementFinderEngine(currentImpactAnalyzes, graphModelB);
 		complementFinderEngine.start();
 		
-		List<IRepairPlan> repairs = new ArrayList<>();
+		List<IComplementationPlan> repairs = new ArrayList<>();
 		
 		LogTime complementMatchingTimer = new LogTime();
 		int potentialEditRules = 0;
@@ -107,7 +107,7 @@ public class PEORepairCalculationEngine {
 			RecognitionSettings recognitionSettings = repairCaculation.getComplementFinderSettings().getRecognitionEngineSettings();
 			
 			if (recognitionSettings.hasPotentialImpact()) {
-				List<IRepairPlan> repairsForEditRule = repairCaculation.findRepairs(complementMatchingTimer);
+				List<IComplementationPlan> repairsForEditRule = repairCaculation.findRepairs(complementMatchingTimer);
 				repairs.addAll(repairsForEditRule);
 				
 				// Evaluation:
