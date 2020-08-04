@@ -1,8 +1,8 @@
 package org.sidiff.revision.repair.api.undo;
 
 import org.sidiff.history.revision.IRevision;
+import org.sidiff.revision.editrules.rollback.RollbackHistoricalChanges;
 import org.sidiff.revision.repair.api.IRepairPlan;
-import org.sidiff.revision.repair.rollback.RollbackHistoricalChanges;
 
 public class RollbackRepairCommand implements IRepairCommand {
 	

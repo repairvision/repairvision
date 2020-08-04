@@ -1,4 +1,4 @@
-package org.sidiff.revision.repair.rollback;
+package org.sidiff.revision.editrules.rollback;
 
 import java.util.Collection;
 import java.util.HashSet;
