@@ -21,9 +21,9 @@ import org.sidiff.revision.api.undo.RollbackCommand;
  * @author Manuel Ohrndorf
  *
  * @param <R>
- *            The kind of {@link IComplementationPlan}.
+ *            The kind of {@link ComplementationPlan}.
  */
-public class ComplementationJob<R extends IComplementationPlan> {
+public class ComplementationJob<R extends ComplementationPlan> {
 
 	/**
 	 * History of applied complements.
@@ -77,7 +77,7 @@ public class ComplementationJob<R extends IComplementationPlan> {
 		this.editStack = complementJob.editStack;
 	}
 
-	public boolean applyComplement(IComplementationPlan complementationPlan, Match match, boolean saveModel) {
+	public boolean applyComplement(ComplementationPlan complementationPlan, Match match, boolean saveModel) {
 
 		// Apply complement:
 		RuleApplication application = new RuleApplicationImpl(engine);
@@ -105,7 +105,7 @@ public class ComplementationJob<R extends IComplementationPlan> {
 		}
 	}
 	
-	public boolean rollbackInconsistencyInducingChanges(IComplementationPlan complement, boolean saveModel) {
+	public boolean rollbackIncomplete(ComplementationPlan complement, boolean saveModel) {
 
 		// rollback inconsistency-inducing changes:
 		RollbackCommand rollbackCommand = new RollbackCommand(complement, revision);
@@ -128,7 +128,7 @@ public class ComplementationJob<R extends IComplementationPlan> {
 
 	}
 
-	public boolean undoUncomplete(boolean saveModel) {
+	public boolean undoLast(boolean saveModel) {
 
 		// Undo complement:
 		if (!editStack.isEmpty()) {

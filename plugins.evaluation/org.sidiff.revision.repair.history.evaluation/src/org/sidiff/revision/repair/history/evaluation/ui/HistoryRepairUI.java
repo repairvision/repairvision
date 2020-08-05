@@ -30,13 +30,13 @@ import org.sidiff.history.analysis.tracing.InconsistencyTrace;
 import org.sidiff.historymodel.History;
 import org.sidiff.historymodel.Problem;
 import org.sidiff.revision.api.ComplementationJob;
-import org.sidiff.revision.repair.ui.controls.basic.BasicRepairViewerUI;
-import org.sidiff.revision.repair.ui.controls.basic.ModelDropWidget;
 import org.sidiff.revision.ui.editors.highlighting.EditorHighlighting;
 import org.sidiff.revision.ui.editors.highlighting.ISelectionHighlightingAdapter;
+import org.sidiff.revision.ui.viewer.controls.basic.BasicComplementationViewerUI;
+import org.sidiff.revision.ui.viewer.controls.basic.ModelDropWidget;
 import org.sidiff.validation.constraint.interpreter.ui.widgets.ValidationWidget;
 
-public class HistoryRepairUI extends BasicRepairViewerUI<HistoryRepairApplication> {
+public class HistoryRepairUI extends BasicComplementationViewerUI<HistoryRepairApplication> {
 
 	/**
 	 * Shows the abstract repairs.
@@ -197,15 +197,15 @@ public class HistoryRepairUI extends BasicRepairViewerUI<HistoryRepairApplicatio
 	
 	@Override
 	public void resultChanged(ComplementationJob<?> repairJob) {
-		assert (repairJob  == application.getRepairJob());
+		assert (repairJob  == application.getComplementationJob());
 		
 		super.resultChanged(repairJob);
-		validationWidget.setInput(application.getRepairJob().getValidations());
+		validationWidget.setInput(application.getComplementationJob().getValidations());
 	}
 	
 	public void clearResults() {
 		validationWidget.clear();
-		viewer_repairs.setInput(null);
+		viewer_complementations.setInput(null);
 	}
 
 	@Override

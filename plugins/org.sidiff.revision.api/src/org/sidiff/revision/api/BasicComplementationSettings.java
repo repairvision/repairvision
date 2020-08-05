@@ -1,6 +1,6 @@
 package org.sidiff.revision.api;
 
-public class BasicComplementationSettings implements IComplementationSettings {
+public class BasicComplementationSettings implements ComplementationSettings {
 
 	/**
 	 * Save the calculated model difference.

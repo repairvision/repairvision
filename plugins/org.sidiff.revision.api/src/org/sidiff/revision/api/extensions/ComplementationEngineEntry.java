@@ -4,19 +4,19 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.Platform;
 import org.sidiff.revision.api.ComplementationJob;
-import org.sidiff.revision.api.IComplementationFacade;
-import org.sidiff.revision.api.IComplementationPlan;
-import org.sidiff.revision.api.IComplementationSettings;
+import org.sidiff.revision.api.ComplementationFacade;
+import org.sidiff.revision.api.ComplementationPlan;
+import org.sidiff.revision.api.ComplementationSettings;
 
 /**
- * Wraps a {@link IComplementationFacade} extension.
+ * Wraps a {@link ComplementationFacade} extension.
  * 
  * @author Manuel Ohrndorf
  */
 public class ComplementationEngineEntry {
 	
 	/**
-	 * The {@link IComplementationFacade} extension point identifier.
+	 * The {@link ComplementationFacade} extension point identifier.
 	 */
 	public static final String EXTENSION_POINT_ID = ExtensionPointIDs.COMPLEMENTATION_ENGINE;
 	
@@ -26,17 +26,17 @@ public class ComplementationEngineEntry {
 	private IConfigurationElement extension;
 	
 	/**
-	 * Initializes a new {@link IComplementationFacade} extension wrapper.
+	 * Initializes a new {@link ComplementationFacade} extension wrapper.
 	 * 
 	 * @param extension
-	 *            The {@link IComplementationFacade} extension to wrap.
+	 *            The {@link ComplementationFacade} extension to wrap.
 	 */
 	public ComplementationEngineEntry(IConfigurationElement extension) {
 		this.extension = extension;
 	}
 	
 	/**
-	 * Initializes a new {@link IComplementationFacade} extension wrapper.
+	 * Initializes a new {@link ComplementationFacade} extension wrapper.
 	 * 
 	 * @param id
 	 *            The unique identifier of the complementation engine.
@@ -63,9 +63,9 @@ public class ComplementationEngineEntry {
 	 * @return An instance of the complementation facade.
 	 */
 	@SuppressWarnings("unchecked")
-	public IComplementationFacade<ComplementationJob<? extends IComplementationPlan>, IComplementationSettings> getComplementationFacade() {
+	public ComplementationFacade<ComplementationJob<? extends ComplementationPlan>, ComplementationSettings> getComplementationFacade() {
 		try {
-			return (IComplementationFacade<ComplementationJob<? extends IComplementationPlan>, IComplementationSettings>) extension.createExecutableExtension("facade");
+			return (ComplementationFacade<ComplementationJob<? extends ComplementationPlan>, ComplementationSettings>) extension.createExecutableExtension("facade");
 		} catch (CoreException e) {
 			e.printStackTrace();
 		}

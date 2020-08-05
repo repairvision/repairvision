@@ -8,13 +8,13 @@ import org.eclipse.emf.henshin.model.GraphElement;
 import org.eclipse.emf.henshin.model.Node;
 import org.sidiff.common.utilities.henshin.HenshinRuleAnalysisUtil;
 import org.sidiff.common.utilities.java.JUtil;
-import org.sidiff.revision.api.IComplementationPlan;
+import org.sidiff.revision.api.ComplementationPlan;
 
 public class RecognitionMatching implements IMatching {
 
-	private IComplementationPlan complementationPlan;
+	private ComplementationPlan complementationPlan;
 	
-	public RecognitionMatching(IComplementationPlan complementationPlan) {
+	public RecognitionMatching(ComplementationPlan complementationPlan) {
 		this.complementationPlan = complementationPlan;
 	}
 	

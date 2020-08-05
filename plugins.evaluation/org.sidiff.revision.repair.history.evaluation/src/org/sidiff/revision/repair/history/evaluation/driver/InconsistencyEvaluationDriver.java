@@ -14,8 +14,8 @@ import org.sidiff.common.utilities.java.JUtil;
 import org.sidiff.common.utilities.ui.util.InfoConsole;
 import org.sidiff.generic.matcher.uuid.UUIDResource;
 import org.sidiff.history.analysis.tracing.InconsistencyTrace;
-import org.sidiff.revision.api.IComplementationFacade;
-import org.sidiff.revision.api.IComplementationPlan;
+import org.sidiff.revision.api.ComplementationFacade;
+import org.sidiff.revision.api.ComplementationPlan;
 import org.sidiff.revision.common.logging.table.LogTable;
 import org.sidiff.revision.difference.api.settings.DifferenceSettings;
 import org.sidiff.revision.impact.changetree.IDecisionNode;
@@ -38,7 +38,7 @@ public class InconsistencyEvaluationDriver {
 	public static RepairJob calculateRepairs(
 			boolean saveDifference, boolean validateDifference, boolean searchOnlyFirstObservable,
 			HistoryInfo history, 
-			IComplementationFacade<RepairJob, RepairSettings> repairFacade,
+			ComplementationFacade<RepairJob, RepairSettings> repairFacade,
 			InconsistencyTrace repaired, 
 			Collection<Rule> editRules, 
 			DifferenceSettings matchingSettings, 
@@ -122,7 +122,7 @@ public class InconsistencyEvaluationDriver {
 		InfoConsole.printInfo("Repairs Found: " + repairJob.getComplementationPlans().size());
 		
 		// calculate Ranking:
-		List<IComplementationPlan> repairRanking = new LinkedList<>(repairJob.getComplementationPlans());
+		List<ComplementationPlan> repairRanking = new LinkedList<>(repairJob.getComplementationPlans());
 		repairRanking.sort(repairJob.getRanking());
 		
 		// search historical observable repair:
@@ -143,7 +143,7 @@ public class InconsistencyEvaluationDriver {
 		InfoConsole.printInfo("Best Observable Repair/Undo Positions: " + bestPositionOfObservable);
 		
 		if (bestPositionOfObservable != -1) {
-			IComplementationPlan bestObservableRepair = (IComplementationPlan) bestObservable[1];
+			ComplementationPlan bestObservableRepair = (ComplementationPlan) bestObservable[1];
 			
 			log.append(InconsistenciesLog.COL_RANKING_OF_BEST_HOR, bestPositionOfObservable);
 			log.append(InconsistenciesLog.COL_BEST_HOR_IS_UNDO, bestObservable[2]);
@@ -166,10 +166,10 @@ public class InconsistencyEvaluationDriver {
 //		log.append("Count of Repair Tree Combinations", countRepairTreeCombinations(repairJob.getValidations()));
 	}
 	
-	private static String printPositions(List<IComplementationPlan> selectedRepairs, List<IComplementationPlan> allRepairs) {
+	private static String printPositions(List<ComplementationPlan> selectedRepairs, List<ComplementationPlan> allRepairs) {
 		StringBuilder positions = new StringBuilder();
 		
-		for (IComplementationPlan selectedRepair : selectedRepairs) {
+		for (ComplementationPlan selectedRepair : selectedRepairs) {
 			if (selectedRepair != selectedRepairs.get(0)) {
 				positions.append("; ");
 			}
@@ -179,15 +179,15 @@ public class InconsistencyEvaluationDriver {
 		return positions.toString();
 	}
 
-	private static Object[] findBestObservableRepair(HistoricalObservable observable, List<IComplementationPlan> repairRanking) {
+	private static Object[] findBestObservableRepair(HistoricalObservable observable, List<ComplementationPlan> repairRanking) {
 		
 		// Find best observable:
 		int bestPositionOfObservable = Integer.MAX_VALUE;
-		IComplementationPlan bestObservableRepair =  null;
+		ComplementationPlan bestObservableRepair =  null;
 		boolean isUndo = false;
 		
 
-		for (IComplementationPlan observableUndo : observable.undos) {
+		for (ComplementationPlan observableUndo : observable.undos) {
 			int positionOfObservable = repairRanking.indexOf(observableUndo);
 			
 			if (positionOfObservable < bestPositionOfObservable) {
@@ -197,7 +197,7 @@ public class InconsistencyEvaluationDriver {
 			}
 		}
 		
-		for (IComplementationPlan observableRepair : observable.repairs) {
+		for (ComplementationPlan observableRepair : observable.repairs) {
 			int positionOfObservable = repairRanking.indexOf(observableRepair);
 			
 			if (positionOfObservable < bestPositionOfObservable) {
@@ -214,7 +214,7 @@ public class InconsistencyEvaluationDriver {
 		}
 	}
 	
-	private static int countUnboudParameters(IComplementationPlan repair) {
+	private static int countUnboudParameters(ComplementationPlan repair) {
 		int count = 0;
 
 		for (Parameter parameter : repair.getParameters()) {

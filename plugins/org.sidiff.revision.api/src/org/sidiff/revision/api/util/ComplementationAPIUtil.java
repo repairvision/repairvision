@@ -7,7 +7,7 @@ import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.GraphElement;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Parameter;
-import org.sidiff.revision.api.IComplementationPlan;
+import org.sidiff.revision.api.ComplementationPlan;
 
 public class ComplementationAPIUtil {
 
@@ -91,7 +91,7 @@ public class ComplementationAPIUtil {
 		return count;
 	}
 	
-	public static int countUnboundParameters(IComplementationPlan complementationPlan) {
+	public static int countUnboundParameters(ComplementationPlan complementationPlan) {
 		int count = 0;
 		
 		for (Parameter parameter : complementationPlan.getParameters()) {

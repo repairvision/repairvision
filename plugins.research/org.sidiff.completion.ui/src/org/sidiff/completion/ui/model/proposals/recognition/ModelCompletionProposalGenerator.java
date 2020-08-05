@@ -25,7 +25,7 @@ import org.sidiff.revision.difference.api.settings.DifferenceSettings;
 import org.sidiff.revision.editrules.complement.matching.finder.ComplementFinderEngine;
 import org.sidiff.revision.editrules.recognition.configuration.RecognitionSettings;
 import org.sidiff.revision.impact.analysis.ImpactAnalyzes;
-import org.sidiff.revision.repair.ui.config.RepairPreferencePage;
+import org.sidiff.revision.ui.configuration.page.ComplementationPreferencePage;
 import org.sidiff.revision.ui.editors.integration.access.ActiveModelEditorAccess;
 
 public class ModelCompletionProposalGenerator {
@@ -72,18 +72,18 @@ public class ModelCompletionProposalGenerator {
 	
 	protected void populateSettings() {
 		if (getCurrentModel() != null) {
-			RepairPreferencePage.populateSettings(getCurrentModel());
+			ComplementationPreferencePage.populateSettings(getCurrentModel());
 		} else if (getHistoricModel() != null) {
-			RepairPreferencePage.populateSettings(getHistoricModel());
+			ComplementationPreferencePage.populateSettings(getHistoricModel());
 		}
 	}
 	
 	protected DifferenceSettings getMatchingSettings() {
-		return RepairPreferencePage.getMatchingSettings();
+		return ComplementationPreferencePage.getMatchingSettings();
 	}
 	
 	protected String getDoumentType() {
-		return RepairPreferencePage.getDoumentType();
+		return ComplementationPreferencePage.getDoumentType();
 	}
 	
 	protected List<Rule> getEditRules() {

@@ -1,0 +1,18 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: ReVision Viewer
+Bundle-SymbolicName: org.sidiff.revision.ui.viewer;singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Bundle-Activator: org.sidiff.revision.ui.viewer.Activator
+Export-Package: org.sidiff.revision.ui.viewer,
+ org.sidiff.revision.ui.viewer.controls.basic,
+ org.sidiff.revision.ui.viewer.provider,
+ org.sidiff.revision.ui.viewer.provider.model,
+ org.sidiff.revision.ui.viewer.views
+Require-Bundle: org.eclipse.emf.henshin.interpreter,
+ org.eclipse.gmf.runtime.diagram.ui,
+ org.sidiff.revision.ui.configuration,
+ org.sidiff.revision.ui.editors.highlighting;visibility:=reexport
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-ActivationPolicy: lazy
+Automatic-Module-Name: org.sidiff.revision.ui

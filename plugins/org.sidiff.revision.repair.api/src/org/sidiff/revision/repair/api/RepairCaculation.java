@@ -8,14 +8,14 @@ import org.eclipse.emf.henshin.interpreter.Match;
 import org.eclipse.emf.henshin.model.Rule;
 import org.sidiff.history.revision.IRevision;
 import org.sidiff.history.revision.util.SymmetricDifferenceUtil;
-import org.sidiff.revision.api.IComplementationPlan;
+import org.sidiff.revision.api.ComplementationPlan;
 import org.sidiff.revision.common.logging.util.LogTime;
 import org.sidiff.revision.difference.Change;
 import org.sidiff.revision.editrules.complement.construction.ComplementRule;
 import org.sidiff.revision.editrules.complement.matching.configuration.ComplementFinderSettings;
 import org.sidiff.revision.editrules.complement.matching.finder.ComplementFinder;
 import org.sidiff.revision.editrules.complement.matching.finder.ComplementFinderEngine;
-import org.sidiff.revision.editrules.complement.plan.ComplementationPlan;
+import org.sidiff.revision.editrules.complement.plan.ComplementationPlanImpl;
 import org.sidiff.revision.editrules.impact.graph.GraphActionImpactAnalysis;
 import org.sidiff.revision.editrules.impact.graph.PotentialGraphActionImpactAnalysis;
 import org.sidiff.revision.editrules.recognition.configuration.RecognitionSettings;
@@ -60,7 +60,7 @@ public class RepairCaculation {
 		}
 	}
 	
-	public List<IComplementationPlan> findRepairs(LogTime complementMatchingTimer) {
+	public List<ComplementationPlan> findRepairs(LogTime complementMatchingTimer) {
 		RecognitionSettings recognitionSettings = complementFinderSettings.getRecognitionEngineSettings();
 		
 		PotentialGraphActionImpactAnalysis historicalPotentialImpact = new PotentialGraphActionImpactAnalysis(
@@ -76,7 +76,7 @@ public class RepairCaculation {
 		repairCount = 0;
 		
 		if (recognitionSettings.hasPotentialImpact()) {
-			List<IComplementationPlan> repairs = new ArrayList<>();
+			List<ComplementationPlan> repairs = new ArrayList<>();
 			
 			for(ComplementRule complement : complementFinder.findComplementRules()) {
 				complementMatchingTimer.start();
@@ -92,7 +92,7 @@ public class RepairCaculation {
 							List<Match> repairMatches = complementFinderEngine.findComplementMatches(complement);
 							
 							if (!repairMatches.isEmpty()) {
-								repairs.add(new ComplementationPlan(complement, repairMatches));
+								repairs.add(new ComplementationPlanImpl(complement, repairMatches));
 								repairCount += repairMatches.size();
 							}
 						}

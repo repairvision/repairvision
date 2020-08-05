@@ -6,16 +6,16 @@ import java.util.List;
 import org.eclipse.emf.henshin.interpreter.EGraph;
 import org.sidiff.history.revision.IRevision;
 import org.sidiff.revision.api.ComplementationJob;
-import org.sidiff.revision.api.IComplementationPlan;
+import org.sidiff.revision.api.ComplementationPlan;
 import org.sidiff.validation.constraint.api.util.RepairValidation;
 import org.sidiff.validation.constraint.api.util.Validation;
 
-public class RepairJob extends ComplementationJob<IComplementationPlan> {
+public class RepairJob extends ComplementationJob<ComplementationPlan> {
 
 	protected Collection<? extends Validation> validations;
 	
 	public RepairJob(List<? extends Validation> validations, 
-			List<IComplementationPlan> repairs, IRevision revision, EGraph targetGraph) {
+			List<ComplementationPlan> repairs, IRevision revision, EGraph targetGraph) {
 		super(repairs, revision, targetGraph);
 		this.validations = validations;
 	}

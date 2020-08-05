@@ -14,7 +14,7 @@ Require-Bundle: org.eclipse.jface.text,
  org.eclipse.emf.ecore;visibility:=reexport,
  org.sidiff.graphpattern.edit,
  org.sidiff.revision.ui.editors.integration,
- org.sidiff.revision.repair.ui,
+ org.sidiff.revision.ui.viewer,
  org.sidiff.revision.editrules.recognition,
  org.sidiff.revision.editrules.complement.matching,
  org.sidiff.revision.editrules.complement,
@@ -26,7 +26,8 @@ Require-Bundle: org.eclipse.jface.text,
  org.eclipse.emf.transaction,
  org.sidiff.common.utilities,
  org.sidiff.revision.editrules.generation,
- org.sidiff.revision.editrules.impact
+ org.sidiff.revision.editrules.impact,
+ org.sidiff.revision.ui.configuration
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Automatic-Module-Name: org.sidiff.completion.ui

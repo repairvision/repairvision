@@ -5,7 +5,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.sidiff.history.revision.impl.Revision;
-import org.sidiff.revision.api.IComplementationFacade;
+import org.sidiff.revision.api.ComplementationFacade;
 import org.sidiff.revision.repair.api.configuration.RepairSettings;
 
 /**
@@ -13,7 +13,7 @@ import org.sidiff.revision.repair.api.configuration.RepairSettings;
  * 
  * @author Manuel Ohrndorf
  */
-public class RepairFacade implements IComplementationFacade<RepairJob, RepairSettings> {
+public class RepairFacade implements ComplementationFacade<RepairJob, RepairSettings> {
 
 	@Override
 	public RepairJob getComplementations(URI uriModelA, URI uriModelB, RepairSettings settings) {

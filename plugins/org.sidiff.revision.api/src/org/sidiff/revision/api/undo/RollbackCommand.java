@@ -1,7 +1,7 @@
 package org.sidiff.revision.api.undo;
 
 import org.sidiff.history.revision.IRevision;
-import org.sidiff.revision.api.IComplementationPlan;
+import org.sidiff.revision.api.ComplementationPlan;
 import org.sidiff.revision.editrules.rollback.RollbackHistoricalChanges;
 
 public class RollbackCommand implements IEditCommand {
@@ -10,7 +10,7 @@ public class RollbackCommand implements IEditCommand {
 	
 	// FIXME: It is not very efficient to store the revision history on the stack!
 	// TODO: Store basic EMF commands for undo!
-	public RollbackCommand(IComplementationPlan complementationPlan, IRevision revision) {
+	public RollbackCommand(ComplementationPlan complementationPlan, IRevision revision) {
 		rollback = new RollbackHistoricalChanges(complementationPlan.getRecognizedChangeSet(), revision);
 	}
 

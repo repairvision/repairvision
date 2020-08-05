@@ -18,7 +18,7 @@ Require-Bundle: org.eclipse.core.resources,
  org.sidiff.graphpattern,
  org.sidiff.history.model,
  org.sidiff.revision.repair.api,
- org.sidiff.revision.repair.ui,
+ org.sidiff.revision.ui.viewer,
  org.sidiff.validation.constraint.api,
  org.sidiff.validation.constraint.interpreter,
  org.sidiff.validation.constraint.interpreter.ui,
@@ -34,7 +34,9 @@ Require-Bundle: org.eclipse.core.resources,
  org.sidiff.revision.impact.analysis,
  org.sidiff.revision.common.logging,
  org.sidiff.revision.impact.changetree,
- org.sidiff.revision.repair.impact
+ org.sidiff.revision.repair.impact,
+ org.sidiff.revision.ui,
+ org.sidiff.revision.ui.configuration
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Automatic-Module-Name: org.sidiff.revision.repair.history.evaluation

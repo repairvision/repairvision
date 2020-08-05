@@ -8,7 +8,7 @@ import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
 import org.sidiff.common.utilities.ui.util.InfoConsole;
 import org.sidiff.history.analysis.tracing.InconsistencyTrace;
-import org.sidiff.revision.api.IComplementationFacade;
+import org.sidiff.revision.api.ComplementationFacade;
 import org.sidiff.revision.common.logging.table.LogTable;
 import org.sidiff.revision.common.logging.util.LogUtil;
 import org.sidiff.revision.difference.api.settings.DifferenceSettings;
@@ -26,7 +26,7 @@ public class HistoryEvaluationDriver {
 	public static int START_WITH_VERSION = 0;
 	
 	public static void calculateRepairs(
-			IComplementationFacade<RepairJob, RepairSettings> repairFacade,
+			ComplementationFacade<RepairJob, RepairSettings> repairFacade,
 			HistoryInfo history,  
 			Collection<Rule> editRules, 
 			DifferenceSettings matchingSettings) {

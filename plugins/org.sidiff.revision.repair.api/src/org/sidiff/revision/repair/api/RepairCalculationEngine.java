@@ -12,7 +12,7 @@ import org.eclipse.emf.henshin.interpreter.impl.EGraphImpl;
 import org.eclipse.emf.henshin.model.Rule;
 import org.sidiff.history.revision.IRevision;
 import org.sidiff.history.revision.impl.Revision;
-import org.sidiff.revision.api.IComplementationPlan;
+import org.sidiff.revision.api.ComplementationPlan;
 import org.sidiff.revision.common.logging.util.LogTime;
 import org.sidiff.revision.editrules.complement.matching.finder.ComplementFinderEngine;
 import org.sidiff.revision.editrules.recognition.configuration.RecognitionSettings;
@@ -91,7 +91,7 @@ public class RepairCalculationEngine {
 		ComplementFinderEngine complementFinderEngine = new ComplementFinderEngine(currentImpactAnalyzes, graphModelB);
 		complementFinderEngine.start();
 		
-		List<IComplementationPlan> repairs = new ArrayList<>();
+		List<ComplementationPlan> repairs = new ArrayList<>();
 		
 		LogTime complementMatchingTimer = new LogTime();
 		int potentialEditRules = 0;
@@ -107,7 +107,7 @@ public class RepairCalculationEngine {
 			RecognitionSettings recognitionSettings = repairCaculation.getComplementFinderSettings().getRecognitionEngineSettings();
 			
 			if (recognitionSettings.hasPotentialImpact()) {
-				List<IComplementationPlan> repairsForEditRule = repairCaculation.findRepairs(complementMatchingTimer);
+				List<ComplementationPlan> repairsForEditRule = repairCaculation.findRepairs(complementMatchingTimer);
 				repairs.addAll(repairsForEditRule);
 				
 				// Evaluation:

@@ -1,25 +1,21 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Repair UI
+Bundle-Name: Partial Edit Operation Repair Engine UI
 Bundle-SymbolicName: org.sidiff.revision.repair.ui;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Bundle-Activator: org.sidiff.revision.repair.ui.Activator
-Export-Package: org.sidiff.revision.repair.ui.app,
- org.sidiff.revision.repair.ui.app.impl,
- org.sidiff.revision.repair.ui.config,
- org.sidiff.revision.repair.ui.controls,
- org.sidiff.revision.repair.ui.controls.basic,
- org.sidiff.revision.repair.ui.presentation
-Require-Bundle: org.eclipse.emf.edit.ui,
- org.sidiff.revision.api,
- org.sidiff.common.utilities,
- org.eclipse.gmf.runtime.diagram.ui,
- org.sidiff.revision.ui.editors.highlighting;visibility:=reexport,
- org.sidiff.history.revision,
+Require-Bundle: org.eclipse.emf.transaction,
+ org.sidiff.revision.editrules.recognition,
+ org.sidiff.graphpattern.edit,
+ org.sidiff.history.analysis,
+ org.sidiff.revision.ui.editors.integration,
+ org.sidiff.revision.repair.api,
+ org.sidiff.revision.editrules.complement.matching,
  org.sidiff.revision.editrules.project,
- org.sidiff.validation.constraint.project,
- org.sidiff.revision.editrules.project.development,
- org.eclipse.emf.henshin.interpreter
-Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+ org.sidiff.revision.ui.viewer,
+ org.sidiff.validation.constraint.api,
+ org.sidiff.validation.constraint.interpreter.ui,
+ org.sidiff.revision.ui.configuration
 Bundle-ActivationPolicy: lazy
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Automatic-Module-Name: org.sidiff.revision.repair.ui

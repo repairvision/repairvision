@@ -18,8 +18,8 @@ import org.sidiff.generic.matcher.uuid.UUIDMatcherProvider;
 import org.sidiff.history.analysis.tracing.InconsistencyTrace;
 import org.sidiff.historymodel.History;
 import org.sidiff.historymodel.Problem;
-import org.sidiff.revision.api.IComplementationFacade;
-import org.sidiff.revision.api.IComplementationPlan;
+import org.sidiff.revision.api.ComplementationFacade;
+import org.sidiff.revision.api.ComplementationPlan;
 import org.sidiff.revision.common.logging.table.LogTable;
 import org.sidiff.revision.difference.api.registry.DifferenceBuilderRegistry;
 import org.sidiff.revision.difference.api.settings.DifferenceSettings;
@@ -31,15 +31,15 @@ import org.sidiff.revision.repair.history.evaluation.driver.InconsistencyEvaluat
 import org.sidiff.revision.repair.history.evaluation.driver.PrintHistoryInfoDriver;
 import org.sidiff.revision.repair.history.evaluation.driver.data.HistoryInfo;
 import org.sidiff.revision.repair.history.evaluation.util.EvaluationUtil;
-import org.sidiff.revision.repair.ui.app.IRepairApplication;
-import org.sidiff.revision.repair.ui.app.IResultChangedListener;
-import org.sidiff.revision.repair.ui.config.RepairPreferencePage;
+import org.sidiff.revision.ui.application.ComplementationApplication;
+import org.sidiff.revision.ui.application.ResultChangedListener;
+import org.sidiff.revision.ui.configuration.page.ComplementationPreferencePage;
 
-public class HistoryRepairApplication implements IRepairApplication<RepairJob, RepairSettings> {
+public class HistoryRepairApplication implements ComplementationApplication<RepairJob, RepairSettings> {
 
-	protected IComplementationFacade<RepairJob, RepairSettings> complementationFacade;
+	protected ComplementationFacade<RepairJob, RepairSettings> complementationFacade;
 	
-	protected List<IResultChangedListener<RepairJob>> listeners = new ArrayList<>();
+	protected List<ResultChangedListener<RepairJob>> listeners = new ArrayList<>();
 
 	protected Collection<IResource> editRuleFiles = new ArrayList<>();
 	
@@ -60,22 +60,22 @@ public class HistoryRepairApplication implements IRepairApplication<RepairJob, R
 	}
 	
 	@Override
-	public void initialize(IComplementationFacade<RepairJob, RepairSettings> repairFacade) {
+	public void initialize(ComplementationFacade<RepairJob, RepairSettings> repairFacade) {
 		this.complementationFacade = repairFacade;
 	}
 	
 	@Override
-	public void addResultChangedListener(IResultChangedListener<RepairJob> listener) {
+	public void addResultChangedListener(ResultChangedListener<RepairJob> listener) {
 		listeners.add(listener);
 	}
 	
 	@Override
-	public void removeResultChangeListener(IResultChangedListener<RepairJob> listener) {
+	public void removeResultChangeListener(ResultChangedListener<RepairJob> listener) {
 		listeners.remove(listener);
 	}
 	
 	protected void fireResultChangeListener() {
-		listeners.forEach(l -> l.resultChanged(getRepairJob()));
+		listeners.forEach(l -> l.resultChanged(getComplementationJob()));
 	}
 	
 	@Override
@@ -99,11 +99,11 @@ public class HistoryRepairApplication implements IRepairApplication<RepairJob, R
 	}
 	
 	@Override
-	public void calculateRepairs() {
+	public void calculateComplementations() {
 	}
 	
 	@Override
-	public void recalculateRepairs() {
+	public void recalculateComplementations() {
 	}
 	
 	public void repairInconsistency(Problem selection) {
@@ -164,12 +164,12 @@ public class HistoryRepairApplication implements IRepairApplication<RepairJob, R
 	}
 	
 	@Override
-	public boolean applyRepair(IComplementationPlan repair, Match match) {
+	public boolean applyComplementation(ComplementationPlan repair, Match match) {
 		return repairJob.applyComplement(repair, match, true);
 	}
 	
 	@Override
-	public boolean undoRepair() {
+	public boolean undoComplementation() {
 		
 		if (repairJob == null) {
 			WorkbenchUtil.showMessage("Please start the repair calculation!");
@@ -181,12 +181,12 @@ public class HistoryRepairApplication implements IRepairApplication<RepairJob, R
 			return true;
 		}
 		
-		return repairJob.undoUncomplete(true);
+		return repairJob.undoLast(true);
 	}
 	
 	@Override
-	public boolean rollbackInconsistencyInducingChanges(IComplementationPlan repair) {
-		return repairJob.rollbackInconsistencyInducingChanges(repair, true);
+	public boolean rollbackIncomplete(ComplementationPlan repair) {
+		return repairJob.rollbackIncomplete(repair, true);
 	}
 
 	public IResource removeEditRule(IResource selection) {
@@ -199,16 +199,16 @@ public class HistoryRepairApplication implements IRepairApplication<RepairJob, R
 	}
 
 	@Override
-	public RepairJob getRepairJob() {
+	public RepairJob getComplementationJob() {
 		return repairJob;
 	}
 	
 	public void populateSettings(Resource modelA, Resource modelB) {
-		RepairPreferencePage.populateSettings(modelB);
+		ComplementationPreferencePage.populateSettings(modelB);
 	}
 	
 	public DifferenceSettings getMatchingSettings() {
-		DifferenceSettings settings = RepairPreferencePage.getMatchingSettings();
+		DifferenceSettings settings = ComplementationPreferencePage.getMatchingSettings();
 		settings.setMatcher(new UUIDMatcherProvider());
 		settings.setTechBuilder(DifferenceBuilderRegistry.getGenericTechnicalDifferenceBuilder());
 		
@@ -216,7 +216,7 @@ public class HistoryRepairApplication implements IRepairApplication<RepairJob, R
 	}
 	
 	public String getDoumentType() {
-		return RepairPreferencePage.getDoumentType();
+		return ComplementationPreferencePage.getDoumentType();
 	}
 	
 	@Override

@@ -15,7 +15,7 @@ import org.sidiff.common.utilities.emf.Scope;
 import org.sidiff.generic.matcher.uuid.UUIDMatcherProvider;
 import org.sidiff.history.revision.util.SettingsUtil;
 import org.sidiff.historymodel.History;
-import org.sidiff.revision.api.IComplementationFacade;
+import org.sidiff.revision.api.ComplementationFacade;
 import org.sidiff.revision.difference.api.settings.DifferenceSettings;
 import org.sidiff.revision.difference.builder.GenericDifferenceBuilderProvider;
 import org.sidiff.revision.difference.builder.IDifferenceBuilderProvider;
@@ -57,7 +57,7 @@ public class HistoryEvaluationApplication implements IApplication {
 				System.out.println("EDIT RULES: " + editRules.size());
 				
 				// repair algorithm:
-				IComplementationFacade<RepairJob, RepairSettings> repairFacade = new RepairFacade();
+				ComplementationFacade<RepairJob, RepairSettings> repairFacade = new RepairFacade();
 
 				// start evaluation:
 				System.out.println("STARTING EVALUATION");
