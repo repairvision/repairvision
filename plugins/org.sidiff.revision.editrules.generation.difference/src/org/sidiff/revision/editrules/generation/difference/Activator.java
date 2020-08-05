@@ -4,7 +4,7 @@ import java.util.logging.Logger;
 
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
-import org.sidiff.common.utilities.logging.LoggingUtil;
+import org.sidiff.revision.common.logging.LoggerFactory;
 
 public class Activator implements BundleActivator {
 	
@@ -22,7 +22,7 @@ public class Activator implements BundleActivator {
 
 	public void start(BundleContext bundleContext) throws Exception {
 		Activator.context = bundleContext;
-		Activator.log = LoggingUtil.getLogger(bundleContext);
+		Activator.log = LoggerFactory.getLogger(bundleContext);
 	}
 
 	public void stop(BundleContext bundleContext) throws Exception {

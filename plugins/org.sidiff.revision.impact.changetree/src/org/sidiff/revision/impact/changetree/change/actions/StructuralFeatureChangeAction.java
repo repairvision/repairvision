@@ -3,7 +3,7 @@ package org.sidiff.revision.impact.changetree.change.actions;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.sidiff.common.utilities.emf.MetaModelUtil;
+import org.sidiff.revision.common.emf.MetaModelUtil;
 import org.sidiff.revision.impact.changetree.IDecisionLeaf;
 
 public abstract class StructuralFeatureChangeAction extends ChangeAction  {

@@ -3,8 +3,8 @@ package org.sidiff.repair.history.editrules.learn.scope;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.sidiff.revision.editrules.generation.difference.configuration.filters.model.IReferenceFilter;
-import org.sidiff.validation.constraint.interpreter.scope.IScopeRecorder;
-import org.sidiff.validation.constraint.interpreter.scope.ReferenceScope;
+import org.sidiff.revision.impact.changetree.scope.IScopeRecorder;
+import org.sidiff.revision.impact.changetree.scope.ReferenceScope;
 
 public class MultiScopeReferenceFilter implements IReferenceFilter {
 

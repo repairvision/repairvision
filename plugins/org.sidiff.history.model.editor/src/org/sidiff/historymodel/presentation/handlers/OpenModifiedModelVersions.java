@@ -8,10 +8,10 @@ import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.handlers.HandlerUtil;
-import org.sidiff.common.utilities.emf.EMFStorage;
-import org.sidiff.common.utilities.ui.util.WorkbenchUtil;
 import org.sidiff.historymodel.Problem;
 import org.sidiff.historymodel.Version;
+import org.sidiff.revision.common.emf.EMFStorage;
+import org.sidiff.revision.common.ui.workbench.WorkbenchUtil;
 
 public class OpenModifiedModelVersions extends AbstractHandler {
 

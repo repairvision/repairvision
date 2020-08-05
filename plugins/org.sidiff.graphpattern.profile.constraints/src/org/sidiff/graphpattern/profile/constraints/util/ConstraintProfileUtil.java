@@ -9,7 +9,6 @@ import java.util.ArrayList;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.sidiff.common.utilities.emf.ModelingUtil;
 import org.sidiff.graphpattern.AttributePattern;
 import org.sidiff.graphpattern.EdgePattern;
 import org.sidiff.graphpattern.Extendable;
@@ -17,6 +16,7 @@ import org.sidiff.graphpattern.GraphElement;
 import org.sidiff.graphpattern.GraphPattern;
 import org.sidiff.graphpattern.NodePattern;
 import org.sidiff.graphpattern.Pattern;
+import org.sidiff.revision.common.emf.ModelingUtil;
 
 public class ConstraintProfileUtil {
 

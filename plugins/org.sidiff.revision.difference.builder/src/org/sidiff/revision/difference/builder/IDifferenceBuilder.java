@@ -1,6 +1,6 @@
 package org.sidiff.revision.difference.builder;
 
-import org.sidiff.common.utilities.emf.Scope;
+import org.sidiff.revision.common.emf.document.Scope;
 import org.sidiff.revision.difference.Difference;
 
 /**

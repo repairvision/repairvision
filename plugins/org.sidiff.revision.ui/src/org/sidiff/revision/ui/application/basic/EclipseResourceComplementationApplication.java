@@ -3,9 +3,9 @@ package org.sidiff.revision.ui.application.basic;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
-import org.sidiff.common.utilities.ui.util.WorkbenchUtil;
 import org.sidiff.revision.api.ComplementationJob;
 import org.sidiff.revision.api.ComplementationSettings;
+import org.sidiff.revision.common.ui.workbench.WorkbenchUtil;
 
 public abstract class EclipseResourceComplementationApplication<J extends ComplementationJob<?>, F extends ComplementationSettings> extends BasicComplementationApplication<J, F> {
 

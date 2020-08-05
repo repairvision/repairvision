@@ -16,7 +16,6 @@ import java.util.Set;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.EcoreUtil.Copier;
-import org.sidiff.common.utilities.java.StringUtil;
 import org.sidiff.graphpattern.Bundle;
 import org.sidiff.graphpattern.EdgePattern;
 import org.sidiff.graphpattern.GraphPattern;
@@ -32,6 +31,7 @@ import org.sidiff.graphpattern.tools.csp.GraphPatternMatchings;
 import org.sidiff.graphpattern.tools.csp.NodePatternDomain;
 import org.sidiff.graphpattern.tools.csp.NodePatternDomain.EdgeMatching;
 import org.sidiff.graphpattern.tools.csp.NodePatternVariable;
+import org.sidiff.revision.common.utilities.java.StringUtil;
 import org.sidiff.revision.editrules.generation.decompose.DecomposingEditRulesUtil;
 import org.sidiff.revision.editrules.generation.generator.util.GraphPatternGeneratorUtil;
 

@@ -21,7 +21,15 @@ Require-Bundle: org.eclipse.emf.henshin.diagram,
  org.sidiff.graphpattern,
  org.sidiff.graphpattern.profile.henshin,
  org.sidiff.graphpattern.design.tools,
- org.junit;resolution:=optional
+ org.junit;resolution:=optional,
+ org.sidiff.revision.common.logging,
+ org.eclipse.emf.henshin.model,
+ org.sidiff.revision.common.henshin,
+ org.sidiff.revision.common.emf,
+ org.eclipse.ui,
+ org.sidiff.revision.common.emf.document,
+ org.sidiff.revision.common.ui,
+ org.sidiff.revision.common.utilities
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Automatic-Module-Name: org.sidiff.editrules.tools.recorder
 Bundle-ActivationPolicy: lazy

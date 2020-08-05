@@ -9,7 +9,7 @@ import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.part.ViewPart;
-import org.sidiff.common.utilities.ui.util.WorkbenchUtil;
+import org.sidiff.revision.common.ui.workbench.WorkbenchUtil;
 import org.sidiff.revision.repair.api.RepairCalculationEngineDebugger;
 import org.sidiff.revision.repair.ui.debugger.model.DebuggingSession;
 

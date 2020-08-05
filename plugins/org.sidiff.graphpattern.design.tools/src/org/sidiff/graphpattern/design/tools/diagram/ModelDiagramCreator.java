@@ -26,8 +26,8 @@ import org.eclipse.sirius.ui.business.internal.commands.ChangeViewpointSelection
 import org.eclipse.sirius.viewpoint.DRepresentation;
 import org.eclipse.sirius.viewpoint.description.RepresentationDescription;
 import org.eclipse.sirius.viewpoint.description.Viewpoint;
-import org.sidiff.common.utilities.emf.ItemProviderUtil;
-import org.sidiff.common.utilities.emf.SiriusUtil;
+import org.sidiff.revision.common.emf.ItemProviderUtil;
+import org.sidiff.revision.common.emf.diagram.SiriusUtil;
 
 /**
  * Creates Sirius diagrams for a given model element and its contained elements.

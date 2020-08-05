@@ -15,13 +15,13 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.handlers.HandlerUtil;
-import org.sidiff.common.utilities.emf.EMFHandlerUtil;
-import org.sidiff.common.utilities.ui.util.WorkbenchUtil;
 import org.sidiff.graphpattern.Bundle;
 import org.sidiff.graphpattern.tools.model2graph.FolderToBundleTransformation;
 import org.sidiff.graphpattern.tools.model2graph.ModelToGraphPatternDefiniton;
 import org.sidiff.graphpattern.tools.model2graph.ModelToGraphPatternFactory;
 import org.sidiff.graphpattern.tools.model2graph.ModelToGraphPatternTransformation;
+import org.sidiff.revision.common.emf.EMFHandlerUtil;
+import org.sidiff.revision.common.ui.workbench.WorkbenchUtil;
 
 public class ModelToGraphPatternHandler extends AbstractHandler {
 	

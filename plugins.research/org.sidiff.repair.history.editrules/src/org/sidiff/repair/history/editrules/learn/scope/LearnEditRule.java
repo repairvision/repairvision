@@ -13,7 +13,7 @@ import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
-import org.sidiff.common.utilities.ui.util.WorkbenchUtil;
+import org.sidiff.revision.common.ui.workbench.WorkbenchUtil;
 import org.sidiff.revision.difference.Difference;
 import org.sidiff.revision.difference.api.settings.DifferenceSettings;
 import org.sidiff.revision.editrules.generation.difference.DifferenceToEditRule;
@@ -23,10 +23,10 @@ import org.sidiff.revision.editrules.generation.difference.configuration.Transfo
 import org.sidiff.revision.editrules.generation.difference.configuration.filters.model.IAttributeFilter;
 import org.sidiff.revision.editrules.generation.difference.configuration.filters.model.IReferenceFilter;
 import org.sidiff.revision.editrules.generation.difference.util.DifferenceToEditRuleUtil;
+import org.sidiff.revision.impact.changetree.scope.IScopeRecorder;
+import org.sidiff.revision.impact.changetree.scope.ScopeRecorder;
 import org.sidiff.validation.constraint.api.util.Validation;
 import org.sidiff.validation.constraint.interpreter.IConstraint;
-import org.sidiff.validation.constraint.interpreter.scope.IScopeRecorder;
-import org.sidiff.validation.constraint.interpreter.scope.ScopeRecorder;
 
 /**
  * Learns an edit rule from a resolved inconsistency.

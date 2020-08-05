@@ -16,11 +16,11 @@ import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ViewerNotification;
-import org.sidiff.common.utilities.emf.ItemProviderUtil;
 import org.sidiff.graphpattern.AttributePattern;
 import org.sidiff.graphpattern.GraphpatternPackage;
 import org.sidiff.graphpattern.edit.util.ColorServices;
 import org.sidiff.graphpattern.edit.util.LabelServices;
+import org.sidiff.revision.common.emf.ItemProviderUtil;
 
 /**
  * This is the item provider adapter for a {@link org.sidiff.graphpattern.AttributePattern} object.

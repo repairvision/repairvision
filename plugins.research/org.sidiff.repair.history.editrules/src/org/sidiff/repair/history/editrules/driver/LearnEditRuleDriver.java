@@ -5,17 +5,17 @@ import java.util.List;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
-import org.sidiff.common.utilities.ui.util.WorkbenchUtil;
 import org.sidiff.history.analysis.tracing.InconsistencyTrace;
 import org.sidiff.historymodel.History;
 import org.sidiff.repair.history.editrules.generator.EditRule;
 import org.sidiff.repair.history.editrules.learn.scope.LearnEditRule;
+import org.sidiff.revision.common.ui.workbench.WorkbenchUtil;
 import org.sidiff.revision.difference.Difference;
 import org.sidiff.revision.difference.api.DifferenceFacade;
 import org.sidiff.revision.difference.api.settings.DifferenceSettings;
+import org.sidiff.revision.impact.changetree.scope.IScopeRecorder;
+import org.sidiff.revision.impact.changetree.scope.ScopeRecorder;
 import org.sidiff.validation.constraint.interpreter.IConstraint;
-import org.sidiff.validation.constraint.interpreter.scope.IScopeRecorder;
-import org.sidiff.validation.constraint.interpreter.scope.ScopeRecorder;
 
 public class LearnEditRuleDriver {
 	

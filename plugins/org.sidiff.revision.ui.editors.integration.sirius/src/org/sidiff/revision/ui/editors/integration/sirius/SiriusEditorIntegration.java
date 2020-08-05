@@ -9,7 +9,7 @@ import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.sirius.diagram.ui.edit.api.part.AbstractBorderedDiagramElementEditPart;
 import org.eclipse.sirius.diagram.ui.part.SiriusDiagramEditor;
 import org.eclipse.ui.IEditorPart;
-import org.sidiff.common.utilities.emf.SiriusUtil;
+import org.sidiff.revision.common.emf.diagram.SiriusUtil;
 import org.sidiff.revision.ui.editors.integration.extension.DefaultEditorIntegration;
 
 public class SiriusEditorIntegration extends DefaultEditorIntegration {

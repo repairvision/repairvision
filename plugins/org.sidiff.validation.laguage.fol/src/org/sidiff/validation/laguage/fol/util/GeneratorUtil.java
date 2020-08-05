@@ -22,7 +22,7 @@ import org.eclipse.pde.internal.core.text.DocumentElementNode;
 import org.eclipse.pde.internal.core.text.plugin.PluginModel;
 import org.eclipse.ui.editors.text.TextFileDocumentProvider;
 import org.eclipse.ui.texteditor.IDocumentProvider;
-import org.sidiff.common.utilities.ui.util.WorkbenchUtil;
+import org.sidiff.revision.common.ui.workbench.WorkbenchUtil;
 import org.sidiff.validation.constraint.project.ConstraintPlugin;
 
 @SuppressWarnings("restriction")

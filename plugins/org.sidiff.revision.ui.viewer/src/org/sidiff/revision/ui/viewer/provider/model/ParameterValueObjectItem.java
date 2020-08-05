@@ -3,7 +3,7 @@ package org.sidiff.revision.ui.viewer.provider.model;
 import java.util.Iterator;
 
 import org.eclipse.emf.ecore.EObject;
-import org.sidiff.common.utilities.java.JUtil;
+import org.sidiff.revision.common.utilities.java.JUtil;
 import org.sidiff.revision.ui.viewer.provider.IHighlightableElement;
 
 public class ParameterValueObjectItem implements IParameterInput, IHighlightableElement {

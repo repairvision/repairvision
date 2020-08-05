@@ -22,7 +22,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.impl.EStringToStringMapEntryImpl;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.sidiff.common.utilities.emf.Scope;
+import org.sidiff.revision.common.emf.document.Scope;
 import org.sidiff.revision.difference.Difference;
 import org.sidiff.revision.difference.matcher.IMatcher;
 import org.sidiff.revision.difference.matcher.util.MatcherUtil;

@@ -5,10 +5,10 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.emf.ecore.EObject;
-import org.sidiff.common.utilities.ui.util.WorkbenchUtil;
 import org.sidiff.graphpattern.Bundle;
 import org.sidiff.graphpattern.Pattern;
 import org.sidiff.graphpattern.profile.constraints.util.ConstraintProfileUtil;
+import org.sidiff.revision.common.ui.workbench.WorkbenchUtil;
 import org.sidiff.revision.editrules.project.RuleBasePlugin;
 
 public class RuleBaseBuilderUtils {

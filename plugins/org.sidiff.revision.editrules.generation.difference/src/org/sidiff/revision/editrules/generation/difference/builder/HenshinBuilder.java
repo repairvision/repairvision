@@ -53,12 +53,12 @@ import org.eclipse.gmf.runtime.common.core.command.CommandResult;
 import org.eclipse.gmf.runtime.diagram.core.services.ViewService;
 import org.eclipse.gmf.runtime.emf.commands.core.command.AbstractTransactionalCommand;
 import org.eclipse.gmf.runtime.notation.Diagram;
-import org.sidiff.common.utilities.emf.EMFStorage;
-import org.sidiff.common.utilities.henshin.HenshinRuleEditUtil;
-import org.sidiff.common.utilities.henshin.pairs.AttributePair;
-import org.sidiff.common.utilities.henshin.pairs.EdgePair;
-import org.sidiff.common.utilities.henshin.pairs.NodePair;
-import org.sidiff.common.utilities.ui.util.WorkbenchUtil;
+import org.sidiff.revision.common.emf.EMFStorage;
+import org.sidiff.revision.common.henshin.HenshinRuleEditUtil;
+import org.sidiff.revision.common.henshin.pairs.AttributePair;
+import org.sidiff.revision.common.henshin.pairs.EdgePair;
+import org.sidiff.revision.common.henshin.pairs.NodePair;
+import org.sidiff.revision.common.ui.workbench.WorkbenchUtil;
 import org.sidiff.revision.editrules.generation.difference.util.Pair;
 
 public class HenshinBuilder implements IEditRuleBuilder<Rule, Node, Edge, Attribute> {

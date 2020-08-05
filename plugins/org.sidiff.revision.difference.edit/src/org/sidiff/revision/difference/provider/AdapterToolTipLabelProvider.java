@@ -33,7 +33,7 @@ import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
-import org.sidiff.common.utilities.emf.ItemProviderUtil;
+import org.sidiff.revision.common.emf.ItemProviderUtil;
 import org.sidiff.revision.difference.AddReference;
 import org.sidiff.revision.difference.RemoveReference;
 import org.sidiff.revision.difference.impl.ChangeImpl;

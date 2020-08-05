@@ -4,7 +4,7 @@ import java.io.File;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
-import org.sidiff.common.utilities.emf.EMFStorage;
+import org.sidiff.revision.common.emf.EMFStorage;
 
 public class ModelRepositoryUtil {
 

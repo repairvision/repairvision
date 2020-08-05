@@ -1,13 +1,13 @@
 package org.sidiff.revision.editrules.complement.construction;
 
-import static org.sidiff.common.utilities.henshin.HenshinRuleAnalysisUtil.getLHS;
-import static org.sidiff.common.utilities.henshin.HenshinRuleAnalysisUtil.getRHS;
-import static org.sidiff.common.utilities.henshin.HenshinRuleAnalysisUtil.getRemoteAttribute;
-import static org.sidiff.common.utilities.henshin.HenshinRuleAnalysisUtil.isCreationEdge;
-import static org.sidiff.common.utilities.henshin.HenshinRuleAnalysisUtil.isCreationNode;
-import static org.sidiff.common.utilities.henshin.HenshinRuleAnalysisUtil.isDeletionEdge;
-import static org.sidiff.common.utilities.henshin.HenshinRuleAnalysisUtil.isDeletionNode;
-import static org.sidiff.common.utilities.henshin.HenshinRuleAnalysisUtil.isPreservedNode;
+import static org.sidiff.revision.common.henshin.HenshinRuleAnalysisUtil.getLHS;
+import static org.sidiff.revision.common.henshin.HenshinRuleAnalysisUtil.getRHS;
+import static org.sidiff.revision.common.henshin.HenshinRuleAnalysisUtil.getRemoteAttribute;
+import static org.sidiff.revision.common.henshin.HenshinRuleAnalysisUtil.isCreationEdge;
+import static org.sidiff.revision.common.henshin.HenshinRuleAnalysisUtil.isCreationNode;
+import static org.sidiff.revision.common.henshin.HenshinRuleAnalysisUtil.isDeletionEdge;
+import static org.sidiff.revision.common.henshin.HenshinRuleAnalysisUtil.isDeletionNode;
+import static org.sidiff.revision.common.henshin.HenshinRuleAnalysisUtil.isPreservedNode;
 
 import java.util.Collection;
 import java.util.List;
@@ -25,10 +25,10 @@ import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Parameter;
 import org.eclipse.emf.henshin.model.ParameterKind;
 import org.eclipse.emf.henshin.model.Rule;
-import org.sidiff.common.utilities.emf.ModelingUtil;
-import org.sidiff.common.utilities.henshin.HenshinChangesUtil;
-import org.sidiff.common.utilities.java.JUtil;
 import org.sidiff.graphpattern.attributes.JavaSciptParser;
+import org.sidiff.revision.common.emf.ModelingUtil;
+import org.sidiff.revision.common.henshin.HenshinChangesUtil;
+import org.sidiff.revision.common.utilities.java.JUtil;
 import org.sidiff.revision.editrules.complement.util.ComplementUtil;
 import org.sidiff.revision.editrules.recognition.match.RecognitionAttributeMatch;
 import org.sidiff.revision.editrules.recognition.match.RecognitionEdgeMatch;

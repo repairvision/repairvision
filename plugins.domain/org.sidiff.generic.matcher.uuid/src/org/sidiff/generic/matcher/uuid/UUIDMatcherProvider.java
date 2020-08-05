@@ -3,7 +3,7 @@ package org.sidiff.generic.matcher.uuid;
 import java.util.Collections;
 import java.util.Set;
 
-import org.sidiff.common.utilities.emf.DocumentType;
+import org.sidiff.revision.common.emf.document.DocumentType;
 import org.sidiff.revision.difference.matcher.IMatcher;
 import org.sidiff.revision.difference.matcher.IMatcherProvider;
 

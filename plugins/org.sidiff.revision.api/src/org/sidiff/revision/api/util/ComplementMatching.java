@@ -6,9 +6,9 @@ import java.util.List;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.henshin.model.GraphElement;
 import org.eclipse.emf.henshin.model.Node;
-import org.sidiff.common.utilities.henshin.HenshinRuleAnalysisUtil;
-import org.sidiff.common.utilities.java.JUtil;
 import org.sidiff.revision.api.ComplementationPlan;
+import org.sidiff.revision.common.henshin.HenshinRuleAnalysisUtil;
+import org.sidiff.revision.common.utilities.java.JUtil;
 
 public class ComplementMatching implements IMatching {
 

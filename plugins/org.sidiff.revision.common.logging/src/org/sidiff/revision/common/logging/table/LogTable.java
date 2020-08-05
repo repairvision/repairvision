@@ -18,7 +18,7 @@ import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVPrinter;
 import org.apache.commons.csv.CSVRecord;
-import org.sidiff.common.utilities.java.StringPrinter;
+import org.sidiff.revision.common.utilities.string.StringPrinter;
 
 public class LogTable {
 

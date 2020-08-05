@@ -5,8 +5,8 @@ import java.util.List;
 import org.eclipse.emf.henshin.model.Attribute;
 import org.eclipse.emf.henshin.model.GraphElement;
 import org.eclipse.emf.henshin.model.Rule;
-import org.sidiff.common.utilities.henshin.HenshinChangesUtil;
 import org.sidiff.history.revision.IRevision;
+import org.sidiff.revision.common.henshin.HenshinChangesUtil;
 import org.sidiff.revision.editrules.impact.graph.GraphActionImpactScope;
 import org.sidiff.revision.impact.analysis.ImpactAnalyzes;
 

@@ -6,8 +6,8 @@ import java.util.List;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.henshin.interpreter.Match;
 import org.eclipse.swt.graphics.Image;
-import org.sidiff.common.utilities.ui.util.NameUtil;
 import org.sidiff.revision.api.ComplementationPlan;
+import org.sidiff.revision.common.utilities.string.NameUtil;
 import org.sidiff.revision.ui.viewer.Activator;
 import org.sidiff.revision.ui.viewer.provider.IHighlightableElement;
 

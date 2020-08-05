@@ -13,7 +13,12 @@ Export-Package: org.sidiff.revision.ui.viewer,
 Require-Bundle: org.eclipse.emf.henshin.interpreter,
  org.eclipse.gmf.runtime.diagram.ui,
  org.sidiff.revision.ui.configuration,
- org.sidiff.revision.ui.editors.highlighting;visibility:=reexport
+ org.sidiff.revision.ui.editors.highlighting;visibility:=reexport,
+ org.sidiff.revision.common.ui,
+ org.sidiff.revision.common.emf,
+ org.eclipse.emf.edit.ui,
+ org.sidiff.revision.common.henshin,
+ org.sidiff.revision.common.utilities
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Automatic-Module-Name: org.sidiff.revision.ui

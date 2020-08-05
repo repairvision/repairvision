@@ -13,13 +13,13 @@ import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
-import org.sidiff.common.utilities.emf.ItemProviderUtil;
 import org.sidiff.completion.ui.codebricks.Codebricks;
 import org.sidiff.completion.ui.codebricks.ObjectPlaceholderBrick;
 import org.sidiff.completion.ui.codebricks.editor.CodebricksEditor;
 import org.sidiff.completion.ui.codebricks.editor.proposals.ObjectCodebricksProposal;
 import org.sidiff.completion.ui.codebricks.util.CodebricksUtil;
 import org.sidiff.completion.ui.proposals.ICompletionProposal;
+import org.sidiff.revision.common.emf.ItemProviderUtil;
 
 public class ObjectPlaceholderBuilder {
 

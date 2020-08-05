@@ -7,9 +7,9 @@ import org.sidiff.revision.impact.changetree.Sequence;
 import org.sidiff.revision.impact.changetree.change.ChangeActionFactory;
 import org.sidiff.revision.impact.changetree.change.ChangeTree;
 import org.sidiff.revision.impact.changetree.change.actions.ChangeAction.RepairType;
+import org.sidiff.revision.impact.changetree.scope.IScopeRecorder;
+import org.sidiff.revision.impact.changetree.scope.ScopeNode;
 import org.sidiff.validation.constraint.interpreter.formulas.Formula;
-import org.sidiff.validation.constraint.interpreter.scope.IScopeRecorder;
-import org.sidiff.validation.constraint.interpreter.scope.ScopeNode;
 import org.sidiff.validation.constraint.interpreter.terms.Variable;
 
 public class Constraint extends NamedElement implements IConstraint {

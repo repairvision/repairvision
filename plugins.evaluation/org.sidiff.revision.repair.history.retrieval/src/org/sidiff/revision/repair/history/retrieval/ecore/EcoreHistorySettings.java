@@ -7,11 +7,11 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
-import org.sidiff.common.utilities.emf.Scope;
 import org.sidiff.history.analysis.validation.EMFValidator;
 import org.sidiff.history.analysis.validation.IValidator;
 import org.sidiff.history.revision.util.SettingsUtil;
 import org.sidiff.revision.difference.api.registry.MatcherRegistry;
+import org.sidiff.revision.common.emf.document.Scope;
 import org.sidiff.revision.difference.api.registry.DifferenceBuilderRegistry;
 import org.sidiff.revision.difference.api.settings.DifferenceSettings;
 import org.sidiff.revision.difference.builder.IDifferenceBuilderProvider;

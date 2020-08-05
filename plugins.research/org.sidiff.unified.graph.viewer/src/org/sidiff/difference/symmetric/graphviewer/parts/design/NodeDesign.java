@@ -1,10 +1,10 @@
 package org.sidiff.difference.symmetric.graphviewer.parts.design;
 
 import org.eclipse.emf.ecore.EObject;
-import org.sidiff.common.utilities.emf.ItemProviderUtil;
 import org.sidiff.difference.symmetric.graphviewer.content.MatchingNode;
 import org.sidiff.difference.symmetric.graphviewer.parts.design.util.INodeSizeCalculator;
 import org.sidiff.difference.symmetric.graphviewer.parts.design.util.ImmediateTooltip;
+import org.sidiff.revision.common.emf.ItemProviderUtil;
 
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.AnchorPane;

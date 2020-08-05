@@ -3,7 +3,7 @@ package org.sidiff.revision.impact.changetree.change.actions;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.sidiff.common.utilities.java.NameUtil;
+import org.sidiff.revision.common.utilities.string.NameUtil;
 import org.sidiff.revision.impact.changetree.IDecisionNode;
 
 public class AttributeChangeAction extends StructuralFeatureChangeAction {

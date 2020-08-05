@@ -7,7 +7,8 @@ Bundle-Vendor: Software Engineering Group
 Export-Package: org.sidiff.revision.difference.matcher,
  org.sidiff.revision.difference.matcher.util
 Require-Bundle: org.eclipse.core.runtime,
- org.sidiff.common.utilities;visibility:=reexport,
- org.sidiff.revision.difference
+ org.sidiff.revision.difference,
+ org.sidiff.revision.common.emf.document,
+ org.sidiff.revision.common.utilities
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Automatic-Module-Name: org.sidiff.matcher

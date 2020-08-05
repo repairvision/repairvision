@@ -5,7 +5,7 @@ import org.eclipse.emf.henshin.interpreter.Match;
 import org.eclipse.emf.henshin.model.NestedCondition;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
-import org.sidiff.common.utilities.henshin.HenshinRuleAnalysisUtil;
+import org.sidiff.revision.common.henshin.HenshinRuleAnalysisUtil;
 
 /**
  * Sorts a set of Henshin rules by its structure. This will optimize the

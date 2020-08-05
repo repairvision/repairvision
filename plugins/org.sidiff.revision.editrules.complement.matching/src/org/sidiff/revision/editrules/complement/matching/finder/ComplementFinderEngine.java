@@ -1,6 +1,6 @@
 package org.sidiff.revision.editrules.complement.matching.finder;
 
-import static org.sidiff.common.utilities.henshin.HenshinRuleAnalysisUtil.getLHS;
+import static org.sidiff.revision.common.henshin.HenshinRuleAnalysisUtil.getLHS;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -17,7 +17,7 @@ import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.GraphElement;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Parameter;
-import org.sidiff.common.utilities.henshin.HenshinRuleAnalysisUtil;
+import org.sidiff.revision.common.henshin.HenshinRuleAnalysisUtil;
 import org.sidiff.revision.common.logging.util.LogTime;
 import org.sidiff.revision.editrules.complement.construction.ComplementConstructor;
 import org.sidiff.revision.editrules.complement.construction.ComplementRule;

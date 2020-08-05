@@ -8,7 +8,7 @@ import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.resource.Resource;
-import org.sidiff.common.utilities.ui.util.WorkbenchUtil;
+import org.sidiff.revision.common.ui.workbench.WorkbenchUtil;
 import org.sidiff.revision.editrules.generation.difference.DifferenceToEditRule;
 import org.sidiff.revision.editrules.generation.difference.builder.IEditRuleBuilder;
 

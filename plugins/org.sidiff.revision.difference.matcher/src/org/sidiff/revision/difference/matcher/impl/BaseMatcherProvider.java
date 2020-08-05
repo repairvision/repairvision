@@ -1,6 +1,6 @@
 package org.sidiff.revision.difference.matcher.impl;
 
-import org.sidiff.common.utilities.ui.util.NameUtil;
+import org.sidiff.revision.common.utilities.string.NameUtil;
 import org.sidiff.revision.difference.matcher.IMatcherProvider;
 
 /**

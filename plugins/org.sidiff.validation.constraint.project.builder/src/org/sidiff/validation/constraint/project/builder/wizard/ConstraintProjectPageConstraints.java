@@ -27,8 +27,8 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
-import org.sidiff.common.utilities.emf.ItemProviderUtil;
-import org.sidiff.common.utilities.java.StringUtil;
+import org.sidiff.revision.common.emf.ItemProviderUtil;
+import org.sidiff.revision.common.utilities.java.StringUtil;
 import org.sidiff.validation.constraint.project.builder.Activator;
 
 /**

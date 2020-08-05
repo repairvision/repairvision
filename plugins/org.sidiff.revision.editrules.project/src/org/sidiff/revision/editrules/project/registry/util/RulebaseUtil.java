@@ -2,7 +2,6 @@ package org.sidiff.revision.editrules.project.registry.util;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 import org.eclipse.core.resources.IResource;
@@ -17,7 +16,7 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.emf.henshin.model.Unit;
-import org.sidiff.common.utilities.ui.util.WorkbenchUtil;
+import org.sidiff.revision.common.ui.workbench.WorkbenchUtil;
 
 public class RulebaseUtil {
 

@@ -5,7 +5,6 @@ Bundle-SymbolicName: org.sidiff.revision.repair.api;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Require-Bundle: org.eclipse.equinox.registry,
- org.sidiff.common.utilities,
  org.sidiff.revision.editrules.recognition,
  org.sidiff.graphpattern,
  org.sidiff.revision.api;visibility:=reexport,
@@ -16,7 +15,8 @@ Require-Bundle: org.eclipse.equinox.registry,
  org.sidiff.history.revision,
  org.sidiff.revision.common.logging,
  org.sidiff.revision.editrules.impact,
- org.sidiff.revision.repair.impact
+ org.sidiff.revision.repair.impact,
+ org.sidiff.revision.common.emf.document
 Export-Package: org.sidiff.revision.repair.api,
  org.sidiff.revision.repair.api.configuration
 Automatic-Module-Name: org.sidiff.revision.repair.api.peo

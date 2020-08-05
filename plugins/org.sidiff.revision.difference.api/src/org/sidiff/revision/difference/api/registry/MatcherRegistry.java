@@ -9,7 +9,7 @@ import java.util.Set;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.ecore.resource.Resource;
-import org.sidiff.common.utilities.emf.DocumentType;
+import org.sidiff.revision.common.emf.document.DocumentType;
 import org.sidiff.revision.difference.matcher.IMatcherProvider;
 import org.sidiff.revision.difference.matcher.IMatcherProviderBundle;
 import org.sidiff.revision.difference.matcher.util.MatcherUtil;

@@ -7,8 +7,8 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.eclipse.emf.ecore.resource.Resource;
-import org.sidiff.common.utilities.emf.DocumentType;
-import org.sidiff.common.utilities.emf.Scope;
+import org.sidiff.revision.common.emf.document.DocumentType;
+import org.sidiff.revision.common.emf.document.Scope;
 import org.sidiff.revision.difference.matcher.IMatcherProvider;
 
 public class MatcherUtil {

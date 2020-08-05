@@ -46,8 +46,6 @@ import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.part.ViewPart;
 import org.eclipse.ui.views.properties.IPropertySheetPage;
-import org.sidiff.common.utilities.emf.EMFStorage;
-import org.sidiff.common.utilities.ui.util.WorkbenchUtil;
 import org.sidiff.difference.symmetric.graphviewer.content.DifferenceImporter;
 import org.sidiff.history.analysis.tracing.InconsistencyTrace;
 import org.sidiff.history.analysis.util.HistoryAnalysisUtil;
@@ -58,6 +56,8 @@ import org.sidiff.historymodel.History;
 import org.sidiff.historymodel.HistoryModelFactory;
 import org.sidiff.historymodel.Problem;
 import org.sidiff.repair.history.editrules.learn.resolved.InconsistencyAnalysis;
+import org.sidiff.revision.common.emf.EMFStorage;
+import org.sidiff.revision.common.ui.workbench.WorkbenchUtil;
 import org.sidiff.revision.difference.Change;
 import org.sidiff.revision.repair.history.evaluation.util.EvaluationUtil;
 

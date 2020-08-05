@@ -25,7 +25,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.ui.IWorkbenchPage;
-import org.sidiff.common.utilities.emf.EMFStorage;
+import org.sidiff.revision.common.emf.EMFStorage;
 
 @SuppressWarnings("restriction")
 public class HistoryModelEditorTools {

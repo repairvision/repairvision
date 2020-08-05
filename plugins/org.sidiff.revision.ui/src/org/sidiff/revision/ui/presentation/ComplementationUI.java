@@ -6,9 +6,9 @@ import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.IWorkbenchPartSite;
-import org.sidiff.common.utilities.ui.widgets.IDisposableControl;
-import org.sidiff.common.utilities.ui.widgets.IUnsetableControl;
 import org.sidiff.revision.api.ComplementationJob;
+import org.sidiff.revision.common.ui.widgets.IDisposableControl;
+import org.sidiff.revision.common.ui.widgets.IUnsetableControl;
 import org.sidiff.revision.ui.application.ComplementationApplication;
 import org.sidiff.revision.ui.application.ResultChangedListener;
 

@@ -1,8 +1,8 @@
 package org.sidiff.validation.constraint.interpreter.formulas;
 
 import org.sidiff.revision.impact.changetree.IDecisionBranch;
+import org.sidiff.revision.impact.changetree.scope.IScopeRecorder;
 import org.sidiff.validation.constraint.interpreter.NamedElement;
-import org.sidiff.validation.constraint.interpreter.scope.IScopeRecorder;
 
 public abstract class FormulaImpl extends NamedElement implements Formula {
 

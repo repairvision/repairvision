@@ -1,8 +1,8 @@
 package org.sidiff.validation.constraint.interpreter.terms.constants;
 
 import org.sidiff.revision.impact.changetree.IDecisionBranch;
+import org.sidiff.revision.impact.changetree.scope.IScopeRecorder;
 import org.sidiff.validation.constraint.interpreter.formulas.predicates.Predicate;
-import org.sidiff.validation.constraint.interpreter.scope.IScopeRecorder;
 
 public class BoolConstantTrue extends Constant implements Predicate {
 

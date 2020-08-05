@@ -2,7 +2,7 @@ package org.sidiff.revision.repair.ui.debugger.model;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.swt.graphics.Image;
-import org.sidiff.common.utilities.emf.ItemProviderUtil;
+import org.sidiff.revision.common.emf.ItemProviderUtil;
 import org.sidiff.revision.repair.ui.debugger.ITreeItem;
 
 public class ModelElementItem implements ITreeItem {

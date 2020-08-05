@@ -11,7 +11,6 @@ import java.util.Stack;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
-import org.sidiff.common.utilities.java.JUtil;
 import org.sidiff.generic.matcher.uuid.UUIDMatcherProvider;
 import org.sidiff.history.analysis.tracing.InconsistencyTrace;
 import org.sidiff.history.revision.IRevision;
@@ -21,6 +20,7 @@ import org.sidiff.history.revision.util.SymmetricDifferenceUtil;
 import org.sidiff.historymodel.ChangeSet;
 import org.sidiff.historymodel.HistoryModelFactory;
 import org.sidiff.historymodel.Problem;
+import org.sidiff.revision.common.utilities.java.JUtil;
 import org.sidiff.revision.difference.AddObject;
 import org.sidiff.revision.difference.AddReference;
 import org.sidiff.revision.difference.AttributeValueChange;

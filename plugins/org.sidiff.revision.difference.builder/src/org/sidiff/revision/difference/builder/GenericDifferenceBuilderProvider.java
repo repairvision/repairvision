@@ -3,7 +3,7 @@ package org.sidiff.revision.difference.builder;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.sidiff.common.utilities.emf.DocumentType;
+import org.sidiff.revision.common.emf.document.DocumentType;
 
 /**
  * Generic technical difference builder. Accepts any model type and filters nothing domain specific.

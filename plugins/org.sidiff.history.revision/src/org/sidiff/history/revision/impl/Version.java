@@ -9,10 +9,10 @@ import java.util.Set;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.resource.Resource;
-import org.sidiff.common.utilities.java.JUtil;
 import org.sidiff.history.revision.IVersion;
 import org.sidiff.history.revision.crossreferences.ICrossReferencer;
 import org.sidiff.history.revision.crossreferences.impl.IndexedCrossReferencer;
+import org.sidiff.revision.common.utilities.java.JUtil;
 
 public class Version implements IVersion {
 	

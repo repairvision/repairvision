@@ -17,11 +17,11 @@ import org.eclipse.emf.transaction.RecordingCommand;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.eclipse.emf.transaction.util.TransactionUtil;
 import org.eclipse.swt.graphics.Image;
-import org.sidiff.common.utilities.emf.ItemProviderUtil;
 import org.sidiff.completion.ui.model.proposals.util.DecompositionTemplates;
 import org.sidiff.completion.ui.proposals.ICompletionPreview;
 import org.sidiff.completion.ui.proposals.ICompletionProposal;
 import org.sidiff.graphpattern.profile.henshin_extension.RuleExtension;
+import org.sidiff.revision.common.emf.ItemProviderUtil;
 import org.sidiff.revision.editrules.complement.construction.ComplementRule;
 
 public class ModelCompletionProposal implements ICompletionProposal {

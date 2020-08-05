@@ -13,9 +13,9 @@ import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.resource.Resource;
-import org.sidiff.common.utilities.java.StringUtil;
 import org.sidiff.graphpattern.GraphPattern;
 import org.sidiff.graphpattern.NodePattern;
+import org.sidiff.revision.common.utilities.java.StringUtil;
 
 public class ModelToGraphPatternDefiniton {
 	

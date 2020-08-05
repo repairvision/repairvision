@@ -24,7 +24,6 @@ import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.henshin.model.Attribute;
 import org.eclipse.emf.henshin.model.Node;
-import org.sidiff.common.utilities.henshin.HenshinRuleAnalysisUtil;
 import org.sidiff.completion.ui.codebricks.Brick;
 import org.sidiff.completion.ui.codebricks.Codebrick;
 import org.sidiff.completion.ui.codebricks.Codebricks;
@@ -45,6 +44,7 @@ import org.sidiff.completion.ui.model.proposals.util.DecompositionTemplates;
 import org.sidiff.graphpattern.attributes.JavaSciptParser;
 import org.sidiff.graphpattern.profile.henshin_extension.GraphElementExtension;
 import org.sidiff.graphpattern.profile.henshin_extension.SubGraph;
+import org.sidiff.revision.common.henshin.HenshinRuleAnalysisUtil;
 import org.sidiff.revision.editrules.generation.decompose.DecomposingEditRulesUtil;
 
 public class CodebricksGenerator {

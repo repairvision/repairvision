@@ -5,7 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.emf.ecore.EClassifier;
-import org.sidiff.common.utilities.java.JUtil;
+import org.sidiff.revision.common.utilities.java.JUtil;
 import org.sidiff.revision.impact.changetree.IDecisionLeaf;
 import org.sidiff.revision.impact.changetree.IDecisionNode;
 import org.sidiff.revision.impact.changetree.analyze.ConstraintAction.ConstraintType;

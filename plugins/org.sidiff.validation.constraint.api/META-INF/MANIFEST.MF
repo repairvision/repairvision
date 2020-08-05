@@ -7,10 +7,10 @@ Bundle-Activator: org.sidiff.validation.constraint.api.Activator
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.emf.ecore,
  org.eclipse.ui,
- org.sidiff.common.utilities,
  org.sidiff.validation.constraint.interpreter,
  org.sidiff.validation.constraint.project;visibility:=reexport,
- org.sidiff.revision.impact.changetree
+ org.sidiff.revision.impact.changetree,
+ org.sidiff.revision.common.emf.document
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Export-Package: org.sidiff.validation.constraint.api,

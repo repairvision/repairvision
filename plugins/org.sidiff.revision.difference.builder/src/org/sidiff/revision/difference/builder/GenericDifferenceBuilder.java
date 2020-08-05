@@ -10,7 +10,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.resource.Resource;
-import org.sidiff.common.utilities.emf.Scope;
+import org.sidiff.revision.common.emf.document.Scope;
 import org.sidiff.revision.difference.AddObject;
 import org.sidiff.revision.difference.AddReference;
 import org.sidiff.revision.difference.AttributeValueChange;

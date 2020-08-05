@@ -18,7 +18,7 @@ import org.eclipse.xtext.generator.IGeneratorContext
 import org.sidiff.validation.laguage.fol.firstOrderLogic.ConstraintLibrary
 import org.sidiff.validation.laguage.fol.util.EMFMetaAccessUtil
 import org.sidiff.validation.laguage.fol.util.GeneratorUtil
-import org.sidiff.common.utilities.ui.util.NameUtil
+import org.sidiff.revision.common.utilities.string.NameUtil
 
 /**
  * Generates code from your model files on save.

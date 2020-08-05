@@ -1,7 +1,7 @@
 package org.sidiff.revision.editrules.impact.graph;
 
-import static org.sidiff.common.utilities.henshin.HenshinChangesUtil.isStrictMatchingType;
-import static org.sidiff.common.utilities.henshin.HenshinRuleAnalysisUtil.getContainingReference;
+import static org.sidiff.revision.common.henshin.HenshinChangesUtil.isStrictMatchingType;
+import static org.sidiff.revision.common.henshin.HenshinRuleAnalysisUtil.getContainingReference;
 
 import java.util.ArrayList;
 import java.util.Collection;

@@ -9,7 +9,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.henshin.model.Attribute;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.swt.graphics.Image;
-import org.sidiff.common.utilities.henshin.HenshinRuleAnalysisUtil;
+import org.sidiff.revision.common.henshin.HenshinRuleAnalysisUtil;
 import org.sidiff.revision.ui.viewer.Activator;
 
 public class ActionAttributeItem extends ActionItem {

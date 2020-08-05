@@ -7,6 +7,8 @@ import org.eclipse.emf.ecore.EClass
 import org.eclipse.emf.ecore.EcorePackage
 import org.eclipse.xtext.EcoreUtil2
 import org.eclipse.xtext.validation.Check
+import org.sidiff.validation.laguage.fol.firstOrderLogic.AsClassifier
+import org.sidiff.validation.laguage.fol.firstOrderLogic.AsDataType
 import org.sidiff.validation.laguage.fol.firstOrderLogic.Capitalize
 import org.sidiff.validation.laguage.fol.firstOrderLogic.Concatenate
 import org.sidiff.validation.laguage.fol.firstOrderLogic.Constraint
@@ -14,11 +16,9 @@ import org.sidiff.validation.laguage.fol.firstOrderLogic.ConstraintLibrary
 import org.sidiff.validation.laguage.fol.firstOrderLogic.FirstOrderLogicPackage
 import org.sidiff.validation.laguage.fol.firstOrderLogic.GetContainer
 import org.sidiff.validation.laguage.fol.firstOrderLogic.GetContainments
-import org.sidiff.validation.laguage.fol.util.LanguageUtil
-import org.sidiff.validation.laguage.fol.firstOrderLogic.AsClassifier
-import org.sidiff.common.utilities.emf.MetaModelUtil
 import org.sidiff.validation.laguage.fol.firstOrderLogic.VariableRef
-import org.sidiff.validation.laguage.fol.firstOrderLogic.AsDataType
+import org.sidiff.validation.laguage.fol.util.LanguageUtil
+import org.sidiff.revision.common.emf.MetaModelUtil
 
 /**
  * This class contains custom validation rules. 

@@ -3,8 +3,8 @@ package org.sidiff.validation.constraint.interpreter.formulas.binary;
 import org.sidiff.revision.impact.changetree.Alternative;
 import org.sidiff.revision.impact.changetree.IDecisionBranch;
 import org.sidiff.revision.impact.changetree.Sequence;
+import org.sidiff.revision.impact.changetree.scope.IScopeRecorder;
 import org.sidiff.validation.constraint.interpreter.formulas.Formula;
-import org.sidiff.validation.constraint.interpreter.scope.IScopeRecorder;
 
 public class Or extends BinaryFormula {
 

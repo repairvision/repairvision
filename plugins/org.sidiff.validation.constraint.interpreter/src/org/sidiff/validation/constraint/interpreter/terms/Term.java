@@ -4,8 +4,8 @@ import org.eclipse.emf.ecore.EClassifier;
 import org.sidiff.revision.impact.changetree.IDecisionBranch;
 import org.sidiff.revision.impact.changetree.analyze.ConstraintAction.ConstraintType;
 import org.sidiff.revision.impact.changetree.change.actions.ChangeAction.RepairType;
+import org.sidiff.revision.impact.changetree.scope.IScopeRecorder;
 import org.sidiff.validation.constraint.interpreter.NamedElement;
-import org.sidiff.validation.constraint.interpreter.scope.IScopeRecorder;
 
 public abstract class Term extends NamedElement  {
 

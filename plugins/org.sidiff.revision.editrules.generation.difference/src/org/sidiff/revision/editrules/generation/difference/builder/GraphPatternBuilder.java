@@ -18,8 +18,6 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
-import org.sidiff.common.utilities.emf.EMFStorage;
-import org.sidiff.common.utilities.ui.util.WorkbenchUtil;
 import org.sidiff.graphpattern.AttributePattern;
 import org.sidiff.graphpattern.Bundle;
 import org.sidiff.graphpattern.EdgePattern;
@@ -29,6 +27,8 @@ import org.sidiff.graphpattern.NodePattern;
 import org.sidiff.graphpattern.Pattern;
 import org.sidiff.graphpattern.design.tools.diagram.ModelDiagramCreator;
 import org.sidiff.graphpattern.util.GraphPatternConstants;
+import org.sidiff.revision.common.emf.EMFStorage;
+import org.sidiff.revision.common.ui.workbench.WorkbenchUtil;
 import org.sidiff.revision.editrules.generation.difference.util.Pair;
 
 public class GraphPatternBuilder implements IEditRuleBuilder<GraphPattern, NodePattern, EdgePattern, AttributePattern> {

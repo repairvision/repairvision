@@ -10,7 +10,11 @@ Require-Bundle: org.eclipse.core.runtime,
  org.sidiff.revision.ui;visibility:=reexport,
  org.sidiff.revision.editrules.project,
  org.sidiff.revision.editrules.project.development,
- org.sidiff.validation.constraint.project
+ org.sidiff.validation.constraint.project,
+ org.eclipse.ui.workbench,
+ org.eclipse.jface,
+ org.sidiff.revision.common.utilities,
+ org.sidiff.revision.common.emf.document
 Automatic-Module-Name: org.sidiff.revision.api.ui.configuration
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8

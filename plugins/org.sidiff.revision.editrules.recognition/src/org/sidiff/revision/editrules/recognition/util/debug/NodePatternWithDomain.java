@@ -6,10 +6,10 @@ import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
 import org.eclipse.emf.ecore.EObject;
-import org.sidiff.common.utilities.emf.ItemProviderUtil;
-import org.sidiff.common.utilities.java.JUtil;
 import org.sidiff.graphpattern.EdgePattern;
 import org.sidiff.graphpattern.NodePattern;
+import org.sidiff.revision.common.emf.ItemProviderUtil;
+import org.sidiff.revision.common.utilities.java.JUtil;
 import org.sidiff.revision.editrules.recognition.pattern.domain.Domain;
 import org.sidiff.revision.editrules.recognition.pattern.domain.Domain.SelectionType;
 

@@ -5,7 +5,9 @@ Bundle-SymbolicName: org.sidiff.revision.difference.api;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Require-Bundle: org.sidiff.revision.difference.builder;visibility:=reexport,
- org.eclipse.core.runtime
+ org.eclipse.core.runtime,
+ org.sidiff.revision.common.emf.document,
+ org.sidiff.revision.common.emf
 Export-Package: org.sidiff.revision.difference.api,
  org.sidiff.revision.difference.api.registry,
  org.sidiff.revision.difference.api.settings,

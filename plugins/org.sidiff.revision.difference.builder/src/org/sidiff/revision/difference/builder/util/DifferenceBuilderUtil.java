@@ -3,8 +3,8 @@ package org.sidiff.revision.difference.builder.util;
 import java.util.Set;
 
 import org.eclipse.emf.ecore.resource.Resource;
-import org.sidiff.common.utilities.emf.DocumentType;
-import org.sidiff.common.utilities.emf.Scope;
+import org.sidiff.revision.common.emf.document.DocumentType;
+import org.sidiff.revision.common.emf.document.Scope;
 import org.sidiff.revision.difference.builder.IDifferenceBuilderProvider;
 
 public class DifferenceBuilderUtil {

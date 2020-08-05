@@ -3,7 +3,7 @@ package org.sidiff.revision.difference.api.util;
 import java.io.File;
 
 import org.eclipse.emf.ecore.resource.Resource;
-import org.sidiff.common.utilities.emf.EMFStorage;
+import org.sidiff.revision.common.emf.EMFStorage;
 import org.sidiff.revision.difference.api.settings.DifferenceSettings;
 
 public class DifferenceUtil {

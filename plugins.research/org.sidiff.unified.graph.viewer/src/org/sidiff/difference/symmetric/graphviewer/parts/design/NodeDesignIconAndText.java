@@ -2,10 +2,10 @@ package org.sidiff.difference.symmetric.graphviewer.parts.design;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.edit.ui.provider.ExtendedImageRegistry;
-import org.sidiff.common.utilities.emf.ItemProviderUtil;
 import org.sidiff.difference.symmetric.graphviewer.content.MatchingNode;
 import org.sidiff.difference.symmetric.graphviewer.parts.design.util.INodeSizeCalculator;
 import org.sidiff.difference.symmetric.graphviewer.parts.design.util.JavaFXUtil;
+import org.sidiff.revision.common.emf.ItemProviderUtil;
 
 import javafx.embed.swt.SWTFXUtils;
 import javafx.geometry.HPos;

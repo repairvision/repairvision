@@ -1,12 +1,12 @@
 package org.sidiff.revision.editrules.generation.difference.configuration.filters.changes.defaults;
 
-import static org.sidiff.common.utilities.java.JUtil.notNull;
+import static org.sidiff.revision.common.utilities.java.JUtil.notNull;
 
 import java.util.logging.Level;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
-import org.sidiff.common.utilities.emf.DocumentType;
+import org.sidiff.revision.common.emf.document.DocumentType;
 import org.sidiff.revision.editrules.generation.difference.Activator;
 import org.sidiff.revision.editrules.generation.difference.configuration.filters.DefaultFilter;
 import org.sidiff.revision.editrules.generation.difference.configuration.filters.FilterConfiguration;

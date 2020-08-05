@@ -16,7 +16,7 @@ import org.sidiff.revision.difference.Change;
 import org.sidiff.revision.difference.Correspondence;
 import org.sidiff.revision.difference.RemoveObject;
 import org.sidiff.revision.difference.RemoveReference;
-import org.sidiff.validation.constraint.interpreter.scope.AttributeScope;
+import org.sidiff.revision.impact.changetree.scope.AttributeScope;
 
 public class EditRuleSignature {
 	

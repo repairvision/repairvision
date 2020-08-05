@@ -4,7 +4,7 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
-import org.sidiff.common.utilities.java.JUtil;
+import org.sidiff.revision.common.utilities.java.JUtil;
 import org.sidiff.revision.impact.changetree.IDecisionLeaf;
 import org.sidiff.revision.impact.changetree.IDecisionNode;
 

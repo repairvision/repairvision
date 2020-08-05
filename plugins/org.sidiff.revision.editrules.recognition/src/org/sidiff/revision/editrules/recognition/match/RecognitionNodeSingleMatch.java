@@ -3,7 +3,7 @@ package org.sidiff.revision.editrules.recognition.match;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.henshin.model.Action.Type;
 import org.eclipse.emf.henshin.model.Node;
-import org.sidiff.common.utilities.emf.ModelingUtil;
+import org.sidiff.revision.common.emf.ModelingUtil;
 
 public class RecognitionNodeSingleMatch extends RecognitionNodeMatch {
 

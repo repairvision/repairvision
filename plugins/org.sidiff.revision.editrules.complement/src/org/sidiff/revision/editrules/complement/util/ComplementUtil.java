@@ -1,10 +1,10 @@
 package org.sidiff.revision.editrules.complement.util;
 
-import static org.sidiff.common.utilities.henshin.HenshinRuleAnalysisUtil.getLHS;
-import static org.sidiff.common.utilities.henshin.HenshinRuleAnalysisUtil.getRHS;
-import static org.sidiff.common.utilities.henshin.HenshinRuleAnalysisUtil.getRemoteAttribute;
-import static org.sidiff.common.utilities.henshin.HenshinRuleAnalysisUtil.getRemoteNode;
-import static org.sidiff.common.utilities.henshin.HenshinRuleAnalysisUtil.isRHSNode;
+import static org.sidiff.revision.common.henshin.HenshinRuleAnalysisUtil.getLHS;
+import static org.sidiff.revision.common.henshin.HenshinRuleAnalysisUtil.getRHS;
+import static org.sidiff.revision.common.henshin.HenshinRuleAnalysisUtil.getRemoteAttribute;
+import static org.sidiff.revision.common.henshin.HenshinRuleAnalysisUtil.getRemoteNode;
+import static org.sidiff.revision.common.henshin.HenshinRuleAnalysisUtil.isRHSNode;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -22,7 +22,7 @@ import org.eclipse.emf.henshin.model.MappingList;
 import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Parameter;
 import org.eclipse.emf.henshin.model.Rule;
-import org.sidiff.common.utilities.henshin.HenshinRuleEditUtil;
+import org.sidiff.revision.common.henshin.HenshinRuleEditUtil;
 import org.sidiff.revision.editrules.recognition.match.RecognitionActionMatch;
 import org.sidiff.revision.editrules.recognition.match.RecognitionAttributeMatch;
 import org.sidiff.revision.editrules.recognition.match.RecognitionEdgeMatch;

@@ -15,7 +15,7 @@ import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Display;
-import org.sidiff.common.utilities.henshin.HenshinRuleAnalysisUtil;
+import org.sidiff.revision.common.henshin.HenshinRuleAnalysisUtil;
 import org.sidiff.revision.ui.viewer.Activator;
 import org.sidiff.revision.ui.viewer.provider.IHighlightableElement;
 

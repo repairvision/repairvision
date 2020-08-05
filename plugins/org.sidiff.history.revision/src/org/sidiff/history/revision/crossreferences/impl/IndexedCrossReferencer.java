@@ -11,8 +11,8 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.resource.Resource;
-import org.sidiff.common.utilities.java.JUtil;
 import org.sidiff.history.revision.crossreferences.ICrossReferencer;
+import org.sidiff.revision.common.utilities.java.JUtil;
 
 public class IndexedCrossReferencer implements ICrossReferencer {
 

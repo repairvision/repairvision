@@ -2,7 +2,7 @@ package org.sidiff.graphpattern.validation;
 
 import org.eclipse.core.resources.IResource;
 import org.eclipse.emf.ecore.EObject;
-import org.sidiff.common.utilities.ui.util.WorkbenchUtil;
+import org.sidiff.revision.common.ui.workbench.WorkbenchUtil;
 
 public class GraphPatternValidation {
 

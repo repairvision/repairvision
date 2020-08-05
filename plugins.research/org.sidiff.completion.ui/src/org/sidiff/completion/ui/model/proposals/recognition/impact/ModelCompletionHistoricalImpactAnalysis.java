@@ -6,7 +6,7 @@ import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
-import org.sidiff.common.utilities.emf.MetaModelUtil;
+import org.sidiff.revision.common.emf.MetaModelUtil;
 import org.sidiff.revision.difference.AddObject;
 import org.sidiff.revision.difference.AddReference;
 import org.sidiff.revision.difference.AttributeValueChange;

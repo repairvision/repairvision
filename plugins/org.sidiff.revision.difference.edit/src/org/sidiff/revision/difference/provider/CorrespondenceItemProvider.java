@@ -17,7 +17,7 @@ import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
-import org.sidiff.common.utilities.emf.ItemProviderUtil;
+import org.sidiff.revision.common.emf.ItemProviderUtil;
 import org.sidiff.revision.difference.Correspondence;
 import org.sidiff.revision.difference.DifferencePackage;
 

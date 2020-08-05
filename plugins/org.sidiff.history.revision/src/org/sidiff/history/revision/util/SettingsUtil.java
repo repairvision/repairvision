@@ -1,7 +1,7 @@
 package org.sidiff.history.revision.util;
 
-import org.sidiff.common.utilities.emf.Scope;
 import org.sidiff.generic.matcher.uuid.UUIDMatcherProvider;
+import org.sidiff.revision.common.emf.document.Scope;
 import org.sidiff.revision.difference.api.registry.DifferenceBuilderRegistry;
 import org.sidiff.revision.difference.api.settings.DifferenceSettings;
 

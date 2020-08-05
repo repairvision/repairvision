@@ -12,13 +12,16 @@ Export-Package: org.sidiff.revision.editrules.recognition,
  org.sidiff.revision.editrules.recognition.pattern.graph,
  org.sidiff.revision.editrules.recognition.revision
 Require-Bundle: org.eclipse.emf.transaction,
- org.sidiff.common.utilities,
  org.sidiff.graphpattern,
  org.sidiff.history.revision,
  org.sidiff.revision.common.logging,
  org.sidiff.revision.difference,
  org.sidiff.revision.impact.analysis;visibility:=reexport,
- org.sidiff.revision.editrules.impact
+ org.sidiff.revision.editrules.impact,
+ org.eclipse.emf.henshin.model,
+ org.sidiff.revision.common.emf,
+ org.sidiff.revision.common.henshin,
+ org.sidiff.revision.common.utilities
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Automatic-Module-Name: org.sidiff.editrule.recognition
 Bundle-ActivationPolicy: lazy

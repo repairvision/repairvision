@@ -5,9 +5,9 @@ import java.util.List;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
+import org.sidiff.revision.impact.changetree.scope.IScopeRecorder;
+import org.sidiff.revision.impact.changetree.scope.ScopeRecorder;
 import org.sidiff.validation.constraint.interpreter.IConstraint;
-import org.sidiff.validation.constraint.interpreter.scope.IScopeRecorder;
-import org.sidiff.validation.constraint.interpreter.scope.ScopeRecorder;
 
 public class ScopeValidationIterator extends ValidationIterator {
 	

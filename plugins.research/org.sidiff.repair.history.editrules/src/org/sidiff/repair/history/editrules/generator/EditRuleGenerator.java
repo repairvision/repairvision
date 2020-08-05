@@ -18,11 +18,11 @@ import org.sidiff.revision.difference.api.registry.DifferenceBuilderRegistry;
 import org.sidiff.revision.difference.api.registry.MatcherRegistry;
 import org.sidiff.revision.difference.api.settings.DifferenceSettings;
 import org.sidiff.revision.impact.changetree.IDecisionNode;
+import org.sidiff.revision.impact.changetree.scope.IScopeRecorder;
+import org.sidiff.revision.impact.changetree.scope.ScopeNode;
+import org.sidiff.revision.impact.changetree.scope.ScopeRecorder;
 import org.sidiff.validation.constraint.api.ValidationFacade;
 import org.sidiff.validation.constraint.api.util.RequiredValidation;
-import org.sidiff.validation.constraint.interpreter.scope.IScopeRecorder;
-import org.sidiff.validation.constraint.interpreter.scope.ScopeNode;
-import org.sidiff.validation.constraint.interpreter.scope.ScopeRecorder;
 
 public class EditRuleGenerator {
 	

@@ -12,7 +12,6 @@ Export-Package: org.sidiff.validation.constraint.interpreter,
  org.sidiff.validation.constraint.interpreter.formulas.predicates.types,
  org.sidiff.validation.constraint.interpreter.formulas.quantifiers,
  org.sidiff.validation.constraint.interpreter.formulas.unary,
- org.sidiff.validation.constraint.interpreter.scope,
  org.sidiff.validation.constraint.interpreter.terms,
  org.sidiff.validation.constraint.interpreter.terms.constants,
  org.sidiff.validation.constraint.interpreter.terms.functions,
@@ -22,7 +21,8 @@ Export-Package: org.sidiff.validation.constraint.interpreter,
 Require-Bundle: org.eclipse.emf.ecore,
  org.eclipse.equinox.app,
  org.eclipse.uml2.uml,
- org.sidiff.common.utilities,
- org.sidiff.revision.impact.changetree
+ org.sidiff.revision.impact.changetree,
+ org.sidiff.revision.common.emf,
+ org.sidiff.revision.common.utilities
 Automatic-Module-Name: org.sidiff.validation.constraint.interpreter
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8

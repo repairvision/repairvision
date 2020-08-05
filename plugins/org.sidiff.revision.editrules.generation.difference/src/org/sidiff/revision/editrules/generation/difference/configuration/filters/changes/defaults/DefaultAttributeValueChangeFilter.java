@@ -1,6 +1,6 @@
 package org.sidiff.revision.editrules.generation.difference.configuration.filters.changes.defaults;
 
-import static org.sidiff.common.utilities.java.JUtil.notNull;
+import static org.sidiff.revision.common.utilities.java.JUtil.notNull;
 
 import java.util.logging.Level;
 

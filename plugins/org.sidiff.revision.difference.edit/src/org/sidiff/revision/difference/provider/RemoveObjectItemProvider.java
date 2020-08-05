@@ -14,7 +14,7 @@ import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
-import org.sidiff.common.utilities.emf.ItemProviderUtil;
+import org.sidiff.revision.common.emf.ItemProviderUtil;
 import org.sidiff.revision.difference.DifferencePackage;
 import org.sidiff.revision.difference.RemoveObject;
 import org.sidiff.revision.difference.impl.RemoveObjectImpl;

@@ -27,8 +27,8 @@ import org.sidiff.revision.editrules.generation.difference.configuration.Symmetr
 import org.sidiff.revision.editrules.generation.difference.configuration.TransformationConfiguration;
 import org.sidiff.revision.editrules.generation.difference.configuration.filters.changes.IAddAttributeFilter;
 import org.sidiff.revision.editrules.generation.difference.util.DifferenceToEditRuleUtil;
-import org.sidiff.validation.constraint.interpreter.scope.AttributeScope;
-import org.sidiff.validation.constraint.interpreter.scope.IScopeRecorder;
+import org.sidiff.revision.impact.changetree.scope.AttributeScope;
+import org.sidiff.revision.impact.changetree.scope.IScopeRecorder;
 
 public class EditRule implements IEditRule {
 

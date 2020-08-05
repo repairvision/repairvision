@@ -4,7 +4,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.henshin.model.Action.Type;
 import org.eclipse.emf.henshin.model.Attribute;
 import org.eclipse.emf.henshin.model.GraphElement;
-import org.sidiff.common.utilities.emf.ModelingUtil;
+import org.sidiff.revision.common.emf.ModelingUtil;
 
 public class RecognitionAttributeMatch extends RecognitionActionMatch {
 

@@ -15,7 +15,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.xmi.XMIResource;
-import org.sidiff.common.utilities.emf.DocumentType;
+import org.sidiff.revision.common.emf.document.DocumentType;
 import org.sidiff.revision.difference.AddObject;
 import org.sidiff.revision.difference.AddReference;
 import org.sidiff.revision.difference.AttributeValueChange;

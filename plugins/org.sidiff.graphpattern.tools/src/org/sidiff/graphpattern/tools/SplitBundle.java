@@ -12,11 +12,11 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jface.dialogs.IInputValidator;
-import org.sidiff.common.utilities.emf.EMFHandlerUtil;
-import org.sidiff.common.utilities.ui.util.WorkbenchUtil;
 import org.sidiff.graphpattern.Bundle;
 import org.sidiff.graphpattern.GraphPattern;
 import org.sidiff.graphpattern.Pattern;
+import org.sidiff.revision.common.emf.EMFHandlerUtil;
+import org.sidiff.revision.common.ui.workbench.WorkbenchUtil;
 
 public class SplitBundle extends AbstractHandler {
 	

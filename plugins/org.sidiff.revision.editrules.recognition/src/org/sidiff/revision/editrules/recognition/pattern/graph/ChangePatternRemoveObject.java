@@ -6,8 +6,8 @@ import org.eclipse.emf.ecore.EObject;
 import org.sidiff.graphpattern.EdgePattern;
 import org.sidiff.graphpattern.GraphpatternFactory;
 import org.sidiff.revision.difference.Change;
-import org.sidiff.revision.difference.RemoveObject;
 import org.sidiff.revision.difference.DifferencePackage;
+import org.sidiff.revision.difference.RemoveObject;
 import org.sidiff.revision.editrules.recognition.pattern.domain.Domain;
 import org.sidiff.revision.editrules.recognition.pattern.graph.path.MatchingPath;
 

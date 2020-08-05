@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.emf.ecore.resource.Resource;
-import org.sidiff.common.utilities.emf.Scope;
+import org.sidiff.revision.common.emf.document.Scope;
 import org.sidiff.revision.difference.Correspondence;
 import org.sidiff.revision.difference.Difference;
 import org.sidiff.revision.difference.api.DifferenceFacade;

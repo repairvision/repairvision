@@ -7,7 +7,7 @@ import java.util.Set;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
-import org.sidiff.common.utilities.emf.ModelingUtil;
+import org.sidiff.revision.common.emf.ModelingUtil;
 import org.sidiff.revision.difference.AddObject;
 import org.sidiff.revision.difference.AddReference;
 import org.sidiff.revision.difference.AttributeValueChange;

@@ -14,8 +14,8 @@ import org.eclipse.sirius.diagram.ui.tools.api.graphical.edit.styles.SimpleStyle
 import org.eclipse.sirius.diagram.ui.tools.api.graphical.edit.styles.StyleConfiguration;
 import org.eclipse.sirius.viewpoint.Style;
 import org.eclipse.swt.graphics.Image;
-import org.sidiff.common.utilities.emf.ItemProviderUtil;
 import org.sidiff.graphpattern.EdgePattern;
+import org.sidiff.revision.common.emf.ItemProviderUtil;
 
 /**
  * Provides the corresponding end/start icons of opposite edges.

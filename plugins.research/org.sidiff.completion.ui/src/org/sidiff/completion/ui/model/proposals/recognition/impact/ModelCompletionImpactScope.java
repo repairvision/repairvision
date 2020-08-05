@@ -8,7 +8,7 @@ import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
-import org.sidiff.common.utilities.emf.MetaModelUtil;
+import org.sidiff.revision.common.emf.MetaModelUtil;
 import org.sidiff.revision.impact.analysis.ImpactAnalysis;
 import org.sidiff.revision.impact.analysis.ImpactScope;
 import org.sidiff.revision.impact.analysis.PotentialImpactScope;

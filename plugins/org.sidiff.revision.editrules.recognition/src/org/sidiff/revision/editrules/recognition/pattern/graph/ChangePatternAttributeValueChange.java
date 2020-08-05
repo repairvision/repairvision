@@ -3,9 +3,9 @@ package org.sidiff.revision.editrules.recognition.pattern.graph;
 import java.util.Iterator;
 
 import org.eclipse.emf.ecore.EObject;
-import org.sidiff.common.utilities.henshin.pairs.AttributePair;
 import org.sidiff.graphpattern.EdgePattern;
 import org.sidiff.graphpattern.GraphpatternFactory;
+import org.sidiff.revision.common.henshin.pairs.AttributePair;
 import org.sidiff.revision.difference.AttributeValueChange;
 import org.sidiff.revision.difference.Change;
 import org.sidiff.revision.difference.DifferencePackage;

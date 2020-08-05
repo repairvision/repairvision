@@ -5,7 +5,7 @@ import java.util.Set;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.MultiStatus;
 import org.eclipse.core.runtime.Status;
-import org.sidiff.common.utilities.emf.Scope;
+import org.sidiff.revision.common.emf.document.Scope;
 import org.sidiff.revision.difference.api.registry.MatcherRegistry;
 import org.sidiff.revision.difference.matcher.IMatcherProvider;
 

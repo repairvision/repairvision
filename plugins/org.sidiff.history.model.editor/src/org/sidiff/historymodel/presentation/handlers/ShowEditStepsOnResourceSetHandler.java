@@ -10,10 +10,10 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.handlers.HandlerUtil;
-import org.sidiff.common.utilities.ui.util.WorkbenchUtil;
 import org.sidiff.historymodel.Problem;
 import org.sidiff.historymodel.Version;
 import org.sidiff.historymodel.presentation.util.HistoryModelEditorTools;
+import org.sidiff.revision.common.ui.workbench.WorkbenchUtil;
 
 public class ShowEditStepsOnResourceSetHandler extends AbstractHandler {
 	

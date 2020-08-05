@@ -19,8 +19,6 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
-import org.sidiff.common.utilities.emf.ItemProviderUtil;
-import org.sidiff.common.utilities.emf.MetaModelUtil;
 import org.sidiff.graphpattern.EdgePattern;
 import org.sidiff.graphpattern.GraphpatternPackage;
 import org.sidiff.graphpattern.NodePattern;
@@ -28,6 +26,8 @@ import org.sidiff.graphpattern.edit.commands.SetEdgePatternOppositeCommand;
 import org.sidiff.graphpattern.edit.commands.SetEdgePatternTypeCommand;
 import org.sidiff.graphpattern.edit.util.ColorServices;
 import org.sidiff.graphpattern.edit.util.LabelServices;
+import org.sidiff.revision.common.emf.ItemProviderUtil;
+import org.sidiff.revision.common.emf.MetaModelUtil;
 import org.eclipse.emf.ecore.EClass;
 
 /**

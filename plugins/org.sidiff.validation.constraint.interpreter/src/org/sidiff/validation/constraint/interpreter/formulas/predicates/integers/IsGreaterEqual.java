@@ -3,8 +3,8 @@ package org.sidiff.validation.constraint.interpreter.formulas.predicates.integer
 import org.sidiff.revision.impact.changetree.Alternative;
 import org.sidiff.revision.impact.changetree.IDecisionBranch;
 import org.sidiff.revision.impact.changetree.change.actions.ChangeAction.RepairType;
+import org.sidiff.revision.impact.changetree.scope.IScopeRecorder;
 import org.sidiff.validation.constraint.interpreter.formulas.predicates.Comparison;
-import org.sidiff.validation.constraint.interpreter.scope.IScopeRecorder;
 import org.sidiff.validation.constraint.interpreter.terms.Term;
 
 public class IsGreaterEqual extends Comparison {

@@ -8,7 +8,7 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.equinox.app.IApplication;
 import org.eclipse.equinox.app.IApplicationContext;
-import org.sidiff.common.utilities.emf.DocumentType;
+import org.sidiff.revision.common.emf.document.DocumentType;
 import org.sidiff.validation.constraint.api.util.ValidationIterator;
 import org.sidiff.validation.constraint.interpreter.IConstraint;
 import org.sidiff.validation.constraint.project.registry.ConstraintLibraryRegistry;

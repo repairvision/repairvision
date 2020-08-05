@@ -4,7 +4,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.henshin.model.Action.Type;
 import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.GraphElement;
-import org.sidiff.common.utilities.emf.ModelingUtil;
+import org.sidiff.revision.common.emf.ModelingUtil;
 
 public class RecognitionEdgeMatch extends RecognitionActionMatch {
 

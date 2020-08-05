@@ -12,12 +12,12 @@ import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.emf.ecore.EObject;
-import org.sidiff.common.utilities.emf.EMFStorage;
 import org.sidiff.graphpattern.EObjectList;
 import org.sidiff.graphpattern.GraphpatternFactory;
 import org.sidiff.historymodel.History;
 import org.sidiff.historymodel.HistoryModelFactory;
 import org.sidiff.historymodel.Version;
+import org.sidiff.revision.common.emf.EMFStorage;
 import org.sidiff.revision.common.logging.table.LogTable;
 import org.sidiff.revision.repair.history.evaluation.driver.data.HistoryInfo;
 
