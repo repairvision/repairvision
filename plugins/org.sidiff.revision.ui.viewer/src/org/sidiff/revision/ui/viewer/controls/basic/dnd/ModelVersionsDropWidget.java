@@ -1,4 +1,4 @@
-package org.sidiff.revision.ui.viewer.controls.basic;
+package org.sidiff.revision.ui.viewer.controls.basic.dnd;
 
 import org.eclipse.core.resources.IResource;
 import org.eclipse.swt.SWT;

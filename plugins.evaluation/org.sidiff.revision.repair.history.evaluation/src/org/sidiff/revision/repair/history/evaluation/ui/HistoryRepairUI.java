@@ -33,7 +33,7 @@ import org.sidiff.revision.api.ComplementationJob;
 import org.sidiff.revision.ui.editors.highlighting.EditorHighlighting;
 import org.sidiff.revision.ui.editors.highlighting.ISelectionHighlightingAdapter;
 import org.sidiff.revision.ui.viewer.controls.basic.BasicComplementationViewerUI;
-import org.sidiff.revision.ui.viewer.controls.basic.ModelDropWidget;
+import org.sidiff.revision.ui.viewer.controls.basic.dnd.ModelDropWidget;
 import org.sidiff.validation.constraint.interpreter.ui.widgets.ValidationWidget;
 
 public class HistoryRepairUI extends BasicComplementationViewerUI<HistoryRepairApplication> {

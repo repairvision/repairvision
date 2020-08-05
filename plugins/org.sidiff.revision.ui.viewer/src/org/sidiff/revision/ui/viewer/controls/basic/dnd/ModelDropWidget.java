@@ -1,4 +1,4 @@
-package org.sidiff.revision.ui.viewer.controls.basic;
+package org.sidiff.revision.ui.viewer.controls.basic.dnd;
 
 import java.lang.reflect.Method;
 import java.util.HashSet;

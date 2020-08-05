@@ -15,8 +15,8 @@ import org.eclipse.ui.IWorkbenchPartSite;
 import org.sidiff.revision.api.ComplementationJob;
 import org.sidiff.revision.repair.ui.Activator;
 import org.sidiff.revision.ui.viewer.controls.basic.BasicComplementationViewerUI;
-import org.sidiff.revision.ui.viewer.controls.basic.ModelDropWidget;
-import org.sidiff.revision.ui.viewer.controls.basic.ModelVersionsDropWidget;
+import org.sidiff.revision.ui.viewer.controls.basic.dnd.ModelDropWidget;
+import org.sidiff.revision.ui.viewer.controls.basic.dnd.ModelVersionsDropWidget;
 import org.sidiff.validation.constraint.api.util.Validation;
 import org.sidiff.validation.constraint.interpreter.ui.widgets.ValidationWidget;
 
