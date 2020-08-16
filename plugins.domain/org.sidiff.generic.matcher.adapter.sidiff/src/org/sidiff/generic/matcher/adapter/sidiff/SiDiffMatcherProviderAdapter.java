@@ -8,7 +8,7 @@ import java.util.Set;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.sidiff.common.emf.access.EMFModelAccess;
 import org.sidiff.common.extension.IExtension.Description;
-import org.sidiff.common.utilities.emf.DocumentType;
+import org.sidiff.revision.common.emf.document.DocumentType;
 import org.sidiff.revision.difference.matcher.IConfigurableMatcherProvider;
 import org.sidiff.revision.difference.matcher.IMatcher;
 import org.sidiff.revision.difference.matcher.IMatcherProvider;

@@ -11,9 +11,9 @@ import java.util.Set;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
-import org.sidiff.common.utilities.emf.Scope;
 import org.sidiff.correspondences.AbstractCorrespondences;
 import org.sidiff.correspondences.ICorrespondences;
+import org.sidiff.revision.common.emf.document.Scope;
 import org.sidiff.revision.difference.Correspondence;
 import org.sidiff.revision.difference.Difference;
 import org.sidiff.revision.difference.DifferenceFactory;
