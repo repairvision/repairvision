@@ -88,9 +88,7 @@ public class JUtil {
 	
 	
 	public static <T> Iterable<T> merge(Collection<T> c1, Collection<T> c2) {
-		Stream<T> resultingStream = Stream.concat(c1.stream(), c2.stream());
-		Iterable<T> iterable = () -> resultingStream.iterator();
-		return iterable;
+		return () -> Stream.concat(c1.stream(), c2.stream()).iterator();
 	}
 	
 	public static boolean notNull(Object... objects) {
