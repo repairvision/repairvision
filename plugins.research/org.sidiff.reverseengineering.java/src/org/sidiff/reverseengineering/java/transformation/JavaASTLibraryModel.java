@@ -1,5 +1,7 @@
 package org.sidiff.reverseengineering.java.transformation;
 
+import java.io.IOException;
+
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.xmi.XMLResource;
@@ -43,5 +45,16 @@ public class JavaASTLibraryModel {
 	 */
 	public XMLResource getLibraryModel() {
 		return libraryModel;
+	}
+	
+	/**
+	 * Save with default options.
+	 */
+	public void save() {
+		try {
+			libraryModel.save(null);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }
