@@ -2,9 +2,9 @@ package org.sidiff.reverseengineering.java.transformation.uml.rules;
 
 import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.eclipse.uml2.uml.Operation;
-import org.eclipse.uml2.uml.Class;
+import org.eclipse.uml2.uml.OperationOwner;
 
-public class MethodToOperation extends JavaToUML<MethodDeclaration, Class, Operation> {
+public class MethodToOperation extends JavaToUML<MethodDeclaration, OperationOwner, Operation> {
 
 	@Override
 	public void apply(MethodDeclaration javaNode) {
@@ -14,7 +14,7 @@ public class MethodToOperation extends JavaToUML<MethodDeclaration, Class, Opera
 	}
 
 	@Override
-	public void apply(Class modelContainer, Operation modelNode) {
+	public void apply(OperationOwner modelContainer, Operation modelNode) {
 		modelContainer.getOwnedOperations().add(modelNode);
 	}
 

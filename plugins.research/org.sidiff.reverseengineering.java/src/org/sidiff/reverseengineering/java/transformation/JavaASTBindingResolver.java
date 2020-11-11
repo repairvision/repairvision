@@ -15,6 +15,7 @@ import org.eclipse.jdt.core.IJavaElement;
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.AbstractTypeDeclaration;
 import org.eclipse.jdt.core.dom.Annotation;
+import org.eclipse.jdt.core.dom.EnumConstantDeclaration;
 import org.eclipse.jdt.core.dom.IBinding;
 import org.eclipse.jdt.core.dom.MemberValuePair;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
@@ -219,6 +220,8 @@ public class JavaASTBindingResolver {
 			return ((Annotation) node).resolveAnnotationBinding();
 		} else if (node instanceof MemberValuePair) {
 			return ((MemberValuePair) node).resolveMemberValuePairBinding();
+		} else if (node instanceof EnumConstantDeclaration) {
+			return ((EnumConstantDeclaration) node).resolveVariable();
 		}
 
 		return null;

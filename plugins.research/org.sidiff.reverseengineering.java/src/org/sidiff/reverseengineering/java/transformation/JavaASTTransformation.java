@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
 
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.IPath;
@@ -14,6 +15,7 @@ import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.ASTVisitor;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.IBinding;
+import org.sidiff.reverseengineering.java.Activator;
 
 /**
  * Base implementation of a Java AST to model transformation.
@@ -126,6 +128,11 @@ public abstract class JavaASTTransformation extends ASTVisitor {
 		
 		if (binding != null) {
 			bindings.bind(projectName, binding, modelElement);
+		} else {
+			if (Activator.getLogger().isLoggable(Level.FINE)) {
+				Activator.getLogger().log(Level.FINE, "No binding found for: " 
+						+ astNode.getClass() + "\n" + modelElement + "\n" + astNode);
+			}
 		}
 	}
 	
@@ -133,8 +140,9 @@ public abstract class JavaASTTransformation extends ASTVisitor {
 	 * @param astNode A Java AST node.
 	 * @return A model element created by this transformation.
 	 */
-	public EObject getModelElement(ASTNode astNode) {
-		return javaToModelTrace.get(astNode);
+	@SuppressWarnings("unchecked")
+	public <E extends EObject> E getModelElement(ASTNode astNode) {
+		return (E) javaToModelTrace.get(astNode);
 	}
 	
 	/**

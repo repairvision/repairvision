@@ -1,5 +1,7 @@
 package org.sidiff.reverseengineering.java;
 
+import java.util.logging.Logger;
+
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
@@ -14,6 +16,12 @@ public class Activator extends AbstractUIPlugin {
 	// The shared instance
 	private static Activator plugin;
 	
+	private static Logger logger;
+
+	public static Logger getLogger() {
+		return logger;
+	}
+	
 	/**
 	 * The constructor
 	 */
@@ -24,12 +32,14 @@ public class Activator extends AbstractUIPlugin {
 	public void start(BundleContext context) throws Exception {
 		super.start(context);
 		plugin = this;
+		Activator.logger = Logger.getLogger(context.getBundle().getSymbolicName());
 	}
 
 	@Override
 	public void stop(BundleContext context) throws Exception {
 		plugin = null;
 		super.stop(context);
+		Activator.logger = null;
 	}
 
 	/**

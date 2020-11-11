@@ -6,6 +6,8 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.Supplier;
+import java.util.logging.ConsoleHandler;
+import java.util.logging.Level;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IWorkspace;
@@ -57,6 +59,12 @@ public class ReverseEngineeringApp implements IApplication {
 	
 	@Override
 	public Object start(IApplicationContext context) throws Exception {
+		
+		// Logging:
+		Activator.getLogger().setLevel(Level.FINE);
+		ConsoleHandler consolHandler = new ConsoleHandler();
+		consolHandler.setLevel(Level.FINE);
+		Activator.getLogger().addHandler(consolHandler);
 
 		// Application Settings:
 		URI baseURI = URI.createFileURI("C:\\Users\\manue\\git\\repairvision\\plugins.research\\org.sidiff.reverseengineering.java\\test");
