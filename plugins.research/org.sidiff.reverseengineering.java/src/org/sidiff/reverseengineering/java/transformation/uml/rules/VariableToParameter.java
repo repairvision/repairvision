@@ -28,17 +28,27 @@ public class VariableToParameter extends JavaToUML<SingleVariableDeclaration, Op
 
 	@Override
 	public void link(SingleVariableDeclaration variableDeclaration, Parameter umlParameter) throws ClassNotFoundException {
-		setParameterType(umlParameter, variableDeclaration.getType());
+		setParameterType(umlParameter, variableDeclaration.getType(), variableDeclaration.isVarargs());
+	}
+	
+	public void setParameterType(Parameter umlParameter, org.eclipse.jdt.core.dom.Type javaType) throws ClassNotFoundException {
+		setParameterType(umlParameter, javaType, false);
 	}
 
-	public void setParameterType(Parameter umlParameter, org.eclipse.jdt.core.dom.Type javaType) throws ClassNotFoundException {
+	public void setParameterType(Parameter umlParameter, org.eclipse.jdt.core.dom.Type javaType, boolean varargs) throws ClassNotFoundException {
 		
 		// Erase generic types -> most concrete bindable type:
 		ITypeBinding variableType = JavaASTUtil.genericTypeErasure(javaType.resolveBinding());
+		variableType = JavaASTUtil.arrayTypeErasure(variableType);
+
+		// For example fun(Foo... args)
+		if (varargs) {
+			umlParameter.setLower(0);
+			umlParameter.setUpper(-1);
+		}
 		
 		// Encode arrays with multiplicities:
-		if (variableType.isArray()) {
-			variableType = JavaASTUtil.arrayTypeErasure(variableType);
+		else if (variableType.isArray()) {
 			umlParameter.setUpper(-1);
 		}
 		
