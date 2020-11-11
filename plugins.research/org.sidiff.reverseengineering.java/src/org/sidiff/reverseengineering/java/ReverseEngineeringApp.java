@@ -34,6 +34,7 @@ import org.sidiff.reverseengineering.java.transformation.uml.JavaASTLibraryModel
 import org.sidiff.reverseengineering.java.transformation.uml.JavaASTProjectModelUML;
 import org.sidiff.reverseengineering.java.transformation.uml.JavaASTTransformationUML;
 import org.sidiff.reverseengineering.java.transformation.uml.JavaASTWorkspaceModelUML;
+import org.sidiff.reverseengineering.java.transformation.uml.rules.JavaToUMLRules;
 import org.sidiff.reverseengineering.java.util.EMFHelper;
 import org.sidiff.reverseengineering.java.util.JavaParser;
 import org.sidiff.reverseengineering.java.util.WorkspaceUtil;
@@ -74,7 +75,7 @@ public class ReverseEngineeringApp implements IApplication {
     	XMLResource libraryModelResource = (XMLResource) resourceSet.createResource(libraryModelURI);
     	JavaASTLibraryModel libraryModel = new JavaASTLibraryModelUML(libraryModelResource);
     	
-    	Supplier<JavaASTTransformation> javaAST2Model = () -> new JavaASTTransformationUML();
+    	Supplier<JavaASTTransformation> javaAST2Model = () -> new JavaASTTransformationUML(new JavaToUMLRules());
     	JavaASTBindingResolver modelBindings = new JavaASTBindingResolverUML(workspaceProjects, new HashMap<>(), libraryModel);
 
 		// Get all projects in the workspace

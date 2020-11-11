@@ -7,10 +7,8 @@ import org.eclipse.jdt.core.dom.TypeDeclaration;
 import org.eclipse.uml2.uml.Class;
 import org.eclipse.uml2.uml.Operation;
 import org.eclipse.uml2.uml.Parameter;
-import org.eclipse.uml2.uml.Type;
-import org.eclipse.uml2.uml.UMLFactory;
-import org.eclipse.uml2.uml.UMLPackage;
 import org.sidiff.reverseengineering.java.transformation.JavaASTTransformation;
+import org.sidiff.reverseengineering.java.transformation.uml.rules.JavaToUMLRules;
 
 /**
  * Implementation of a Java AST to a UML model transformation.
@@ -19,14 +17,17 @@ import org.sidiff.reverseengineering.java.transformation.JavaASTTransformation;
  */
 public class JavaASTTransformationUML extends JavaASTTransformation {
 	
-	private UMLFactory umlFactory = UMLFactory.eINSTANCE;
-	
-	private UMLPackage umlPackage = UMLPackage.eINSTANCE;
-	
 	private boolean linker = false;
+	
+	private JavaToUMLRules rules;
+	
+	public JavaASTTransformationUML(JavaToUMLRules rules) {
+		this.rules = rules;
+	}
 	
 	@Override
 	public void apply(CompilationUnit javaAST) {
+		this.rules.init(this);
        	
 		// Create model graph nodes:
     	javaAST.accept(this);
@@ -37,35 +38,31 @@ public class JavaASTTransformationUML extends JavaASTTransformation {
 	}
 
 	@Override
-	public boolean visit(TypeDeclaration node) {
+	public boolean visit(TypeDeclaration typeDeclaration) {
 		if (!linker) {
-			Class umlClass = umlFactory.createClass();
-			umlClass.setName(node.getName().getIdentifier());
-			createRootModelElement(node, umlClass);
+			rules.classToClass.apply(typeDeclaration);
 		} else {
-			Class umlClass = (Class) getModelElement(node);
+			Class umlClass = (Class) getModelElement(typeDeclaration);
 					
-			for (MethodDeclaration method : node.getMethods()) {
+			for (MethodDeclaration method : typeDeclaration.getMethods()) {
 				Operation umlOperation = (Operation) getModelElement(method);
-				umlClass.getOwnedOperations().add(umlOperation);
+				rules.methodToOperation.apply(umlClass, umlOperation);
 			}
 		}
 		return true;
 	}
 	
 	@Override
-	public boolean visit(MethodDeclaration node) {
+	public boolean visit(MethodDeclaration methodDeclaration) {
 		if (!linker) {
-			Operation umlOperation = umlFactory.createOperation();
-			umlOperation.setName(node.getName().getIdentifier());
-			createModelElement(node, umlOperation);
+			rules.methodToOperation.apply(methodDeclaration);
 		} else {
-			Operation umlOperation = (Operation) getModelElement(node);
+			Operation umlOperation = (Operation) getModelElement(methodDeclaration);
 			
-			for (Object parameter : node.parameters()) {
+			for (Object parameter : methodDeclaration.parameters()) {
 				if (parameter instanceof SingleVariableDeclaration) {
 					Parameter umlParameter = (Parameter) getModelElement((SingleVariableDeclaration) parameter);
-					umlOperation.getOwnedParameters().add(umlParameter);
+					rules.variableToParameter.apply(umlOperation, umlParameter);
 				}
 			}
 		}
@@ -73,16 +70,13 @@ public class JavaASTTransformationUML extends JavaASTTransformation {
 	}
 	
 	@Override
-	public boolean visit(SingleVariableDeclaration node) {
+	public boolean visit(SingleVariableDeclaration variableDeclaration) {
 		if (!linker) {
-			Parameter umlParameter = umlFactory.createParameter();
-			umlParameter.setName(node.getName().getIdentifier());
-			createModelElement(node, umlParameter);
+			rules.variableToParameter.apply(variableDeclaration);
 		} else {
 			try {
-				Parameter umlParameter = (Parameter) getModelElement(node);
-				Type type = resolveBinding(node.getType().resolveBinding(), umlPackage.getType());
-				umlParameter.setType((Type) type);
+				Parameter umlParameter = (Parameter) getModelElement(variableDeclaration);
+				rules.variableToParameter.link(variableDeclaration, umlParameter);
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
 			}
