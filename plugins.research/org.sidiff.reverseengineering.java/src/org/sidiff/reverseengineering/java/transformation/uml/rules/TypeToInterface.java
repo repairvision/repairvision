@@ -7,9 +7,13 @@ import org.eclipse.uml2.uml.Package;
 public class TypeToInterface extends JavaToUML<TypeDeclaration, Package, Interface> {
 
 	@Override
-	public void apply(TypeDeclaration javaNode) {
-		Interface umlInterface = createInterface(javaNode);
-		trafo.createRootModelElement(javaNode, umlInterface);
+	public void apply(TypeDeclaration typeDeclaration) {
+		Interface umlInterface = createInterface(typeDeclaration);
+		trafo.createRootModelElement(typeDeclaration, umlInterface);
+		
+		if (typeDeclaration.getJavadoc() != null) {
+			createJavaDocComment(umlInterface, typeDeclaration.getJavadoc());
+		}
 	}
 	
 	public Interface createInterface(TypeDeclaration javaNode) {

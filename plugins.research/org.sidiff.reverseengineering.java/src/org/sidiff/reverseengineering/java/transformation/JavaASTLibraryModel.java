@@ -20,10 +20,16 @@ public class JavaASTLibraryModel {
 	private XMLResource libraryModel;
 	
 	/**
+	 * Creates bindings for the model.
+	 */
+	private JavaASTBindingTranslator bindingTranslator;
+	
+	/**
 	 * @param libraryModel The library model.
 	 */
-	public JavaASTLibraryModel(XMLResource libraryModel) {
+	public JavaASTLibraryModel(XMLResource libraryModel, JavaASTBindingTranslator bindingTranslator) {
 		this.libraryModel = libraryModel;
+		this.bindingTranslator = bindingTranslator;
 	}
 
 	/**
@@ -37,7 +43,48 @@ public class JavaASTLibraryModel {
 	 */
 	@SuppressWarnings("unchecked")
 	public <E extends EObject> E getLibraryModelElement(IBinding externalBinding, EClass isTypeOf) {
-		return (E) libraryModel.getEObject(externalBinding.getKey());
+		return (E) libraryModel.getEObject(getBindingKey(externalBinding));
+	}
+	
+	/**
+	 * @param bindingKey A unique binding key.
+	 * @return The corresponding model element.
+	 */
+	@SuppressWarnings("unchecked")
+	public <E extends EObject> E getLibraryModelElement(String bindingKey) {
+		return (E) libraryModel.getEObject(bindingKey);
+	}
+	
+	/**
+	 * @param binding      The Java AST binding.
+	 * @param modelElement The corresponding library model element.
+	 */
+	public void bindModelElement(IBinding binding, EObject modelElement) {
+		libraryModel.setID(modelElement, getBindingKey(binding));
+	}
+	
+	/**
+	 * @param bindinKey      A unique binding key.
+	 * @param modelElement The corresponding library model element.
+	 */
+	public void bindModelElement(String bindinKey, EObject modelElement) {
+		libraryModel.setID(modelElement, bindinKey);
+	}
+	
+	/**
+	 * @param binding The Java AST binding.
+	 * @return The library binding key.
+	 */
+	protected String getBindingKey(IBinding binding) {
+		return bindingTranslator.getBindingKey("library", binding);
+	}
+	
+	/**
+	 * @param bindinKey A local binding key.
+	 * @return The library binding key.
+	 */
+	protected String getBindingKey(String bindingKey) {
+		return "library" + "/" + bindingKey;
 	}
 
 	/**

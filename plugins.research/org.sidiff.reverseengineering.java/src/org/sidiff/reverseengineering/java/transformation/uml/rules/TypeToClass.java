@@ -7,9 +7,13 @@ import org.eclipse.uml2.uml.Package;
 public class TypeToClass extends JavaToUML<TypeDeclaration, Package, Class> {
 
 	@Override
-	public void apply(TypeDeclaration javaNode) {
-		Class umlClass = createClass(javaNode);
-		trafo.createRootModelElement(javaNode, umlClass);
+	public void apply(TypeDeclaration typeDeclaration) {
+		Class umlClass = createClass(typeDeclaration);
+		trafo.createRootModelElement(typeDeclaration, umlClass);
+		
+		if (typeDeclaration.getJavadoc() != null) {
+			createJavaDocComment(umlClass, typeDeclaration.getJavadoc());
+		}
 	}
 
 	public Class createClass(TypeDeclaration javaNode) {

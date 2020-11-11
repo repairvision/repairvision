@@ -11,6 +11,7 @@ import org.eclipse.jdt.core.dom.IVariableBinding;
 import org.eclipse.uml2.uml.UMLPackage;
 import org.sidiff.reverseengineering.java.transformation.JavaASTLibraryModel;
 import org.sidiff.reverseengineering.java.transformation.JavaASTBindingResolver;
+import org.sidiff.reverseengineering.java.transformation.JavaASTBindingTranslator;
 
 /**
  * Maps UML types to Java AST bindings.
@@ -25,12 +26,15 @@ public class JavaASTBindingResolverUML extends JavaASTBindingResolver {
 	 *                          project will be considered as external projects.
 	 *                          External projects might be generated as common
 	 *                          fragments.
+	 * @param bindingTranslator Creates model object IDs.
 	 * @param bindings          The initial bindings, e.g., common model elements.
 	 * @param commonModel       The common model manager.
 	 */
 	public JavaASTBindingResolverUML(Set<String> workspaceProjects, 
-			Map<String, EObject> bindings, JavaASTLibraryModel commonModel) {
-		super(workspaceProjects, "uml", bindings, commonModel);
+			JavaASTBindingTranslator bindingTranslator, Map<String, EObject> bindings, 
+			JavaASTLibraryModel commonModel) {
+		
+		super(workspaceProjects, "uml", bindingTranslator, bindings, commonModel);
 	}
 
 	@Override

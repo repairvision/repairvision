@@ -139,11 +139,20 @@ public class JavaASTTransformationUML extends JavaASTTransformation {
 			Operation umlOperation = getModelElement(methodDeclaration);
 			
 			if (umlOperation != null) {
+				
+				// in parameter:
 				for (Object parameter : methodDeclaration.parameters()) {
 					if (parameter instanceof SingleVariableDeclaration) {
 						Parameter umlParameter = getModelElement((SingleVariableDeclaration) parameter);
 						rules.variableToParameter.apply(umlOperation, umlParameter);
 					}
+				}
+				
+				// return parameter:
+				try {
+					rules.methodToOperation.link(methodDeclaration, umlOperation);
+				} catch (ClassNotFoundException e) {
+					e.printStackTrace();
 				}
 			}
 		}

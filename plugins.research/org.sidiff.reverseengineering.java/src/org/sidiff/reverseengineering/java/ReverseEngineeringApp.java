@@ -27,11 +27,13 @@ import org.eclipse.jdt.core.IPackageFragment;
 import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.sidiff.reverseengineering.java.transformation.JavaASTBindingResolver;
+import org.sidiff.reverseengineering.java.transformation.JavaASTBindingTranslator;
 import org.sidiff.reverseengineering.java.transformation.JavaASTLibraryModel;
 import org.sidiff.reverseengineering.java.transformation.JavaASTProjectModel;
 import org.sidiff.reverseengineering.java.transformation.JavaASTTransformation;
 import org.sidiff.reverseengineering.java.transformation.JavaASTWorkspaceModel;
 import org.sidiff.reverseengineering.java.transformation.uml.JavaASTBindingResolverUML;
+import org.sidiff.reverseengineering.java.transformation.uml.JavaASTBindingTranslatorUML;
 import org.sidiff.reverseengineering.java.transformation.uml.JavaASTLibraryModelUML;
 import org.sidiff.reverseengineering.java.transformation.uml.JavaASTProjectModelUML;
 import org.sidiff.reverseengineering.java.transformation.uml.JavaASTTransformationUML;
@@ -72,6 +74,7 @@ public class ReverseEngineeringApp implements IApplication {
 		
 		JavaParser javaParser = new JavaParser();
 		EMFHelper emfHelper = new EMFHelper();
+		JavaASTBindingTranslator bindingTranslator = new JavaASTBindingTranslatorUML();
 		
 		ResourceSet resourceSet = new ResourceSetImpl();
 		
@@ -81,10 +84,10 @@ public class ReverseEngineeringApp implements IApplication {
 		
 		URI libraryModelURI = baseURI.appendSegment("Libraries").appendFileExtension("uml");
     	XMLResource libraryModelResource = (XMLResource) resourceSet.createResource(libraryModelURI);
-    	JavaASTLibraryModel libraryModel = new JavaASTLibraryModelUML(libraryModelResource);
+    	JavaASTLibraryModel libraryModel = new JavaASTLibraryModelUML(libraryModelResource, bindingTranslator);
     	
     	Supplier<JavaASTTransformation> javaAST2Model = () -> new JavaASTTransformationUML(new JavaToUMLRules());
-    	JavaASTBindingResolver modelBindings = new JavaASTBindingResolverUML(workspaceProjects, new HashMap<>(), libraryModel);
+    	JavaASTBindingResolver modelBindings = new JavaASTBindingResolverUML(workspaceProjects, bindingTranslator, new HashMap<>(), libraryModel);
 
 		// Get all projects in the workspace
 		IWorkspace workspace = ResourcesPlugin.getWorkspace();

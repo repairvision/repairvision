@@ -20,6 +20,7 @@ import org.eclipse.jdt.core.dom.IBinding;
 import org.eclipse.jdt.core.dom.MemberValuePair;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.eclipse.jdt.core.dom.ModuleDeclaration;
+import org.eclipse.jdt.core.dom.Type;
 import org.eclipse.jdt.core.dom.VariableDeclaration;
 
 /**
@@ -40,6 +41,11 @@ public class JavaASTBindingResolver {
 	 * The file extension of the corresponding modeling domain.
 	 */
 	private String modelFileExtension;
+	
+	/**
+	 * Creates bindings for the model.
+	 */
+	private JavaASTBindingTranslator bindingTranslator;
 
 	/**
 	 * Binding key -> Model element
@@ -49,7 +55,7 @@ public class JavaASTBindingResolver {
 	/**
 	 * The common model manager.
 	 */
-	private JavaASTLibraryModel commonModel;
+	private JavaASTLibraryModel libraryModel;
 	
 	/**
 	 * @param workspaceProjects  The local projects in the workspace that will be
@@ -59,14 +65,17 @@ public class JavaASTBindingResolver {
 	 *                           fragments.
 	 * @param modelFileExtension The file extension of the modeling domain.
 	 * @param bindings           The initial bindings, e.g., common model elements.
-	 * @param commonModel        The common model manager.
+	 * @param libraryModel        The common model manager.
 	 */
 	public JavaASTBindingResolver(Set<String> workspaceProjects, String modelFileExtension,
-			Map<String, EObject> bindings, JavaASTLibraryModel commonModel) {
+			JavaASTBindingTranslator bindingTranslator, Map<String, EObject> bindings,
+			JavaASTLibraryModel libraryModel) {
+		
 		this.workspaceProjects = workspaceProjects;
 		this.modelFileExtension = modelFileExtension;
+		this.bindingTranslator = bindingTranslator;
 		this.bindings = bindings;
-		this.commonModel = commonModel;
+		this.libraryModel = libraryModel;
 	}
 	
 	/**
@@ -77,7 +86,7 @@ public class JavaASTBindingResolver {
 	 * @param modelElement A model element (or main element of model fragment).
 	 */
 	public void bind(String projectName, IBinding binding, EObject modelElement) {
-		bindings.put(getBindingKey(projectName, binding), modelElement);
+		bindings.put(bindingTranslator.getBindingKey(projectName, binding), modelElement);
 	}
 
 	/**
@@ -94,7 +103,7 @@ public class JavaASTBindingResolver {
 		
 		IJavaElement javaElement = binding.getJavaElement();
 		String projectName = javaElement.getJavaProject().getProject().getName();
-		String uniqueBindingKey = getBindingKey(projectName, binding);
+		String uniqueBindingKey = bindingTranslator.getBindingKey(projectName, binding);
 		
 		// Check for internal bindings and already existing common external bindings:
 		EObject existingBinding = bindings.get(uniqueBindingKey); 
@@ -138,7 +147,7 @@ public class JavaASTBindingResolver {
 		} else {
 			
 			// External common model element:
-			return commonModel.getLibraryModelElement(externalBinding, isTypeOf);
+			return libraryModel.getLibraryModelElement(externalBinding, isTypeOf);
 		}
 	}
 	
@@ -187,16 +196,7 @@ public class JavaASTBindingResolver {
 	 * @return The URI with the corresponding fragment.
 	 */
 	protected URI getURI(URI modelURI, String projectName, IBinding binding) {
-		return modelURI.appendFragment(getBindingKey(projectName, binding));
-	}
-	
-	/**
-	 * @param projectName The name of the containing project
-	 * @param binding The Java AST binding.
-	 * @return The corresponding unique binding key.
-	 */
-	protected String getBindingKey(String projectName, IBinding binding) {
-		return projectName + "/" + binding.getKey();
+		return modelURI.appendFragment(bindingTranslator.getBindingKey(projectName, binding));
 	}
 	
 	/**
@@ -222,6 +222,8 @@ public class JavaASTBindingResolver {
 			return ((MemberValuePair) node).resolveMemberValuePairBinding();
 		} else if (node instanceof EnumConstantDeclaration) {
 			return ((EnumConstantDeclaration) node).resolveVariable();
+		} else if (node instanceof Type) {
+			return ((Type) node).resolveBinding();
 		}
 
 		return null;

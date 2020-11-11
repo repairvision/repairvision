@@ -1,8 +1,16 @@
 package org.sidiff.reverseengineering.java.transformation.uml.rules;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.jdt.core.dom.Javadoc;
+import org.eclipse.uml2.uml.Comment;
+import org.eclipse.uml2.uml.Element;
 import org.eclipse.uml2.uml.UMLFactory;
 import org.eclipse.uml2.uml.UMLPackage;
 import org.sidiff.reverseengineering.java.transformation.uml.JavaASTTransformationUML;
+import org.sidiff.reverseengineering.java.util.JavaASTUtil;
 
 public abstract class JavaToUML<JN, UC, UN> {
 
@@ -14,6 +22,8 @@ public abstract class JavaToUML<JN, UC, UN> {
 	
 	protected JavaToUMLRules rules;
 	
+	protected Map<EObject, Object> trace;
+	
 	public JavaToUMLRules getRules() {
 		return rules;
 	}
@@ -24,12 +34,37 @@ public abstract class JavaToUML<JN, UC, UN> {
 	}
 	
 	public void cleanUp() {
-		this.trafo = null; // avoids resource leaks
+		// avoids resource leaks
+		this.trafo = null;
 		this.rules = null;
+		this.trace = null;
 	}
 	
 	public JavaASTTransformationUML getTransformation() {
 		return trafo;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public <E> E getFragment(EObject modelElement) {
+		return (E) trace.get(modelElement);
+	}
+	
+	public void addFragment(EObject main, Object child) {
+		
+		if (trace == null) {
+			this.trace = new HashMap<>();
+		}
+		
+		trace.put(main, child);
+	}
+	
+	public Comment createJavaDocComment(Element umlElement, Javadoc javadoc) {
+		String javaDoc = JavaASTUtil.getJavaDoc(javadoc);
+		Comment umlComment = umlFactory.createComment();
+		umlComment.setBody(javaDoc);
+		umlComment.getAnnotatedElements().add(umlElement);
+		umlElement.getOwnedComments().add(umlComment);
+		return umlComment;
 	}
 
 	/**

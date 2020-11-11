@@ -21,7 +21,9 @@ import org.eclipse.uml2.uml.Property;
 import org.eclipse.uml2.uml.StructuredClassifier;
 import org.eclipse.uml2.uml.UMLFactory;
 import org.eclipse.uml2.uml.UMLPackage;
+import org.sidiff.reverseengineering.java.transformation.JavaASTBindingTranslator;
 import org.sidiff.reverseengineering.java.transformation.JavaASTLibraryModel;
+import org.sidiff.reverseengineering.java.util.JavaASTUtil;
 
 /**
  * Manages the creation of library UML model elements.
@@ -37,10 +39,11 @@ public class JavaASTLibraryModelUML extends JavaASTLibraryModel {
 	private Model libraryModelRoot;
 	
 	/**
-	 * @param libraryModel The library model.
+	 * @param libraryModel      The library model.
+	 * @param bindingTranslator Creates model object IDs.
 	 */
-	public JavaASTLibraryModelUML(XMLResource libraryModel) {
-		super(libraryModel);
+	public JavaASTLibraryModelUML(XMLResource libraryModel, JavaASTBindingTranslator bindingTranslator) {
+		super(libraryModel, bindingTranslator);
 		
 		if (libraryModel.getContents().isEmpty()) {
 			this.libraryModelRoot = umlFactory.createModel();
@@ -64,8 +67,7 @@ public class JavaASTLibraryModelUML extends JavaASTLibraryModel {
 		// Create new:
 		switch (externalBinding.getKind()) {
 		case IBinding.PACKAGE:
-			libraryModelElement = createLibraryPackage((IPackageBinding) externalBinding);
-			break;
+			return (E) createLibraryPackage((IPackageBinding) externalBinding); // binds internally
 		case IBinding.TYPE:
 			ITypeBinding typeBinding = (ITypeBinding) externalBinding;
 			
@@ -97,7 +99,7 @@ public class JavaASTLibraryModelUML extends JavaASTLibraryModel {
 		
 		// Trace and return new model element:
 		if (libraryModelElement != null) {
-			getLibraryModel().setID(libraryModelElement, externalBinding.getKey());
+			bindModelElement(externalBinding, libraryModelElement);
 			return (E) libraryModelElement;
 		}
 		
@@ -105,11 +107,29 @@ public class JavaASTLibraryModelUML extends JavaASTLibraryModel {
 	}
 
 	protected EObject createLibraryPackage(IPackageBinding packageBinding) {
-		// TODO: Create hierarchical Packages!?
-		Package libraryPackage = umlFactory.createPackage();
-		libraryPackage.setName(packageBinding.getName());
-		libraryModelRoot.getPackagedElements().add(libraryPackage);
-		return libraryPackage;
+		String bindingKey = null;
+		Package parentPackage = libraryModelRoot;
+		Package childPackage = null;
+		
+		for (String packageName : packageBinding.getNameComponents()) {
+			if (bindingKey == null) {
+				bindingKey = packageName;
+			} else {
+				bindingKey += "/" + packageName;
+			}
+			childPackage = super.getLibraryModelElement(getBindingKey(bindingKey));
+					
+			if (childPackage == null) {
+				childPackage = umlFactory.createPackage();
+				childPackage.setName(packageName);
+				parentPackage.getPackagedElements().add(childPackage);
+				bindModelElement(getBindingKey(bindingKey), childPackage);
+			}
+			
+			parentPackage = childPackage;
+		}
+		
+		return childPackage;
 	}
 
 	protected EObject createLibraryEnumeration(ITypeBinding typeBinding) {
@@ -119,20 +139,23 @@ public class JavaASTLibraryModelUML extends JavaASTLibraryModel {
 		Package libraryPackage = getLibraryModelElement(typeBinding.getPackage(), umlPackage.getPackage());
 		libraryPackage.getOwnedTypes().add(libraryEnum);
 		
+		for (IVariableBinding enumLiteral : typeBinding.getDeclaredFields()) {
+			EnumerationLiteral libraryEnumLiteral = umlFactory.createEnumerationLiteral();
+			libraryEnumLiteral.setName(enumLiteral.getName());
+			libraryEnum.getOwnedLiterals().add(libraryEnumLiteral);
+		}
+		
 		return libraryEnum;
 	}
 
 	protected EObject createLibraryEnumLiteral(IVariableBinding variableBinding) {
-		EnumerationLiteral libraryEnumLiteral = umlFactory.createEnumerationLiteral();
-		libraryEnumLiteral.setName(variableBinding.getName());
-		
-		Enumeration libraryEnum = getLibraryModelElement(variableBinding.getDeclaringClass(), umlPackage.getEnumeration());
-		libraryEnum.getOwnedLiterals().add(libraryEnumLiteral);
-		
-		return libraryEnumLiteral;
+		getLibraryModelElement(variableBinding.getDeclaringClass(), umlPackage.getEnumeration());
+		return super.getLibraryModelElement(variableBinding, umlPackage.getEnumerationLiteral());
 	}
 
 	protected EObject createLibraryInterface(ITypeBinding typeBinding) {
+		typeBinding = JavaASTUtil.genericTypeErasure(typeBinding);
+		
 		Interface libraryIterface = umlFactory.createInterface();
 		libraryIterface.setName(typeBinding.getName());
 		
@@ -143,6 +166,8 @@ public class JavaASTLibraryModelUML extends JavaASTLibraryModel {
 	}
 
 	protected EObject createLibraryClass(ITypeBinding typeBinding) {
+		typeBinding = JavaASTUtil.genericTypeErasure(typeBinding);
+		
 		Class libraryClass = umlFactory.createClass();
 		libraryClass.setName(typeBinding.getName());
 		
@@ -159,19 +184,19 @@ public class JavaASTLibraryModelUML extends JavaASTLibraryModel {
 		Classifier libraryClassifier = getLibraryModelElement(methodBinding.getDeclaringClass(), umlPackage.getClassifier());
 		libraryClassifier.getOperations().add(libraryOperation);
 		
-		// TODO: Create parameter signature!
+		// Create parameter signature:
+		for (ITypeBinding parameter : methodBinding.getParameterTypes()) {
+			Parameter libraryParameter = umlFactory.createParameter();
+			libraryParameter.setName(parameter.getName());
+			libraryOperation.getOwnedParameters().add(libraryParameter);
+		}
 		
 		return libraryOperation;
 	}
 
 	protected EObject createLibraryParameter(IVariableBinding variableBinding) {
-		Parameter libraryParameter = umlFactory.createParameter();
-		libraryParameter.setName(variableBinding.getName());
-		
-		Operation libraryOperation = getLibraryModelElement(variableBinding.getDeclaringMethod(), umlPackage.getOperation());
-		libraryOperation.getOwnedParameters().add(libraryParameter);
-		
-		return libraryParameter;
+		getLibraryModelElement(variableBinding.getDeclaringMethod(), umlPackage.getOperation());
+		return super.getLibraryModelElement(variableBinding, umlPackage.getParameter());
 	}
 
 	protected EObject createLibraryProperty(IVariableBinding variableBinding) {

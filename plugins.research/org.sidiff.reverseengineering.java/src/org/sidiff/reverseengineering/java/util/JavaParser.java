@@ -15,12 +15,10 @@ import org.eclipse.jdt.core.IPackageFragmentRoot;
 import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jdt.core.dom.AST;
-import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.ASTParser;
 import org.eclipse.jdt.core.dom.ASTRequestor;
 import org.eclipse.jdt.core.dom.AbstractTypeDeclaration;
 import org.eclipse.jdt.core.dom.CompilationUnit;
-import org.eclipse.jdt.core.dom.ITypeBinding;
 
 /**
  * Some convenient functionality to parse and analyze Java models. 
@@ -122,21 +120,6 @@ public class JavaParser {
 	}
 
 	/**
-	 * Calculates the lines in the source code file for a node in the AST.
-	 * 
-	 * @param javaAST The source code's AST.
-	 * @param node    A node in the AST.
-	 * @return The corresponding start and end line of the AST node.
-	 */
-	public int[] getLineRange(CompilationUnit javaAST, ASTNode node) {
-		int startPosition = node.getStartPosition();
-		int endPosition = startPosition + node.getLength();
-		int startLine = javaAST.getLineNumber(startPosition);
-		int endLine = javaAST.getLineNumber(endPosition);
-		return new int[] { startLine, endLine };
-	}
-	
-	/**
 	 * @param javaAST A Java ASTs.
 	 * @return Binding key to a java AST.
 	 */
@@ -150,17 +133,5 @@ public class JavaParser {
 
 		return null;
 	}
-
-	/**
-	 * Searches for the outermost binding of a type binding, e.g., of inner classes.
-	 * 
-	 * @param astBinding A type binding.
-	 * @return The binding of the outer type.
-	 */
-	public ITypeBinding getOuterTypeBinding(ITypeBinding astBinding) {
-		while ((astBinding != null) && astBinding.getDeclaringClass() != null) {
-			astBinding = astBinding.getDeclaringClass();
-		}
-		return astBinding;
-	}
+	
 }
