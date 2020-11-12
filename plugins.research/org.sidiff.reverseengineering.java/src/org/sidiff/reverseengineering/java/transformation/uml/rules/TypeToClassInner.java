@@ -10,11 +10,12 @@ public class TypeToClassInner extends JavaToUML<TypeDeclaration, Classifier, Cla
 	@Override
 	public void apply(TypeDeclaration typeDeclaration) {
 		Class umlClass = rules.typeToClass.createClass(typeDeclaration);
-		trafo.createModelElement(typeDeclaration, umlClass);
 		
 		if (typeDeclaration.getJavadoc() != null) {
 			rules.javaToUMLHelper.createJavaDocComment(umlClass, typeDeclaration.getJavadoc());
 		}
+		
+		trafo.createModelElement(typeDeclaration, umlClass);
 	}
 
 	@Override
@@ -27,7 +28,13 @@ public class TypeToClassInner extends JavaToUML<TypeDeclaration, Classifier, Cla
 	}
 
 	@Override
-	public void link(TypeDeclaration javaNode, Class modelNode) throws ClassNotFoundException {
+	public void link(TypeDeclaration typeDeclaration, Class umlClass) throws ClassNotFoundException {
+		
+		// extends:
+		rules.typeToClass.createGeneralization(typeDeclaration, typeDeclaration.getSuperclassType(), umlClass);
+		
+		// implements:
+		rules.typeToClass.createInterfaces(typeDeclaration, umlClass);
 	}
 
 }

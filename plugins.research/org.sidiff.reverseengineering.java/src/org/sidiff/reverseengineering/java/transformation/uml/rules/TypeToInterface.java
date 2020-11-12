@@ -1,5 +1,6 @@
 package org.sidiff.reverseengineering.java.transformation.uml.rules;
 
+import org.eclipse.jdt.core.dom.Type;
 import org.eclipse.jdt.core.dom.TypeDeclaration;
 import org.eclipse.uml2.uml.Interface;
 import org.eclipse.uml2.uml.Package;
@@ -9,11 +10,12 @@ public class TypeToInterface extends JavaToUML<TypeDeclaration, Package, Interfa
 	@Override
 	public void apply(TypeDeclaration typeDeclaration) {
 		Interface umlInterface = createInterface(typeDeclaration);
-		trafo.createRootModelElement(typeDeclaration, umlInterface);
 		
 		if (typeDeclaration.getJavadoc() != null) {
 			rules.javaToUMLHelper.createJavaDocComment(umlInterface, typeDeclaration.getJavadoc());
 		}
+		
+		trafo.createRootModelElement(typeDeclaration, umlInterface);
 	}
 	
 	public Interface createInterface(TypeDeclaration javaNode) {
@@ -28,7 +30,14 @@ public class TypeToInterface extends JavaToUML<TypeDeclaration, Package, Interfa
 	}
 
 	@Override
-	public void link(TypeDeclaration javaNode, Interface modelNode) throws ClassNotFoundException {
+	public void link(TypeDeclaration typeDeclaration, Interface umlInterface) throws ClassNotFoundException {
+		
+		// extends:
+		for (Object javaInterface : typeDeclaration.superInterfaceTypes()) {
+			if (javaInterface instanceof Type) {
+				rules.typeToClass.createGeneralization(typeDeclaration, (Type) javaInterface, umlInterface);
+			}
+		}
 	}
 
 }

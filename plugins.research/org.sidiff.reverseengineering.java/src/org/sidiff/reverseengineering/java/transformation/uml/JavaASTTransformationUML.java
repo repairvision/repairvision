@@ -134,6 +134,25 @@ public class JavaASTTransformationUML extends JavaASTTransformation {
 					Operation umlOperation = getModelElement(method);
 					rules.methodToOperation.apply((OperationOwner) umlClassifier, umlOperation);
 				}
+				
+				// super types and interfaces:
+				try {
+					if (typeDeclaration.isPackageMemberTypeDeclaration()) {
+						if (umlClassifier instanceof Class) {
+							rules.typeToClass.link(typeDeclaration, (Class) umlClassifier);
+						} else if (umlClassifier instanceof Interface) {
+							rules.typeToInterface.link(typeDeclaration, (Interface) umlClassifier);
+						}
+					} else if (typeDeclaration.getParent() instanceof TypeDeclaration) {
+						if (umlClassifier instanceof Class) {
+							rules.typeToClassInner.link(typeDeclaration, (Class) umlClassifier);
+						} else if (umlClassifier instanceof Interface) {
+							rules.typeToInterfaceInner.link(typeDeclaration, (Interface) umlClassifier);
+						}
+					}
+				} catch (ClassNotFoundException e) {
+					e.printStackTrace();
+				}
 			}
 		}
 		return true;

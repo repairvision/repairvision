@@ -16,11 +16,12 @@ public class MethodToOperation extends JavaToUML<MethodDeclaration, OperationOwn
 	public void apply(MethodDeclaration methodDeclaration) {
 		Operation umlOperation = umlFactory.createOperation();
 		umlOperation.setName(methodDeclaration.getName().getIdentifier());
-		trafo.createModelElement(methodDeclaration, umlOperation);
 		
 		if (methodDeclaration.getJavadoc() != null) {
 			rules.javaToUMLHelper.createJavaDocComment(umlOperation, methodDeclaration.getJavadoc());
 		}
+		
+		trafo.createModelElement(methodDeclaration, umlOperation);
 	}
 
 	@Override

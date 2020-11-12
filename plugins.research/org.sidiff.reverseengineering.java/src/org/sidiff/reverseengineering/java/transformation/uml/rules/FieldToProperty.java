@@ -35,6 +35,10 @@ public class FieldToProperty extends JavaToUML<FieldDeclaration, Classifier, Pro
 				umlProperty.setUpper(-1);
 			}
 			
+			if (fieldDeclaration.getJavadoc() != null) {
+				rules.javaToUMLHelper.createJavaDocComment(umlProperty, fieldDeclaration.getJavadoc());
+			}
+			
 			trafo.createModelElement(fieldDeclaration, umlProperty);
 		} else {
 			if (Activator.getLogger().isLoggable(Level.FINE)) {

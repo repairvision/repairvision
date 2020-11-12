@@ -1,19 +1,29 @@
 package org.sidiff.reverseengineering.java.transformation.uml.rules;
 
+import java.util.logging.Level;
+
+import org.eclipse.jdt.core.dom.ITypeBinding;
+import org.eclipse.jdt.core.dom.Type;
 import org.eclipse.jdt.core.dom.TypeDeclaration;
 import org.eclipse.uml2.uml.Class;
+import org.eclipse.uml2.uml.Classifier;
+import org.eclipse.uml2.uml.Generalization;
+import org.eclipse.uml2.uml.Interface;
+import org.eclipse.uml2.uml.InterfaceRealization;
 import org.eclipse.uml2.uml.Package;
+import org.sidiff.reverseengineering.java.Activator;
 
 public class TypeToClass extends JavaToUML<TypeDeclaration, Package, Class> {
 
 	@Override
 	public void apply(TypeDeclaration typeDeclaration) {
 		Class umlClass = createClass(typeDeclaration);
-		trafo.createRootModelElement(typeDeclaration, umlClass);
 		
 		if (typeDeclaration.getJavadoc() != null) {
 			rules.javaToUMLHelper.createJavaDocComment(umlClass, typeDeclaration.getJavadoc());
 		}
+		
+		trafo.createRootModelElement(typeDeclaration, umlClass);
 	}
 
 	public Class createClass(TypeDeclaration javaNode) {
@@ -28,7 +38,56 @@ public class TypeToClass extends JavaToUML<TypeDeclaration, Package, Class> {
 	}
 
 	@Override
-	public void link(TypeDeclaration javaNode, Class modelNode) {
+	public void link(TypeDeclaration typeDeclaration, Class umlClass) throws ClassNotFoundException {
+		
+		// extends:
+		createGeneralization(typeDeclaration, typeDeclaration.getSuperclassType(), umlClass);
+		
+		// implements:
+		createInterfaces(typeDeclaration, umlClass);
+	}
+
+	public void createGeneralization(TypeDeclaration typeDeclaration, Type superType, Classifier umlClassifier) throws ClassNotFoundException {
+		if (superType != null) {
+			Classifier umlSuperType = trafo.resolveBinding(superType.resolveBinding(), umlPackage.getClassifier());
+			
+			if (umlSuperType != null) {
+				Generalization umlGeneralization = umlFactory.createGeneralization();
+				umlGeneralization.setSpecific(umlClassifier);
+				umlGeneralization.setGeneral(umlSuperType);
+				umlClassifier.getGeneralizations().add(umlGeneralization);
+			} else {
+				if (Activator.getLogger().isLoggable(Level.FINE)) {
+					Activator.getLogger().log(Level.FINE, "Super type not found: " + typeDeclaration);
+				}
+			}
+		}
+	}
+
+	public void createInterfaces(TypeDeclaration typeDeclaration, Class umlClass) throws ClassNotFoundException {
+		if (typeDeclaration.superInterfaceTypes() != null) {
+			for (Object javaInterface : typeDeclaration.superInterfaceTypes()) {
+				
+				if (javaInterface instanceof Type) {
+					Type javaInterfaceType = (Type) javaInterface;
+					ITypeBinding umlInterfaceBinding = javaInterfaceType.resolveBinding();
+	
+					Interface umlInterface = trafo.resolveBinding(umlInterfaceBinding, umlPackage.getInterface());
+					
+					if (umlInterface != null) {
+						InterfaceRealization umlInterfaceRealization = umlFactory.createInterfaceRealization();
+						umlInterfaceRealization.setName(umlInterfaceBinding.getName());
+						umlInterfaceRealization.setContract(umlInterface);
+						umlInterfaceRealization.setImplementingClassifier(umlClass);
+						umlClass.getInterfaceRealizations().add(umlInterfaceRealization);
+					} else {
+						if (Activator.getLogger().isLoggable(Level.FINE)) {
+							Activator.getLogger().log(Level.FINE, "Interface not found: " + typeDeclaration);
+						}
+					}
+				}
+			}
+		}
 	}
 
 }
