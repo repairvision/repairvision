@@ -6,9 +6,9 @@ import org.eclipse.jdt.core.dom.FieldDeclaration;
 import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
 import org.eclipse.uml2.uml.Classifier;
 import org.eclipse.uml2.uml.Interface;
+import org.eclipse.uml2.uml.LiteralSpecification;
 import org.eclipse.uml2.uml.Property;
 import org.eclipse.uml2.uml.StructuredClassifier;
-import org.eclipse.uml2.uml.ValueSpecification;
 import org.sidiff.reverseengineering.java.Activator;
 
 public class FieldToProperty extends JavaToUML<FieldDeclaration, Classifier, Property> {
@@ -19,25 +19,7 @@ public class FieldToProperty extends JavaToUML<FieldDeclaration, Classifier, Pro
 				&& (fieldDeclaration.fragments().get(0) instanceof VariableDeclarationFragment)) {
 			
 			VariableDeclarationFragment declarationFragment = (VariableDeclarationFragment) fieldDeclaration.fragments().get(0);
-			
-			Property umlProperty = createProperty(
-					declarationFragment.getName().getIdentifier(),
-					rules.javaToUMLHelper.createLiteralValue(declarationFragment.getInitializer(), false));
-			
-			// Encode initialization with mulitplicities:
-			// NOTE: 1 is default value...
-//			if (declarationFragment.getInitializer() != null) {
-//				umlProperty.setLower(1);
-//			}
-			
-			// Encode arrays with multiplicities:
-			if (fieldDeclaration.getType().isArrayType()) {
-				umlProperty.setUpper(-1);
-			}
-			
-			if (fieldDeclaration.getJavadoc() != null) {
-				rules.javaToUMLHelper.createJavaDocComment(umlProperty, fieldDeclaration.getJavadoc());
-			}
+			Property umlProperty = createProperty(fieldDeclaration, declarationFragment);
 			
 			trafo.createModelElement(fieldDeclaration, umlProperty);
 		} else {
@@ -48,12 +30,31 @@ public class FieldToProperty extends JavaToUML<FieldDeclaration, Classifier, Pro
 		
 	}
 	
-	public Property createProperty(String name, ValueSpecification defaultValue) {
+	public Property createProperty(FieldDeclaration fieldDeclaration, VariableDeclarationFragment declarationFragment) {
 		Property umlProperty = umlFactory.createProperty();
-		umlProperty.setName(name);
+		umlProperty.setName(declarationFragment.getName().getIdentifier());
+		rules.javaToUMLHelper.setVisibility(umlProperty, fieldDeclaration);
+		
+		// default value:
+		LiteralSpecification defaultValue = rules.javaToUMLHelper.createLiteralValue(declarationFragment.getInitializer(), false);
 		
 		if (defaultValue != null) {
 			umlProperty.setDefaultValue(defaultValue);
+		}
+		
+		// Encode initialization with mulitplicities:
+		// NOTE: 1 is default value...
+//		if (declarationFragment.getInitializer() != null) {
+//			umlProperty.setLower(1);
+//		}
+		
+		// Encode arrays with multiplicities:
+		if (fieldDeclaration.getType().isArrayType()) {
+			umlProperty.setUpper(-1);
+		}
+		
+		if (fieldDeclaration.getJavadoc() != null) {
+			rules.javaToUMLHelper.createJavaDocComment(umlProperty, fieldDeclaration.getJavadoc());
 		}
 		
 		return umlProperty;

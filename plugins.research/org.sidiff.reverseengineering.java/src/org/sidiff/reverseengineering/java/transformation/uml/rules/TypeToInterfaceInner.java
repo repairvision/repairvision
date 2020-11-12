@@ -11,11 +11,6 @@ public class TypeToInterfaceInner extends JavaToUML<TypeDeclaration, Classifier,
 	@Override
 	public void apply(TypeDeclaration typeDeclaration) {
 		Interface umlInterface = rules.typeToInterface.createInterface(typeDeclaration);
-		
-		if (typeDeclaration.getJavadoc() != null) {
-			rules.javaToUMLHelper.createJavaDocComment(umlInterface, typeDeclaration.getJavadoc());
-		}
-		
 		trafo.createModelElement(typeDeclaration, umlInterface);
 	}
 

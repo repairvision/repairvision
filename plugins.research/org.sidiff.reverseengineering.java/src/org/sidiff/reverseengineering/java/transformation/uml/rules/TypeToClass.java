@@ -18,17 +18,18 @@ public class TypeToClass extends JavaToUML<TypeDeclaration, Package, Class> {
 	@Override
 	public void apply(TypeDeclaration typeDeclaration) {
 		Class umlClass = createClass(typeDeclaration);
+		trafo.createRootModelElement(typeDeclaration, umlClass);
+	}
+
+	public Class createClass(TypeDeclaration typeDeclaration) {
+		Class umlClass = umlFactory.createClass();
+		umlClass.setName(typeDeclaration.getName().getIdentifier());
+		rules.javaToUMLHelper.setVisibility(umlClass, typeDeclaration);
 		
 		if (typeDeclaration.getJavadoc() != null) {
 			rules.javaToUMLHelper.createJavaDocComment(umlClass, typeDeclaration.getJavadoc());
 		}
 		
-		trafo.createRootModelElement(typeDeclaration, umlClass);
-	}
-
-	public Class createClass(TypeDeclaration javaNode) {
-		Class umlClass = umlFactory.createClass();
-		umlClass.setName(javaNode.getName().getIdentifier());
 		return umlClass;
 	}
 

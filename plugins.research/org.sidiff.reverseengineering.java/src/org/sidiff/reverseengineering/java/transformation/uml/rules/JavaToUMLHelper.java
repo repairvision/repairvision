@@ -1,8 +1,10 @@
 package org.sidiff.reverseengineering.java.transformation.uml.rules;
 
+import org.eclipse.jdt.core.dom.BodyDeclaration;
 import org.eclipse.jdt.core.dom.Expression;
 import org.eclipse.jdt.core.dom.ITypeBinding;
 import org.eclipse.jdt.core.dom.Javadoc;
+import org.eclipse.jdt.core.dom.Modifier;
 import org.eclipse.uml2.uml.Comment;
 import org.eclipse.uml2.uml.Element;
 import org.eclipse.uml2.uml.LiteralBoolean;
@@ -11,10 +13,12 @@ import org.eclipse.uml2.uml.LiteralReal;
 import org.eclipse.uml2.uml.LiteralSpecification;
 import org.eclipse.uml2.uml.LiteralString;
 import org.eclipse.uml2.uml.MultiplicityElement;
+import org.eclipse.uml2.uml.NamedElement;
 import org.eclipse.uml2.uml.Type;
 import org.eclipse.uml2.uml.TypedElement;
 import org.eclipse.uml2.uml.UMLFactory;
 import org.eclipse.uml2.uml.UMLPackage;
+import org.eclipse.uml2.uml.VisibilityKind;
 import org.sidiff.reverseengineering.java.transformation.uml.JavaASTTransformationUML;
 import org.sidiff.reverseengineering.java.util.JavaASTUtil;
 
@@ -42,6 +46,20 @@ public class JavaToUMLHelper {
 		umlComment.getAnnotatedElements().add(umlElement);
 		umlElement.getOwnedComments().add(umlComment);
 		return umlComment;
+	}
+	
+	public void setVisibility(NamedElement umlElement, BodyDeclaration javaBodyDeclaration) {
+		int modifiers = javaBodyDeclaration.getModifiers();
+		
+		if (Modifier.isPublic(modifiers)) {
+			umlElement.setVisibility(VisibilityKind.PUBLIC_LITERAL);
+		} else if (Modifier.isPrivate(modifiers)) {
+			umlElement.setVisibility(VisibilityKind.PRIVATE_LITERAL);
+		} else if (Modifier.isProtected(modifiers)) {
+			umlElement.setVisibility(VisibilityKind.PROTECTED_LITERAL);
+		} else {
+			umlElement.setVisibility(VisibilityKind.PACKAGE_LITERAL);
+		}
 	}
 	
 	public void setType(TypedElement umlTypedElement, org.eclipse.jdt.core.dom.Type javaType) throws ClassNotFoundException {

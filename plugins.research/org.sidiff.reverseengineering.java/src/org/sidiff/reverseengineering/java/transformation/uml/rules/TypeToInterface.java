@@ -10,17 +10,18 @@ public class TypeToInterface extends JavaToUML<TypeDeclaration, Package, Interfa
 	@Override
 	public void apply(TypeDeclaration typeDeclaration) {
 		Interface umlInterface = createInterface(typeDeclaration);
+		trafo.createRootModelElement(typeDeclaration, umlInterface);
+	}
+	
+	public Interface createInterface(TypeDeclaration typeDeclaration) {
+		Interface umlInterface = umlFactory.createInterface();
+		umlInterface.setName(typeDeclaration.getName().getIdentifier());
+		rules.javaToUMLHelper.setVisibility(umlInterface, typeDeclaration);
 		
 		if (typeDeclaration.getJavadoc() != null) {
 			rules.javaToUMLHelper.createJavaDocComment(umlInterface, typeDeclaration.getJavadoc());
 		}
 		
-		trafo.createRootModelElement(typeDeclaration, umlInterface);
-	}
-	
-	public Interface createInterface(TypeDeclaration javaNode) {
-		Interface umlInterface = umlFactory.createInterface();
-		umlInterface.setName(javaNode.getName().getIdentifier());
 		return umlInterface;
 	}
 

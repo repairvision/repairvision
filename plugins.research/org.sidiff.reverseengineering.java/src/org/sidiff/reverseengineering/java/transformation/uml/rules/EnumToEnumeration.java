@@ -14,6 +14,12 @@ public class EnumToEnumeration extends JavaToUML<EnumDeclaration, Package, Enume
 	public Enumeration createEnumeration(EnumDeclaration enumDeclaration) {
 		Enumeration umlEnumeration = umlFactory.createEnumeration();
 		umlEnumeration.setName(enumDeclaration.getName().getIdentifier());
+		rules.javaToUMLHelper.setVisibility(umlEnumeration, enumDeclaration);
+		
+		if (enumDeclaration.getJavadoc() != null) {
+			rules.javaToUMLHelper.createJavaDocComment(umlEnumeration, enumDeclaration.getJavadoc());
+		}
+		
 		return umlEnumeration;
 	}
 

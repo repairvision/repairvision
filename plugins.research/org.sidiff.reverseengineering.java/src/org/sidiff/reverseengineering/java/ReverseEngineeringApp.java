@@ -78,7 +78,7 @@ public class ReverseEngineeringApp implements IApplication {
 		
 		ResourceSet resourceSet = new ResourceSetImpl();
 		
-		URI workspaceModelURI = baseURI.appendSegment("Main").appendFileExtension("uml");
+		URI workspaceModelURI = baseURI.appendSegment("System").appendFileExtension("uml");
     	XMLResource workspaceModelResource = (XMLResource) resourceSet.createResource(workspaceModelURI);
     	JavaASTWorkspaceModel workspaceModel = new JavaASTWorkspaceModelUML(workspaceModelResource, "System");
 		
