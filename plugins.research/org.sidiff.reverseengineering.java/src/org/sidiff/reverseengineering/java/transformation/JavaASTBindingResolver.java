@@ -16,12 +16,15 @@ import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.AbstractTypeDeclaration;
 import org.eclipse.jdt.core.dom.Annotation;
 import org.eclipse.jdt.core.dom.EnumConstantDeclaration;
+import org.eclipse.jdt.core.dom.FieldDeclaration;
 import org.eclipse.jdt.core.dom.IBinding;
 import org.eclipse.jdt.core.dom.MemberValuePair;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.eclipse.jdt.core.dom.ModuleDeclaration;
 import org.eclipse.jdt.core.dom.Type;
 import org.eclipse.jdt.core.dom.VariableDeclaration;
+import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
+import org.sidiff.reverseengineering.java.util.JavaASTUtil;
 
 /**
  * Manages the Java AST to model bindings.
@@ -101,22 +104,26 @@ public class JavaASTBindingResolver {
 	public <E extends EObject> E resolveBinding(IPath localPath, IBinding binding, EClass isTypeOf) 
 			throws ClassNotFoundException {
 		
-		IJavaElement javaElement = binding.getJavaElement();
-		String projectName = javaElement.getJavaProject().getProject().getName();
-		String uniqueBindingKey = bindingTranslator.getBindingKey(projectName, binding);
-		
-		// Check for internal bindings and already existing common external bindings:
-		EObject existingBinding = bindings.get(uniqueBindingKey); 
-		
-		if (existingBinding != null) {
-			return (E) existingBinding;
+		if (JavaASTUtil.isPrimitiveType(binding)) {
+			return libraryModel.getPrimitiveType(binding);
 		} else {
-			// Create new workspace proxy binding or common external binding:
-			IPath externalPath = javaElement.getPath();
-			return (E) createExternalBinding(projectName, binding, externalPath, localPath, isTypeOf);
+			IJavaElement javaElement = binding.getJavaElement();
+			String projectName = javaElement.getJavaProject().getProject().getName();
+			String uniqueBindingKey = bindingTranslator.getBindingKey(projectName, binding);
+			
+			// Check for internal bindings and already existing common external bindings:
+			EObject existingBinding = bindings.get(uniqueBindingKey); 
+			
+			if (existingBinding != null) {
+				return (E) existingBinding;
+			} else {
+				// Create new workspace proxy binding or common external binding:
+				IPath externalPath = javaElement.getPath();
+				return (E) createExternalBinding(projectName, binding, externalPath, localPath, isTypeOf);
+			}
 		}
 	}
-	
+
 	/**
 	 * @param externalProjectName The name of the external project containing the
 	 * @param externalBinding     The Java AST binding.
@@ -214,6 +221,15 @@ public class JavaASTBindingResolver {
 			return ((AbstractTypeDeclaration) node).resolveBinding();
 		} else if (node instanceof VariableDeclaration) {
 			return ((VariableDeclaration) node).resolveBinding();
+		} else if (node instanceof FieldDeclaration) {
+			FieldDeclaration fieldDeclaration = (FieldDeclaration) node;
+			
+			if ((fieldDeclaration.fragments().size() == 1) 
+					&& (fieldDeclaration.fragments().get(0) instanceof VariableDeclarationFragment)) {
+				
+				VariableDeclarationFragment declarationFragment = (VariableDeclarationFragment) fieldDeclaration.fragments().get(0);
+				return declarationFragment.resolveBinding();
+			}
 		} else if (node instanceof MethodDeclaration) {
 			return ((MethodDeclaration) node).resolveBinding();
 		} else if (node instanceof Annotation) {

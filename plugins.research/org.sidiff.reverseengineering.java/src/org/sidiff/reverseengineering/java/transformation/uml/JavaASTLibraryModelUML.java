@@ -10,6 +10,7 @@ import org.eclipse.jdt.core.dom.ITypeBinding;
 import org.eclipse.jdt.core.dom.IVariableBinding;
 import org.eclipse.uml2.uml.Class;
 import org.eclipse.uml2.uml.Classifier;
+import org.eclipse.uml2.uml.DataType;
 import org.eclipse.uml2.uml.Enumeration;
 import org.eclipse.uml2.uml.EnumerationLiteral;
 import org.eclipse.uml2.uml.Interface;
@@ -38,6 +39,8 @@ public class JavaASTLibraryModelUML extends JavaASTLibraryModel {
 	
 	private Model libraryModelRoot;
 	
+	private Package primitiveTypeModel;
+	
 	/**
 	 * @param libraryModel      The library model.
 	 * @param bindingTranslator Creates model object IDs.
@@ -52,6 +55,36 @@ public class JavaASTLibraryModelUML extends JavaASTLibraryModel {
 		} else {
 			this.libraryModelRoot = (Model) libraryModel.getContents().get(0);
 		}
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public DataType getPrimitiveType(IBinding binding) {
+		EObject libraryModelElement =  super.getPrimitiveType(binding);
+
+		if ((libraryModelElement == null) && JavaASTUtil.isPrimitiveType(binding)) {
+			if (primitiveTypeModel == null) {
+				createLibraryPrimitiveModel();
+			}
+			DataType newDataType = createLibraryPrimitiveDataType(binding);
+			bindPrimitiveType(binding, newDataType);
+			return newDataType;
+		}
+		
+		return (DataType) libraryModelElement;
+	}
+
+	protected void createLibraryPrimitiveModel() {
+		this.primitiveTypeModel = umlFactory.createPackage();
+		this.primitiveTypeModel.setName("datatypes");
+		this.libraryModelRoot.getPackagedElements().add(0, primitiveTypeModel);
+	}
+
+	protected DataType createLibraryPrimitiveDataType(IBinding binding) {
+		DataType primitiveDataType = umlFactory.createDataType();
+		primitiveDataType.setName(binding.getName());
+		primitiveTypeModel.getPackagedElements().add(primitiveDataType);
+		return primitiveDataType;
 	}
 
 	@SuppressWarnings("unchecked")

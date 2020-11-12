@@ -86,7 +86,32 @@ public class JavaASTLibraryModel {
 	protected String getBindingKey(String bindingKey) {
 		return "library" + "/" + bindingKey;
 	}
-
+	
+	/**
+	 * @param binding The Java primitive binding.
+	 * @return The corresponding model element. 
+	 */
+	@SuppressWarnings("unchecked")
+	public <E extends EObject> E getPrimitiveType(IBinding binding) {
+		return (E) libraryModel.getEObject(getPrimitiveTypeBindingKey(binding));
+	}
+	
+	/**
+	 * @param binding      The Java AST binding.
+	 * @param modelElement The corresponding library model element.
+	 */
+	public void bindPrimitiveType(IBinding binding, EObject modelElement) {
+		libraryModel.setID(modelElement, getPrimitiveTypeBindingKey(binding));
+	}
+	
+	/**
+	 * @param bindinKey A local binding key.
+	 * @return The library binding key.
+	 */
+	protected String getPrimitiveTypeBindingKey(IBinding binding) {
+		return getBindingKey("datatypes/" + binding.getName());
+	}
+	
 	/**
 	 * @return The library model.
 	 */

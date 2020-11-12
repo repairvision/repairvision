@@ -13,7 +13,7 @@ public class TypeToClassInner extends JavaToUML<TypeDeclaration, Classifier, Cla
 		trafo.createModelElement(typeDeclaration, umlClass);
 		
 		if (typeDeclaration.getJavadoc() != null) {
-			createJavaDocComment(umlClass, typeDeclaration.getJavadoc());
+			rules.javaToUMLHelper.createJavaDocComment(umlClass, typeDeclaration.getJavadoc());
 		}
 	}
 

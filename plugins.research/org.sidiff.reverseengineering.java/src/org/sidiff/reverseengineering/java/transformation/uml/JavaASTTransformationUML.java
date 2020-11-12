@@ -3,6 +3,7 @@ package org.sidiff.reverseengineering.java.transformation.uml;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.EnumConstantDeclaration;
 import org.eclipse.jdt.core.dom.EnumDeclaration;
+import org.eclipse.jdt.core.dom.FieldDeclaration;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.eclipse.jdt.core.dom.SingleVariableDeclaration;
 import org.eclipse.jdt.core.dom.TypeDeclaration;
@@ -14,6 +15,7 @@ import org.eclipse.uml2.uml.Interface;
 import org.eclipse.uml2.uml.Operation;
 import org.eclipse.uml2.uml.OperationOwner;
 import org.eclipse.uml2.uml.Parameter;
+import org.eclipse.uml2.uml.Property;
 import org.sidiff.reverseengineering.java.transformation.JavaASTTransformation;
 import org.sidiff.reverseengineering.java.transformation.uml.rules.JavaToUMLRules;
 
@@ -121,6 +123,12 @@ public class JavaASTTransformationUML extends JavaASTTransformation {
 					}
 				}
 				
+				// properties:
+				for (FieldDeclaration field : typeDeclaration.getFields()) {
+					Property umlProperty = getModelElement(field);
+					rules.fieldToProperty.apply(umlClassifier, umlProperty);
+				}
+				
 				// methods:
 				for (MethodDeclaration method : typeDeclaration.getMethods()) {
 					Operation umlOperation = getModelElement(method);
@@ -131,6 +139,24 @@ public class JavaASTTransformationUML extends JavaASTTransformation {
 		return true;
 	}
 	
+	@Override
+	public boolean visit(FieldDeclaration fieldDeclaration) {
+		if (!linker) {
+			rules.fieldToProperty.apply(fieldDeclaration);
+		} else {
+			Property umlProperty = getModelElement(fieldDeclaration);
+			
+			if (umlProperty != null) {
+				try {
+					rules.fieldToProperty.link(fieldDeclaration, umlProperty);
+				} catch (ClassNotFoundException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return true;
+	}
+
 	@Override
 	public boolean visit(MethodDeclaration methodDeclaration) {
 		if (!linker) {

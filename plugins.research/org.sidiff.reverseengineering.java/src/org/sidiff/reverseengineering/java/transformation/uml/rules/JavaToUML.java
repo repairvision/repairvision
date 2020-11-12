@@ -4,13 +4,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.jdt.core.dom.Javadoc;
-import org.eclipse.uml2.uml.Comment;
-import org.eclipse.uml2.uml.Element;
 import org.eclipse.uml2.uml.UMLFactory;
 import org.eclipse.uml2.uml.UMLPackage;
 import org.sidiff.reverseengineering.java.transformation.uml.JavaASTTransformationUML;
-import org.sidiff.reverseengineering.java.util.JavaASTUtil;
 
 public abstract class JavaToUML<JN, UC, UN> {
 
@@ -58,15 +54,6 @@ public abstract class JavaToUML<JN, UC, UN> {
 		trace.put(main, child);
 	}
 	
-	public Comment createJavaDocComment(Element umlElement, Javadoc javadoc) {
-		String javaDoc = JavaASTUtil.getJavaDoc(javadoc);
-		Comment umlComment = umlFactory.createComment();
-		umlComment.setBody(javaDoc);
-		umlComment.getAnnotatedElements().add(umlElement);
-		umlElement.getOwnedComments().add(umlComment);
-		return umlComment;
-	}
-
 	/**
 	 * Transforms the Java AST node to a corresponding model element (fragment).
 	 * 

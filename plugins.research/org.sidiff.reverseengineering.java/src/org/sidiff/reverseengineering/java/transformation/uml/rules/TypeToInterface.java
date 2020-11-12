@@ -12,7 +12,7 @@ public class TypeToInterface extends JavaToUML<TypeDeclaration, Package, Interfa
 		trafo.createRootModelElement(typeDeclaration, umlInterface);
 		
 		if (typeDeclaration.getJavadoc() != null) {
-			createJavaDocComment(umlInterface, typeDeclaration.getJavadoc());
+			rules.javaToUMLHelper.createJavaDocComment(umlInterface, typeDeclaration.getJavadoc());
 		}
 	}
 	

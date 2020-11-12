@@ -19,7 +19,7 @@ public class MethodToOperation extends JavaToUML<MethodDeclaration, OperationOwn
 		trafo.createModelElement(methodDeclaration, umlOperation);
 		
 		if (methodDeclaration.getJavadoc() != null) {
-			createJavaDocComment(umlOperation, methodDeclaration.getJavadoc());
+			rules.javaToUMLHelper.createJavaDocComment(umlOperation, methodDeclaration.getJavadoc());
 		}
 	}
 

@@ -12,7 +12,7 @@ public class TypeToClass extends JavaToUML<TypeDeclaration, Package, Class> {
 		trafo.createRootModelElement(typeDeclaration, umlClass);
 		
 		if (typeDeclaration.getJavadoc() != null) {
-			createJavaDocComment(umlClass, typeDeclaration.getJavadoc());
+			rules.javaToUMLHelper.createJavaDocComment(umlClass, typeDeclaration.getJavadoc());
 		}
 	}
 

@@ -95,6 +95,18 @@ public class JavaASTUtil {
 	}
 	
 	/**
+	 * @param binding A Java AST binding.
+	 * @return <code>true</code> if it is a primitive type, e.g., int, float, char;
+	 *         <code>false</code> otherwise.
+	 */
+	public static boolean isPrimitiveType(IBinding binding) {
+		if (binding instanceof ITypeBinding) {
+			return ((ITypeBinding) binding).isPrimitive();
+		}
+		return false;
+	}
+	
+	/**
 	 * Calculates the lines in the source code file for a node in the AST.
 	 * 
 	 * @param javaAST The source code's AST.
