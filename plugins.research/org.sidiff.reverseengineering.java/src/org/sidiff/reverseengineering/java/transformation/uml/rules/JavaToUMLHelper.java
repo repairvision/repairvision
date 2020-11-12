@@ -144,19 +144,9 @@ public class JavaToUMLHelper {
 				ITypeBinding collectionType = getFirstTypeArgumentBinding(genericBinding);
 
 				if (collectionType != null) {
-					if (qualifiedErasedTypeName.equals(List.class.getCanonicalName())) {
-						umlMultiplicityElement.setIsOrdered(true);
-						umlMultiplicityElement.setIsUnique(false);
-						umlMultiplicityElement.setLower(0);
-						umlMultiplicityElement.setUpper(-1);
-						return collectionType;
-					} else if (qualifiedErasedTypeName.equals(LinkedList.class.getCanonicalName())) {
-						umlMultiplicityElement.setIsOrdered(true);
-						umlMultiplicityElement.setIsUnique(false);
-						umlMultiplicityElement.setLower(0);
-						umlMultiplicityElement.setUpper(-1);
-						return collectionType;
-					} else if (qualifiedErasedTypeName.equals(ArrayList.class.getCanonicalName())) {
+					if (qualifiedErasedTypeName.equals(List.class.getCanonicalName())
+							|| qualifiedErasedTypeName.equals(LinkedList.class.getCanonicalName())
+							|| qualifiedErasedTypeName.equals(ArrayList.class.getCanonicalName())) {
 						umlMultiplicityElement.setIsOrdered(true);
 						umlMultiplicityElement.setIsUnique(false);
 						umlMultiplicityElement.setLower(0);
@@ -170,25 +160,15 @@ public class JavaToUMLHelper {
 				ITypeBinding collectionType = getFirstTypeArgumentBinding(genericBinding);
 
 				if (collectionType != null) {
-					if (qualifiedErasedTypeName.equals(Set.class.getCanonicalName())) {
+					if (qualifiedErasedTypeName.equals(Set.class.getCanonicalName())
+							|| qualifiedErasedTypeName.equals(HashSet.class.getCanonicalName())) {
 						umlMultiplicityElement.setIsOrdered(false);
 						umlMultiplicityElement.setIsUnique(true);
 						umlMultiplicityElement.setLower(0);
 						umlMultiplicityElement.setUpper(-1);
 						return collectionType;
-					} else if (qualifiedErasedTypeName.equals(HashSet.class.getCanonicalName())) {
-						umlMultiplicityElement.setIsOrdered(false);
-						umlMultiplicityElement.setIsUnique(true);
-						umlMultiplicityElement.setLower(0);
-						umlMultiplicityElement.setUpper(-1);
-						return collectionType;
-					} else if (qualifiedErasedTypeName.equals(TreeSet.class.getCanonicalName())) {
-						umlMultiplicityElement.setIsOrdered(true);
-						umlMultiplicityElement.setIsUnique(true);
-						umlMultiplicityElement.setLower(0);
-						umlMultiplicityElement.setUpper(-1);
-						return collectionType;
-					}  else if (qualifiedErasedTypeName.equals(LinkedHashSet.class.getCanonicalName())) {
+					} else if (qualifiedErasedTypeName.equals(TreeSet.class.getCanonicalName())
+							|| qualifiedErasedTypeName.equals(LinkedHashSet.class.getCanonicalName())) {
 						umlMultiplicityElement.setIsOrdered(true);
 						umlMultiplicityElement.setIsUnique(true);
 						umlMultiplicityElement.setLower(0);
