@@ -1,5 +1,13 @@
 package org.sidiff.reverseengineering.java.transformation.uml.rules;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
+
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.core.dom.BodyDeclaration;
 import org.eclipse.jdt.core.dom.Expression;
@@ -34,6 +42,8 @@ public class JavaToUMLHelper {
 	
 	protected JavaASTTransformationUML trafo;
 	
+	protected boolean umlCollectionEncoding = true;
+	
 	public void init(JavaASTTransformationUML trafo) {
 		this.trafo = trafo;
 	}
@@ -43,6 +53,14 @@ public class JavaToUMLHelper {
 		this.trafo = null;
 	}
 	
+	public boolean isUmlCollectionEncoding() {
+		return umlCollectionEncoding;
+	}
+
+	public void setUmlCollectionEncoding(boolean umlCollectionEncoding) {
+		this.umlCollectionEncoding = umlCollectionEncoding;
+	}
+
 	public Comment createJavaDocComment(Element umlElement, Javadoc javadoc) {
 		String javaDoc = JavaASTUtil.getJavaDoc(javadoc);
 		Comment umlComment = umlFactory.createComment();
@@ -89,16 +107,122 @@ public class JavaToUMLHelper {
 	}
 
 	public void setType(TypedElement umlTypedElement, org.eclipse.jdt.core.dom.Type javaType) throws ClassNotFoundException {
-		
 		// Erase generic types -> most concrete bindable type:
-		ITypeBinding variableType = JavaASTUtil.genericTypeErasure(javaType.resolveBinding());
-		variableType = JavaASTUtil.arrayTypeErasure(variableType);
+		ITypeBinding originalBinding = javaType.resolveBinding();
+		ITypeBinding typeBinding = JavaASTUtil.genericTypeErasure(originalBinding);
+		typeBinding = JavaASTUtil.arrayTypeErasure(typeBinding);
+		
+		// For example List<String> -> String[0..*] {ordered=true, unique=false}:
+		if (umlCollectionEncoding && (umlTypedElement instanceof MultiplicityElement)) {
+			ITypeBinding collectionType = encodeCollectionType((MultiplicityElement) umlTypedElement, originalBinding, typeBinding);
+			
+			if (collectionType != null) {
+				typeBinding = collectionType;
+			}
+		}
 		
 		// Resolve and set type:
-		Type type = trafo.resolveBinding(variableType, umlPackage.getType());
+		Type type = trafo.resolveBinding(typeBinding, umlPackage.getType());
 		umlTypedElement.setType((Type) type);
 	}
 	
+	public ITypeBinding encodeCollectionType(MultiplicityElement umlMultiplicityElement, ITypeBinding genericBinding, ITypeBinding erasedBinding) {
+		
+		// List<String> -> String[0..*] {ordered=true, unique=false}
+		// Set<String> -> String[0..*] {ordered=false, unique=true}
+		// LinkedHashSet<String>, TreeSet<String> -> String[0..*] {ordered=true, unique=true}
+		// Raw Type List, Set -> Object[0..*] ...
+		
+		if (genericBinding.isParameterizedType() || genericBinding.isRawType()) {
+			String qualifiedErasedTypeName = erasedBinding.getQualifiedName();
+
+			if ((qualifiedErasedTypeName == null) || !qualifiedErasedTypeName.startsWith("java.util")) {
+				return null;
+			}
+
+			if (qualifiedErasedTypeName.contains("List")) {
+				ITypeBinding collectionType = getFirstTypeArgumentBinding(genericBinding);
+
+				if (collectionType != null) {
+					if (qualifiedErasedTypeName.equals(List.class.getCanonicalName())) {
+						umlMultiplicityElement.setIsOrdered(true);
+						umlMultiplicityElement.setIsUnique(false);
+						umlMultiplicityElement.setLower(0);
+						umlMultiplicityElement.setUpper(-1);
+						return collectionType;
+					} else if (qualifiedErasedTypeName.equals(LinkedList.class.getCanonicalName())) {
+						umlMultiplicityElement.setIsOrdered(true);
+						umlMultiplicityElement.setIsUnique(false);
+						umlMultiplicityElement.setLower(0);
+						umlMultiplicityElement.setUpper(-1);
+						return collectionType;
+					} else if (qualifiedErasedTypeName.equals(ArrayList.class.getCanonicalName())) {
+						umlMultiplicityElement.setIsOrdered(true);
+						umlMultiplicityElement.setIsUnique(false);
+						umlMultiplicityElement.setLower(0);
+						umlMultiplicityElement.setUpper(-1);
+						return collectionType;
+					}
+				}
+			}
+
+			else if	(qualifiedErasedTypeName.contains("Set")) {
+				ITypeBinding collectionType = getFirstTypeArgumentBinding(genericBinding);
+
+				if (collectionType != null) {
+					if (qualifiedErasedTypeName.equals(Set.class.getCanonicalName())) {
+						umlMultiplicityElement.setIsOrdered(false);
+						umlMultiplicityElement.setIsUnique(true);
+						umlMultiplicityElement.setLower(0);
+						umlMultiplicityElement.setUpper(-1);
+						return collectionType;
+					} else if (qualifiedErasedTypeName.equals(HashSet.class.getCanonicalName())) {
+						umlMultiplicityElement.setIsOrdered(false);
+						umlMultiplicityElement.setIsUnique(true);
+						umlMultiplicityElement.setLower(0);
+						umlMultiplicityElement.setUpper(-1);
+						return collectionType;
+					} else if (qualifiedErasedTypeName.equals(TreeSet.class.getCanonicalName())) {
+						umlMultiplicityElement.setIsOrdered(true);
+						umlMultiplicityElement.setIsUnique(true);
+						umlMultiplicityElement.setLower(0);
+						umlMultiplicityElement.setUpper(-1);
+						return collectionType;
+					}  else if (qualifiedErasedTypeName.equals(LinkedHashSet.class.getCanonicalName())) {
+						umlMultiplicityElement.setIsOrdered(true);
+						umlMultiplicityElement.setIsUnique(true);
+						umlMultiplicityElement.setLower(0);
+						umlMultiplicityElement.setUpper(-1);
+						return collectionType;
+					}
+				}
+			}
+		}
+		
+		return null;
+	}
+	
+	protected ITypeBinding getFirstTypeArgumentBinding(ITypeBinding genericBinding) {
+		if (genericBinding.isParameterizedType()) {
+			ITypeBinding[] typeArguments = genericBinding.getTypeArguments();
+			
+			if ((typeArguments != null) && (typeArguments.length > 0)) {
+				return typeArguments[0];
+			}
+		} else if (genericBinding.isRawType()) {
+			ITypeBinding typeDeclaration = genericBinding.getTypeDeclaration();
+			
+			if (typeDeclaration != null) {
+				ITypeBinding[] typeParameters = typeDeclaration.getTypeParameters();
+				
+				if ((typeParameters != null) && (typeParameters.length > 0)) {
+					return typeParameters[0].getErasure();
+				}
+			}
+		}
+		return null;
+	}
+
 	public void encodeArrayType(MultiplicityElement umlMultiplicityElement, org.eclipse.jdt.core.dom.Type javaType) {
 		// Encode arrays with multiplicities:
 		if (javaType.isArrayType()) {

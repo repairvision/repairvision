@@ -76,8 +76,11 @@ public class JavaASTUtil {
 	 * @param binding A Java AST binding.
 	 * @return The erasure of this type binding.
 	 */
-	public static ITypeBinding genericTypeErasure(ITypeBinding binding) {
-		return binding.getErasure();
+	public static ITypeBinding genericTypeErasure(ITypeBinding typeBinding) {
+		if (typeBinding.isParameterizedType() || typeBinding.isGenericType()) {
+			return typeBinding.getErasure();
+		}
+		return typeBinding;
 	}
 	
 	/**

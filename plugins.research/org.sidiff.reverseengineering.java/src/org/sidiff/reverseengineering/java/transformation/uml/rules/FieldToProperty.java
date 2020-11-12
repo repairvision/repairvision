@@ -71,10 +71,10 @@ public class FieldToProperty extends JavaToUML<FieldDeclaration, Classifier, Pro
 
 	@Override
 	public void link(FieldDeclaration javaNode, Property umlProperty) throws ClassNotFoundException {
-		setParameterType(umlProperty, javaNode.getType());
+		setPropertyType(umlProperty, javaNode.getType());
 	}
 	
-	public void setParameterType(Property umlProperty, org.eclipse.jdt.core.dom.Type javaType) throws ClassNotFoundException {
+	public void setPropertyType(Property umlProperty, org.eclipse.jdt.core.dom.Type javaType) throws ClassNotFoundException {
 		rules.javaToUMLHelper.setType(umlProperty, javaType);
 		rules.javaToUMLHelper.encodeArrayType(umlProperty, javaType);
 	}
