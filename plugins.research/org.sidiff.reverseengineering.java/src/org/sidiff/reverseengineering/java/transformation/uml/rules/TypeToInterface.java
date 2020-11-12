@@ -16,7 +16,7 @@ public class TypeToInterface extends JavaToUML<TypeDeclaration, Package, Interfa
 	public Interface createInterface(TypeDeclaration typeDeclaration) {
 		Interface umlInterface = umlFactory.createInterface();
 		umlInterface.setName(typeDeclaration.getName().getIdentifier());
-		rules.javaToUMLHelper.setVisibility(umlInterface, typeDeclaration);
+		rules.javaToUMLHelper.setModifiers(umlInterface, typeDeclaration);
 		
 		if (typeDeclaration.getJavadoc() != null) {
 			rules.javaToUMLHelper.createJavaDocComment(umlInterface, typeDeclaration.getJavadoc());

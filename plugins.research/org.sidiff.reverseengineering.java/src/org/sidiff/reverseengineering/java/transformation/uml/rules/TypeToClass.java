@@ -24,7 +24,7 @@ public class TypeToClass extends JavaToUML<TypeDeclaration, Package, Class> {
 	public Class createClass(TypeDeclaration typeDeclaration) {
 		Class umlClass = umlFactory.createClass();
 		umlClass.setName(typeDeclaration.getName().getIdentifier());
-		rules.javaToUMLHelper.setVisibility(umlClass, typeDeclaration);
+		rules.javaToUMLHelper.setModifiers(umlClass, typeDeclaration);
 		
 		if (typeDeclaration.getJavadoc() != null) {
 			rules.javaToUMLHelper.createJavaDocComment(umlClass, typeDeclaration.getJavadoc());

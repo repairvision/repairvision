@@ -21,7 +21,7 @@ public class MethodToOperation extends JavaToUML<MethodDeclaration, OperationOwn
 	public Operation createOperation(MethodDeclaration methodDeclaration) {
 		Operation umlOperation = umlFactory.createOperation();
 		umlOperation.setName(methodDeclaration.getName().getIdentifier());
-		rules.javaToUMLHelper.setVisibility(umlOperation, methodDeclaration);
+		rules.javaToUMLHelper.setModifiers(umlOperation, methodDeclaration);
 		
 		if (methodDeclaration.getJavadoc() != null) {
 			rules.javaToUMLHelper.createJavaDocComment(umlOperation, methodDeclaration.getJavadoc());

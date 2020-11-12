@@ -176,7 +176,7 @@ public class JavaASTLibraryModelUML extends JavaASTLibraryModel {
 	protected EObject createLibraryEnumeration(ITypeBinding typeBinding) {
 		Enumeration libraryEnum = umlFactory.createEnumeration();
 		libraryEnum.setName(typeBinding.getName());
-		javaToUMLHelper.setVisibility(libraryEnum, typeBinding.getModifiers());
+		javaToUMLHelper.setModifiers(libraryEnum, typeBinding.getModifiers());
 		
 		Package libraryPackage = getLibraryModelElement(typeBinding.getPackage(), umlPackage.getPackage());
 		libraryPackage.getOwnedTypes().add(libraryEnum);
@@ -200,7 +200,7 @@ public class JavaASTLibraryModelUML extends JavaASTLibraryModel {
 		
 		Interface libraryIterface = umlFactory.createInterface();
 		libraryIterface.setName(typeBinding.getName());
-		javaToUMLHelper.setVisibility(libraryIterface, typeBinding.getModifiers());
+		javaToUMLHelper.setModifiers(libraryIterface, typeBinding.getModifiers());
 		
 		Package libraryPackage = getLibraryModelElement(typeBinding.getPackage(), umlPackage.getPackage());
 		libraryPackage.getOwnedTypes().add(libraryIterface);
@@ -213,7 +213,7 @@ public class JavaASTLibraryModelUML extends JavaASTLibraryModel {
 		
 		Class libraryClass = umlFactory.createClass();
 		libraryClass.setName(typeBinding.getName());
-		javaToUMLHelper.setVisibility(libraryClass, typeBinding.getModifiers());
+		javaToUMLHelper.setModifiers(libraryClass, typeBinding.getModifiers());
 		
 		Package libraryPackage = getLibraryModelElement(typeBinding.getPackage(), umlPackage.getPackage());
 		libraryPackage.getOwnedTypes().add(libraryClass);
@@ -224,7 +224,7 @@ public class JavaASTLibraryModelUML extends JavaASTLibraryModel {
 	protected EObject createLibraryOperation(IMethodBinding methodBinding) {
 		Operation libraryOperation = umlFactory.createOperation();
 		libraryOperation.setName(methodBinding.getName());
-		javaToUMLHelper.setVisibility(libraryOperation, methodBinding.getModifiers());
+		javaToUMLHelper.setModifiers(libraryOperation, methodBinding.getModifiers());
 		
 		Classifier libraryClassifier = getLibraryModelElement(methodBinding.getDeclaringClass(), umlPackage.getClassifier());
 		libraryClassifier.getOperations().add(libraryOperation);
@@ -247,7 +247,7 @@ public class JavaASTLibraryModelUML extends JavaASTLibraryModel {
 	protected EObject createLibraryProperty(IVariableBinding variableBinding) {
 		Property libraryProperty = umlFactory.createProperty();
 		libraryProperty.setName(variableBinding.getName());
-		javaToUMLHelper.setVisibility(libraryProperty, variableBinding.getModifiers());
+		javaToUMLHelper.setModifiers(libraryProperty, variableBinding.getModifiers());
 		
 		StructuredClassifier libraryClassifier = getLibraryModelElement(variableBinding.getDeclaringClass(), umlPackage.getStructuredClassifier());
 		libraryClassifier.getOwnedAttributes().add(libraryProperty);

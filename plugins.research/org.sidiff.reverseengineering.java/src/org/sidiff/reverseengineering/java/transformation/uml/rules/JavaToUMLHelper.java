@@ -1,10 +1,12 @@
 package org.sidiff.reverseengineering.java.transformation.uml.rules;
 
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.core.dom.BodyDeclaration;
 import org.eclipse.jdt.core.dom.Expression;
 import org.eclipse.jdt.core.dom.ITypeBinding;
 import org.eclipse.jdt.core.dom.Javadoc;
 import org.eclipse.jdt.core.dom.Modifier;
+import org.eclipse.uml2.uml.Classifier;
 import org.eclipse.uml2.uml.Comment;
 import org.eclipse.uml2.uml.Element;
 import org.eclipse.uml2.uml.LiteralBoolean;
@@ -14,6 +16,8 @@ import org.eclipse.uml2.uml.LiteralSpecification;
 import org.eclipse.uml2.uml.LiteralString;
 import org.eclipse.uml2.uml.MultiplicityElement;
 import org.eclipse.uml2.uml.NamedElement;
+import org.eclipse.uml2.uml.Operation;
+import org.eclipse.uml2.uml.Property;
 import org.eclipse.uml2.uml.Type;
 import org.eclipse.uml2.uml.TypedElement;
 import org.eclipse.uml2.uml.UMLFactory;
@@ -48,11 +52,31 @@ public class JavaToUMLHelper {
 		return umlComment;
 	}
 	
-	public void setVisibility(NamedElement umlElement, BodyDeclaration javaBodyDeclaration) {
-		setVisibility(umlElement, javaBodyDeclaration.getModifiers());
+	public void setModifiers(EObject umlElement, BodyDeclaration javaBodyDeclaration) {
+		setModifiers(umlElement, javaBodyDeclaration.getModifiers());
+	}
+
+	public void setModifiers(EObject umlElement, int modifiers) {
+		
+		if (umlElement instanceof Classifier) {
+			((Classifier) umlElement).setIsAbstract(Modifier.isAbstract(modifiers));
+			((Classifier) umlElement).setIsFinalSpecialization(Modifier.isFinal(modifiers));
+			((Classifier) umlElement).setIsLeaf(Modifier.isFinal(modifiers));
+		} else if (umlElement instanceof Operation) {
+			((Operation) umlElement).setIsAbstract(Modifier.isAbstract(modifiers));
+			((Operation) umlElement).setIsLeaf(Modifier.isFinal(modifiers));
+			((Operation) umlElement).setIsStatic(Modifier.isStatic(modifiers));
+		} else if (umlElement instanceof Property) {
+			((Property) umlElement).setIsStatic(Modifier.isStatic(modifiers));
+			((Property) umlElement).setIsLeaf(Modifier.isFinal(modifiers));
+		}
+		
+		if (umlElement instanceof NamedElement) {
+			setVisibility((NamedElement) umlElement, modifiers);
+		}
 	}
 	
-	public void setVisibility(NamedElement umlElement, int modifiers) {
+	protected void setVisibility(NamedElement umlElement, int modifiers) {
 		if (Modifier.isPublic(modifiers)) {
 			umlElement.setVisibility(VisibilityKind.PUBLIC_LITERAL);
 		} else if (Modifier.isPrivate(modifiers)) {
@@ -63,7 +87,7 @@ public class JavaToUMLHelper {
 			umlElement.setVisibility(VisibilityKind.PACKAGE_LITERAL);
 		}
 	}
-	
+
 	public void setType(TypedElement umlTypedElement, org.eclipse.jdt.core.dom.Type javaType) throws ClassNotFoundException {
 		
 		// Erase generic types -> most concrete bindable type:

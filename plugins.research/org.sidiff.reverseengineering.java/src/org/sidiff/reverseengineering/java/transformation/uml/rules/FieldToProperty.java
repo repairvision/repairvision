@@ -33,7 +33,7 @@ public class FieldToProperty extends JavaToUML<FieldDeclaration, Classifier, Pro
 	public Property createProperty(FieldDeclaration fieldDeclaration, VariableDeclarationFragment declarationFragment) {
 		Property umlProperty = umlFactory.createProperty();
 		umlProperty.setName(declarationFragment.getName().getIdentifier());
-		rules.javaToUMLHelper.setVisibility(umlProperty, fieldDeclaration);
+		rules.javaToUMLHelper.setModifiers(umlProperty, fieldDeclaration);
 		
 		// default value:
 		LiteralSpecification defaultValue = rules.javaToUMLHelper.createLiteralValue(declarationFragment.getInitializer(), false);
