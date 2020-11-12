@@ -31,10 +31,10 @@ public class JavaToUMLRules {
 	
 	public VariableToParameter variableToParameter;
 	
-	public JavaToUMLRules() {
-		this.transformations = new ArrayList<>();
+	public JavaToUMLRules(JavaToUMLHelper javaToUMLHelper) {
+		this.javaToUMLHelper = javaToUMLHelper;
 		
-		this.javaToUMLHelper = new JavaToUMLHelper();
+		this.transformations = new ArrayList<>();
 		
 		this.enumToEnumeration = add(new EnumToEnumeration());
 		this.enumToEnumerationInner = add(new EnumToEnumerationInner());

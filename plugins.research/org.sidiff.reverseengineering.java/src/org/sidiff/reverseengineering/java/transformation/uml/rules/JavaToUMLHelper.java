@@ -49,8 +49,10 @@ public class JavaToUMLHelper {
 	}
 	
 	public void setVisibility(NamedElement umlElement, BodyDeclaration javaBodyDeclaration) {
-		int modifiers = javaBodyDeclaration.getModifiers();
-		
+		setVisibility(umlElement, javaBodyDeclaration.getModifiers());
+	}
+	
+	public void setVisibility(NamedElement umlElement, int modifiers) {
 		if (Modifier.isPublic(modifiers)) {
 			umlElement.setVisibility(VisibilityKind.PUBLIC_LITERAL);
 		} else if (Modifier.isPrivate(modifiers)) {
