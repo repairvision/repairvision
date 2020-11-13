@@ -9,13 +9,13 @@ import org.eclipse.jdt.core.dom.IPackageBinding;
 import org.eclipse.jdt.core.dom.ITypeBinding;
 import org.eclipse.jdt.core.dom.IVariableBinding;
 import org.eclipse.uml2.uml.Class;
-import org.eclipse.uml2.uml.Classifier;
 import org.eclipse.uml2.uml.DataType;
 import org.eclipse.uml2.uml.Enumeration;
 import org.eclipse.uml2.uml.EnumerationLiteral;
 import org.eclipse.uml2.uml.Interface;
 import org.eclipse.uml2.uml.Model;
 import org.eclipse.uml2.uml.Operation;
+import org.eclipse.uml2.uml.OperationOwner;
 import org.eclipse.uml2.uml.Package;
 import org.eclipse.uml2.uml.Parameter;
 import org.eclipse.uml2.uml.Property;
@@ -226,8 +226,8 @@ public class JavaASTLibraryModelUML extends JavaASTLibraryModel {
 		libraryOperation.setName(methodBinding.getName());
 		javaToUMLHelper.setModifiers(libraryOperation, methodBinding.getModifiers());
 		
-		Classifier libraryClassifier = getLibraryModelElement(methodBinding.getDeclaringClass(), umlPackage.getClassifier());
-		libraryClassifier.getOperations().add(libraryOperation);
+		OperationOwner libraryClassifier = getLibraryModelElement(methodBinding.getDeclaringClass(), umlPackage.getClassifier());
+		libraryClassifier.getOwnedOperations().add(libraryOperation);
 		
 		// Create parameter signature:
 		for (ITypeBinding parameter : methodBinding.getParameterTypes()) {

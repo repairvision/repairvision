@@ -54,6 +54,12 @@ public abstract class JavaToUML<JN, UC, UN> {
 		trace.put(main, child);
 	}
 	
+	/*
+	 * 1. Create model graph nodes (+ local attributes)
+	 * 2. Create model AST containments
+	 *    Create model graph edges (+ none local attribute value)
+	 */
+	
 	/**
 	 * Transforms the Java AST node to a corresponding model element (fragment).
 	 * 

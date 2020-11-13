@@ -1,5 +1,7 @@
 package org.sidiff.reverseengineering.java.util;
 
+import java.util.regex.Pattern;
+
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.IBinding;
@@ -15,6 +17,8 @@ import org.eclipse.jdt.core.dom.Type;
  * @author Manuel Ohrndorf
  */
 public class JavaASTUtil {
+	
+	protected static Pattern javaDocRegEx = Pattern.compile("(?m)(^\\s*?\\*/)|(^\\s*?/\\**)|(^\\s*?\\*\\s?)");
 
 	/**
 	 * Searches for the outermost binding of a type binding, e.g., of inner classes.
@@ -129,7 +133,7 @@ public class JavaASTUtil {
 	 * @return The JavaDoc text without asterisk.
 	 */
 	public static String getJavaDoc(Javadoc javadoc) {
-		String javaDoc = javadoc.toString().replaceAll("(?m)(^\\s*?\\*/)|(^\\s*?/\\**)|(^\\s*?\\*\\s?)", "");
+		String javaDoc = javaDocRegEx.matcher(javadoc.toString()).replaceAll("");
 		return javaDoc.trim();
 	}
 }

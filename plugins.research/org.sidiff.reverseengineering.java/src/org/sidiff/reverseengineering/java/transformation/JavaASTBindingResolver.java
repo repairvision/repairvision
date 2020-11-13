@@ -2,6 +2,7 @@ package org.sidiff.reverseengineering.java.transformation;
 
 import java.util.Map;
 import java.util.Set;
+import java.util.logging.Level;
 
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.emf.common.util.URI;
@@ -24,6 +25,7 @@ import org.eclipse.jdt.core.dom.ModuleDeclaration;
 import org.eclipse.jdt.core.dom.Type;
 import org.eclipse.jdt.core.dom.VariableDeclaration;
 import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
+import org.sidiff.reverseengineering.java.Activator;
 import org.sidiff.reverseengineering.java.util.JavaASTUtil;
 
 /**
@@ -97,31 +99,42 @@ public class JavaASTBindingResolver {
 	 *                       contained.
 	 * @param nodeBindingKey An AST node binding.
 	 * @param isTypeOfThe    The minimal type of the proxy
-	 * @return The corresponding model element.
+	 * @return The corresponding model element or <code>null</code>; possibly a
+	 *         proxy that can not be resolved/loaded yet! So do NOT access
+	 *         informations of this object!
 	 * @throws ClassNotFoundException
 	 */
 	@SuppressWarnings("unchecked")
-	public <E extends EObject> E resolveBinding(IPath localPath, IBinding binding, EClass isTypeOf) 
+	public <E extends EObject> E resolveBindingProxy(IPath localPath, IBinding binding, EClass isTypeOf) 
 			throws ClassNotFoundException {
 		
 		if (JavaASTUtil.isPrimitiveType(binding)) {
 			return libraryModel.getPrimitiveType(binding);
 		} else {
 			IJavaElement javaElement = binding.getJavaElement();
-			String projectName = javaElement.getJavaProject().getProject().getName();
-			String uniqueBindingKey = bindingTranslator.getBindingKey(projectName, binding);
 			
-			// Check for internal bindings and already existing common external bindings:
-			EObject existingBinding = bindings.get(uniqueBindingKey); 
-			
-			if (existingBinding != null) {
-				return (E) existingBinding;
+			if (javaElement != null) {
+				String projectName = javaElement.getJavaProject().getProject().getName();
+				String uniqueBindingKey = bindingTranslator.getBindingKey(projectName, binding);
+				
+				// Check for internal bindings and already existing common external bindings:
+				EObject existingBinding = bindings.get(uniqueBindingKey); 
+				
+				if (existingBinding != null) {
+					return (E) existingBinding;
+				} else {
+					// Create new workspace proxy binding or common external binding:
+					IPath externalPath = javaElement.getPath();
+					return (E) createExternalBinding(projectName, binding, externalPath, localPath, isTypeOf);
+				}
 			} else {
-				// Create new workspace proxy binding or common external binding:
-				IPath externalPath = javaElement.getPath();
-				return (E) createExternalBinding(projectName, binding, externalPath, localPath, isTypeOf);
+				if (Activator.getLogger().isLoggable(Level.FINE)) {
+					Activator.getLogger().log(Level.FINE, "Can not resolve: " + binding);
+				}
 			}
 		}
+		
+		return null;
 	}
 
 	/**

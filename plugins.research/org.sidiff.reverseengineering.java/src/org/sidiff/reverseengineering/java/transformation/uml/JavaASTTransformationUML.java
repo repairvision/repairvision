@@ -45,6 +45,11 @@ public class JavaASTTransformationUML extends JavaASTTransformation {
 		this.linker = true;
 		javaAST.accept(this);
 		
+		// Finalize model graph:
+		// TODO Method invocations
+//		this.rules.javaToUMLHelper.finalize(getRootModelElements());
+		
+		// Clean up resources:
 		this.rules.cleanUp();
 	}
 	
@@ -126,13 +131,29 @@ public class JavaASTTransformationUML extends JavaASTTransformation {
 				// properties:
 				for (FieldDeclaration field : typeDeclaration.getFields()) {
 					Property umlProperty = getModelElement(field);
-					rules.fieldToProperty.apply(umlClassifier, umlProperty);
+
+					// FIXME: public int currentRepetition, maxRepetition;
+					if (umlProperty != null) {
+						rules.fieldToProperty.apply(umlClassifier, umlProperty);
+					}
 				}
 				
 				// methods:
 				for (MethodDeclaration method : typeDeclaration.getMethods()) {
 					Operation umlOperation = getModelElement(method);
 					rules.methodToOperation.apply((OperationOwner) umlClassifier, umlOperation);
+					
+					// TODO Method invocations
+//					// method body:
+//					if (umlClassifier instanceof Class) {
+//						Class umlClass = (Class) umlClassifier; // only classes have method bodies...
+//						Behavior classBehavior = umlClass.getClassifierBehavior();
+//						FunctionBehavior operationBehavior = getModelElement(method.getBody());
+//						
+//						if ((operationBehavior != null) && (classBehavior != null)) {
+//							rules.blockToFunctionBehavior.apply(classBehavior, operationBehavior);
+//						}
+//					}
 				}
 				
 				// super types and interfaces:
@@ -221,4 +242,47 @@ public class JavaASTTransformationUML extends JavaASTTransformation {
 		}
 		return true;
 	}
+
+	// TODO Method invocations
+//	@Override
+//	public boolean visit(Block block) {
+//		if (!linker) {
+//			if (block.getParent() instanceof MethodDeclaration) {
+//				rules.blockToFunctionBehavior.apply(block);
+//			}
+//		} else {
+//			FunctionBehavior operationBehavior = getModelElement(block);
+//			
+//			if (operationBehavior != null) {
+//				try {
+//					rules.blockToFunctionBehavior.link(block, operationBehavior);
+//				} catch (ClassNotFoundException e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		}
+//		
+//		return true;
+//	}
+//	
+//	@Override
+//	public boolean visit(MethodInvocation methodInvocation) {
+//		if (!linker) {
+//			rules.methodInvocationToCallOperationAction.apply(methodInvocation);
+//		} else {
+//			CallOperationAction callOperation = getModelElement(methodInvocation);
+//			FunctionBehavior operationBehavior = getParentModelElement(methodInvocation, UMLPackage.eINSTANCE.getFunctionBehavior());
+//			
+//			if ((operationBehavior != null) && (callOperation != null)) {
+//				rules.methodInvocationToCallOperationAction.apply(operationBehavior, callOperation);
+//				
+//				try {
+//					rules.methodInvocationToCallOperationAction.link(methodInvocation, callOperation);
+//				} catch (ClassNotFoundException e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		}
+//		return true;
+//	}
 }

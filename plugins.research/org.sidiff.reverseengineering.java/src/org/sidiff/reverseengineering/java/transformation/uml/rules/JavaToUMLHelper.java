@@ -2,6 +2,7 @@ package org.sidiff.reverseengineering.java.transformation.uml.rules;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -9,14 +10,20 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.core.dom.BodyDeclaration;
 import org.eclipse.jdt.core.dom.Expression;
 import org.eclipse.jdt.core.dom.ITypeBinding;
 import org.eclipse.jdt.core.dom.Javadoc;
 import org.eclipse.jdt.core.dom.Modifier;
+import org.eclipse.uml2.uml.Action;
+import org.eclipse.uml2.uml.Behavior;
+import org.eclipse.uml2.uml.CallOperationAction;
+import org.eclipse.uml2.uml.Class;
 import org.eclipse.uml2.uml.Classifier;
 import org.eclipse.uml2.uml.Comment;
 import org.eclipse.uml2.uml.Element;
+import org.eclipse.uml2.uml.Interaction;
 import org.eclipse.uml2.uml.LiteralBoolean;
 import org.eclipse.uml2.uml.LiteralInteger;
 import org.eclipse.uml2.uml.LiteralReal;
@@ -42,15 +49,19 @@ public class JavaToUMLHelper {
 	
 	protected JavaASTTransformationUML trafo;
 	
+	protected JavaToUMLRules rules;
+	
 	protected boolean umlCollectionEncoding = true;
 	
-	public void init(JavaASTTransformationUML trafo) {
+	public void init(JavaASTTransformationUML trafo, JavaToUMLRules rules) {
 		this.trafo = trafo;
+		this.rules = rules;
 	}
 	
 	public void cleanUp() {
 		// avoids resource leaks
 		this.trafo = null;
+		this.rules = null;
 	}
 	
 	public boolean isUmlCollectionEncoding() {
@@ -59,6 +70,55 @@ public class JavaToUMLHelper {
 
 	public void setUmlCollectionEncoding(boolean umlCollectionEncoding) {
 		this.umlCollectionEncoding = umlCollectionEncoding;
+	}
+	
+	public void finalize(List<EObject> rootElements) {
+		for (EObject element : rootElements) {
+			finalizeClass(element);
+		}
+	}
+
+	protected void finalizeClass(EObject modelElement) {
+		if (modelElement instanceof Class) {
+			Class umlClass = (Class) modelElement;
+			
+			if (umlClass.getClassifierBehavior() != null) {
+				for (Iterator<Behavior> behaviorIterator = umlClass.getClassifierBehavior().getOwnedBehaviors().iterator(); behaviorIterator.hasNext();) {
+					Behavior operationBehavior = behaviorIterator.next();
+					Interaction operationCalls = rules.blockToFunctionBehavior.getInteraction(operationBehavior);
+
+					if (operationCalls.getActions().isEmpty()) {
+						behaviorIterator.remove(); // clean up empty operation bodies
+					} else {
+						Set<Operation> calledOperations = new HashSet<>();
+
+						for (Iterator<Action> actionIterator = operationCalls.getActions().iterator(); actionIterator.hasNext();) {
+							Action operationCallAction = (Action) actionIterator.next();
+
+							if (operationCallAction instanceof CallOperationAction) {
+								Operation calledOperation = ((CallOperationAction) operationCallAction).getOperation();
+
+								if (calledOperations.contains(calledOperation)) {
+									actionIterator.remove(); // remove duplicated operation call
+								} else {
+									calledOperations.add(calledOperation);
+								}
+							}
+						}
+					}
+				}
+				
+				if (umlClass.getClassifierBehavior().getOwnedBehaviors().isEmpty()) {
+					// clean up classes without operation (calls)
+					EcoreUtil.remove(umlClass.getClassifierBehavior());
+				} 
+			}
+
+			// finalize nested classes:
+			for (Classifier nestedClassifier : umlClass.getNestedClassifiers()) {
+				finalizeClass(nestedClassifier);
+			}
+		}
 	}
 
 	public Comment createJavaDocComment(Element umlElement, Javadoc javadoc) {
@@ -122,8 +182,8 @@ public class JavaToUMLHelper {
 		}
 		
 		// Resolve and set type:
-		Type type = trafo.resolveBinding(typeBinding, umlPackage.getType());
-		umlTypedElement.setType((Type) type);
+		Type typeProxy = trafo.resolveBindingProxy(typeBinding, umlPackage.getType());
+		umlTypedElement.setType(typeProxy);
 	}
 	
 	public ITypeBinding encodeCollectionType(MultiplicityElement umlMultiplicityElement, ITypeBinding genericBinding, ITypeBinding erasedBinding) {
@@ -187,7 +247,7 @@ public class JavaToUMLHelper {
 			ITypeBinding[] typeArguments = genericBinding.getTypeArguments();
 			
 			if ((typeArguments != null) && (typeArguments.length > 0)) {
-				return typeArguments[0];
+				return typeArguments[0].getErasure();
 			}
 		} else if (genericBinding.isRawType()) {
 			ITypeBinding typeDeclaration = genericBinding.getTypeDeclaration();

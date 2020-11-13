@@ -83,11 +83,11 @@ public abstract class JavaASTTransformation extends ASTVisitor {
 	/**
 	 * @param binding     An AST node binding.
 	 * @param isTypeOfThe The minimal type of the proxy
-	 * @return The corresponding model element.
-	 * @throws ClassNotFoundException
+	 * @return The corresponding model element; possibly a proxy that can not be
+	 *         resolved/loaded yet! So do NOT access informations of this object!
 	 */
-	public <E extends EObject> E resolveBinding(IBinding binding, EClass isTypeOf) throws ClassNotFoundException {
-		return bindings.resolveBinding(astResourceFolder, binding, isTypeOf);
+	public <E extends EObject> E resolveBindingProxy(IBinding binding, EClass isTypeOf) throws ClassNotFoundException {
+		return bindings.resolveBindingProxy(astResourceFolder, binding, isTypeOf);
 	}
 
 	/**
@@ -113,9 +113,9 @@ public abstract class JavaASTTransformation extends ASTVisitor {
 	}
 	
 	/**
-	 * Traces a model element in this transformation.
+	 * Traces a main model element in this transformation and creates a binding.
 	 * 
-	 * @param modelElement A model element (or main element of model fragment).
+	 * @param modelElement A model element.
 	 */
 	public void createModelElement(ASTNode astNode, EObject modelElement) {
 		assert (astNode != null);
@@ -137,12 +137,38 @@ public abstract class JavaASTTransformation extends ASTVisitor {
 	}
 	
 	/**
+	 * Traces a model element fragment (no binding) in this transformation.
+	 * 
+	 * @param modelElement A model element fragment (no binding).
+	 */
+	public void createModelElementFragment(ASTNode astNode, EObject modelElement) {
+		assert (astNode != null);
+		
+		// Trace generated element:
+		javaToModelTrace.put(astNode, modelElement);
+	}
+	
+	/**
 	 * @param astNode A Java AST node.
 	 * @return A model element created by this transformation.
 	 */
 	@SuppressWarnings("unchecked")
 	public <E extends EObject> E getModelElement(ASTNode astNode) {
 		return (E) javaToModelTrace.get(astNode);
+	}
+	
+	@SuppressWarnings("unchecked")
+	public <E extends EObject> E getParentModelElement(ASTNode astNode, EClass type) {
+		while(astNode != null) {
+			EObject modelElement = getModelElement(astNode);
+
+			if ((modelElement != null) && (type == modelElement.eClass())) {
+				return (E) modelElement;
+			}
+			
+			astNode = astNode.getParent();
+		}
+		return null;
 	}
 	
 	/**

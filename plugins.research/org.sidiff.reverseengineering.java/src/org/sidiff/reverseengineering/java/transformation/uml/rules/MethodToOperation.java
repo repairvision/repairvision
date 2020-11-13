@@ -38,7 +38,8 @@ public class MethodToOperation extends JavaToUML<MethodDeclaration, OperationOwn
 	public void link(MethodDeclaration methodDeclaration, Operation operation) throws ClassNotFoundException {
 		Type returnType = methodDeclaration.getReturnType2();
 		
-		if (!JavaASTUtil.isPrimitiveType(returnType, PrimitiveType.VOID)) {
+		// constructor return type = null
+		if ((returnType != null) && !JavaASTUtil.isPrimitiveType(returnType, PrimitiveType.VOID)) {
 			Parameter umlReturnParameter = rules.variableToParameter.createParameter(null);
 			umlReturnParameter.setDirection(ParameterDirectionKind.RETURN_LITERAL);
 			

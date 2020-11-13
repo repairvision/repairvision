@@ -7,6 +7,7 @@ import org.eclipse.jdt.core.dom.Type;
 import org.eclipse.jdt.core.dom.TypeDeclaration;
 import org.eclipse.uml2.uml.Class;
 import org.eclipse.uml2.uml.Classifier;
+import org.eclipse.uml2.uml.FunctionBehavior;
 import org.eclipse.uml2.uml.Generalization;
 import org.eclipse.uml2.uml.Interface;
 import org.eclipse.uml2.uml.InterfaceRealization;
@@ -30,7 +31,17 @@ public class TypeToClass extends JavaToUML<TypeDeclaration, Package, Class> {
 			rules.javaToUMLHelper.createJavaDocComment(umlClass, typeDeclaration.getJavadoc());
 		}
 		
+		// Create classifier behavior for operation behavior modeling:
+		// TODO: Method invocations
+//		createClassifierBehavior(umlClass);
+		
 		return umlClass;
+	}
+	
+	public void createClassifierBehavior(Class umlClass) {
+		FunctionBehavior umlFunctionBehavior = umlFactory.createFunctionBehavior();
+		umlFunctionBehavior.setName(umlClass.getName());
+		umlClass.setClassifierBehavior(umlFunctionBehavior);
 	}
 
 	@Override
@@ -50,12 +61,12 @@ public class TypeToClass extends JavaToUML<TypeDeclaration, Package, Class> {
 
 	public void createGeneralization(TypeDeclaration typeDeclaration, Type superType, Classifier umlClassifier) throws ClassNotFoundException {
 		if (superType != null) {
-			Classifier umlSuperType = trafo.resolveBinding(superType.resolveBinding(), umlPackage.getClassifier());
+			Classifier umlSuperTypeProxy = trafo.resolveBindingProxy(superType.resolveBinding(), umlPackage.getClassifier());
 			
-			if (umlSuperType != null) {
+			if (umlSuperTypeProxy != null) {
 				Generalization umlGeneralization = umlFactory.createGeneralization();
 				umlGeneralization.setSpecific(umlClassifier);
-				umlGeneralization.setGeneral(umlSuperType);
+				umlGeneralization.setGeneral(umlSuperTypeProxy);
 				umlClassifier.getGeneralizations().add(umlGeneralization);
 			} else {
 				if (Activator.getLogger().isLoggable(Level.FINE)) {
@@ -73,12 +84,12 @@ public class TypeToClass extends JavaToUML<TypeDeclaration, Package, Class> {
 					Type javaInterfaceType = (Type) javaInterface;
 					ITypeBinding umlInterfaceBinding = javaInterfaceType.resolveBinding();
 	
-					Interface umlInterface = trafo.resolveBinding(umlInterfaceBinding, umlPackage.getInterface());
+					Interface umlInterfaceProxy = trafo.resolveBindingProxy(umlInterfaceBinding, umlPackage.getInterface());
 					
-					if (umlInterface != null) {
+					if (umlInterfaceProxy != null) {
 						InterfaceRealization umlInterfaceRealization = umlFactory.createInterfaceRealization();
 						umlInterfaceRealization.setName(umlInterfaceBinding.getName());
-						umlInterfaceRealization.setContract(umlInterface);
+						umlInterfaceRealization.setContract(umlInterfaceProxy);
 						umlInterfaceRealization.setImplementingClassifier(umlClass);
 						umlClass.getInterfaceRealizations().add(umlInterfaceRealization);
 					} else {

@@ -1,6 +1,7 @@
 package org.sidiff.reverseengineering.java;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -8,6 +9,7 @@ import java.util.Set;
 import java.util.function.Supplier;
 import java.util.logging.ConsoleHandler;
 import java.util.logging.Level;
+import java.util.stream.Collectors;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IWorkspace;
@@ -71,7 +73,12 @@ public class ReverseEngineeringApp implements IApplication {
 
 		// Application Settings:
 		URI baseURI = URI.createFileURI("C:\\Users\\manue\\git\\repairvision\\plugins.research\\org.sidiff.reverseengineering.java\\test");
-		Set<String> workspaceProjects = new HashSet<>(Arrays.asList(new String[] { "Test" }));
+		
+		boolean parseMethodBodies = false;
+		
+		Set<String> workspaceProjectsFilter = new HashSet<>(Arrays.asList(new String[] { "org.eclipse.jdt.core.tests.builder" }));
+		Set<IProject> workspaceProjects = getAllWorkspaceProjects(workspaceProjectsFilter); // getProject("Test");
+		Set<String> workspaceProjectNames = getProjectName(workspaceProjects);
 		
 		JavaParser javaParser = new JavaParser();
 		EMFHelper emfHelper = new EMFHelper();
@@ -87,36 +94,34 @@ public class ReverseEngineeringApp implements IApplication {
 		URI libraryModelURI = baseURI.appendSegment("Libraries").appendFileExtension("uml");
     	XMLResource libraryModelResource = (XMLResource) resourceSet.createResource(libraryModelURI);
     	JavaASTLibraryModel libraryModel = new JavaASTLibraryModelUML(libraryModelResource, bindingTranslator, javaToUMLHelper);
-    	
-    	Supplier<JavaASTTransformation> javaAST2Model = () -> new JavaASTTransformationUML(new JavaToUMLRules(javaToUMLHelper));
-    	JavaASTBindingResolver modelBindings = new JavaASTBindingResolverUML(workspaceProjects, bindingTranslator, new HashMap<>(), libraryModel);
 
-		// Get all projects in the workspace
-		IWorkspace workspace = ResourcesPlugin.getWorkspace();
-		IWorkspaceRoot root = workspace.getRoot();
-		IProject[] projects = root.getProjects();
+		for (IProject project : workspaceProjects) {
+			
+			// Store bindings per project to avoid "overwhelming" the binding map, lead to bad performance:
+			Supplier<JavaASTTransformation> javaAST2Model = () -> new JavaASTTransformationUML(new JavaToUMLRules(javaToUMLHelper));
+			JavaASTBindingResolver modelBindings = new JavaASTBindingResolverUML(workspaceProjectNames, bindingTranslator, new HashMap<>(), libraryModel);
+			
+			URI projectModelURI = baseURI.appendSegment(project.getName())
+					.appendSegment(project.getName()).appendFileExtension("uml");
+			XMLResource projectModelResource = (XMLResource) resourceSet.createResource(projectModelURI);
+			JavaASTProjectModel projectModel = new JavaASTProjectModelUML(projectModelResource);
 
-		for (IProject project : projects) {
-			try {
-				if (workspaceProjects.contains(project.getName())) {
-					if (WorkspaceUtil.isJavaProject(project)) {
-						URI projectModelURI = baseURI.appendSegment(project.getName())
-								.appendSegment(project.getName()).appendFileExtension("uml");
-				    	XMLResource projectModelResource = (XMLResource) resourceSet.createResource(projectModelURI);
-						JavaASTProjectModel projectModel = new JavaASTProjectModelUML(projectModelResource);
-						
-						/* start model generation */
-						generateModel(baseURI, workspaceProjects, project, resourceSet, 
-								javaParser, emfHelper,javaAST2Model, modelBindings,
-								workspaceModel, libraryModel, projectModel);
-						
-						// Save project model:
-						projectModel.save();
-					}
-				}
-			} catch (CoreException e) {
-				e.printStackTrace();
-			}
+			/* start model generation */
+			generateModel(baseURI, 
+					workspaceProjectNames, 
+					project, 
+					resourceSet, 
+					javaParser,
+					emfHelper,
+					javaAST2Model, 
+					modelBindings, 
+					workspaceModel, 
+					libraryModel, 
+					projectModel,
+					parseMethodBodies);
+
+			// Save project model:
+			projectModel.save();
 		}
 		
 		// Save main workspace and common library model:
@@ -130,16 +135,62 @@ public class ReverseEngineeringApp implements IApplication {
     	System.out.println("FINISHED!");
 		return IApplication.EXIT_OK;
 	}
+	
+	public Set<String> getProjectName(Set<IProject> projects) {
+		return projects.stream().map(IProject::getName).collect(Collectors.toSet());
+	}
+	
+	public Set<IProject> getProject(String name) {
+		IWorkspace workspace = ResourcesPlugin.getWorkspace();
+		IWorkspaceRoot root = workspace.getRoot();
+		IProject project = root.getProject(name);
+		return Collections.singleton(project);
+	}
+
+	public Set<IProject> getAllWorkspaceProjects(Set<String> workspaceProjectsFilter) {
+		Set<IProject> workspaceProjects = new HashSet<>();
+		
+		// Get all projects in the workspace
+		IWorkspace workspace = ResourcesPlugin.getWorkspace();
+		IWorkspaceRoot root = workspace.getRoot();
+		IProject[] projects = root.getProjects();
+		
+		for (IProject project : projects) {
+			try {
+				if (!workspaceProjectsFilter.contains(project.getName())) {
+					if (WorkspaceUtil.isJavaProject(project)) {
+						workspaceProjects.add(project);
+					}
+				}
+			} catch (CoreException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return workspaceProjects;
+	}
 
 	@Override
 	public void stop() {
 	}
 	
-	private void generateModel(URI baseURI, Set<String> workspaceProjects, IProject project, ResourceSet resourceSet,
-			JavaParser javaParser, EMFHelper emfHelper, Supplier<JavaASTTransformation> javaAST2Model, JavaASTBindingResolver modelBindings,
-			JavaASTWorkspaceModel workspaceModel, JavaASTLibraryModel libraryModel, JavaASTProjectModel projectModel) throws JavaModelException {
+	private void generateModel(URI baseURI, 
+			Set<String> workspaceProjects, 
+			IProject project, 
+			ResourceSet resourceSet,
+			JavaParser javaParser, 
+			EMFHelper emfHelper, 
+			Supplier<JavaASTTransformation> javaAST2Model,
+			JavaASTBindingResolver modelBindings, 
+			JavaASTWorkspaceModel workspaceModel,
+			JavaASTLibraryModel libraryModel, 
+			JavaASTProjectModel projectModel, 
+			boolean parseMethodBodies)
+			throws JavaModelException {
 
-		Map<ICompilationUnit, CompilationUnit> parsedASTs = javaParser.parse(project, true);
+		System.out.print("Parsing...");
+		Map<ICompilationUnit, CompilationUnit> parsedASTs = javaParser.parse(project, parseMethodBodies);
+		System.out.println("Finished");
 
     	ResourceSet resourceSetOld = new ResourceSetImpl();
     	

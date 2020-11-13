@@ -60,9 +60,7 @@ public class JavaASTBindingResolverUML extends JavaASTBindingResolver {
 		case IBinding.TYPE:
 			ITypeBinding typeBinding = (ITypeBinding) binding;
 			
-			if (typeBinding.isAnnotation()) { // is also interface
-				concreteSubClass = UMLPackage.eINSTANCE.getComment();
-			} else if (typeBinding.isEnum()) {
+			if (typeBinding.isEnum()) {
 				concreteSubClass = UMLPackage.eINSTANCE.getEnumeration();
 			} else if (typeBinding.isInterface()) {
 				concreteSubClass = UMLPackage.eINSTANCE.getInterface();

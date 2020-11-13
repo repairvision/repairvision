@@ -11,6 +11,8 @@ public class JavaToUMLRules {
 	
 	public JavaToUMLHelper javaToUMLHelper;
 	
+	// Class Diagram:
+	
 	public EnumToEnumeration enumToEnumeration;
 	
 	public EnumToEnumerationInner enumToEnumerationInner;
@@ -31,6 +33,12 @@ public class JavaToUMLRules {
 	
 	public VariableToParameter variableToParameter;
 	
+	// Method body -> Activity Diagram:
+	
+	public BodyBlockToFunctionBehavior blockToFunctionBehavior;
+	
+	public MethodInvocationToCallOperationAction methodInvocationToCallOperationAction;
+	
 	public JavaToUMLRules(JavaToUMLHelper javaToUMLHelper) {
 		this.javaToUMLHelper = javaToUMLHelper;
 		
@@ -46,6 +54,9 @@ public class JavaToUMLRules {
 		this.fieldToProperty = add(new FieldToProperty());
 		this.methodToOperation = add(new MethodToOperation());
 		this.variableToParameter = add(new VariableToParameter());
+		
+		this.blockToFunctionBehavior = add(new BodyBlockToFunctionBehavior());
+		this.methodInvocationToCallOperationAction = add(new MethodInvocationToCallOperationAction());
 	}
 	
 	protected <T extends JavaToUML<?, ?, ?>> T add(T transformation) {
@@ -54,7 +65,7 @@ public class JavaToUMLRules {
 	}
 
 	public void init(JavaASTTransformationUML trafo) {
-		javaToUMLHelper.init(trafo);
+		javaToUMLHelper.init(trafo, this);
 		
 		for (JavaToUML<?, ?, ?> javaToUML : transformations) {
 			javaToUML.init(trafo, this);
