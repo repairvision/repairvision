@@ -89,11 +89,11 @@ public class ReverseEngineeringApp implements IApplication {
 		ResourceSet resourceSet = new ResourceSetImpl();
 		
 		URI workspaceModelURI = baseURI.appendSegment("System").appendFileExtension("uml");
-    	XMLResource workspaceModelResource = (XMLResource) resourceSet.createResource(workspaceModelURI);
+    	XMLResource workspaceModelResource = emfHelper.initializeResource(resourceSet, workspaceModelURI);
     	JavaASTWorkspaceModel workspaceModel = new JavaASTWorkspaceModelUML(workspaceModelResource, "System");
 		
 		URI libraryModelURI = baseURI.appendSegment("Libraries").appendFileExtension("uml");
-    	XMLResource libraryModelResource = (XMLResource) resourceSet.createResource(libraryModelURI);
+    	XMLResource libraryModelResource = emfHelper.initializeResource(resourceSet, libraryModelURI);
     	JavaASTLibraryModel libraryModel = new JavaASTLibraryModelUML(libraryModelResource, bindingTranslator, javaToUMLHelper);
 
 		for (IProject project : workspaceProjects) {
@@ -215,7 +215,7 @@ public class ReverseEngineeringApp implements IApplication {
     		URI modelURI = transformation.getModelURI(baseURI);
     		XMLResource resourceOld = null; // for reuse of XMI object IDs
     		
-    		if (resourceSet.getURIConverter().exists(modelURI, null)) {
+    		if (emfHelper.resourceExists(resourceSet, modelURI)) {
     			resourceOld = (XMLResource) resourceSetOld.getResource(modelURI, true);
     		}
     		

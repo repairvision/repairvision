@@ -40,6 +40,29 @@ public class EMFHelper {
 
 		return URI.createPlatformResourceURI(platformPath, true);
 	}
+	
+	/**
+	 * @param resourceSet The resource set for loading the model.
+	 * @param modelURI    The URI to be tested.
+	 * @return <code>true</code> if the resource exists physically or in the
+	 *         resource set; <code>false</code> otherwise.
+	 */
+	public boolean resourceExists(ResourceSet resourceSet, URI modelURI) {
+		return resourceSet.getURIConverter().exists(modelURI, null);
+	}
+	
+	/**
+	 * @param resourceSet The resource set for loading the model.
+	 * @param modelURI    The URI to be tested.
+	 * @return The loaded or new resource.
+	 */
+	public XMLResource initializeResource(ResourceSet resourceSet, URI modelURI) {
+		if (resourceExists(resourceSet, modelURI)) {
+			return (XMLResource) resourceSet.getResource(modelURI, true);
+		} else {
+			return (XMLResource) resourceSet.createResource(modelURI);
+		}
+	}
 
 	/**
 	 * Save a model with the Java binding keys as object IDs.
