@@ -1,6 +1,5 @@
 package org.sidiff.reverseengineering.java;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -66,9 +65,10 @@ public class ReverseEngineeringApp implements IApplication {
 	public Object start(IApplicationContext context) throws Exception {
 		
 		// Logging:
-		Activator.getLogger().setLevel(Level.FINE);
+		Level logLevel = Level.FINE;
+		Activator.getLogger().setLevel(logLevel);
 		ConsoleHandler consolHandler = new ConsoleHandler();
-		consolHandler.setLevel(Level.FINE);
+		consolHandler.setLevel(logLevel);
 		Activator.getLogger().addHandler(consolHandler);
 
 		// Application Settings:
@@ -76,8 +76,9 @@ public class ReverseEngineeringApp implements IApplication {
 		
 		boolean parseMethodBodies = false;
 		
-		Set<String> workspaceProjectsFilter = new HashSet<>(Arrays.asList(new String[] { "org.eclipse.jdt.core.tests.builder" }));
-		Set<IProject> workspaceProjects = getAllWorkspaceProjects(workspaceProjectsFilter); // getProject("Test");
+//		Set<String> workspaceProjectsFilter = new HashSet<>(Arrays.asList(new String[] { "org.eclipse.jdt.core.tests.builder" }));
+//		Set<IProject> workspaceProjects = getAllWorkspaceProjects(workspaceProjectsFilter);
+		Set<IProject> workspaceProjects = getProject("Test");
 		Set<String> workspaceProjectNames = getProjectName(workspaceProjects);
 		
 		JavaParser javaParser = new JavaParser();

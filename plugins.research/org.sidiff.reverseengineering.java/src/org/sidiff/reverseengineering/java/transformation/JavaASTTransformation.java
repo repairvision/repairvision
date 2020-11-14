@@ -87,7 +87,15 @@ public abstract class JavaASTTransformation extends ASTVisitor {
 	 *         resolved/loaded yet! So do NOT access informations of this object!
 	 */
 	public <E extends EObject> E resolveBindingProxy(IBinding binding, EClass isTypeOf) throws ClassNotFoundException {
-		return bindings.resolveBindingProxy(astResourceFolder, binding, isTypeOf);
+		E bindingProxy = bindings.resolveBindingProxy(astResourceFolder, binding, isTypeOf);
+
+		if (Activator.getLogger().isLoggable(Level.FINER)) {
+			if ((isTypeOf == bindingProxy.eClass()) || isTypeOf.getEAllSuperTypes().contains(bindingProxy.eClass())) {
+				Activator.getLogger().log(Level.FINER, "Binding type mismatch:\n" + binding + "\n" + bindingProxy + "\n" + isTypeOf);
+			}
+		}
+
+		return bindingProxy;
 	}
 
 	/**
@@ -96,42 +104,54 @@ public abstract class JavaASTTransformation extends ASTVisitor {
 	 * @param rootModelElement A model element (or main element of model fragment).
 	 */
 	public void createRootModelElement(ASTNode astNode, EObject rootModelElement) {
-		assert (astNode != null);
-		
-		// Trace generated element:
-		javaToModelTrace.put(astNode, rootModelElement);
-		
-		// Trace binding key for cross AST resolution:
-		IBinding binding = bindings.getBinding(astNode);
-		
-		if (binding != null) {
-			bindings.bind(projectName, binding, rootModelElement);
+
+		if ((astNode != null) && (rootModelElement != null)) {
+
+			// Trace generated element:
+			javaToModelTrace.put(astNode, rootModelElement);
+
+			// Trace binding key for cross AST resolution:
+			IBinding binding = bindings.getBinding(astNode);
+
+			if (binding != null) {
+				bindings.bind(projectName, binding, rootModelElement);
+			}
+
+			// Log creation of root model element:
+			rootModelElements.add(rootModelElement);
+		} else {
+			if (Activator.getLogger().isLoggable(Level.FINE)) {
+				Activator.getLogger().log(Level.FINE, "Tace with null-element:\n" + astNode + "\n" + rootModelElement);
+			}
 		}
-		
-		// Log creation of root model element:
-		rootModelElements.add(rootModelElement);
 	}
-	
+
 	/**
 	 * Traces a main model element in this transformation and creates a binding.
 	 * 
 	 * @param modelElement A model element.
 	 */
 	public void createModelElement(ASTNode astNode, EObject modelElement) {
-		assert (astNode != null);
 		
-		// Trace generated element:
-		javaToModelTrace.put(astNode, modelElement);
-		
-		// Trace binding key for cross AST resolution:
-		IBinding binding = bindings.getBinding(astNode);
-		
-		if (binding != null) {
-			bindings.bind(projectName, binding, modelElement);
+		if ((astNode != null) && (modelElement != null)) {
+			
+			// Trace generated element:
+			javaToModelTrace.put(astNode, modelElement);
+			
+			// Trace binding key for cross AST resolution:
+			IBinding binding = bindings.getBinding(astNode);
+			
+			if (binding != null) {
+				bindings.bind(projectName, binding, modelElement);
+			} else {
+				if (Activator.getLogger().isLoggable(Level.FINE)) {
+					Activator.getLogger().log(Level.FINE, "No binding found for: " 
+							+ astNode.getClass() + "\n" + modelElement + "\n" + astNode);
+				}
+			}
 		} else {
 			if (Activator.getLogger().isLoggable(Level.FINE)) {
-				Activator.getLogger().log(Level.FINE, "No binding found for: " 
-						+ astNode.getClass() + "\n" + modelElement + "\n" + astNode);
+				Activator.getLogger().log(Level.FINE, "Tace with null-element:\n" + astNode + "\n" + modelElement);
 			}
 		}
 	}

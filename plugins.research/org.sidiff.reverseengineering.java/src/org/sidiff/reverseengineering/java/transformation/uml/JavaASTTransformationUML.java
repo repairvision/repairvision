@@ -7,6 +7,7 @@ import org.eclipse.jdt.core.dom.FieldDeclaration;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.eclipse.jdt.core.dom.SingleVariableDeclaration;
 import org.eclipse.jdt.core.dom.TypeDeclaration;
+import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
 import org.eclipse.uml2.uml.Class;
 import org.eclipse.uml2.uml.Classifier;
 import org.eclipse.uml2.uml.Enumeration;
@@ -129,12 +130,17 @@ public class JavaASTTransformationUML extends JavaASTTransformation {
 				}
 				
 				// properties:
-				for (FieldDeclaration field : typeDeclaration.getFields()) {
-					Property umlProperty = getModelElement(field);
+				for (FieldDeclaration fieldDeclaration : typeDeclaration.getFields()) {
 
-					// FIXME: public int currentRepetition, maxRepetition;
-					if (umlProperty != null) {
-						rules.fieldToProperty.apply(umlClassifier, umlProperty);
+					// For example: public String a1, a2, a3;
+					for (Object fieldDeclarationFragment : fieldDeclaration.fragments()) {
+						if (fieldDeclarationFragment instanceof VariableDeclarationFragment) {
+							Property umlProperty = getModelElement((VariableDeclarationFragment) fieldDeclarationFragment);
+							
+							if (umlProperty != null) {
+								rules.fieldToProperty.apply(umlClassifier, umlProperty);
+							}
+						}
 					}
 				}
 				
@@ -182,13 +188,24 @@ public class JavaASTTransformationUML extends JavaASTTransformation {
 	@Override
 	public boolean visit(FieldDeclaration fieldDeclaration) {
 		if (!linker) {
-			rules.fieldToProperty.apply(fieldDeclaration);
+			
+			// For example: public String a1, a2, a3;
+			for (Object fieldDeclarationFragment : fieldDeclaration.fragments()) {
+				if (fieldDeclarationFragment instanceof VariableDeclarationFragment) {
+					rules.fieldToProperty.apply((VariableDeclarationFragment) fieldDeclarationFragment);
+				}
+			}
 		} else {
 			Property umlProperty = getModelElement(fieldDeclaration);
 			
 			if (umlProperty != null) {
 				try {
-					rules.fieldToProperty.link(fieldDeclaration, umlProperty);
+					// For example: public String a1, a2, a3;
+					for (Object fieldDeclarationFragment : fieldDeclaration.fragments()) {
+						if (fieldDeclarationFragment instanceof VariableDeclarationFragment) {
+							rules.fieldToProperty.link((VariableDeclarationFragment) fieldDeclarationFragment, umlProperty);
+						}
+					}
 				} catch (ClassNotFoundException e) {
 					e.printStackTrace();
 				}
