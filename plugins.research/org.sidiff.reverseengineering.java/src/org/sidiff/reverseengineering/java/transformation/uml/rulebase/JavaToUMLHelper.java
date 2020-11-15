@@ -340,16 +340,18 @@ public class JavaToUMLHelper {
 					
 					try {
 						if ((enumerationTypeBinding != null) && (enumerationLiteralBinding != null)) {
-							EObject enumerationType = trafo.resolveBindingProxy(enumerationTypeBinding, umlPackage.getEnumeration());
-							
-							if (enumerationType instanceof Enumeration) {
-								EObject enumerationLiteral = trafo.resolveBindingProxy(enumerationLiteralBinding, umlPackage.getEnumerationLiteral());
-
-								if (enumerationLiteral instanceof EnumerationLiteral) {
-									InstanceValue instanceValue = umlFactory.createInstanceValue();
-									instanceValue.setType((Enumeration) enumerationType);
-									instanceValue.setInstance((EnumerationLiteral) enumerationLiteral);
-									return instanceValue;
+							if ((enumerationTypeBinding instanceof ITypeBinding) && ((ITypeBinding) enumerationTypeBinding).isEnum()) {
+								EObject enumerationType = trafo.resolveBindingProxy(enumerationTypeBinding, umlPackage.getEnumeration());
+								
+								if (enumerationType instanceof Enumeration) {
+									EObject enumerationLiteral = trafo.resolveBindingProxy(enumerationLiteralBinding, umlPackage.getEnumerationLiteral());
+									
+									if (enumerationLiteral instanceof EnumerationLiteral) {
+										InstanceValue instanceValue = umlFactory.createInstanceValue();
+										instanceValue.setType((Enumeration) enumerationType);
+										instanceValue.setInstance((EnumerationLiteral) enumerationLiteral);
+										return instanceValue;
+									}
 								}
 							}
 						} else {
