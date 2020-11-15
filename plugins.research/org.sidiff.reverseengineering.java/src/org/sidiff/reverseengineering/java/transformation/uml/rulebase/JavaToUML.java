@@ -1,4 +1,4 @@
-package org.sidiff.reverseengineering.java.transformation.uml.rules;
+package org.sidiff.reverseengineering.java.transformation.uml.rulebase;
 
 import java.util.HashMap;
 import java.util.Map;

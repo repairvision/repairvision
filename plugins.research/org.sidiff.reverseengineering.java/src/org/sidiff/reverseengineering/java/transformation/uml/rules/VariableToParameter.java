@@ -3,6 +3,7 @@ package org.sidiff.reverseengineering.java.transformation.uml.rules;
 import org.eclipse.jdt.core.dom.SingleVariableDeclaration;
 import org.eclipse.uml2.uml.Operation;
 import org.eclipse.uml2.uml.Parameter;
+import org.sidiff.reverseengineering.java.transformation.uml.rulebase.JavaToUML;
 
 public class VariableToParameter extends JavaToUML<SingleVariableDeclaration, Operation, Parameter> {
 

@@ -2,6 +2,7 @@ package org.sidiff.reverseengineering.java.transformation.uml.rules;
 
 import org.eclipse.jdt.core.dom.EnumDeclaration;
 import org.eclipse.uml2.uml.Enumeration;
+import org.sidiff.reverseengineering.java.transformation.uml.rulebase.JavaToUML;
 
 public class EnumToEnumeration extends JavaToUML<EnumDeclaration, Package, Enumeration> {
 

@@ -78,7 +78,7 @@ public class JavaParser {
 		parser.setKind(ASTParser.K_COMPILATION_UNIT);
 		parser.setSource(source);
 		parser.setResolveBindings(true);
-		parser.setBindingsRecovery(true); // generates full qualified binding also for none resolvable/missing types
+		parser.setBindingsRecovery(true); // generates binding also for none resolvable/missing types
 		parser.setIgnoreMethodBodies(parseMethodBodies);
 		CompilationUnit ast = (CompilationUnit) parser.createAST(null);
 
@@ -105,7 +105,7 @@ public class JavaParser {
 		parser.setKind(ASTParser.K_COMPILATION_UNIT);
 		parser.setProject(project);
 		parser.setResolveBindings(true);
-		parser.setBindingsRecovery(true); // generates full qualified binding also for none resolvable/missing types
+		parser.setBindingsRecovery(true); // generates binding also for none resolvable/missing types
 		parser.setIgnoreMethodBodies(!parseMethodBodies);
 
 		Map<ICompilationUnit, CompilationUnit> asts = new LinkedHashMap<>();

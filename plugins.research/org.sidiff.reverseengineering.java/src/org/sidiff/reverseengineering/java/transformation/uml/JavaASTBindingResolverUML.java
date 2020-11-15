@@ -5,6 +5,7 @@ import java.util.Set;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.IBinding;
 import org.eclipse.jdt.core.dom.ITypeBinding;
 import org.eclipse.jdt.core.dom.IVariableBinding;
@@ -21,6 +22,8 @@ import org.sidiff.reverseengineering.java.transformation.JavaASTBindingTranslato
 public class JavaASTBindingResolverUML extends JavaASTBindingResolver {
 
 	/**
+	 * @param compilationUnit    The corresponding compilation unit.
+	 * @param libraryModel       The common model manager.
 	 * @param workspaceProjects The local projects in the workspace that will be
 	 *                          transformed to corresponding models. Otherwise, a
 	 *                          project will be considered as external projects.
@@ -28,13 +31,11 @@ public class JavaASTBindingResolverUML extends JavaASTBindingResolver {
 	 *                          fragments.
 	 * @param bindingTranslator Creates model object IDs.
 	 * @param bindings          The initial bindings, e.g., common model elements.
-	 * @param commonModel       The common model manager.
 	 */
-	public JavaASTBindingResolverUML(Set<String> workspaceProjects, 
-			JavaASTBindingTranslator bindingTranslator, Map<String, EObject> bindings, 
-			JavaASTLibraryModel commonModel) {
+	public JavaASTBindingResolverUML(CompilationUnit compilationUnit, JavaASTLibraryModel libraryModel,
+			Set<String> workspaceProjects, JavaASTBindingTranslator bindingTranslator, Map<String, EObject> bindings) {
 		
-		super(workspaceProjects, "uml", bindingTranslator, bindings, commonModel);
+		super(compilationUnit, libraryModel, workspaceProjects, "uml", bindingTranslator, bindings);
 	}
 
 	@Override

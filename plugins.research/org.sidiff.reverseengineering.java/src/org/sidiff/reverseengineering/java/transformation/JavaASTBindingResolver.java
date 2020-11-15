@@ -1,9 +1,12 @@
 package org.sidiff.reverseengineering.java.transformation;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Map;
 import java.util.Set;
 import java.util.logging.Level;
 
+import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
@@ -13,9 +16,11 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.BasicEObjectImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.core.IJavaElement;
+import org.eclipse.jdt.core.IPackageFragment;
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.AbstractTypeDeclaration;
 import org.eclipse.jdt.core.dom.Annotation;
+import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.EnumConstantDeclaration;
 import org.eclipse.jdt.core.dom.FieldDeclaration;
 import org.eclipse.jdt.core.dom.IBinding;
@@ -26,6 +31,7 @@ import org.eclipse.jdt.core.dom.Type;
 import org.eclipse.jdt.core.dom.VariableDeclaration;
 import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
 import org.sidiff.reverseengineering.java.Activator;
+import org.sidiff.reverseengineering.java.util.BindingRecovery;
 import org.sidiff.reverseengineering.java.util.JavaASTUtil;
 
 /**
@@ -34,7 +40,7 @@ import org.sidiff.reverseengineering.java.util.JavaASTUtil;
  * @author Manuel Ohrndorf
  */
 public class JavaASTBindingResolver {
-
+	
 	/**
 	 * The local projects in the workspace that will be transformed to corresponding
 	 * models. Otherwise, a project will be considered as external projects.
@@ -63,6 +69,13 @@ public class JavaASTBindingResolver {
 	private JavaASTLibraryModel libraryModel;
 	
 	/**
+	 * Helper to handle unresolved, recovered binding.
+	 */
+	private BindingRecovery bindingRecovery;
+	
+	/**
+	 * @param compilationUnit    The corresponding compilation unit.
+	 * @param libraryModel       The common model manager.
 	 * @param workspaceProjects  The local projects in the workspace that will be
 	 *                           transformed to corresponding models. Otherwise, a
 	 *                           project will be considered as external projects.
@@ -70,17 +83,17 @@ public class JavaASTBindingResolver {
 	 *                           fragments.
 	 * @param modelFileExtension The file extension of the modeling domain.
 	 * @param bindings           The initial bindings, e.g., common model elements.
-	 * @param libraryModel        The common model manager.
 	 */
-	public JavaASTBindingResolver(Set<String> workspaceProjects, String modelFileExtension,
-			JavaASTBindingTranslator bindingTranslator, Map<String, EObject> bindings,
-			JavaASTLibraryModel libraryModel) {
+	public JavaASTBindingResolver(CompilationUnit compilationUnit, JavaASTLibraryModel libraryModel,
+			Set<String> workspaceProjects, String modelFileExtension,
+			JavaASTBindingTranslator bindingTranslator, Map<String, EObject> bindings) {
 		
+		this.libraryModel = libraryModel;
 		this.workspaceProjects = workspaceProjects;
 		this.modelFileExtension = modelFileExtension;
 		this.bindingTranslator = bindingTranslator;
 		this.bindings = bindings;
-		this.libraryModel = libraryModel;
+		this.bindingRecovery = new BindingRecovery(compilationUnit);
 	}
 	
 	/**
@@ -105,15 +118,20 @@ public class JavaASTBindingResolver {
 	 * @throws ClassNotFoundException
 	 */
 	@SuppressWarnings("unchecked")
-	public <E extends EObject> E resolveBindingProxy(IPath localPath, IBinding binding, EClass isTypeOf) 
+	public <E extends EObject> E resolveBindingProxy(String[] localPath, IBinding binding, EClass isTypeOf) 
 			throws ClassNotFoundException {
 		
-		if (JavaASTUtil.isPrimitiveType(binding)) {
+   		if (JavaASTUtil.isPrimitiveType(binding)) {
 			return libraryModel.getPrimitiveType(binding);
 		} else {
 			IJavaElement javaElement = binding.getJavaElement();
 			
-			if (javaElement != null) {
+			if (binding.isRecovered()) {
+				
+				// External common model element:
+				return libraryModel.getLibraryModelElement(binding, isTypeOf, bindingRecovery);
+				
+			} else if (javaElement != null) {
 				String projectName = javaElement.getJavaProject().getProject().getName();
 				String uniqueBindingKey = bindingTranslator.getBindingKey(projectName, binding);
 				
@@ -123,13 +141,29 @@ public class JavaASTBindingResolver {
 				if (existingBinding != null) {
 					return (E) existingBinding;
 				} else {
-					// Create new workspace proxy binding or common external binding:
-					IPath externalPath = javaElement.getPath();
-					return (E) createExternalBinding(projectName, binding, externalPath, localPath, isTypeOf);
+					if (workspaceProjects.contains(projectName) && isInWorkspace(binding)) {
+						
+						// Create new workspace proxy binding or common external binding:
+						String[] externalPath = getModelPath(projectName, javaElement);
+						URI externalBindingURI = getExternalURI(projectName, binding, externalPath, localPath);
+						uniqueBindingKey = externalBindingURI.fragment();
+						EObject newExternalModelElement = createExternalProxy(externalBindingURI, binding, isTypeOf);
+
+						// Trace the new binding:
+						if ((newExternalModelElement != null) && (newExternalModelElement != null)) {
+							bindings.put(uniqueBindingKey, newExternalModelElement);
+						}
+						
+						return (E) newExternalModelElement;
+					} else {
+						
+						// External common model element:
+						return libraryModel.getLibraryModelElement(binding, isTypeOf, bindingRecovery);
+					}
 				}
 			} else {
 				if (Activator.getLogger().isLoggable(Level.FINE)) {
-					Activator.getLogger().log(Level.FINE, "Can not resolve: " + binding);
+					Activator.getLogger().log(Level.FINE, "Can not resolve: " + binding.getKey());
 				}
 			}
 		}
@@ -137,47 +171,46 @@ public class JavaASTBindingResolver {
 		return null;
 	}
 
-	/**
-	 * @param externalProjectName The name of the external project containing the
-	 * @param externalBinding     The Java AST binding.
-	 * @param externalPath        The path to the external model.
-	 * @param localPath           The local path of the current model.
-	 * @param isTypeOfThe         The minimal type of the external model element.
-	 * @return The external model element (common or proxy) for the given binding.
-	 * @throws ClassNotFoundException
-	 */
-	protected EObject createExternalBinding(
-			String externalProjectName, IBinding externalBinding, 
-			IPath externalPath, IPath localPath, EClass isTypeOf) 
-					throws ClassNotFoundException {
+	public String[] getModelPath(String projectName, IJavaElement javaElement) {
+		String[] packages = getPackageName(javaElement).split("\\.");
+		String[] modelPath = new String[packages.length + 2];
+		modelPath[0] = projectName;
 		
-		if (workspaceProjects.contains(externalProjectName) && isInWorkspace(externalBinding)) {
-			
-			// External workspace model element:
-			URI externalBindingURI = getExternalURI(externalProjectName, externalBinding, externalPath, localPath);
-			String uniqueBindingKey = externalBindingURI.fragment();
-			EObject newExternalModelElement = createExternalProxy(externalBindingURI, externalBinding, isTypeOf);
+		for (int i = 0; i < packages.length; i++) {
+			modelPath[i + 1] = packages[i];
+		}
+		
+		modelPath[modelPath.length - 1] =  getModelName(javaElement.getPath()).lastSegment();
+		return modelPath;
+	}
 
-			// Trace the new binding:
-			if ((newExternalModelElement != null) && (newExternalModelElement != null)) {
-				bindings.put(uniqueBindingKey, newExternalModelElement);
-			}
-			
-			return newExternalModelElement;
+	protected String getPackageName(IJavaElement javaElement) {
+		while ((javaElement != null) && !(javaElement instanceof IPackageFragment)) {
+			javaElement = javaElement.getParent();
+		}
+		
+		if (javaElement != null) {
+			return ((IPackageFragment) javaElement).getElementName();
 		} else {
-			
-			// External common model element:
-			return libraryModel.getLibraryModelElement(externalBinding, isTypeOf);
+			return "default";
 		}
 	}
-	
+
 	/**
 	 * @param externalBinding A Java binding.
 	 * @return <code>true</code> if it is a source file in the workspace;
 	 *         <code>false</code> if it is, e.g., a Java source of the JDT.
 	 */
 	protected boolean isInWorkspace(IBinding externalBinding) {
-		return externalBinding.getJavaElement().getResource() != null;
+		IResource resource = externalBinding.getJavaElement().getResource();
+		
+		if (resource != null) {
+			if (resource.getFileExtension().equalsIgnoreCase("java")) {
+				return true;
+			}
+		}
+		
+		return false;
 	}
 
 	/**
@@ -203,9 +236,14 @@ public class JavaASTBindingResolver {
 	 * @param localPath           The local path of the current model.
 	 * @return The URI to the external model.
 	 */
-	protected URI getExternalURI(String externalProjectName, IBinding externalBinding, IPath externalPath, IPath localPath) {
-		IPath relativePath = getModelPath(externalPath.makeRelativeTo(localPath));
-		URI modelURI = URI.createURI(relativePath.toString(), true);
+	protected URI getExternalURI(String externalProjectName, IBinding externalBinding, String[] externalPath, String[] localPath) {
+		Path relativePath = Paths.get("", localPath).getParent().relativize(Paths.get("", externalPath));
+		URI modelURI = URI.createURI("", true);
+		
+		for (Path path : relativePath) {
+			modelURI = modelURI.appendSegment(path.toString());
+		}
+		
 		return getURI(modelURI, externalProjectName, externalBinding);
 	}
 	
@@ -313,8 +351,8 @@ public class JavaASTBindingResolver {
 	 * @param astPath The path of the Java AST resource.
 	 * @return The path of the corresponding model.
 	 */
-	public IPath getModelPath(IPath astPath) {
-		return astPath.removeFileExtension().addFileExtension(modelFileExtension);
+	public IPath getModelName(IPath javaFile) {
+		return javaFile.removeFileExtension().addFileExtension(modelFileExtension);
 	}
 	
 	/**

@@ -1,6 +1,5 @@
 package org.sidiff.reverseengineering.java.transformation.uml;
 
-import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.EnumConstantDeclaration;
 import org.eclipse.jdt.core.dom.EnumDeclaration;
 import org.eclipse.jdt.core.dom.FieldDeclaration;
@@ -18,7 +17,7 @@ import org.eclipse.uml2.uml.OperationOwner;
 import org.eclipse.uml2.uml.Parameter;
 import org.eclipse.uml2.uml.Property;
 import org.sidiff.reverseengineering.java.transformation.JavaASTTransformation;
-import org.sidiff.reverseengineering.java.transformation.uml.rules.JavaToUMLRules;
+import org.sidiff.reverseengineering.java.transformation.uml.rulebase.JavaToUMLRules;
 
 /**
  * Implementation of a Java AST to a UML model transformation.
@@ -36,15 +35,15 @@ public class JavaASTTransformationUML extends JavaASTTransformation {
 	}
 	
 	@Override
-	public void apply(CompilationUnit javaAST) {
+	public void apply() {
 		this.rules.init(this);
        	
 		// Create model graph nodes:
-    	javaAST.accept(this);
+    	getJavaAST().accept(this);
 		
     	// Create model graph edges:
 		this.linker = true;
-		javaAST.accept(this);
+		getJavaAST().accept(this);
 		
 		// Finalize model graph:
 		// TODO Method invocations
@@ -196,19 +195,19 @@ public class JavaASTTransformationUML extends JavaASTTransformation {
 				}
 			}
 		} else {
-			Property umlProperty = getModelElement(fieldDeclaration);
-			
-			if (umlProperty != null) {
-				try {
-					// For example: public String a1, a2, a3;
-					for (Object fieldDeclarationFragment : fieldDeclaration.fragments()) {
-						if (fieldDeclarationFragment instanceof VariableDeclarationFragment) {
+			try {
+				// For example: public String a1, a2, a3;
+				for (Object fieldDeclarationFragment : fieldDeclaration.fragments()) {
+					if (fieldDeclarationFragment instanceof VariableDeclarationFragment) {
+						Property umlProperty = getModelElement((VariableDeclarationFragment) fieldDeclarationFragment);
+						
+						if (umlProperty != null) {
 							rules.fieldToProperty.link((VariableDeclarationFragment) fieldDeclarationFragment, umlProperty);
 						}
 					}
-				} catch (ClassNotFoundException e) {
-					e.printStackTrace();
 				}
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
 			}
 		}
 		return true;

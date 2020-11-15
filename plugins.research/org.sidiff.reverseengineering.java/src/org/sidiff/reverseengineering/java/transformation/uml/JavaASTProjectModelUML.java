@@ -3,11 +3,12 @@ package org.sidiff.reverseengineering.java.transformation.uml;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.xmi.XMLResource;
-import org.eclipse.jdt.core.IPackageFragment;
+import org.eclipse.jdt.core.dom.IPackageBinding;
 import org.eclipse.uml2.uml.Model;
 import org.eclipse.uml2.uml.Package;
 import org.eclipse.uml2.uml.PackageableElement;
 import org.eclipse.uml2.uml.UMLFactory;
+import org.sidiff.reverseengineering.java.transformation.JavaASTBindingTranslator;
 import org.sidiff.reverseengineering.java.transformation.JavaASTProjectModel;
 
 /**
@@ -18,55 +19,82 @@ import org.sidiff.reverseengineering.java.transformation.JavaASTProjectModel;
 public class JavaASTProjectModelUML extends JavaASTProjectModel {
 	
 	private UMLFactory umlFactory = UMLFactory.eINSTANCE;
+	
+	protected Model projectModelRoot;
+	
+	protected Package defaultPackage;
 
 	/**
-	 * @param projectModel The model representing a Java project
+	 * @param projectModel      The model representing a Java project
+	 * @param bindingTranslator Helper to translate bindings.
 	 */
-	public JavaASTProjectModelUML(XMLResource projectModel) {
-		super(projectModel);
+	public JavaASTProjectModelUML(XMLResource projectModel, JavaASTBindingTranslator bindingTranslator) {
+		super(projectModel, bindingTranslator);
 	}
 	
 	@Override
-	protected EObject createProject(IProject project, EObject childModelElement) {
-		Model umlProjectModel = umlFactory.createModel();
-		umlProjectModel.setName(project.getName());
-		getProjectModel().getContents().add(umlProjectModel);
-		
-		if (childModelElement instanceof PackageableElement) {
-			umlProjectModel.getPackagedElements().add((PackageableElement) childModelElement);
-		}
-		
-		return umlProjectModel;
-	}
-	
-	@Override
-	protected void addToProject(EObject projectModelElement, EObject childModelElement) {
-		if (childModelElement instanceof PackageableElement) {
-			if (projectModelElement instanceof Package) {
-				((Package) projectModelElement).getPackagedElements().add((PackageableElement) childModelElement);
-			}
-		}
-	}
+	public void addPackagedElement(IProject project, IPackageBinding binding, EObject modelElement) {
+		String[] packages = binding.getNameComponents();
+		String bindingKey = null;
+		Package parentPackage = getProjectPackage(project);
+		Package childPackage = null;
 
-	@Override
-	protected EObject createPackage(IPackageFragment parentPackage, EObject childModelElement) {
-		Package umlPackage = umlFactory.createPackage();
-		umlPackage.setName(parentPackage.getElementName());
-		
-		if (childModelElement instanceof PackageableElement) {
-			umlPackage.getPackagedElements().add((PackageableElement) childModelElement);
+		for (String packageName : packages) {
+			if (bindingKey == null) {
+				bindingKey = packageName;
+			} else {
+				bindingKey += "/" + packageName;
+			}
+			
+			if (packageName == packages[packages.length - 1]) {
+				// Bind Java key to inner most package:
+				childPackage = getModelElement(getBindingKey(project, binding.getKey()));
+			} else {
+				childPackage = getModelElement(getBindingKey(project, bindingKey));
+			}
+
+			if (childPackage == null) {
+				childPackage = umlFactory.createPackage();
+				childPackage.setName(packageName);
+				parentPackage.getNestedPackages().add(childPackage);
+				
+				if (packageName == packages[packages.length - 1]) {
+					// Bind Java key to inner most package:
+					bindModelElement(getBindingKey(project, binding.getKey()), childPackage);
+				} else {
+					bindModelElement(getBindingKey(project, bindingKey), childPackage);
+				}
+			}
+
+			parentPackage = childPackage;
 		}
 		
-		return umlPackage;
-	}
-	
-	@Override
-	protected void addToPackage(EObject packageModelElement, EObject childModelElement) {
-		if (childModelElement instanceof PackageableElement) {
-			if (packageModelElement instanceof Package) {
-				((Package) packageModelElement).getPackagedElements().add((PackageableElement) childModelElement);
+		// add model element:
+		if (modelElement instanceof PackageableElement) {
+			if (childPackage != null) {
+				childPackage.getPackagedElements().add((PackageableElement) modelElement);
+			} else {
+				if (defaultPackage == null) {
+					this.defaultPackage = umlFactory.createPackage();
+					this.defaultPackage.setName("default");
+					this.projectModelRoot.getNestedPackages().add(0, defaultPackage);
+					bindModelElement(getBindingKey(project, "default"), defaultPackage);
+				}
+				
+				this.defaultPackage.getPackagedElements().add((PackageableElement) modelElement);
 			}
 		}
+	}
+	
+	protected Package getProjectPackage(IProject project) {
+		if (projectModelRoot == null) {
+			this.projectModelRoot = umlFactory.createModel();
+			projectModelRoot.setName(project.getName());
+			getProjectModel().getContents().add(projectModelRoot);
+			
+			bindModelElement(getBindingKey(project), projectModelRoot);
+		}
+		return projectModelRoot;
 	}
 
 }

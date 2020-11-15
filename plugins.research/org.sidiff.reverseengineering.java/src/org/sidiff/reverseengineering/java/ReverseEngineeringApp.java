@@ -1,10 +1,11 @@
 package org.sidiff.reverseengineering.java;
 
-import java.util.Collections;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.logging.ConsoleHandler;
 import java.util.logging.Level;
@@ -39,8 +40,8 @@ import org.sidiff.reverseengineering.java.transformation.uml.JavaASTLibraryModel
 import org.sidiff.reverseengineering.java.transformation.uml.JavaASTProjectModelUML;
 import org.sidiff.reverseengineering.java.transformation.uml.JavaASTTransformationUML;
 import org.sidiff.reverseengineering.java.transformation.uml.JavaASTWorkspaceModelUML;
-import org.sidiff.reverseengineering.java.transformation.uml.rules.JavaToUMLHelper;
-import org.sidiff.reverseengineering.java.transformation.uml.rules.JavaToUMLRules;
+import org.sidiff.reverseengineering.java.transformation.uml.rulebase.JavaToUMLHelper;
+import org.sidiff.reverseengineering.java.transformation.uml.rulebase.JavaToUMLRules;
 import org.sidiff.reverseengineering.java.util.EMFHelper;
 import org.sidiff.reverseengineering.java.util.JavaParser;
 import org.sidiff.reverseengineering.java.util.WorkspaceUtil;
@@ -75,10 +76,12 @@ public class ReverseEngineeringApp implements IApplication {
 		URI baseURI = URI.createFileURI("C:\\Users\\manue\\git\\repairvision\\plugins.research\\org.sidiff.reverseengineering.java\\test");
 		
 		boolean parseMethodBodies = false;
-		
-//		Set<String> workspaceProjectsFilter = new HashSet<>(Arrays.asList(new String[] { "org.eclipse.jdt.core.tests.builder" }));
-//		Set<IProject> workspaceProjects = getAllWorkspaceProjects(workspaceProjectsFilter);
-		Set<IProject> workspaceProjects = getProject("Test");
+
+		Set<String> workspaceProjectsFilter = new HashSet<>(Arrays.asList(new String[] { "" }));
+		Set<IProject> workspaceProjects = getAllWorkspaceProjects(workspaceProjectsFilter);
+//		workspaceProjects = getProject("org.eclipse.jdt.apt.core");
+//		workspaceProjects.addAll(getProject("Test2"));
+//		workspaceProjects = getProject("org.eclipse.jdt.compiler.apt");
 		Set<String> workspaceProjectNames = getProjectName(workspaceProjects);
 		
 		JavaParser javaParser = new JavaParser();
@@ -96,16 +99,16 @@ public class ReverseEngineeringApp implements IApplication {
     	XMLResource libraryModelResource = emfHelper.initializeResource(resourceSet, libraryModelURI);
     	JavaASTLibraryModel libraryModel = new JavaASTLibraryModelUML(libraryModelResource, bindingTranslator, javaToUMLHelper);
 
+    	// Store bindings relative to each unit:
+    	Function<CompilationUnit, JavaASTBindingResolver> modelBindings = (compilationUnit) -> new JavaASTBindingResolverUML(compilationUnit, libraryModel, workspaceProjectNames, bindingTranslator, new HashMap<>());
+    	Supplier<JavaASTTransformation> javaAST2Model = () -> new JavaASTTransformationUML(new JavaToUMLRules(javaToUMLHelper));
+    	
 		for (IProject project : workspaceProjects) {
-			
-			// Store bindings per project to avoid "overwhelming" the binding map, lead to bad performance:
-			Supplier<JavaASTTransformation> javaAST2Model = () -> new JavaASTTransformationUML(new JavaToUMLRules(javaToUMLHelper));
-			JavaASTBindingResolver modelBindings = new JavaASTBindingResolverUML(workspaceProjectNames, bindingTranslator, new HashMap<>(), libraryModel);
 			
 			URI projectModelURI = baseURI.appendSegment(project.getName())
 					.appendSegment(project.getName()).appendFileExtension("uml");
 			XMLResource projectModelResource = (XMLResource) resourceSet.createResource(projectModelURI);
-			JavaASTProjectModel projectModel = new JavaASTProjectModelUML(projectModelResource);
+			JavaASTProjectModel projectModel = new JavaASTProjectModelUML(projectModelResource, bindingTranslator);
 
 			/* start model generation */
 			generateModel(baseURI, 
@@ -145,7 +148,9 @@ public class ReverseEngineeringApp implements IApplication {
 		IWorkspace workspace = ResourcesPlugin.getWorkspace();
 		IWorkspaceRoot root = workspace.getRoot();
 		IProject project = root.getProject(name);
-		return Collections.singleton(project);
+		Set<IProject> projects = new HashSet<>();
+		projects.add(project);
+		return projects;
 	}
 
 	public Set<IProject> getAllWorkspaceProjects(Set<String> workspaceProjectsFilter) {
@@ -182,7 +187,7 @@ public class ReverseEngineeringApp implements IApplication {
 			JavaParser javaParser, 
 			EMFHelper emfHelper, 
 			Supplier<JavaASTTransformation> javaAST2Model,
-			JavaASTBindingResolver modelBindings, 
+			Function<CompilationUnit, JavaASTBindingResolver> modelBindingProvider, 
 			JavaASTWorkspaceModel workspaceModel,
 			JavaASTLibraryModel libraryModel, 
 			JavaASTProjectModel projectModel, 
@@ -197,17 +202,22 @@ public class ReverseEngineeringApp implements IApplication {
     	
     	for (CompilationUnit javaAST : parsedASTs.values()) {
     		IJavaElement javaElement = javaAST.getJavaElement();
-    		System.out.println(javaElement.getResource());
     		
+    		System.out.println(javaElement.getResource().getFullPath());
+    		
+    		JavaASTBindingResolver modelBindings = modelBindingProvider.apply(javaAST);
     		JavaASTTransformation transformation = javaAST2Model.get();
-    		transformation.init(javaElement.getResource(), modelBindings);
-    		transformation.apply(javaAST);
+    		transformation.init(javaAST, modelBindings);
+    		transformation.apply();
     		
     		// Add to project model:
     		if (javaElement.getParent() instanceof IPackageFragment) {
     			for (EObject rootModelELement : transformation.getRootModelElements()) {
-    				projectModel.addPackagedElement(project, javaAST.getPackage().resolveBinding(),
-    						(IPackageFragment) javaElement.getParent(), rootModelELement);
+    				if ((javaAST.getPackage() != null) && (javaAST.getPackage().resolveBinding() != null)) { //FIXME:default packages!?
+    					projectModel.addPackagedElement(project, javaAST.getPackage().resolveBinding(), rootModelELement);
+    				} else {
+    					projectModel.getProjectModel().getContents().add(rootModelELement); 
+    				}
     			}
     		}
     		

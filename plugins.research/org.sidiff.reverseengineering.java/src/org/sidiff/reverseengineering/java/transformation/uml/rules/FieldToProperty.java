@@ -4,9 +4,10 @@ import org.eclipse.jdt.core.dom.FieldDeclaration;
 import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
 import org.eclipse.uml2.uml.Classifier;
 import org.eclipse.uml2.uml.Interface;
-import org.eclipse.uml2.uml.LiteralSpecification;
 import org.eclipse.uml2.uml.Property;
 import org.eclipse.uml2.uml.StructuredClassifier;
+import org.eclipse.uml2.uml.ValueSpecification;
+import org.sidiff.reverseengineering.java.transformation.uml.rulebase.JavaToUML;
 
 public class FieldToProperty extends JavaToUML<VariableDeclarationFragment, Classifier, Property> {
 
@@ -22,14 +23,6 @@ public class FieldToProperty extends JavaToUML<VariableDeclarationFragment, Clas
 			
 			Property umlProperty = umlFactory.createProperty();
 			umlProperty.setName(declarationFragment.getName().getIdentifier());
-			rules.javaToUMLHelper.setModifiers(umlProperty, fieldDeclaration);
-			
-			// default value:
-			LiteralSpecification defaultValue = rules.javaToUMLHelper.createLiteralValue(declarationFragment.getInitializer(), false);
-			
-			if (defaultValue != null) {
-				umlProperty.setDefaultValue(defaultValue);
-			}
 			
 			// Encode initialization with mulitplicities:
 			// NOTE: 1 is default value...
@@ -62,15 +55,27 @@ public class FieldToProperty extends JavaToUML<VariableDeclarationFragment, Clas
 	}
 
 	@Override
-	public void link(VariableDeclarationFragment variableDeclarationFragment, Property umlProperty) throws ClassNotFoundException {
-		if (variableDeclarationFragment.getParent() instanceof FieldDeclaration) {
-			setPropertyType(umlProperty, ((FieldDeclaration) variableDeclarationFragment.getParent()).getType());
+	public void link(VariableDeclarationFragment declarationFragment, Property umlProperty) throws ClassNotFoundException {
+		if (declarationFragment.getParent() instanceof FieldDeclaration) {
+			FieldDeclaration fieldDeclaration = (FieldDeclaration) declarationFragment.getParent();
+			
+			setPropertyType(umlProperty, fieldDeclaration.getType());
+			setPropertyDefaultValue(declarationFragment, umlProperty);
+			rules.javaToUMLHelper.setModifiers(umlProperty, fieldDeclaration); // interface visibility depends on container
 		}
 	}
-	
+
 	public void setPropertyType(Property umlProperty, org.eclipse.jdt.core.dom.Type javaType) throws ClassNotFoundException {
 		rules.javaToUMLHelper.setType(umlProperty, javaType);
 		rules.javaToUMLHelper.encodeArrayType(umlProperty, javaType);
+	}
+
+	public void setPropertyDefaultValue(VariableDeclarationFragment declarationFragment, Property umlProperty) {
+		ValueSpecification defaultValue = rules.javaToUMLHelper.createValueSpecification(declarationFragment.getInitializer(), false);
+		
+		if (defaultValue != null) {
+			umlProperty.setDefaultValue(defaultValue);
+		}
 	}
 
 }

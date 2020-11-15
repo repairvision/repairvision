@@ -3,6 +3,7 @@ package org.sidiff.reverseengineering.java.transformation.uml.rules;
 import org.eclipse.jdt.core.dom.EnumConstantDeclaration;
 import org.eclipse.uml2.uml.Enumeration;
 import org.eclipse.uml2.uml.EnumerationLiteral;
+import org.sidiff.reverseengineering.java.transformation.uml.rulebase.JavaToUML;
 
 public class EnumConstantToEnumerationLiteral extends JavaToUML<EnumConstantDeclaration, Enumeration, EnumerationLiteral>{
 

@@ -13,6 +13,7 @@ import org.eclipse.uml2.uml.Interface;
 import org.eclipse.uml2.uml.InterfaceRealization;
 import org.eclipse.uml2.uml.Package;
 import org.sidiff.reverseengineering.java.Activator;
+import org.sidiff.reverseengineering.java.transformation.uml.rulebase.JavaToUML;
 
 public class TypeToClass extends JavaToUML<TypeDeclaration, Package, Class> {
 
@@ -61,17 +62,21 @@ public class TypeToClass extends JavaToUML<TypeDeclaration, Package, Class> {
 
 	public void createGeneralization(TypeDeclaration typeDeclaration, Type superType, Classifier umlClassifier) throws ClassNotFoundException {
 		if (superType != null) {
-			Classifier umlSuperTypeProxy = trafo.resolveBindingProxy(superType.resolveBinding(), umlPackage.getClassifier());
+			ITypeBinding umlSuperTypeBinding = superType.resolveBinding();
 			
-			if (umlSuperTypeProxy != null) {
-				Generalization umlGeneralization = umlFactory.createGeneralization();
-				umlGeneralization.setSpecific(umlClassifier);
-				umlGeneralization.setGeneral(umlSuperTypeProxy);
-				umlClassifier.getGeneralizations().add(umlGeneralization);
-			} else {
-				if (Activator.getLogger().isLoggable(Level.FINE)) {
-					Activator.getLogger().log(Level.FINE, "Super type not found: " + typeDeclaration);
+			if (umlSuperTypeBinding != null) {
+				Classifier umlSuperTypeProxy = trafo.resolveBindingProxy(umlSuperTypeBinding, umlPackage.getClassifier());
+				
+				if (umlSuperTypeProxy != null) {
+					Generalization umlGeneralization = umlFactory.createGeneralization();
+					umlGeneralization.setSpecific(umlClassifier);
+					umlGeneralization.setGeneral(umlSuperTypeProxy);
+					umlClassifier.getGeneralizations().add(umlGeneralization);
+				} else if (Activator.getLogger().isLoggable(Level.FINE)) {
+					Activator.getLogger().log(Level.FINE, "Super type not found: " + typeDeclaration.getName().getIdentifier());
 				}
+			} else if (Activator.getLogger().isLoggable(Level.FINE)) {
+				Activator.getLogger().log(Level.FINE, "Super type not found: " + typeDeclaration.getName().getIdentifier());
 			}
 		}
 	}
@@ -79,23 +84,25 @@ public class TypeToClass extends JavaToUML<TypeDeclaration, Package, Class> {
 	public void createInterfaces(TypeDeclaration typeDeclaration, Class umlClass) throws ClassNotFoundException {
 		if (typeDeclaration.superInterfaceTypes() != null) {
 			for (Object javaInterface : typeDeclaration.superInterfaceTypes()) {
-				
+
 				if (javaInterface instanceof Type) {
 					Type javaInterfaceType = (Type) javaInterface;
 					ITypeBinding umlInterfaceBinding = javaInterfaceType.resolveBinding();
 	
-					Interface umlInterfaceProxy = trafo.resolveBindingProxy(umlInterfaceBinding, umlPackage.getInterface());
-					
-					if (umlInterfaceProxy != null) {
-						InterfaceRealization umlInterfaceRealization = umlFactory.createInterfaceRealization();
-						umlInterfaceRealization.setName(umlInterfaceBinding.getName());
-						umlInterfaceRealization.setContract(umlInterfaceProxy);
-						umlInterfaceRealization.setImplementingClassifier(umlClass);
-						umlClass.getInterfaceRealizations().add(umlInterfaceRealization);
-					} else {
-						if (Activator.getLogger().isLoggable(Level.FINE)) {
-							Activator.getLogger().log(Level.FINE, "Interface not found: " + typeDeclaration);
+					if (umlInterfaceBinding != null) {
+						Interface umlInterfaceProxy = trafo.resolveBindingProxy(umlInterfaceBinding, umlPackage.getInterface());
+						
+						if (umlInterfaceProxy != null) {
+							InterfaceRealization umlInterfaceRealization = umlFactory.createInterfaceRealization();
+							umlInterfaceRealization.setName(umlInterfaceBinding.getName());
+							umlInterfaceRealization.setContract(umlInterfaceProxy);
+							umlInterfaceRealization.setImplementingClassifier(umlClass);
+							umlClass.getInterfaceRealizations().add(umlInterfaceRealization);
+						} else if (Activator.getLogger().isLoggable(Level.FINE)) {
+							Activator.getLogger().log(Level.FINE, "Interface not found: " + typeDeclaration.getName().getIdentifier());
 						}
+					} else if (Activator.getLogger().isLoggable(Level.FINE)) {
+						Activator.getLogger().log(Level.FINE, "Interface not found: " + typeDeclaration.getName().getIdentifier());
 					}
 				}
 			}

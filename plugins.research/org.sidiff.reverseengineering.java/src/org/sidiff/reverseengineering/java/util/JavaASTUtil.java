@@ -55,8 +55,8 @@ public class JavaASTUtil {
 	 * @return The unwrapped array type or the given binding.
 	 */
 	public static ITypeBinding arrayTypeErasure(ITypeBinding astBinding) {
-		if (((ITypeBinding) astBinding).isArray()) {
-			return ((ITypeBinding) astBinding).getElementType();
+		if (astBinding.isArray() || (astBinding.getDimensions() != 0)) {
+			return astBinding.getElementType();
 		}
 		return astBinding;
 	}
@@ -67,11 +67,7 @@ public class JavaASTUtil {
 	 */
 	public static IBinding genericTypeErasure(IBinding astBinding) {
 		if (astBinding instanceof ITypeBinding) {
-			ITypeBinding typeBinding =  (ITypeBinding) astBinding;
-					
-			if (typeBinding.isParameterizedType() || typeBinding.isGenericType()) {
-				astBinding = genericTypeErasure(typeBinding);
-			}
+			astBinding = genericTypeErasure((ITypeBinding) astBinding);
 		}
 		return astBinding;
 	}
@@ -81,7 +77,7 @@ public class JavaASTUtil {
 	 * @return The erasure of this type binding.
 	 */
 	public static ITypeBinding genericTypeErasure(ITypeBinding typeBinding) {
-		if (typeBinding.isParameterizedType() || typeBinding.isGenericType()) {
+		if (typeBinding.isParameterizedType() || typeBinding.isGenericType() || !typeBinding.isRawType()) {
 			return typeBinding.getErasure();
 		}
 		return typeBinding;

@@ -6,6 +6,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.jdt.core.dom.IBinding;
+import org.sidiff.reverseengineering.java.util.BindingRecovery;
 
 /**
  * Manages the creation of library model elements.
@@ -25,7 +26,13 @@ public class JavaASTLibraryModel {
 	private JavaASTBindingTranslator bindingTranslator;
 	
 	/**
-	 * @param libraryModel The library model.
+	 * Project name for binding keys.
+	 */
+	protected String projectName = "library";
+	
+	/**
+	 * @param libraryModel      The library model.
+	 * @param bindingTranslator Helper to translate bindings.
 	 */
 	public JavaASTLibraryModel(XMLResource libraryModel, JavaASTBindingTranslator bindingTranslator) {
 		this.libraryModel = libraryModel;
@@ -36,14 +43,20 @@ public class JavaASTLibraryModel {
 	 * Returns or creates a library model element. This function is intended to be
 	 * sub-classed by clients for specific modeling languages.
 	 * 
-	 * @param uniqueBindingKey The binding key as model element ID.
-	 * @param externalBinding  The Java AST binding.
-	 * @param isTypeOf         The minimal type of the library model element.
+	 * @param externalBinding     The Java AST binding.
+	 * @param recoveredBindingKey A recovered binding key or <code>null</code>.
+	 * @param isTypeOf            The minimal type of the library model element.
 	 * @return The library model element.
 	 */
 	@SuppressWarnings("unchecked")
-	public <E extends EObject> E getLibraryModelElement(IBinding externalBinding, EClass isTypeOf) {
-		return (E) libraryModel.getEObject(getBindingKey(externalBinding));
+	public <E extends EObject> E getLibraryModelElement(IBinding externalBinding, EClass isTypeOf, BindingRecovery bindingRecovery) {
+		String recoveredBinding = bindingRecovery.getRecoveredBinding(externalBinding);
+		
+		if (recoveredBinding != null) {
+			return (E) libraryModel.getEObject(getBindingKey(recoveredBinding)); 
+		} else {
+			return (E) libraryModel.getEObject(getBindingKey(externalBinding));
+		}
 	}
 	
 	/**
@@ -56,11 +69,18 @@ public class JavaASTLibraryModel {
 	}
 	
 	/**
-	 * @param binding      The Java AST binding.
-	 * @param modelElement The corresponding library model element.
+	 * @param binding             The Java AST binding.
+	 * @param recoveredBindingKey A recovered binding key or <code>null</code>.
+	 * @param modelElement        The corresponding library model element.
 	 */
-	public void bindModelElement(IBinding binding, EObject modelElement) {
-		libraryModel.setID(modelElement, getBindingKey(binding));
+	public void bindModelElement(IBinding binding, EObject modelElement, BindingRecovery bindingRecovery) {
+		String recoveredBinding = bindingRecovery.getRecoveredBinding(binding);
+		
+		if (recoveredBinding != null) {
+			libraryModel.setID(modelElement, getBindingKey(bindingRecovery.getRecoveredBinding(binding)));
+		} else {
+			libraryModel.setID(modelElement, getBindingKey(binding));
+		}
 	}
 	
 	/**
@@ -76,7 +96,7 @@ public class JavaASTLibraryModel {
 	 * @return The library binding key.
 	 */
 	protected String getBindingKey(IBinding binding) {
-		return bindingTranslator.getBindingKey("library", binding);
+		return bindingTranslator.getBindingKey(projectName, binding);
 	}
 	
 	/**
@@ -84,7 +104,7 @@ public class JavaASTLibraryModel {
 	 * @return The library binding key.
 	 */
 	protected String getBindingKey(String bindingKey) {
-		return "library" + "/" + bindingKey;
+		return bindingTranslator.getBindingKey(projectName, bindingKey);
 	}
 	
 	/**

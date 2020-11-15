@@ -1,4 +1,4 @@
-package org.sidiff.reverseengineering.java.transformation.uml.rules;
+package org.sidiff.reverseengineering.java.transformation.uml.rulebase;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -8,14 +8,17 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.logging.Level;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.core.dom.BodyDeclaration;
 import org.eclipse.jdt.core.dom.Expression;
+import org.eclipse.jdt.core.dom.IBinding;
 import org.eclipse.jdt.core.dom.ITypeBinding;
 import org.eclipse.jdt.core.dom.Javadoc;
 import org.eclipse.jdt.core.dom.Modifier;
+import org.eclipse.jdt.core.dom.QualifiedName;
 import org.eclipse.uml2.uml.Action;
 import org.eclipse.uml2.uml.Behavior;
 import org.eclipse.uml2.uml.CallOperationAction;
@@ -23,11 +26,14 @@ import org.eclipse.uml2.uml.Class;
 import org.eclipse.uml2.uml.Classifier;
 import org.eclipse.uml2.uml.Comment;
 import org.eclipse.uml2.uml.Element;
+import org.eclipse.uml2.uml.Enumeration;
+import org.eclipse.uml2.uml.EnumerationLiteral;
+import org.eclipse.uml2.uml.InstanceValue;
 import org.eclipse.uml2.uml.Interaction;
+import org.eclipse.uml2.uml.Interface;
 import org.eclipse.uml2.uml.LiteralBoolean;
 import org.eclipse.uml2.uml.LiteralInteger;
 import org.eclipse.uml2.uml.LiteralReal;
-import org.eclipse.uml2.uml.LiteralSpecification;
 import org.eclipse.uml2.uml.LiteralString;
 import org.eclipse.uml2.uml.MultiplicityElement;
 import org.eclipse.uml2.uml.NamedElement;
@@ -37,7 +43,9 @@ import org.eclipse.uml2.uml.Type;
 import org.eclipse.uml2.uml.TypedElement;
 import org.eclipse.uml2.uml.UMLFactory;
 import org.eclipse.uml2.uml.UMLPackage;
+import org.eclipse.uml2.uml.ValueSpecification;
 import org.eclipse.uml2.uml.VisibilityKind;
+import org.sidiff.reverseengineering.java.Activator;
 import org.sidiff.reverseengineering.java.transformation.uml.JavaASTTransformationUML;
 import org.sidiff.reverseengineering.java.util.JavaASTUtil;
 
@@ -162,28 +170,39 @@ public class JavaToUMLHelper {
 		} else if (Modifier.isProtected(modifiers)) {
 			umlElement.setVisibility(VisibilityKind.PROTECTED_LITERAL);
 		} else {
-			umlElement.setVisibility(VisibilityKind.PACKAGE_LITERAL);
+			if (((umlElement instanceof Operation) || (umlElement instanceof Property)) && (umlElement.eContainer() instanceof Interface)) {
+				umlElement.setVisibility(VisibilityKind.PUBLIC_LITERAL);
+			} else {
+				umlElement.setVisibility(VisibilityKind.PACKAGE_LITERAL);
+			}
 		}
 	}
 
 	public void setType(TypedElement umlTypedElement, org.eclipse.jdt.core.dom.Type javaType) throws ClassNotFoundException {
 		// Erase generic types -> most concrete bindable type:
 		ITypeBinding originalBinding = javaType.resolveBinding();
-		ITypeBinding typeBinding = JavaASTUtil.genericTypeErasure(originalBinding);
-		typeBinding = JavaASTUtil.arrayTypeErasure(typeBinding);
 		
-		// For example List<String> -> String[0..*] {ordered=true, unique=false}:
-		if (umlCollectionEncoding && (umlTypedElement instanceof MultiplicityElement)) {
-			ITypeBinding collectionType = encodeCollectionType((MultiplicityElement) umlTypedElement, originalBinding, typeBinding);
+		if (originalBinding != null) {
+			ITypeBinding typeBinding = JavaASTUtil.genericTypeErasure(originalBinding);
+			typeBinding = JavaASTUtil.arrayTypeErasure(typeBinding);
 			
-			if (collectionType != null) {
-				typeBinding = collectionType;
+			// For example List<String> -> String[0..*] {ordered=true, unique=false}:
+			if (umlCollectionEncoding && (umlTypedElement instanceof MultiplicityElement)) {
+				ITypeBinding collectionType = encodeCollectionType((MultiplicityElement) umlTypedElement, originalBinding, typeBinding);
+				
+				if (collectionType != null) {
+					typeBinding = collectionType;
+				}
+			}
+			
+			// Resolve and set type:
+			Type typeProxy = trafo.resolveBindingProxy(typeBinding, umlPackage.getType());
+			umlTypedElement.setType(typeProxy);
+		} else {
+			if (Activator.getLogger().isLoggable(Level.FINE)) {
+				Activator.getLogger().log(Level.FINE, "No binding can be resolved for: " + javaType);
 			}
 		}
-		
-		// Resolve and set type:
-		Type typeProxy = trafo.resolveBindingProxy(typeBinding, umlPackage.getType());
-		umlTypedElement.setType(typeProxy);
 	}
 	
 	public ITypeBinding encodeCollectionType(MultiplicityElement umlMultiplicityElement, ITypeBinding genericBinding, ITypeBinding erasedBinding) {
@@ -270,7 +289,7 @@ public class JavaToUMLHelper {
 		}
 	}
 
-	public LiteralSpecification createLiteralValue(Expression expression, boolean convertNull) {
+	public ValueSpecification createValueSpecification(Expression expression, boolean convertNull) {
 		
 		if (expression != null) {
 			String stringValue = expression.toString();
@@ -314,6 +333,32 @@ public class JavaToUMLHelper {
 				} catch (Exception e) {
 					return null;
 				}
+			case Expression.QUALIFIED_NAME:
+				if (expression instanceof QualifiedName) {
+					IBinding enumerationTypeBinding = ((QualifiedName) expression).resolveTypeBinding();
+					IBinding enumerationLiteralBinding = ((QualifiedName) expression).resolveBinding();
+					
+					try {
+						if ((enumerationTypeBinding != null) && (enumerationLiteralBinding != null)) {
+							EObject enumerationType = trafo.resolveBindingProxy(enumerationTypeBinding, umlPackage.getEnumeration());
+							EObject enumerationLiteral = trafo.resolveBindingProxy(enumerationLiteralBinding, umlPackage.getEnumerationLiteral());
+							
+							if ((enumerationType instanceof Enumeration) && (enumerationLiteral instanceof EnumerationLiteral)) {
+								InstanceValue instanceValue = umlFactory.createInstanceValue();
+								instanceValue.setType((Enumeration) enumerationType);
+								instanceValue.setInstance((EnumerationLiteral) enumerationLiteral);
+								return instanceValue;
+							}
+						} else {
+							if (Activator.getLogger().isLoggable(Level.FINE)) {
+								Activator.getLogger().log(Level.FINE, "No enumeration binding found: " + expression);
+							}
+						}
+					} catch (ClassNotFoundException e) {
+						e.printStackTrace();
+					}
+				}
+				break;
 			}
 		}
 		return null;

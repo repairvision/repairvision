@@ -9,6 +9,7 @@ import org.eclipse.uml2.uml.FunctionBehavior;
 import org.eclipse.uml2.uml.Interaction;
 import org.eclipse.uml2.uml.Operation;
 import org.sidiff.reverseengineering.java.Activator;
+import org.sidiff.reverseengineering.java.transformation.uml.rulebase.JavaToUML;
 
 public class MethodInvocationToCallOperationAction extends JavaToUML<MethodInvocation, FunctionBehavior, CallOperationAction> {
 

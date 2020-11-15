@@ -9,6 +9,7 @@ import org.eclipse.jdt.core.dom.IPackageBinding;
 import org.eclipse.jdt.core.dom.ITypeBinding;
 import org.eclipse.jdt.core.dom.IVariableBinding;
 import org.eclipse.uml2.uml.Class;
+import org.eclipse.uml2.uml.Classifier;
 import org.eclipse.uml2.uml.DataType;
 import org.eclipse.uml2.uml.Enumeration;
 import org.eclipse.uml2.uml.EnumerationLiteral;
@@ -25,7 +26,8 @@ import org.eclipse.uml2.uml.UMLPackage;
 import org.eclipse.uml2.uml.VisibilityKind;
 import org.sidiff.reverseengineering.java.transformation.JavaASTBindingTranslator;
 import org.sidiff.reverseengineering.java.transformation.JavaASTLibraryModel;
-import org.sidiff.reverseengineering.java.transformation.uml.rules.JavaToUMLHelper;
+import org.sidiff.reverseengineering.java.transformation.uml.rulebase.JavaToUMLHelper;
+import org.sidiff.reverseengineering.java.util.BindingRecovery;
 import org.sidiff.reverseengineering.java.util.JavaASTUtil;
 
 /**
@@ -45,6 +47,8 @@ public class JavaASTLibraryModelUML extends JavaASTLibraryModel {
 	
 	protected Package primitiveTypeModel;
 	
+	protected Package defaultPackage;
+	
 	/**
 	 * @param libraryModel      The library model.
 	 * @param bindingTranslator Creates model object IDs.
@@ -59,6 +63,7 @@ public class JavaASTLibraryModelUML extends JavaASTLibraryModel {
 			this.libraryModelRoot = umlFactory.createModel();
 			this.libraryModelRoot.setName("Library");
 			libraryModel.getContents().add(libraryModelRoot);
+			bindModelElement(getBindingKey("libraries"), libraryModelRoot);
 		} else {
 			this.libraryModelRoot = (Model) libraryModel.getContents().get(0);
 		}
@@ -85,6 +90,7 @@ public class JavaASTLibraryModelUML extends JavaASTLibraryModel {
 		this.primitiveTypeModel = umlFactory.createPackage();
 		this.primitiveTypeModel.setName("datatypes");
 		this.libraryModelRoot.getPackagedElements().add(0, primitiveTypeModel);
+		bindModelElement(getBindingKey("datatypes"), primitiveTypeModel);
 	}
 
 	protected DataType createLibraryPrimitiveDataType(IBinding binding) {
@@ -97,8 +103,11 @@ public class JavaASTLibraryModelUML extends JavaASTLibraryModel {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public <E extends EObject> E getLibraryModelElement(IBinding externalBinding, EClass isTypeOf) {
-		EObject libraryModelElement = super.getLibraryModelElement(externalBinding, isTypeOf);
+	public <E extends EObject> E getLibraryModelElement(IBinding externalBinding, EClass isTypeOf, BindingRecovery bindingRecovery) {
+		externalBinding = JavaASTUtil.genericTypeErasure(externalBinding);
+		externalBinding = JavaASTUtil.arrayTypeErasure(externalBinding);
+		
+		EObject libraryModelElement = super.getLibraryModelElement(externalBinding, isTypeOf, bindingRecovery);
 		
 		// Already exists?
 		if (libraryModelElement != null) {
@@ -107,17 +116,15 @@ public class JavaASTLibraryModelUML extends JavaASTLibraryModel {
 		
 		// Create new:
 		switch (externalBinding.getKind()) {
-		case IBinding.PACKAGE:
-			return (E) createLibraryPackage((IPackageBinding) externalBinding); // binds internally
 		case IBinding.TYPE:
 			ITypeBinding typeBinding = (ITypeBinding) externalBinding;
 			
 			if (typeBinding.isEnum()) {
-				libraryModelElement = createLibraryEnumeration(typeBinding);
-			} else if (typeBinding.isInterface()) {
-				libraryModelElement = createLibraryInterface(typeBinding);
+				libraryModelElement = createLibraryEnumeration(typeBinding, bindingRecovery);
+			} else if (typeBinding.isInterface()|| typeBinding.isRecovered()) {
+				libraryModelElement = createLibraryInterface(typeBinding, bindingRecovery);
 			} else if (typeBinding.isClass()) {
-				libraryModelElement = createLibraryClass(typeBinding);
+				libraryModelElement = createLibraryClass(typeBinding, bindingRecovery);
 			}
 			
 			break;
@@ -125,108 +132,162 @@ public class JavaASTLibraryModelUML extends JavaASTLibraryModel {
 			IVariableBinding variableBinding = (IVariableBinding) externalBinding;
 			
 			if (variableBinding.isParameter()) {
-				libraryModelElement = createLibraryParameter(variableBinding);
+				libraryModelElement = createLibraryParameter(variableBinding, bindingRecovery);
 			} else if (variableBinding.isEnumConstant()) { // is also field
-				libraryModelElement = createLibraryEnumLiteral(variableBinding);
+				libraryModelElement = createLibraryEnumLiteral(variableBinding, bindingRecovery);
 			} else if (variableBinding.isField()) {
-				libraryModelElement = createLibraryProperty(variableBinding);
+				libraryModelElement = createLibraryProperty(variableBinding, bindingRecovery);
 			}
 			
 			break;
 		case IBinding.METHOD:
-			libraryModelElement = createLibraryOperation((IMethodBinding) externalBinding);
+			libraryModelElement = createLibraryOperation((IMethodBinding) externalBinding, bindingRecovery);
 			break;
 		}
 		
 		// Trace and return new model element:
 		if (libraryModelElement != null) {
-			bindModelElement(externalBinding, libraryModelElement);
+			bindModelElement(externalBinding, libraryModelElement, bindingRecovery);
 			return (E) libraryModelElement;
 		}
 		
 		return null;
 	}
 
-	protected EObject createLibraryPackage(IPackageBinding packageBinding) {
+	protected Package getLibraryPackage(IPackageBinding packageBinding, ITypeBinding containedType, BindingRecovery bindingRecovery) {
+		
+		// Use the original package of a recovered binding from the imports:
+		String[] packages = bindingRecovery.getRecoveredPackage(containedType);
+		
+		// Use original binding:
+		if (packages == null) {
+			packages = packageBinding.getNameComponents();
+		}
+		
 		String bindingKey = null;
 		Package parentPackage = libraryModelRoot;
 		Package childPackage = null;
-		
-		for (String packageName : packageBinding.getNameComponents()) {
+
+		for (String packageName : packages) {
 			if (bindingKey == null) {
 				bindingKey = packageName;
 			} else {
 				bindingKey += "/" + packageName;
 			}
 			childPackage = super.getLibraryModelElement(getBindingKey(bindingKey));
-					
+
 			if (childPackage == null) {
 				childPackage = umlFactory.createPackage();
 				childPackage.setName(packageName);
-				parentPackage.getPackagedElements().add(childPackage);
+				parentPackage.getNestedPackages().add(0, childPackage);
 				bindModelElement(getBindingKey(bindingKey), childPackage);
 			}
-			
+
 			parentPackage = childPackage;
 		}
 		
-		return childPackage;
+		if (childPackage != null) {
+			return childPackage;
+		}
+		
+		// use default package:
+		if (defaultPackage == null) {
+			this.defaultPackage = umlFactory.createPackage();
+			this.defaultPackage.setName("default");
+			this.libraryModelRoot.getNestedPackages().add(0, defaultPackage);
+			bindModelElement(getBindingKey("default"), defaultPackage);
+		}
+		return defaultPackage;
+		
 	}
 
-	protected EObject createLibraryEnumeration(ITypeBinding typeBinding) {
+	protected void addClassifierToModel(ITypeBinding typeBinding, Classifier newClassifier, BindingRecovery bindingRecovery) {
+		if (typeBinding.getDeclaringClass() != null) {
+			
+			// nested in class or interface:
+			Classifier parentClassifier = getLibraryModelElement(typeBinding.getDeclaringClass(), umlPackage.getClassifier(), bindingRecovery);
+			
+			if (parentClassifier instanceof Class) {
+				((Class) parentClassifier).getNestedClassifiers().add(newClassifier);
+			} else if (parentClassifier instanceof Interface) {
+				((Interface) parentClassifier).getNestedClassifiers().add(newClassifier);
+			}
+		} else {
+			
+			// nested in package:
+			Package libraryPackage = getLibraryPackage(typeBinding.getPackage(), typeBinding, bindingRecovery);
+	
+			if (libraryPackage != null) {
+				libraryPackage.getOwnedTypes().add(newClassifier);
+				return;
+			}
+		}
+	}
+
+	protected EObject createLibraryEnumeration(ITypeBinding typeBinding, BindingRecovery bindingRecovery) {
 		Enumeration libraryEnum = umlFactory.createEnumeration();
 		libraryEnum.setName(typeBinding.getName());
-		javaToUMLHelper.setModifiers(libraryEnum, typeBinding.getModifiers());
 		
-		Package libraryPackage = getLibraryModelElement(typeBinding.getPackage(), umlPackage.getPackage());
-		libraryPackage.getOwnedTypes().add(libraryEnum);
+		// repair visibility:
+		if (typeBinding.isRecovered()) {
+			libraryEnum.setVisibility(VisibilityKind.PUBLIC_LITERAL);
+		}
 		
+		// set container:
+		addClassifierToModel(typeBinding, libraryEnum, bindingRecovery);
+		
+		// enumeration literal:
 		for (IVariableBinding enumLiteral : typeBinding.getDeclaredFields()) {
 			EnumerationLiteral libraryEnumLiteral = umlFactory.createEnumerationLiteral();
 			libraryEnumLiteral.setName(enumLiteral.getName());
 			libraryEnum.getOwnedLiterals().add(libraryEnumLiteral);
 		}
 		
+		javaToUMLHelper.setModifiers(libraryEnum, typeBinding.getModifiers());
 		return libraryEnum;
 	}
 
-	protected EObject createLibraryEnumLiteral(IVariableBinding variableBinding) {
-		getLibraryModelElement(variableBinding.getDeclaringClass(), umlPackage.getEnumeration());
-		return super.getLibraryModelElement(variableBinding, umlPackage.getEnumerationLiteral());
+	protected EObject createLibraryEnumLiteral(IVariableBinding variableBinding, BindingRecovery bindingRecovery) {
+		// create full enumeration:
+		getLibraryModelElement(variableBinding.getDeclaringClass(), umlPackage.getEnumeration(), bindingRecovery);
+		return super.getLibraryModelElement(variableBinding, umlPackage.getEnumerationLiteral(), bindingRecovery);
 	}
 
-	protected EObject createLibraryInterface(ITypeBinding typeBinding) {
-		typeBinding = JavaASTUtil.genericTypeErasure(typeBinding);
-		
+	protected EObject createLibraryInterface(ITypeBinding typeBinding, BindingRecovery bindingRecovery) {
 		Interface libraryIterface = umlFactory.createInterface();
 		libraryIterface.setName(typeBinding.getName());
+		
+		if (typeBinding.isRecovered()) {
+			libraryIterface.setVisibility(VisibilityKind.PUBLIC_LITERAL);
+		}
+		
+		// set container:
+		addClassifierToModel(typeBinding, libraryIterface, bindingRecovery);
+		
 		javaToUMLHelper.setModifiers(libraryIterface, typeBinding.getModifiers());
-		
-		Package libraryPackage = getLibraryModelElement(typeBinding.getPackage(), umlPackage.getPackage());
-		libraryPackage.getOwnedTypes().add(libraryIterface);
-		
 		return libraryIterface;
 	}
 
-	protected EObject createLibraryClass(ITypeBinding typeBinding) {
-		typeBinding = JavaASTUtil.genericTypeErasure(typeBinding);
-		
+	protected EObject createLibraryClass(ITypeBinding typeBinding, BindingRecovery bindingRecovery) {
 		Class libraryClass = umlFactory.createClass();
 		libraryClass.setName(typeBinding.getName());
+		
+		if (typeBinding.isRecovered()) {
+			libraryClass.setVisibility(VisibilityKind.PUBLIC_LITERAL);
+		}
+		
+		// set container:
+		addClassifierToModel(typeBinding, libraryClass, bindingRecovery);
+		
 		javaToUMLHelper.setModifiers(libraryClass, typeBinding.getModifiers());
-		
-		Package libraryPackage = getLibraryModelElement(typeBinding.getPackage(), umlPackage.getPackage());
-		libraryPackage.getOwnedTypes().add(libraryClass);
-		
 		return libraryClass;
 	}
 
-	protected EObject createLibraryOperation(IMethodBinding methodBinding) {
+	protected EObject createLibraryOperation(IMethodBinding methodBinding, BindingRecovery bindingRecovery) {
 		Operation libraryOperation = umlFactory.createOperation();
 		libraryOperation.setName(methodBinding.getName());
-		javaToUMLHelper.setModifiers(libraryOperation, methodBinding.getModifiers());
 		
-		OperationOwner libraryClassifier = getLibraryModelElement(methodBinding.getDeclaringClass(), umlPackage.getClassifier());
+		OperationOwner libraryClassifier = getLibraryModelElement(methodBinding.getDeclaringClass(), umlPackage.getClassifier(), bindingRecovery);
 		libraryClassifier.getOwnedOperations().add(libraryOperation);
 		
 		// Create parameter signature:
@@ -236,22 +297,28 @@ public class JavaASTLibraryModelUML extends JavaASTLibraryModel {
 			libraryOperation.getOwnedParameters().add(libraryParameter);
 		}
 		
+		javaToUMLHelper.setModifiers(libraryOperation, methodBinding.getModifiers());
 		return libraryOperation;
 	}
 
-	protected EObject createLibraryParameter(IVariableBinding variableBinding) {
-		getLibraryModelElement(variableBinding.getDeclaringMethod(), umlPackage.getOperation());
-		return super.getLibraryModelElement(variableBinding, umlPackage.getParameter());
+	protected EObject createLibraryParameter(IVariableBinding variableBinding, BindingRecovery bindingRecovery) {
+		getLibraryModelElement(variableBinding.getDeclaringMethod(), umlPackage.getOperation(), bindingRecovery);
+		return super.getLibraryModelElement(variableBinding, umlPackage.getParameter(), bindingRecovery);
 	}
 
-	protected EObject createLibraryProperty(IVariableBinding variableBinding) {
+	protected EObject createLibraryProperty(IVariableBinding variableBinding, BindingRecovery bindingRecovery) {
 		Property libraryProperty = umlFactory.createProperty();
 		libraryProperty.setName(variableBinding.getName());
+		
+		Classifier libraryClassifier = getLibraryModelElement(variableBinding.getDeclaringClass(), umlPackage.getClassifier(), bindingRecovery);
+		
+		if (libraryClassifier instanceof StructuredClassifier) {
+			((StructuredClassifier) libraryClassifier).getOwnedAttributes().add(libraryProperty);
+		} else if (libraryClassifier instanceof Interface) {
+			((Interface) libraryClassifier).getOwnedAttributes().add(libraryProperty);
+		}
+		
 		javaToUMLHelper.setModifiers(libraryProperty, variableBinding.getModifiers());
-		
-		StructuredClassifier libraryClassifier = getLibraryModelElement(variableBinding.getDeclaringClass(), umlPackage.getStructuredClassifier());
-		libraryClassifier.getOwnedAttributes().add(libraryProperty);
-		
 		return libraryProperty;
 	}
 }

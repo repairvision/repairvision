@@ -4,6 +4,7 @@ import org.eclipse.jdt.core.dom.Type;
 import org.eclipse.jdt.core.dom.TypeDeclaration;
 import org.eclipse.uml2.uml.Interface;
 import org.eclipse.uml2.uml.Package;
+import org.sidiff.reverseengineering.java.transformation.uml.rulebase.JavaToUML;
 
 public class TypeToInterface extends JavaToUML<TypeDeclaration, Package, Interface> {
 

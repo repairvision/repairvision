@@ -6,11 +6,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 
-import org.eclipse.core.resources.IResource;
-import org.eclipse.core.runtime.IPath;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.jdt.core.IJavaElement;
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.ASTVisitor;
 import org.eclipse.jdt.core.dom.CompilationUnit;
@@ -25,24 +24,24 @@ import org.sidiff.reverseengineering.java.Activator;
 public abstract class JavaASTTransformation extends ASTVisitor {
 	
 	/**
-	 * Manages the Java AST to model bindings.
+	 * The name of the corresponding project (namespace).
 	 */
-	private JavaASTBindingResolver bindings;
+	private String projectName;
 	
 	/**
 	 * The corresponding Java resource in the workspace.
 	 */
-	private IResource astResource;
+	private CompilationUnit javaAST;
 	
 	/**
-	 * The folder of the Java resource in the workspace.
+	 * The corresponding relative transformation path.
 	 */
-	private IPath astResourceFolder;
+	private String[] transformationPath;
 	
 	/**
-	 * The name of the corresponding project (namespace).
+	 * Manages the Java AST to model bindings.
 	 */
-	private String projectName;
+	private JavaASTBindingResolver bindings;
 	
 	/**
 	 * All root model elements created by this transformation.
@@ -57,15 +56,17 @@ public abstract class JavaASTTransformation extends ASTVisitor {
 	/**
 	 * Initializes the Java AST transformation.
 	 * 
-	 * @param astResource The corresponding Java resource in the workspace.
+	 * @param javaAST The Java AST to be transformed.
 	 * @param bindings    Manages the Java AST to model bindings.
 	 * @return itself
 	 */
-	public JavaASTTransformation init(IResource astResource, JavaASTBindingResolver bindings) {
-		this.astResource = astResource;
-		this.astResourceFolder = astResource.getParent().getFullPath();
-		this.projectName = astResource.getProject().getName();
+	public JavaASTTransformation init(CompilationUnit javaAST, JavaASTBindingResolver bindings) {
+		this.javaAST = javaAST;
 		this.bindings = bindings;
+
+		IJavaElement javaElement = javaAST.getJavaElement();
+		this.projectName = javaElement.getResource().getProject().getName();
+		this.transformationPath = bindings.getModelPath(projectName, javaElement);
 		this.rootModelElements = new ArrayList<>();
 		this.javaToModelTrace = new HashMap<>();
 		return this;
@@ -76,7 +77,7 @@ public abstract class JavaASTTransformation extends ASTVisitor {
 	 * 
 	 * @param javaAST The Java AST to be transformed.
 	 */
-	public void apply(CompilationUnit javaAST) {
+	public void apply() {
 		javaAST.accept(this);
 	}
 
@@ -87,7 +88,7 @@ public abstract class JavaASTTransformation extends ASTVisitor {
 	 *         resolved/loaded yet! So do NOT access informations of this object!
 	 */
 	public <E extends EObject> E resolveBindingProxy(IBinding binding, EClass isTypeOf) throws ClassNotFoundException {
-		E bindingProxy = bindings.resolveBindingProxy(astResourceFolder, binding, isTypeOf);
+		E bindingProxy = bindings.resolveBindingProxy(transformationPath, binding, isTypeOf);
 
 		if (Activator.getLogger().isLoggable(Level.FINER)) {
 			if ((isTypeOf == bindingProxy.eClass()) || isTypeOf.getEAllSuperTypes().contains(bindingProxy.eClass())) {
@@ -192,20 +193,6 @@ public abstract class JavaASTTransformation extends ASTVisitor {
 	}
 	
 	/**
-	 * @return The corresponding Java resource in the workspace.
-	 */
-	public IResource getAstResource() {
-		return astResource;
-	}
-	
-	/**
-	 * @return The folder of the Java resource in the workspace.
-	 */
-	public IPath getAstResourceFolder() {
-		return astResourceFolder;
-	}
-	
-	/**
 	 * @return The name of the corresponding project (namespace).
 	 */
 	public String getProjectName() {
@@ -218,8 +205,7 @@ public abstract class JavaASTTransformation extends ASTVisitor {
 	 *         the workspace.
 	 */
 	public URI getModelURI(URI baseURI) {
-		IPath projectStructure = bindings.getModelPath(astResource.getFullPath());
-		return baseURI.appendSegments(projectStructure.segments());
+		return baseURI.appendSegments(transformationPath);
 	}
 	
 	/**
@@ -234,5 +220,9 @@ public abstract class JavaASTTransformation extends ASTVisitor {
 	 */
 	public List<EObject> getRootModelElements() {
 		return rootModelElements;
+	}
+	
+	public CompilationUnit getJavaAST() {
+		return javaAST;
 	}
 }

@@ -1,9 +1,21 @@
-package org.sidiff.reverseengineering.java.transformation.uml.rules;
+package org.sidiff.reverseengineering.java.transformation.uml.rulebase;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.sidiff.reverseengineering.java.transformation.uml.JavaASTTransformationUML;
+import org.sidiff.reverseengineering.java.transformation.uml.rules.BodyBlockToFunctionBehavior;
+import org.sidiff.reverseengineering.java.transformation.uml.rules.EnumConstantToEnumerationLiteral;
+import org.sidiff.reverseengineering.java.transformation.uml.rules.EnumToEnumeration;
+import org.sidiff.reverseengineering.java.transformation.uml.rules.EnumToEnumerationInner;
+import org.sidiff.reverseengineering.java.transformation.uml.rules.FieldToProperty;
+import org.sidiff.reverseengineering.java.transformation.uml.rules.MethodInvocationToCallOperationAction;
+import org.sidiff.reverseengineering.java.transformation.uml.rules.MethodToOperation;
+import org.sidiff.reverseengineering.java.transformation.uml.rules.TypeToClass;
+import org.sidiff.reverseengineering.java.transformation.uml.rules.TypeToClassInner;
+import org.sidiff.reverseengineering.java.transformation.uml.rules.TypeToInterface;
+import org.sidiff.reverseengineering.java.transformation.uml.rules.TypeToInterfaceInner;
+import org.sidiff.reverseengineering.java.transformation.uml.rules.VariableToParameter;
 
 public class JavaToUMLRules {
 	

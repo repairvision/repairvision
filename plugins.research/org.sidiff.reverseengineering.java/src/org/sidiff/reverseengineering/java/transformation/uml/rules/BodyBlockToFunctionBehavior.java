@@ -7,6 +7,7 @@ import org.eclipse.uml2.uml.Behavior;
 import org.eclipse.uml2.uml.FunctionBehavior;
 import org.eclipse.uml2.uml.Interaction;
 import org.eclipse.uml2.uml.Operation;
+import org.sidiff.reverseengineering.java.transformation.uml.rulebase.JavaToUML;
 
 public class BodyBlockToFunctionBehavior extends JavaToUML<Block, Behavior, FunctionBehavior> {
 

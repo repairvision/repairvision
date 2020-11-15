@@ -5,8 +5,6 @@ import java.io.IOException;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.xmi.XMLResource;
-import org.eclipse.jdt.core.IPackageFragment;
-import org.eclipse.jdt.core.IPackageFragmentRoot;
 import org.eclipse.jdt.core.dom.IPackageBinding;
 
 /**
@@ -20,12 +18,19 @@ public abstract class JavaASTProjectModel {
 	 * The model representing a Java project.
 	 */
 	private XMLResource projectModel;
-
+	
 	/**
-	 * @param projectModel The model representing a Java project
+	 * Creates bindings for the model.
 	 */
-	public JavaASTProjectModel(XMLResource projectModel) {
+	private JavaASTBindingTranslator bindingTranslator;
+	
+	/**
+	 * @param projectModel      The model representing a Java project
+	 * @param bindingTranslator Helper to translate bindings.
+	 */
+	public JavaASTProjectModel(XMLResource projectModel, JavaASTBindingTranslator bindingTranslator) {
 		this.projectModel = projectModel;
+		this.bindingTranslator = bindingTranslator;
 	}
 
 	/**
@@ -34,61 +39,23 @@ public abstract class JavaASTProjectModel {
 	 * @param packageFragment A Java package.
 	 * @param modelElement The contained model element.
 	 */
-	public void addPackagedElement(IProject project, IPackageBinding binding, IPackageFragment packageFragment, EObject modelElement) {
-		EObject currentModelElement = modelElement;
-		String curentModelElementID;
-		
-		// Containing package as Java name binding:
-		if (packageFragment != null) { // default package?
-			curentModelElementID = getBindingKey(project, binding);
-			EObject existingModelElement = projectModel.getEObject(curentModelElementID);
-			
-			if (existingModelElement == null) {
-				currentModelElement = createPackage(packageFragment, modelElement);
-				projectModel.setID(currentModelElement, curentModelElementID);
-			} else {
-				addToPackage(existingModelElement, currentModelElement);
-				currentModelElement = existingModelElement;
-			}
-			
-			if (packageFragment.getParent() instanceof IPackageFragment) {
-				packageFragment = (IPackageFragment) packageFragment.getParent();
-			} else {
-				packageFragment = null;
-			}
-		}
-		
-		// Upper packages - source folder?
-		while ((packageFragment != null)  && !(packageFragment instanceof IPackageFragmentRoot)) {
-			curentModelElementID = getBindingKey(project, packageFragment);
-			EObject existingModelElement = projectModel.getEObject(curentModelElementID);
-			
-			if (existingModelElement == null) {
-				currentModelElement = createPackage(packageFragment, currentModelElement);
-				projectModel.setID(currentModelElement, curentModelElementID);
-			} else {
-				addToPackage(existingModelElement, currentModelElement);
-				currentModelElement = existingModelElement;
-			}
+	public abstract void addPackagedElement(IProject project, IPackageBinding binding, EObject modelElement);
+	
+	/**
+	 * @param bindingKey A binding in of this project.
+	 * @return The corresponding model element.
+	 */
+	@SuppressWarnings("unchecked")
+	public <E extends EObject> E getModelElement(String bindingKey) {
+		return (E) projectModel.getEObject(bindingKey);
+	}
 
-			if (packageFragment.getParent() instanceof IPackageFragment) {
-				packageFragment = (IPackageFragment) packageFragment.getParent();
-			} else {
-				packageFragment = null;
-			}
-		}
-		
-		// Add to root:
-		curentModelElementID = getBindingKey(project);
-		EObject existingModelElement = projectModel.getEObject(curentModelElementID);
-		
-		if (existingModelElement == null) {
-			currentModelElement = createProject(project, currentModelElement);
-			projectModel.setID(currentModelElement, curentModelElementID);
-		}  else {
-			addToProject(existingModelElement, currentModelElement);
-			currentModelElement = existingModelElement;
-		}
+	/**
+	 * @param bindingKey The unique binding key.
+	 * @param element    A new model element.
+	 */
+	public void bindModelElement(String bindingKey, EObject element) {
+		projectModel.setID(element, bindingKey);
 	}
 	
 	/**
@@ -96,54 +63,16 @@ public abstract class JavaASTProjectModel {
 	 * @return The binding key.
 	 */
 	protected String getBindingKey(IProject project) {
-		return project.toString() + "/";
+		return bindingTranslator.getBindingKey("project", project.toString());
 	}
 
 	/**
-	 * @param project The presented project.
-	 * @param binding A binding of a Java package.
-	 * @return The binding key.
+	 * @param bindinKey A local binding key.
+	 * @return The library binding key.
 	 */
-	protected String getBindingKey(IProject project, IPackageBinding binding) {
-		return project + "/" + binding.getKey();
+	protected String getBindingKey(IProject project, String bindingKey) {
+		return bindingTranslator.getBindingKey(project.getName(), bindingKey);
 	}
-	
-	/**
-	 * @param project The presented project.
-	 * @param packageFragment A Java package.
-	 * @return The binding key.
-	 */
-	protected String getBindingKey(IProject project, IPackageFragment packageFragment) {
-		return project + "/" + packageFragment.getPath();
-	}
-	
-	/**
-	 * @param project           The presented project.
-	 * @param childModelElement A child package or model element.
-	 * @return The created model package.
-	 */
-	protected abstract EObject createProject(IProject project, EObject childModelElement);
-	
-	/**
-	 * @param projectModelElement The presented project.
-	 * @param childModelElement   A child package or model element.
-	 * @return The created model package.
-	 */
-	protected abstract void addToProject(EObject projectModelElement, EObject childModelElement);
-
-	/**
-	 * @param parentPackage     The corresponding Java package.
-	 * @param childModelElement A child package or model element.
-	 * @return The created model package.
-	 */
-	protected abstract EObject createPackage(IPackageFragment parentPackage, EObject childModelElement);
-	
-	/**
-	 * @param packageModelElement The parent model package.
-	 * @param childModelElement   A child package or model element.
-	 * @return The created model package.
-	 */
-	protected abstract void addToPackage(EObject packageModelElement, EObject childModelElement);
 	
 	/**
 	 * @return The model representing a Java project
