@@ -125,6 +125,33 @@ public class JavaASTUtil {
 	}
 	
 	/**
+	 * Calculates the last line in the source code file for a node in the AST.
+	 * 
+	 * @param javaAST The source code's AST.
+	 * @param node    A node in the AST.
+	 * @return The corresponding last line of the AST node.
+	 */
+	public static int getLastLine(CompilationUnit javaAST, ASTNode node) {
+		int startPosition = node.getStartPosition();
+		int endPosition = startPosition + node.getLength();
+		int endLine = javaAST.getLineNumber(endPosition);
+		return endLine;
+	}
+	
+	/**
+	 * Calculates the first line in the source code file for a node in the AST.
+	 * 
+	 * @param javaAST The source code's AST.
+	 * @param node    A node in the AST.
+	 * @return The corresponding first line of the AST node.
+	 */
+	public static int getFirstLine(CompilationUnit javaAST, ASTNode node) {
+		int startPosition = node.getStartPosition();
+		int startLine = javaAST.getLineNumber(startPosition);
+		return startLine;
+	}
+	
+	/**
 	 * @param javadoc The AST JavaDoc.
 	 * @return The JavaDoc text without asterisk.
 	 */

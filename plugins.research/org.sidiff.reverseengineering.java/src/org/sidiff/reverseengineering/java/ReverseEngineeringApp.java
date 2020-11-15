@@ -78,7 +78,7 @@ public class ReverseEngineeringApp implements IApplication {
 
 		Set<String> workspaceProjectsFilter = new HashSet<>(Arrays.asList(new String[] { "" }));
 		Set<IProject> workspaceProjects = getAllWorkspaceProjects(workspaceProjectsFilter);
-//		workspaceProjects = getProject("Test2");
+		workspaceProjects = getProject("Test");
 //		workspaceProjects.addAll(getProject("Test"));
 //		workspaceProjects = getProject("org.eclipse.jdt.core");
 		Set<String> workspaceProjectNames = getProjectName(workspaceProjects);

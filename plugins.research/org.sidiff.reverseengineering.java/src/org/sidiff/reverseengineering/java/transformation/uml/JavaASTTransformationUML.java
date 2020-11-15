@@ -1,5 +1,14 @@
 package org.sidiff.reverseengineering.java.transformation.uml;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map.Entry;
+import java.util.TreeMap;
+import java.util.logging.Level;
+
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.AbstractTypeDeclaration;
 import org.eclipse.jdt.core.dom.AnnotationTypeDeclaration;
 import org.eclipse.jdt.core.dom.AnnotationTypeMemberDeclaration;
@@ -27,8 +36,10 @@ import org.eclipse.uml2.uml.OperationOwner;
 import org.eclipse.uml2.uml.Parameter;
 import org.eclipse.uml2.uml.Property;
 import org.eclipse.uml2.uml.UMLPackage;
+import org.sidiff.reverseengineering.java.Activator;
 import org.sidiff.reverseengineering.java.transformation.JavaASTTransformation;
 import org.sidiff.reverseengineering.java.transformation.uml.rulebase.JavaToUMLRules;
+import org.sidiff.reverseengineering.java.util.JavaASTUtil;
 
 /**
  * Implementation of a Java AST to a UML model transformation.
@@ -42,6 +53,8 @@ public class JavaASTTransformationUML extends JavaASTTransformation {
 	private boolean includeMethodBodies = true;
 	
 	private JavaToUMLRules rules;
+	
+	private TreeMap<Integer, EObject> lineToModel = new TreeMap<>();
 	
 	public JavaASTTransformationUML(JavaToUMLRules rules, boolean includeMethodBodies) {
 		this.rules = rules;
@@ -84,19 +97,18 @@ public class JavaASTTransformationUML extends JavaASTTransformation {
 				rules.enumToEnumerationInner.apply(enumDeclaration);
 			}
 		} else {
-			Enumeration umlEnum = getModelElement(enumDeclaration);
+			Enumeration umlEnumeration = getModelElement(enumDeclaration);
 			
-			if (umlEnum != null) {
-				Enumeration umlEnumeration = getModelElement(enumDeclaration);
-
-				if (umlEnumeration != null) {
-					for (Object enumConstant : enumDeclaration.enumConstants()) {
-						if (enumConstant instanceof EnumConstantDeclaration) {
-							EnumerationLiteral umlEnumerationLiteral = getModelElement((EnumConstantDeclaration) enumConstant);
-							rules.enumConstantToEnumerationLiteral.apply(umlEnumeration, umlEnumerationLiteral);
-						}
+			if (umlEnumeration != null) {
+				for (Object enumConstant : enumDeclaration.enumConstants()) {
+					if (enumConstant instanceof EnumConstantDeclaration) {
+						EnumerationLiteral umlEnumerationLiteral = getModelElement((EnumConstantDeclaration) enumConstant);
+						rules.enumConstantToEnumerationLiteral.apply(umlEnumeration, umlEnumerationLiteral);
 					}
 				}
+				
+				// log line mapping: enum
+				traceLineToModelElement(JavaASTUtil.getLastLine(getJavaAST(), enumDeclaration), umlEnumeration);
 			}
 		}
 		return true;
@@ -156,6 +168,15 @@ public class JavaASTTransformationUML extends JavaASTTransformation {
 						}
 					}
 				}
+				
+				// log line mapping: @interface
+				if (!annotationTypeDeclaration.bodyDeclarations().isEmpty()) {
+					// Assume class declaration end where the first body statement begins:
+					traceLineToModelElement(JavaASTUtil.getFirstLine(getJavaAST(), (ASTNode) annotationTypeDeclaration.bodyDeclarations().get(0)) - 1, umlAnnotationInterface);
+					traceLineToModelElement(JavaASTUtil.getLastLine(getJavaAST(), annotationTypeDeclaration), umlAnnotationInterface); // tail
+				} else {
+					traceLineToModelElement(JavaASTUtil.getLastLine(getJavaAST(), annotationTypeDeclaration), umlAnnotationInterface);
+				}
 			}
 		}
 		return true;
@@ -174,6 +195,9 @@ public class JavaASTTransformationUML extends JavaASTTransformation {
 				} catch (ClassNotFoundException e) {
 					e.printStackTrace();
 				}
+				
+				// log line mapping: @interface operation
+				traceLineToModelElement(JavaASTUtil.getLastLine(getJavaAST(), memberDeclaration), annotationOperation);
 			}
 		}
 		return true;
@@ -251,7 +275,10 @@ public class JavaASTTransformationUML extends JavaASTTransformation {
 				// methods:
 				for (MethodDeclaration method : typeDeclaration.getMethods()) {
 					Operation umlOperation = getModelElement(method);
-					rules.methodToOperation.apply((OperationOwner) umlClassifier, umlOperation);
+					
+					if (umlOperation != null) {
+						rules.methodToOperation.apply((OperationOwner) umlClassifier, umlOperation);
+					}
 					
 					// method body:
 					if (includeMethodBodies && (umlClassifier instanceof Class)) {
@@ -284,6 +311,15 @@ public class JavaASTTransformationUML extends JavaASTTransformation {
 					e.printStackTrace();
 				}
 			}
+			
+			// log line mapping: root/inner class/interface
+			if (!typeDeclaration.bodyDeclarations().isEmpty()) {
+				// Assume class declaration end where the first body statement begins:
+				traceLineToModelElement(JavaASTUtil.getFirstLine(getJavaAST(), (ASTNode) typeDeclaration.bodyDeclarations().get(0)) - 1, umlClassifier);
+				traceLineToModelElement(JavaASTUtil.getLastLine(getJavaAST(), typeDeclaration), umlClassifier); // tail
+			} else {
+				traceLineToModelElement(JavaASTUtil.getLastLine(getJavaAST(), typeDeclaration), umlClassifier);
+			}
 		}
 		return true;
 	}
@@ -299,19 +335,22 @@ public class JavaASTTransformationUML extends JavaASTTransformation {
 				}
 			}
 		} else {
-			try {
-				// For example: public String a1, a2, a3;
-				for (Object fieldDeclarationFragment : fieldDeclaration.fragments()) {
-					if (fieldDeclarationFragment instanceof VariableDeclarationFragment) {
-						Property umlProperty = getModelElement((VariableDeclarationFragment) fieldDeclarationFragment);
-						
-						if (umlProperty != null) {
+			// For example: public String a1, a2, a3;
+			for (Object fieldDeclarationFragment : fieldDeclaration.fragments()) {
+				if (fieldDeclarationFragment instanceof VariableDeclarationFragment) {
+					Property umlProperty = getModelElement((VariableDeclarationFragment) fieldDeclarationFragment);
+
+					if (umlProperty != null) {
+						try {
 							rules.fieldToProperty.link((VariableDeclarationFragment) fieldDeclarationFragment, umlProperty);
+						} catch (ClassNotFoundException e) {
+							e.printStackTrace();
 						}
+
+						// log line mapping: property
+						traceLineToModelElement(JavaASTUtil.getLastLine(getJavaAST(), (ASTNode) fieldDeclarationFragment), umlProperty);
 					}
 				}
-			} catch (ClassNotFoundException e) {
-				e.printStackTrace();
 			}
 		}
 		return true;
@@ -340,6 +379,9 @@ public class JavaASTTransformationUML extends JavaASTTransformation {
 				} catch (ClassNotFoundException e) {
 					e.printStackTrace();
 				}
+				
+				// log line mapping: operation
+				traceLineToModelElement(JavaASTUtil.getLastLine(getJavaAST(), methodDeclaration), umlOperation);
 			}
 		}
 		return true;
@@ -419,7 +461,7 @@ public class JavaASTTransformationUML extends JavaASTTransformation {
 		return true;
 	}
 
-	protected boolean isInScope(MethodInvocation methodInvocation) {
+	public boolean isInScope(MethodInvocation methodInvocation) {
 		String projectName = null;
 		ITypeBinding methodDeclaringBinding = null;
 		
@@ -439,5 +481,51 @@ public class JavaASTTransformationUML extends JavaASTTransformation {
 		}
 		
 		return false;
+	}
+
+	public List<EObject> getModelElementsByLine(Iterable<Integer> lines) {
+		if (lineToModel.isEmpty()) {
+			return Collections.emptyList();
+		}
+		
+		List<EObject> modelElements = new ArrayList<>();
+		
+		for (Integer line : lines) {
+			Entry<Integer, EObject> lineMatch = lineToModel.ceilingEntry(line);
+			
+			if (lineMatch != null) {
+				modelElements.add(lineMatch.getValue());
+			} else {
+				// assign space after last operation/declaration to the class
+				modelElements.add(lineToModel.firstEntry().getValue());
+			}
+		}
+		
+		return modelElements;
+	}
+	
+	protected void traceLineToModelElement(int lastLine, EObject modelElement) {
+		if ((modelElement != null) && !lineToModel.containsKey(lastLine)) {
+			if ((modelElement.eContainer() != null) || (getRootModelElements().contains(modelElement))) {
+				this.lineToModel.put(lastLine, modelElement);
+			} else {
+				if (Activator.getLogger().isLoggable(Level.FINE)) {
+					Activator.getLogger().log(Level.FINE, "Model element is not contained in a resource: " + modelElement);
+				}
+			}
+		}
+	}
+
+	public String dumpLineToModelElement() {
+		StringBuilder dump = new StringBuilder();
+		
+		for (Entry<Integer, EObject> lineEntry : lineToModel.entrySet()) {
+			dump.append(lineEntry.getKey());
+			dump.append(": ");
+			dump.append(lineEntry.getValue());
+			dump.append("\n");
+		}
+		
+		return dump.toString();
 	}
 }

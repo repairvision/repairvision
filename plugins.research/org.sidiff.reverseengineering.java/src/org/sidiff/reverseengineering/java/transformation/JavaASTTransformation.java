@@ -236,6 +236,9 @@ public abstract class JavaASTTransformation extends ASTVisitor {
 		return rootModelElements;
 	}
 	
+	/**
+	 * @return The corresponding Java AST.
+	 */
 	public CompilationUnit getJavaAST() {
 		return javaAST;
 	}
