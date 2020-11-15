@@ -1,6 +1,7 @@
 package org.sidiff.reverseengineering.java.transformation.uml.rules;
 
 
+import org.eclipse.jdt.core.dom.BodyDeclaration;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.eclipse.jdt.core.dom.PrimitiveType;
 import org.eclipse.jdt.core.dom.Type;
@@ -13,15 +14,17 @@ import org.sidiff.reverseengineering.java.util.JavaASTUtil;
 
 public class MethodToOperation extends JavaToUML<MethodDeclaration, OperationOwner, Operation> {
 	
+	public String returnParameterName = "return";
+	
 	@Override
 	public void apply(MethodDeclaration methodDeclaration) {
-		Operation umlOperation = createOperation(methodDeclaration);
+		Operation umlOperation = createOperation(methodDeclaration, methodDeclaration.getName().getIdentifier());
 		trafo.createModelElement(methodDeclaration, umlOperation);
 	}
 
-	public Operation createOperation(MethodDeclaration methodDeclaration) {
+	public Operation createOperation(BodyDeclaration methodDeclaration, String name) {
 		Operation umlOperation = umlFactory.createOperation();
-		umlOperation.setName(methodDeclaration.getName().getIdentifier());
+		umlOperation.setName(name);
 		
 		if (methodDeclaration.getJavadoc() != null) {
 			rules.javaToUMLHelper.createJavaDocComment(umlOperation, methodDeclaration.getJavadoc());
@@ -44,6 +47,7 @@ public class MethodToOperation extends JavaToUML<MethodDeclaration, OperationOwn
 		if ((returnType != null) && !JavaASTUtil.isPrimitiveType(returnType, PrimitiveType.VOID)) {
 			Parameter umlReturnParameter = rules.variableToParameter.createParameter(null);
 			umlReturnParameter.setDirection(ParameterDirectionKind.RETURN_LITERAL);
+			umlReturnParameter.setName(returnParameterName);
 			
 			rules.variableToParameter.setParameterType(umlReturnParameter, returnType);
 			operation.getOwnedParameters().add(umlReturnParameter);

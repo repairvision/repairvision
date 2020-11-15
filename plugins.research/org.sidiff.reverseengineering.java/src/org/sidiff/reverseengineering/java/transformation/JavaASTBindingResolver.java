@@ -20,14 +20,13 @@ import org.eclipse.jdt.core.IPackageFragment;
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.AbstractTypeDeclaration;
 import org.eclipse.jdt.core.dom.Annotation;
+import org.eclipse.jdt.core.dom.AnnotationTypeMemberDeclaration;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.EnumConstantDeclaration;
-import org.eclipse.jdt.core.dom.FieldDeclaration;
 import org.eclipse.jdt.core.dom.IBinding;
 import org.eclipse.jdt.core.dom.MemberValuePair;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.eclipse.jdt.core.dom.ModuleDeclaration;
-import org.eclipse.jdt.core.dom.Type;
 import org.eclipse.jdt.core.dom.VariableDeclaration;
 import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
 import org.sidiff.reverseengineering.java.Activator;
@@ -272,25 +271,18 @@ public class JavaASTBindingResolver {
 			return ((AbstractTypeDeclaration) node).resolveBinding();
 		} else if (node instanceof VariableDeclaration) {
 			return ((VariableDeclaration) node).resolveBinding();
-		} else if (node instanceof FieldDeclaration) {
-			FieldDeclaration fieldDeclaration = (FieldDeclaration) node;
-			
-			if ((fieldDeclaration.fragments().size() == 1) 
-					&& (fieldDeclaration.fragments().get(0) instanceof VariableDeclarationFragment)) {
-				
-				VariableDeclarationFragment declarationFragment = (VariableDeclarationFragment) fieldDeclaration.fragments().get(0);
-				return declarationFragment.resolveBinding();
-			}
+		} else if (node instanceof VariableDeclarationFragment) {
+			return((VariableDeclarationFragment) node).resolveBinding();
 		} else if (node instanceof MethodDeclaration) {
 			return ((MethodDeclaration) node).resolveBinding();
-		} else if (node instanceof Annotation) {
-			return ((Annotation) node).resolveAnnotationBinding();
 		} else if (node instanceof MemberValuePair) {
 			return ((MemberValuePair) node).resolveMemberValuePairBinding();
 		} else if (node instanceof EnumConstantDeclaration) {
 			return ((EnumConstantDeclaration) node).resolveVariable();
-		} else if (node instanceof Type) {
-			return ((Type) node).resolveBinding();
+		} else if (node instanceof AnnotationTypeMemberDeclaration) {
+			return ((AnnotationTypeMemberDeclaration) node).resolveBinding();
+		} else if (node instanceof Annotation) {
+			return ((Annotation) node).resolveAnnotationBinding();
 		}
 
 		return null;

@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.sidiff.reverseengineering.java.transformation.uml.JavaASTTransformationUML;
+import org.sidiff.reverseengineering.java.transformation.uml.rules.AnnotationTypeMemberToOperation;
+import org.sidiff.reverseengineering.java.transformation.uml.rules.AnnotationTypeToInterface;
+import org.sidiff.reverseengineering.java.transformation.uml.rules.AnnotationTypeToInterfaceInner;
 import org.sidiff.reverseengineering.java.transformation.uml.rules.BodyBlockToFunctionBehavior;
 import org.sidiff.reverseengineering.java.transformation.uml.rules.EnumConstantToEnumerationLiteral;
 import org.sidiff.reverseengineering.java.transformation.uml.rules.EnumToEnumeration;
@@ -45,6 +48,12 @@ public class JavaToUMLRules {
 	
 	public VariableToParameter variableToParameter;
 	
+	public AnnotationTypeToInterface annotationTypeToInterface;
+	
+	public AnnotationTypeToInterfaceInner annotationTypeToInterfaceInner;
+	
+	public AnnotationTypeMemberToOperation annotationTypeMemberToOperation;
+	
 	// Method body -> Activity Diagram:
 	
 	public BodyBlockToFunctionBehavior blockToFunctionBehavior;
@@ -66,6 +75,9 @@ public class JavaToUMLRules {
 		this.fieldToProperty = add(new FieldToProperty());
 		this.methodToOperation = add(new MethodToOperation());
 		this.variableToParameter = add(new VariableToParameter());
+		this.annotationTypeToInterface = add(new AnnotationTypeToInterface());
+		this.annotationTypeToInterfaceInner = add(new AnnotationTypeToInterfaceInner());
+		this.annotationTypeMemberToOperation = add(new AnnotationTypeMemberToOperation());
 		
 		this.blockToFunctionBehavior = add(new BodyBlockToFunctionBehavior());
 		this.methodInvocationToCallOperationAction = add(new MethodInvocationToCallOperationAction());

@@ -228,11 +228,6 @@ public class JavaASTLibraryModelUML extends JavaASTLibraryModel {
 		Enumeration libraryEnum = umlFactory.createEnumeration();
 		libraryEnum.setName(typeBinding.getName());
 		
-		// repair visibility:
-		if (typeBinding.isRecovered()) {
-			libraryEnum.setVisibility(VisibilityKind.PUBLIC_LITERAL);
-		}
-		
 		// set container:
 		addClassifierToModel(typeBinding, libraryEnum, bindingRecovery);
 		
@@ -244,6 +239,12 @@ public class JavaASTLibraryModelUML extends JavaASTLibraryModel {
 		}
 		
 		javaToUMLHelper.setModifiers(libraryEnum, typeBinding.getModifiers());
+		
+		// repair visibility:
+		if (typeBinding.isRecovered()) {
+			libraryEnum.setVisibility(VisibilityKind.PUBLIC_LITERAL);
+		}
+		
 		return libraryEnum;
 	}
 
@@ -257,14 +258,17 @@ public class JavaASTLibraryModelUML extends JavaASTLibraryModel {
 		Interface libraryIterface = umlFactory.createInterface();
 		libraryIterface.setName(typeBinding.getName());
 		
+		// set container:
+		addClassifierToModel(typeBinding, libraryIterface, bindingRecovery);
+		
+		// Operation visibility package->public depends on container...
+		javaToUMLHelper.setModifiers(libraryIterface, typeBinding.getModifiers());
+		
+		// repair visibility:
 		if (typeBinding.isRecovered()) {
 			libraryIterface.setVisibility(VisibilityKind.PUBLIC_LITERAL);
 		}
 		
-		// set container:
-		addClassifierToModel(typeBinding, libraryIterface, bindingRecovery);
-		
-		javaToUMLHelper.setModifiers(libraryIterface, typeBinding.getModifiers());
 		return libraryIterface;
 	}
 
@@ -272,14 +276,16 @@ public class JavaASTLibraryModelUML extends JavaASTLibraryModel {
 		Class libraryClass = umlFactory.createClass();
 		libraryClass.setName(typeBinding.getName());
 		
-		if (typeBinding.isRecovered()) {
-			libraryClass.setVisibility(VisibilityKind.PUBLIC_LITERAL);
-		}
-		
 		// set container:
 		addClassifierToModel(typeBinding, libraryClass, bindingRecovery);
 		
 		javaToUMLHelper.setModifiers(libraryClass, typeBinding.getModifiers());
+		
+		// repair visibility:
+		if (typeBinding.isRecovered()) {
+			libraryClass.setVisibility(VisibilityKind.PUBLIC_LITERAL);
+		}
+		
 		return libraryClass;
 	}
 
@@ -298,6 +304,12 @@ public class JavaASTLibraryModelUML extends JavaASTLibraryModel {
 		}
 		
 		javaToUMLHelper.setModifiers(libraryOperation, methodBinding.getModifiers());
+		
+		// repair visibility:
+		if (methodBinding.isRecovered()) {
+			libraryOperation.setVisibility(VisibilityKind.PUBLIC_LITERAL);
+		}
+		
 		return libraryOperation;
 	}
 
@@ -319,6 +331,12 @@ public class JavaASTLibraryModelUML extends JavaASTLibraryModel {
 		}
 		
 		javaToUMLHelper.setModifiers(libraryProperty, variableBinding.getModifiers());
+		
+		// repair visibility:
+		if (variableBinding.isRecovered()) {
+			libraryProperty.setVisibility(VisibilityKind.PUBLIC_LITERAL);
+		}
+		
 		return libraryProperty;
 	}
 }

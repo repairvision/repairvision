@@ -79,9 +79,9 @@ public class ReverseEngineeringApp implements IApplication {
 
 		Set<String> workspaceProjectsFilter = new HashSet<>(Arrays.asList(new String[] { "" }));
 		Set<IProject> workspaceProjects = getAllWorkspaceProjects(workspaceProjectsFilter);
-//		workspaceProjects = getProject("org.eclipse.jdt.apt.core");
-//		workspaceProjects.addAll(getProject("Test2"));
-//		workspaceProjects = getProject("org.eclipse.jdt.compiler.apt");
+		workspaceProjects = getProject("Test2");
+//		workspaceProjects.addAll(getProject("Test"));
+//		workspaceProjects = getProject("org.eclipse.jdt.core");
 		Set<String> workspaceProjectNames = getProjectName(workspaceProjects);
 		
 		JavaParser javaParser = new JavaParser();
@@ -175,7 +175,7 @@ public class ReverseEngineeringApp implements IApplication {
 		
 		return workspaceProjects;
 	}
-
+	
 	@Override
 	public void stop() {
 	}
@@ -204,7 +204,7 @@ public class ReverseEngineeringApp implements IApplication {
     		IJavaElement javaElement = javaAST.getJavaElement();
     		
     		System.out.println(javaElement.getResource().getFullPath());
-    		
+   		
     		JavaASTBindingResolver modelBindings = modelBindingProvider.apply(javaAST);
     		JavaASTTransformation transformation = javaAST2Model.get();
     		transformation.init(javaAST, modelBindings);
@@ -212,11 +212,11 @@ public class ReverseEngineeringApp implements IApplication {
     		
     		// Add to project model:
     		if (javaElement.getParent() instanceof IPackageFragment) {
-    			for (EObject rootModelELement : transformation.getRootModelElements()) {
-    				if ((javaAST.getPackage() != null) && (javaAST.getPackage().resolveBinding() != null)) { //FIXME:default packages!?
-    					projectModel.addPackagedElement(project, javaAST.getPackage().resolveBinding(), rootModelELement);
+    			for (EObject rootModelElement : transformation.getRootModelElements()) {
+    				if ((javaAST.getPackage() != null) && (javaAST.getPackage().resolveBinding() != null)) {
+    					projectModel.addPackagedElement(project, javaAST.getPackage().resolveBinding(), rootModelElement);
     				} else {
-    					projectModel.getProjectModel().getContents().add(rootModelELement); 
+    					projectModel.addPackagedElement(project, null, rootModelElement); // default package
     				}
     			}
     		}

@@ -1,5 +1,6 @@
 package org.sidiff.reverseengineering.java.transformation.uml.rules;
 
+import org.eclipse.jdt.core.dom.AbstractTypeDeclaration;
 import org.eclipse.jdt.core.dom.Type;
 import org.eclipse.jdt.core.dom.TypeDeclaration;
 import org.eclipse.uml2.uml.Interface;
@@ -14,7 +15,7 @@ public class TypeToInterface extends JavaToUML<TypeDeclaration, Package, Interfa
 		trafo.createRootModelElement(typeDeclaration, umlInterface);
 	}
 	
-	public Interface createInterface(TypeDeclaration typeDeclaration) {
+	public Interface createInterface(AbstractTypeDeclaration typeDeclaration) {
 		Interface umlInterface = umlFactory.createInterface();
 		umlInterface.setName(typeDeclaration.getName().getIdentifier());
 		rules.javaToUMLHelper.setModifiers(umlInterface, typeDeclaration);

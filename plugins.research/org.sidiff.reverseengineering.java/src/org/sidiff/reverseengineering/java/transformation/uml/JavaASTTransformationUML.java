@@ -1,5 +1,8 @@
 package org.sidiff.reverseengineering.java.transformation.uml;
 
+import org.eclipse.jdt.core.dom.AbstractTypeDeclaration;
+import org.eclipse.jdt.core.dom.AnnotationTypeDeclaration;
+import org.eclipse.jdt.core.dom.AnnotationTypeMemberDeclaration;
 import org.eclipse.jdt.core.dom.EnumConstantDeclaration;
 import org.eclipse.jdt.core.dom.EnumDeclaration;
 import org.eclipse.jdt.core.dom.FieldDeclaration;
@@ -58,7 +61,8 @@ public class JavaASTTransformationUML extends JavaASTTransformation {
 		if (!linker) {
 			if (enumDeclaration.isPackageMemberTypeDeclaration()) {
 				rules.enumToEnumeration.apply(enumDeclaration);
-			} else if (enumDeclaration.getParent() instanceof TypeDeclaration) {
+			} else if (enumDeclaration.getParent() instanceof AbstractTypeDeclaration) {
+				// class, interface, annotation
 				rules.enumToEnumerationInner.apply(enumDeclaration);
 			}
 		} else {
@@ -84,6 +88,75 @@ public class JavaASTTransformationUML extends JavaASTTransformation {
 	public boolean visit(EnumConstantDeclaration enumConstantDeclaration) {
 		if (!linker) {
 			rules.enumConstantToEnumerationLiteral.apply(enumConstantDeclaration);
+		}
+		return true;
+	}
+	
+	@Override
+	public boolean visit(AnnotationTypeDeclaration annotationTypeDeclaration) {
+		if (!linker) {
+			if (annotationTypeDeclaration.isPackageMemberTypeDeclaration()) {
+				rules.annotationTypeToInterface.apply(annotationTypeDeclaration);
+			} else {
+				rules.annotationTypeToInterfaceInner.apply(annotationTypeDeclaration);
+			}
+		} else {
+			Interface umlAnnotationInterface = getModelElement(annotationTypeDeclaration);
+			
+			if (umlAnnotationInterface != null) {
+				// properties:
+				for (Object bodyDeclaration : annotationTypeDeclaration.bodyDeclarations()) {
+
+					// fields:
+					if (bodyDeclaration instanceof FieldDeclaration) {
+						for (Object fieldDeclarationFragment : ((FieldDeclaration) bodyDeclaration).fragments()) {
+							if (fieldDeclarationFragment instanceof VariableDeclarationFragment) {
+								Property umlProperty = getModelElement((VariableDeclarationFragment) fieldDeclarationFragment);
+								
+								if (umlProperty != null) {
+									rules.fieldToProperty.apply(umlAnnotationInterface, umlProperty);
+								}
+							}
+						}
+					}
+					
+					// methods:
+					if (bodyDeclaration instanceof AnnotationTypeMemberDeclaration) {
+						Operation annotationOperation = getModelElement((AnnotationTypeMemberDeclaration) bodyDeclaration);
+						
+						if (annotationOperation != null) {
+							rules.annotationTypeMemberToOperation.apply(umlAnnotationInterface, annotationOperation);
+						}
+					}
+					
+					// enumeration:
+					if (bodyDeclaration instanceof EnumDeclaration) {
+						Enumeration annotationEnumeration = getModelElement((EnumDeclaration) bodyDeclaration);
+						
+						if (annotationEnumeration != null) {
+							rules.enumToEnumerationInner.apply(umlAnnotationInterface, annotationEnumeration);
+						}
+					}
+				}
+			}
+		}
+		return true;
+	}
+	
+	@Override
+	public boolean visit(AnnotationTypeMemberDeclaration memberDeclaration) {
+		if (!linker) {
+			rules.annotationTypeMemberToOperation.apply(memberDeclaration);
+		} else {
+			Operation annotationOperation = getModelElement(memberDeclaration);
+			
+			if (annotationOperation != null) {
+				try {
+					rules.annotationTypeMemberToOperation.link(memberDeclaration, annotationOperation);
+				} catch (ClassNotFoundException e) {
+					e.printStackTrace();
+				}
+			}
 		}
 		return true;
 	}
@@ -115,16 +188,20 @@ public class JavaASTTransformationUML extends JavaASTTransformation {
 						TypeDeclaration innerTypeDeclaration = (TypeDeclaration) bodyDeclaration;
 						
 						if (innerTypeDeclaration.isInterface()) {
-							Interface umlNestedInterface = getModelElement((TypeDeclaration) innerTypeDeclaration);
+							Interface umlNestedInterface = getModelElement(innerTypeDeclaration);
 							rules.typeToInterfaceInner.apply(umlClassifier, umlNestedInterface);
 						} else {
-							Class umlNestedClass = getModelElement((TypeDeclaration) innerTypeDeclaration);
+							Class umlNestedClass = getModelElement(innerTypeDeclaration);
 							rules.typeToClassInner.apply(umlClassifier, umlNestedClass);
 						}
 					} else if (bodyDeclaration instanceof EnumDeclaration) {
 						EnumDeclaration innerTypeDeclaration = (EnumDeclaration) bodyDeclaration;
-						Enumeration umlNestedEnum = getModelElement((EnumDeclaration) innerTypeDeclaration);
+						Enumeration umlNestedEnum = getModelElement(innerTypeDeclaration);
 						rules.enumToEnumerationInner.apply(umlClassifier, umlNestedEnum);
+					} else if (bodyDeclaration instanceof AnnotationTypeDeclaration) {
+						AnnotationTypeDeclaration innerTypeDeclaration = (AnnotationTypeDeclaration) bodyDeclaration;
+						Interface umlNestedAnnotationInterface = getModelElement(innerTypeDeclaration);
+						rules.annotationTypeToInterfaceInner.apply(umlClassifier, umlNestedAnnotationInterface);
 					}
 				}
 				

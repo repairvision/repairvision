@@ -34,6 +34,15 @@ public class JavaASTProjectModelUML extends JavaASTProjectModel {
 	
 	@Override
 	public void addPackagedElement(IProject project, IPackageBinding binding, EObject modelElement) {
+		
+		// default package?
+		if (binding == null) {
+			if (modelElement instanceof PackageableElement) {
+				getDefaultPackage(project).getPackagedElements().add((PackageableElement) modelElement);
+				return;
+			}
+		}
+		
 		String[] packages = binding.getNameComponents();
 		String bindingKey = null;
 		Package parentPackage = getProjectPackage(project);
@@ -74,14 +83,7 @@ public class JavaASTProjectModelUML extends JavaASTProjectModel {
 			if (childPackage != null) {
 				childPackage.getPackagedElements().add((PackageableElement) modelElement);
 			} else {
-				if (defaultPackage == null) {
-					this.defaultPackage = umlFactory.createPackage();
-					this.defaultPackage.setName("default");
-					this.projectModelRoot.getNestedPackages().add(0, defaultPackage);
-					bindModelElement(getBindingKey(project, "default"), defaultPackage);
-				}
-				
-				this.defaultPackage.getPackagedElements().add((PackageableElement) modelElement);
+				getDefaultPackage(project).getPackagedElements().add((PackageableElement) modelElement);
 			}
 		}
 	}
@@ -97,4 +99,13 @@ public class JavaASTProjectModelUML extends JavaASTProjectModel {
 		return projectModelRoot;
 	}
 
+	private Package getDefaultPackage(IProject project) {
+		if (defaultPackage == null) {
+			this.defaultPackage = umlFactory.createPackage();
+			this.defaultPackage.setName("default");
+			getProjectPackage(project).getNestedPackages().add(0, defaultPackage);
+			bindModelElement(getBindingKey(project, "default"), defaultPackage);
+		}
+		return defaultPackage;
+	}
 }
