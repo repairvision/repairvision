@@ -140,7 +140,7 @@ public class JavaASTBindingResolver {
 				if (existingBinding != null) {
 					return (E) existingBinding;
 				} else {
-					if (workspaceProjects.contains(projectName) && isInWorkspace(binding)) {
+					if (isInScope(projectName, binding)) {
 						
 						// Create new workspace proxy binding or common external binding:
 						String[] externalPath = getModelPath(projectName, javaElement);
@@ -195,12 +195,16 @@ public class JavaASTBindingResolver {
 		}
 	}
 
+	public boolean isInScope(String projectName, IBinding binding) {
+		return workspaceProjects.contains(projectName) && isInWorkspace(binding);
+	}
+
 	/**
 	 * @param externalBinding A Java binding.
 	 * @return <code>true</code> if it is a source file in the workspace;
 	 *         <code>false</code> if it is, e.g., a Java source of the JDT.
 	 */
-	protected boolean isInWorkspace(IBinding externalBinding) {
+	public boolean isInWorkspace(IBinding externalBinding) {
 		IResource resource = externalBinding.getJavaElement().getResource();
 		
 		if (resource != null) {

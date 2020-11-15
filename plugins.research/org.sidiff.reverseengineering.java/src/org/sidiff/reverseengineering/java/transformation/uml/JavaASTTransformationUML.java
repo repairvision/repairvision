@@ -3,22 +3,30 @@ package org.sidiff.reverseengineering.java.transformation.uml;
 import org.eclipse.jdt.core.dom.AbstractTypeDeclaration;
 import org.eclipse.jdt.core.dom.AnnotationTypeDeclaration;
 import org.eclipse.jdt.core.dom.AnnotationTypeMemberDeclaration;
+import org.eclipse.jdt.core.dom.Block;
 import org.eclipse.jdt.core.dom.EnumConstantDeclaration;
 import org.eclipse.jdt.core.dom.EnumDeclaration;
 import org.eclipse.jdt.core.dom.FieldDeclaration;
+import org.eclipse.jdt.core.dom.IMethodBinding;
+import org.eclipse.jdt.core.dom.ITypeBinding;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
+import org.eclipse.jdt.core.dom.MethodInvocation;
 import org.eclipse.jdt.core.dom.SingleVariableDeclaration;
 import org.eclipse.jdt.core.dom.TypeDeclaration;
 import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
+import org.eclipse.uml2.uml.Behavior;
+import org.eclipse.uml2.uml.CallOperationAction;
 import org.eclipse.uml2.uml.Class;
 import org.eclipse.uml2.uml.Classifier;
 import org.eclipse.uml2.uml.Enumeration;
 import org.eclipse.uml2.uml.EnumerationLiteral;
+import org.eclipse.uml2.uml.FunctionBehavior;
 import org.eclipse.uml2.uml.Interface;
 import org.eclipse.uml2.uml.Operation;
 import org.eclipse.uml2.uml.OperationOwner;
 import org.eclipse.uml2.uml.Parameter;
 import org.eclipse.uml2.uml.Property;
+import org.eclipse.uml2.uml.UMLPackage;
 import org.sidiff.reverseengineering.java.transformation.JavaASTTransformation;
 import org.sidiff.reverseengineering.java.transformation.uml.rulebase.JavaToUMLRules;
 
@@ -31,10 +39,13 @@ public class JavaASTTransformationUML extends JavaASTTransformation {
 	
 	private boolean linker = false;
 	
+	private boolean includeMethodBodies = true;
+	
 	private JavaToUMLRules rules;
 	
-	public JavaASTTransformationUML(JavaToUMLRules rules) {
+	public JavaASTTransformationUML(JavaToUMLRules rules, boolean includeMethodBodies) {
 		this.rules = rules;
+		this.includeMethodBodies = includeMethodBodies;
 	}
 	
 	@Override
@@ -49,11 +60,18 @@ public class JavaASTTransformationUML extends JavaASTTransformation {
 		getJavaAST().accept(this);
 		
 		// Finalize model graph:
-		// TODO Method invocations
-//		this.rules.javaToUMLHelper.finalize(getRootModelElements());
+		this.rules.getTransformations().forEach(rule -> rule.finalizing(getRootModelElements()));
 		
 		// Clean up resources:
 		this.rules.cleanUp();
+	}
+	
+	public boolean isIncludeMethodBodies() {
+		return includeMethodBodies;
+	}
+	
+	public void setIncludeMethodBodies(boolean includeMethodBodies) {
+		this.includeMethodBodies = includeMethodBodies;
 	}
 	
 	@Override
@@ -169,12 +187,22 @@ public class JavaASTTransformationUML extends JavaASTTransformation {
 					rules.typeToInterface.apply(typeDeclaration);
 				} else {
 					rules.typeToClass.apply(typeDeclaration);
+					
+					// method invocations:
+					if (includeMethodBodies) {
+						rules.typeToClassWithInteraction.apply(typeDeclaration);
+					}
 				}
 			} else if (typeDeclaration.getParent() instanceof TypeDeclaration) {
 				if (typeDeclaration.isInterface()) {
 					rules.typeToInterfaceInner.apply(typeDeclaration);
 				} else {
 					rules.typeToClassInner.apply(typeDeclaration);
+					
+					// method invocations:
+					if (includeMethodBodies) {
+						rules.typeToClassWithInteraction.apply(typeDeclaration);
+					}
 				}
 			}
 		} else {
@@ -225,17 +253,16 @@ public class JavaASTTransformationUML extends JavaASTTransformation {
 					Operation umlOperation = getModelElement(method);
 					rules.methodToOperation.apply((OperationOwner) umlClassifier, umlOperation);
 					
-					// TODO Method invocations
-//					// method body:
-//					if (umlClassifier instanceof Class) {
-//						Class umlClass = (Class) umlClassifier; // only classes have method bodies...
-//						Behavior classBehavior = umlClass.getClassifierBehavior();
-//						FunctionBehavior operationBehavior = getModelElement(method.getBody());
-//						
-//						if ((operationBehavior != null) && (classBehavior != null)) {
-//							rules.blockToFunctionBehavior.apply(classBehavior, operationBehavior);
-//						}
-//					}
+					// method body:
+					if (includeMethodBodies && (umlClassifier instanceof Class)) {
+						Class umlClass = (Class) umlClassifier; // only classes have method bodies...
+						Behavior classBehavior = umlClass.getClassifierBehavior();
+						FunctionBehavior operationBehavior = getModelElement(method.getBody());
+						
+						if ((operationBehavior != null) && (classBehavior != null)) {
+							rules.blockToFunctionBehavior.apply(classBehavior, operationBehavior);
+						}
+					}
 				}
 				
 				// super types and interfaces:
@@ -336,46 +363,81 @@ public class JavaASTTransformationUML extends JavaASTTransformation {
 		return true;
 	}
 
-	// TODO Method invocations
-//	@Override
-//	public boolean visit(Block block) {
-//		if (!linker) {
-//			if (block.getParent() instanceof MethodDeclaration) {
-//				rules.blockToFunctionBehavior.apply(block);
-//			}
-//		} else {
-//			FunctionBehavior operationBehavior = getModelElement(block);
-//			
-//			if (operationBehavior != null) {
-//				try {
-//					rules.blockToFunctionBehavior.link(block, operationBehavior);
-//				} catch (ClassNotFoundException e) {
-//					e.printStackTrace();
-//				}
-//			}
-//		}
-//		
-//		return true;
-//	}
-//	
-//	@Override
-//	public boolean visit(MethodInvocation methodInvocation) {
-//		if (!linker) {
-//			rules.methodInvocationToCallOperationAction.apply(methodInvocation);
-//		} else {
-//			CallOperationAction callOperation = getModelElement(methodInvocation);
-//			FunctionBehavior operationBehavior = getParentModelElement(methodInvocation, UMLPackage.eINSTANCE.getFunctionBehavior());
-//			
-//			if ((operationBehavior != null) && (callOperation != null)) {
-//				rules.methodInvocationToCallOperationAction.apply(operationBehavior, callOperation);
-//				
-//				try {
-//					rules.methodInvocationToCallOperationAction.link(methodInvocation, callOperation);
-//				} catch (ClassNotFoundException e) {
-//					e.printStackTrace();
-//				}
-//			}
-//		}
-//		return true;
-//	}
+	@Override
+	public boolean visit(Block block) {
+		
+		// Skip method bodies!
+		if (!includeMethodBodies) {
+			return false;
+		}
+		
+		if (!linker) {
+			if (block.getParent() instanceof MethodDeclaration) {
+				rules.blockToFunctionBehavior.apply(block);
+			}
+		} else {
+			FunctionBehavior operationBehavior = getModelElement(block);
+			
+			if (operationBehavior != null) {
+				try {
+					rules.blockToFunctionBehavior.link(block, operationBehavior);
+				} catch (ClassNotFoundException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		
+		return true;
+	}
+	
+	@Override
+	public boolean visit(MethodInvocation methodInvocation) {
+		
+		// Skip method invocations!
+		if (!includeMethodBodies) {
+			return false;
+		}
+		
+		if (isInScope(methodInvocation)) {
+			if (!linker) {
+				rules.methodInvocationToCallOperationAction.apply(methodInvocation);
+			} else {
+				CallOperationAction callOperation = getModelElement(methodInvocation);
+				FunctionBehavior operationBehavior = getParentModelElement(methodInvocation, UMLPackage.eINSTANCE.getFunctionBehavior());
+				
+				if ((operationBehavior != null) && (callOperation != null)) {
+					rules.methodInvocationToCallOperationAction.apply(operationBehavior, callOperation);
+					
+					try {
+						rules.methodInvocationToCallOperationAction.link(methodInvocation, callOperation);
+					} catch (ClassNotFoundException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		}
+		return true;
+	}
+
+	protected boolean isInScope(MethodInvocation methodInvocation) {
+		String projectName = null;
+		ITypeBinding methodDeclaringBinding = null;
+		
+		try {
+			IMethodBinding methodBinding = methodInvocation.resolveMethodBinding();
+			
+			if (methodBinding.getJavaElement() != null) {
+				methodDeclaringBinding =  methodBinding.getDeclaringClass();
+				projectName = methodDeclaringBinding.getJavaElement().getJavaProject().getProject().getName();
+			}
+		} catch (Throwable t) {
+			return false;
+		}
+		
+		if ((projectName != null) && (methodDeclaringBinding != null)) {
+			return getBindingResolver().isInScope(projectName, methodDeclaringBinding);
+		}
+		
+		return false;
+	}
 }

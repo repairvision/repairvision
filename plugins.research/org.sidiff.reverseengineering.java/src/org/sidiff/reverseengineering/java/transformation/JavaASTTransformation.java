@@ -163,10 +163,17 @@ public abstract class JavaASTTransformation extends ASTVisitor {
 	 * @param modelElement A model element fragment (no binding).
 	 */
 	public void createModelElementFragment(ASTNode astNode, EObject modelElement) {
-		assert (astNode != null);
 		
-		// Trace generated element:
-		javaToModelTrace.put(astNode, modelElement);
+		if ((astNode != null) && (modelElement != null)) {
+			
+			// Trace generated element:
+			javaToModelTrace.put(astNode, modelElement);
+		} else {
+			if (Activator.getLogger().isLoggable(Level.FINE)) {
+				Activator.getLogger().log(Level.FINE, "Tace with null-element:\n" + astNode + "\n" + modelElement);
+			}
+		}
+		
 	}
 	
 	/**
@@ -206,6 +213,13 @@ public abstract class JavaASTTransformation extends ASTVisitor {
 	 */
 	public URI getModelURI(URI baseURI) {
 		return baseURI.appendSegments(transformationPath);
+	}
+	
+	/**
+	 * @return The helper which computes the binding keys.
+	 */
+	public JavaASTBindingResolver getBindingResolver() {
+		return bindings;
 	}
 	
 	/**

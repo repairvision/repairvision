@@ -16,6 +16,7 @@ import org.sidiff.reverseengineering.java.transformation.uml.rules.MethodInvocat
 import org.sidiff.reverseengineering.java.transformation.uml.rules.MethodToOperation;
 import org.sidiff.reverseengineering.java.transformation.uml.rules.TypeToClass;
 import org.sidiff.reverseengineering.java.transformation.uml.rules.TypeToClassInner;
+import org.sidiff.reverseengineering.java.transformation.uml.rules.TypeToClassWithInteraction;
 import org.sidiff.reverseengineering.java.transformation.uml.rules.TypeToInterface;
 import org.sidiff.reverseengineering.java.transformation.uml.rules.TypeToInterfaceInner;
 import org.sidiff.reverseengineering.java.transformation.uml.rules.VariableToParameter;
@@ -56,6 +57,8 @@ public class JavaToUMLRules {
 	
 	// Method body -> Activity Diagram:
 	
+	public TypeToClassWithInteraction typeToClassWithInteraction;
+	
 	public BodyBlockToFunctionBehavior blockToFunctionBehavior;
 	
 	public MethodInvocationToCallOperationAction methodInvocationToCallOperationAction;
@@ -76,6 +79,7 @@ public class JavaToUMLRules {
 		this.methodToOperation = add(new MethodToOperation());
 		this.variableToParameter = add(new VariableToParameter());
 		this.annotationTypeToInterface = add(new AnnotationTypeToInterface());
+		this.typeToClassWithInteraction = add(new TypeToClassWithInteraction());
 		this.annotationTypeToInterfaceInner = add(new AnnotationTypeToInterfaceInner());
 		this.annotationTypeMemberToOperation = add(new AnnotationTypeMemberToOperation());
 		

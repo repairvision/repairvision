@@ -1,6 +1,7 @@
 package org.sidiff.reverseengineering.java.transformation.uml.rulebase;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.eclipse.emf.ecore.EObject;
@@ -84,4 +85,11 @@ public abstract class JavaToUML<JN, UC, UN> {
 	 * @throws ClassNotFoundException A type binding that could not be resolved.
 	 */
 	public abstract void link(JN javaNode, UN modelNode) throws ClassNotFoundException;
+	
+	/**
+	 * Optional final processing step.
+	 * 
+	 * @param rootElements All root elements of the transformation.
+	 */
+	public void finalizing(List<EObject> rootElements) {}
 }

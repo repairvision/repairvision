@@ -6,7 +6,6 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.Function;
-import java.util.function.Supplier;
 import java.util.logging.ConsoleHandler;
 import java.util.logging.Level;
 import java.util.stream.Collectors;
@@ -75,7 +74,7 @@ public class ReverseEngineeringApp implements IApplication {
 		// Application Settings:
 		URI baseURI = URI.createFileURI("C:\\Users\\manue\\git\\repairvision\\plugins.research\\org.sidiff.reverseengineering.java\\test");
 		
-		boolean parseMethodBodies = false;
+		boolean inlcudeMethodBodies = false;
 
 		Set<String> workspaceProjectsFilter = new HashSet<>(Arrays.asList(new String[] { "" }));
 		Set<IProject> workspaceProjects = getAllWorkspaceProjects(workspaceProjectsFilter);
@@ -101,7 +100,7 @@ public class ReverseEngineeringApp implements IApplication {
 
     	// Store bindings relative to each unit:
     	Function<CompilationUnit, JavaASTBindingResolver> modelBindings = (compilationUnit) -> new JavaASTBindingResolverUML(compilationUnit, libraryModel, workspaceProjectNames, bindingTranslator, new HashMap<>());
-    	Supplier<JavaASTTransformation> javaAST2Model = () -> new JavaASTTransformationUML(new JavaToUMLRules(javaToUMLHelper));
+    	Function<Boolean, JavaASTTransformation> javaAST2Model = (includeMethodBodies) -> new JavaASTTransformationUML(new JavaToUMLRules(javaToUMLHelper), includeMethodBodies);
     	
 		for (IProject project : workspaceProjects) {
 			
@@ -122,7 +121,7 @@ public class ReverseEngineeringApp implements IApplication {
 					workspaceModel, 
 					libraryModel, 
 					projectModel,
-					parseMethodBodies);
+					inlcudeMethodBodies);
 
 			// Save project model:
 			projectModel.save();
@@ -186,16 +185,16 @@ public class ReverseEngineeringApp implements IApplication {
 			ResourceSet resourceSet,
 			JavaParser javaParser, 
 			EMFHelper emfHelper, 
-			Supplier<JavaASTTransformation> javaAST2Model,
+			Function<Boolean, JavaASTTransformation> javaAST2Model,
 			Function<CompilationUnit, JavaASTBindingResolver> modelBindingProvider, 
 			JavaASTWorkspaceModel workspaceModel,
 			JavaASTLibraryModel libraryModel, 
 			JavaASTProjectModel projectModel, 
-			boolean parseMethodBodies)
+			boolean includeMethodBodies)
 			throws JavaModelException {
 
 		System.out.print("Parsing...");
-		Map<ICompilationUnit, CompilationUnit> parsedASTs = javaParser.parse(project, parseMethodBodies);
+		Map<ICompilationUnit, CompilationUnit> parsedASTs = javaParser.parse(project, includeMethodBodies);
 		System.out.println("Finished");
 
     	ResourceSet resourceSetOld = new ResourceSetImpl();
@@ -206,7 +205,7 @@ public class ReverseEngineeringApp implements IApplication {
     		System.out.println(javaElement.getResource().getFullPath());
    		
     		JavaASTBindingResolver modelBindings = modelBindingProvider.apply(javaAST);
-    		JavaASTTransformation transformation = javaAST2Model.get();
+    		JavaASTTransformation transformation = javaAST2Model.apply(includeMethodBodies);
     		transformation.init(javaAST, modelBindings);
     		transformation.apply();
     		

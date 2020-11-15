@@ -7,7 +7,6 @@ import org.eclipse.jdt.core.dom.Type;
 import org.eclipse.jdt.core.dom.TypeDeclaration;
 import org.eclipse.uml2.uml.Class;
 import org.eclipse.uml2.uml.Classifier;
-import org.eclipse.uml2.uml.FunctionBehavior;
 import org.eclipse.uml2.uml.Generalization;
 import org.eclipse.uml2.uml.Interface;
 import org.eclipse.uml2.uml.InterfaceRealization;
@@ -32,17 +31,7 @@ public class TypeToClass extends JavaToUML<TypeDeclaration, Package, Class> {
 			rules.javaToUMLHelper.createJavaDocComment(umlClass, typeDeclaration.getJavadoc());
 		}
 		
-		// Create classifier behavior for operation behavior modeling:
-		// TODO: Method invocations
-//		createClassifierBehavior(umlClass);
-		
 		return umlClass;
-	}
-	
-	public void createClassifierBehavior(Class umlClass) {
-		FunctionBehavior umlFunctionBehavior = umlFactory.createFunctionBehavior();
-		umlFunctionBehavior.setName(umlClass.getName());
-		umlClass.setClassifierBehavior(umlFunctionBehavior);
 	}
 
 	@Override
