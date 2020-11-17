@@ -7,8 +7,11 @@ import org.sidiff.reverseengineering.java.transformation.uml.rulebase.JavaToUMLR
 
 public class TransformationModuleUML extends TransformationModule {
 
-	public TransformationModuleUML(TransformationSettings settings) {
+	private TransformationSettingsUML settingsUML;
+	
+	public TransformationModuleUML(TransformationSettingsUML settings) {
 		super(settings, new TransformationDomainUML());
+		this.settingsUML = settings;
 	}
 	
 	@Override
@@ -17,6 +20,18 @@ public class TransformationModuleUML extends TransformationModule {
 		bindJavaToUMLRules();
 		bindJavaToUMLHelper();
 	}
+	
+	/*
+	 * Instances:
+	 */
+	
+	protected void configureSettings() {
+		bind(TransformationSettings.class).toInstance(settingsUML);
+	}
+	
+	/*
+	 * Type Bindings:
+	 */
 	
 	protected void bindJavaToUMLRules() {
 		bind(JavaToUMLRules.class);

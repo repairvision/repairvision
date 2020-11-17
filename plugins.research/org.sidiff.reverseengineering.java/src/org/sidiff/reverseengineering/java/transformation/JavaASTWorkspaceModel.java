@@ -42,6 +42,11 @@ public abstract class JavaASTWorkspaceModel {
 	public abstract void addToWorkspace(EObject projectModel);
 	
 	/**
+	 * @param projectModel The model element representing the project's root.
+	 */
+	public abstract void removeFromWorkspace(EObject projectModel);
+
+	/**
 	 * @return The model representing a Java workspace.
 	 */
 	public XMLResource getWorkspaceModel() {

@@ -1,6 +1,7 @@
 package org.sidiff.reverseengineering.java.transformation;
 
 import java.io.IOException;
+import java.util.NoSuchElementException;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.emf.ecore.EObject;
@@ -20,22 +21,30 @@ public abstract class JavaASTProjectModel {
 	/**
 	 * The model representing a Java project.
 	 */
-	private XMLResource projectModel;
+	protected XMLResource projectModel;
+	
+	/**
+	 * The corresponding workspace project.
+	 */
+	protected IProject project;
 	
 	/**
 	 * Creates bindings for the model.
 	 */
-	private JavaASTBindingTranslator bindingTranslator;
+	protected JavaASTBindingTranslator bindingTranslator;
 	
 	/**
 	 * @param projectModel      The model representing a Java project
+	 * @param project           The corresponding workspace project.
 	 * @param bindingTranslator Helper to translate bindings.
 	 */
 	@Inject
 	public JavaASTProjectModel(
 			@Assisted XMLResource projectModel, 
+			@Assisted IProject project,
 			JavaASTBindingTranslator bindingTranslator) {
 		this.projectModel = projectModel;
+		this.project = project;
 		this.bindingTranslator = bindingTranslator;
 	}
 
@@ -45,8 +54,18 @@ public abstract class JavaASTProjectModel {
 	 * @param packageFragment A Java package.
 	 * @param modelElement The contained model element.
 	 */
-	public abstract void addPackagedElement(IProject project, IPackageBinding binding, EObject modelElement);
+	public abstract void addPackagedElement(IPackageBinding binding, EObject modelElement);
 	
+	/**
+	 * Matches the given project path to the qualified type names and removes the
+	 * given type from the project model.
+	 * 
+	 * @param project     A workspace project.
+	 * @param projectPath A project relative path by folder segments.
+	 * @param typeName    The name of the Java type.
+	 */
+	public abstract void removePackagedElement(String[] projectPath, String typeName) throws NoSuchElementException;
+
 	/**
 	 * @param bindingKey A binding in of this project.
 	 * @return The corresponding model element.
@@ -85,6 +104,13 @@ public abstract class JavaASTProjectModel {
 	 */
 	public XMLResource getProjectModel() {
 		return projectModel;
+	}
+	
+	/**
+	 * @return The corresponding workspace project.
+	 */
+	public IProject getProject() {
+		return project;
 	}
 	
 	/**

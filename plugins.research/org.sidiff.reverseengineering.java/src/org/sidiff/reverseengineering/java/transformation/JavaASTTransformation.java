@@ -16,6 +16,7 @@ import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.IBinding;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.sidiff.reverseengineering.java.Activator;
+import org.sidiff.reverseengineering.java.configuration.TransformationSettings;
 
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
@@ -38,9 +39,9 @@ public abstract class JavaASTTransformation extends ASTVisitor {
 	private CompilationUnit javaAST;
 	
 	/**
-	 * Whether method bodies should be considered.
+	 * Transformation settings.
 	 */
-	private boolean includeMethodBodies = true;
+	private TransformationSettings settings;
 	
 	/**
 	 * The corresponding relative transformation path.
@@ -72,15 +73,15 @@ public abstract class JavaASTTransformation extends ASTVisitor {
 	@Inject
 	public JavaASTTransformation(
 			@Assisted CompilationUnit javaAST,
-			@Assisted boolean includeMethodBodies,
-			@Assisted JavaASTBindingResolver bindings) {
+			@Assisted JavaASTBindingResolver bindings,
+			TransformationSettings settings) {
 		this.javaAST = javaAST;
-		this.includeMethodBodies = includeMethodBodies;
+		this.settings = settings;
 		this.bindings = bindings;
 
 		IJavaElement javaElement = javaAST.getJavaElement();
 		this.projectName = javaElement.getResource().getProject().getName();
-		this.transformationPath = bindings.getModelPath(projectName, javaElement);
+		this.transformationPath = bindings.getBindingTranslator().getModelPath(projectName, javaElement);
 		this.rootModelElements = new ArrayList<>();
 		this.javaToModelTrace = new HashMap<>();
 	}
@@ -96,7 +97,7 @@ public abstract class JavaASTTransformation extends ASTVisitor {
 	
 	@Override
 	public boolean visit(MethodDeclaration node) {
-		return includeMethodBodies;
+		return settings.isIncludeMethodBodies();
 	}
 
 	/**
@@ -234,17 +235,10 @@ public abstract class JavaASTTransformation extends ASTVisitor {
 	}
 
 	/**
-	 * @return Whether method bodies should be considered.
+	 * @return Transformation settings.
 	 */
-	public boolean isIncludeMethodBodies() {
-		return includeMethodBodies;
-	}
-
-	/**
-	 * @param includeMethodBodies Whether method bodies should be considered.
-	 */
-	public void setIncludeMethodBodies(boolean includeMethodBodies) {
-		this.includeMethodBodies = includeMethodBodies;
+	public TransformationSettings getSettings() {
+		return settings;
 	}
 	
 	/**

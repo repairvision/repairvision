@@ -29,10 +29,9 @@ public class JavaASTBindingResolverUML extends JavaASTBindingResolver {
 	public JavaASTBindingResolverUML(
 			@Assisted CompilationUnit compilationUnit, 
 			@Assisted Set<String> workspaceProjectScope,
-			@Assisted String modelFileExtension, 
 			@Assisted JavaASTLibraryModel libraryModel, 
 			JavaASTBindingTranslator bindingTranslator) {
-		super(compilationUnit, workspaceProjectScope, modelFileExtension, libraryModel, bindingTranslator);
+		super(compilationUnit, workspaceProjectScope, libraryModel, bindingTranslator);
 	}
 
 	@Override

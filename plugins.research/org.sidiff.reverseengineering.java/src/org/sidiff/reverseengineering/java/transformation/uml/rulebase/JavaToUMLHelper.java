@@ -39,8 +39,11 @@ import org.eclipse.uml2.uml.UMLPackage;
 import org.eclipse.uml2.uml.ValueSpecification;
 import org.eclipse.uml2.uml.VisibilityKind;
 import org.sidiff.reverseengineering.java.Activator;
+import org.sidiff.reverseengineering.java.configuration.uml.TransformationSettingsUML;
 import org.sidiff.reverseengineering.java.transformation.uml.JavaASTTransformationUML;
 import org.sidiff.reverseengineering.java.util.JavaASTUtil;
+
+import com.google.inject.Inject;
 
 public class JavaToUMLHelper {
 	
@@ -51,8 +54,13 @@ public class JavaToUMLHelper {
 	protected JavaASTTransformationUML trafo;
 	
 	protected JavaToUMLRules rules;
+
+	protected TransformationSettingsUML settings;
 	
-	protected boolean umlCollectionEncoding = true;
+	@Inject
+	public JavaToUMLHelper(TransformationSettingsUML settings) {
+		this.settings = settings;
+	}
 	
 	public void init(JavaASTTransformationUML trafo, JavaToUMLRules rules) {
 		this.trafo = trafo;
@@ -63,14 +71,6 @@ public class JavaToUMLHelper {
 		// avoids resource leaks
 		this.trafo = null;
 		this.rules = null;
-	}
-	
-	public boolean isUmlCollectionEncoding() {
-		return umlCollectionEncoding;
-	}
-
-	public void setUmlCollectionEncoding(boolean umlCollectionEncoding) {
-		this.umlCollectionEncoding = umlCollectionEncoding;
 	}
 	
 	public Comment createJavaDocComment(Element umlElement, Javadoc javadoc) {
@@ -131,7 +131,7 @@ public class JavaToUMLHelper {
 			typeBinding = JavaASTUtil.arrayTypeErasure(typeBinding);
 			
 			// For example List<String> -> String[0..*] {ordered=true, unique=false}:
-			if (umlCollectionEncoding && (umlTypedElement instanceof MultiplicityElement)) {
+			if (settings.isJavaCollectionsToMultivaluedType() && (umlTypedElement instanceof MultiplicityElement)) {
 				ITypeBinding collectionType = encodeCollectionType((MultiplicityElement) umlTypedElement, originalBinding, typeBinding);
 				
 				if (collectionType != null) {

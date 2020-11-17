@@ -3,10 +3,13 @@ package org.sidiff.reverseengineering.java;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.Set;
+import java.util.logging.Level;
 import java.util.stream.Collectors;
 
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IResource;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -53,6 +56,8 @@ public class IncrementalReverseEngineering {
 	
 	private ResourceSet oldResourceSet;
 	
+	private ResourceSet resourceSetNew;
+	
 	@Inject
 	public IncrementalReverseEngineering(
 			TransformationSettings settings,
@@ -85,40 +90,59 @@ public class IncrementalReverseEngineering {
 		// Setup model resources:
 		JavaASTWorkspaceModel workspaceModel = workspaceModelFactory.create(settings.getWorkspaceModel(), settings.getName());
     	JavaASTLibraryModel libraryModel = libraryModelFactory.create(settings.getLibraryModel());
+    	this.resourceSetNew = settings.getWorkspaceModel().getResourceSet();
 		
 		for (WorkspaceUpdate workspaceUpdate : updates) {
-			JavaASTProjectModel projectModel = process(workspaceUpdate, workspaceProjectScope, workspaceModel, libraryModel);
+			JavaASTProjectModel projectModel = process(workspaceUpdate, workspaceProjectScope, libraryModel);
 			
 			// Save project model:
-			projectModel.save();
+			if (!projectModel.getProjectModel().getContents().isEmpty()) {
+				workspaceModel.addToWorkspace(projectModel.getProjectModel().getContents().get(0));
+				projectModel.save();
+			} else {
+				workspaceModel.removeFromWorkspace(projectModel.getProjectModel().getContents().get(0));
+			}
 		}
 		
 		// Save main workspace and common library model:
 		if (!libraryModel.getLibraryModel().getContents().isEmpty()) {
 			workspaceModel.addToWorkspace(libraryModel.getLibraryModel().getContents().get(0));
+			libraryModel.save();
+		} else {
+			workspaceModel.removeFromWorkspace(libraryModel.getLibraryModel().getContents().get(0));
 		}
 		
-		libraryModel.save();
 		workspaceModel.save();
 	}
 	
 	protected JavaASTProjectModel process(
 			WorkspaceUpdate workspaceUpdate, 
 			Set<String> workspaceProjectScope, 
-			JavaASTWorkspaceModel workspaceModel, 
 			JavaASTLibraryModel libraryModel) 
 					throws JavaModelException {
-
-		System.out.print("Parsing...");
-		Map<ICompilationUnit, CompilationUnit> parsedASTs = javaParser.parse(workspaceUpdate.getProject(), settings.isIncludeMethodBodies());
-		System.out.println("Finished");
+		
+		// Parse Java source files to be updated:
+		if (Activator.isLoggable(Level.FINE)) Activator.log(Level.FINE, "Parsing...");
+		
+		Map<ICompilationUnit, CompilationUnit> parsedASTs = javaParser.parse(
+				workspaceUpdate.getProject(), workspaceUpdate.needsUpdate(), settings.isIncludeMethodBodies());
+		
+		if (Activator.isLoggable(Level.FINE)) Activator.log(Level.FINE, "Finished");
 
 		// Setup project model resource:
-    	ResourceSet resourceSetNew = settings.getWorkspaceModel().getResourceSet();
 		URI projectModelURI = settings.getBaseURI().appendSegment(workspaceUpdate.getProject().getName())
 				.appendSegment(workspaceUpdate.getProject().getName()).appendFileExtension(settings.getModelFileExtension());
-		XMLResource projectModelResource = (XMLResource) resourceSetNew.createResource(projectModelURI);
-    	JavaASTProjectModel projectModel = projectModelFactory.create(projectModelResource);
+		XMLResource projectModelResource = EMFHelper.initializeResource(resourceSetNew, projectModelURI);
+    	JavaASTProjectModel projectModel = projectModelFactory.create(projectModelResource, workspaceUpdate.getProject());
+    	
+    	// Remove elements to be updated:
+    	for (IResource removed : workspaceUpdate.getRemoved()) {
+    		removeFromProjectModel(projectModel, removed);
+    	}
+    	
+    	for (IResource modified : workspaceUpdate.getModified()) {
+    		removeFromProjectModel(projectModel, modified);
+    	}
     	
     	// Log modified models:
     	List<Resource> oldResources = new ArrayList<>(); 
@@ -127,12 +151,10 @@ public class IncrementalReverseEngineering {
     	for (CompilationUnit javaAST : parsedASTs.values()) {
     		IJavaElement javaElement = javaAST.getJavaElement();
     		
-    		System.out.println(javaElement.getResource().getFullPath());
+    		if (Activator.isLoggable(Level.FINE)) Activator.log(Level.FINE, javaElement.getResource().getFullPath().toString());
    		
-    		JavaASTBindingResolver modelBindings = bindingResolverFactory.create(
-    				javaAST, workspaceProjectScope, settings.getModelFileExtension(), libraryModel);
-    		JavaASTTransformation transformation = transformationFactory.create(javaAST, settings.isIncludeMethodBodies(), modelBindings);
-
+    		JavaASTBindingResolver modelBindings = bindingResolverFactory.create(javaAST, workspaceProjectScope, libraryModel);
+    		JavaASTTransformation transformation = transformationFactory.create(javaAST, modelBindings);
 
 			/* start model transformation */
     		transformation.apply();
@@ -141,34 +163,45 @@ public class IncrementalReverseEngineering {
     		if (javaElement.getParent() instanceof IPackageFragment) {
     			for (EObject rootModelElement : transformation.getRootModelElements()) {
     				if ((javaAST.getPackage() != null) && (javaAST.getPackage().resolveBinding() != null)) {
-    					projectModel.addPackagedElement(workspaceUpdate.getProject(), javaAST.getPackage().resolveBinding(), rootModelElement);
+    					projectModel.addPackagedElement(javaAST.getPackage().resolveBinding(), rootModelElement);
     				} else {
-    					projectModel.addPackagedElement(workspaceUpdate.getProject(), null, rootModelElement); // default package
+    					projectModel.addPackagedElement(null, rootModelElement); // default package
     				}
     			}
     		}
     		
-    		// Save or update model resource:
+    		// Save model resource:
     		URI modelURI = transformation.getModelURI(settings.getBaseURI());
+    		
+    		// Update model?
     		XMLResource resourceOld = null; // for reuse of XMI object IDs
     		
-    		if (emfHelper.resourceExists(oldResourceSet, modelURI)) {
-    			resourceOld = (XMLResource) oldResourceSet.getResource(modelURI, true);
-    			oldResources.add(resourceOld);
+    		if (workspaceUpdate.isModified(javaElement.getResource())) {
+    			if (EMFHelper.resourceExists(oldResourceSet, modelURI)) {
+    				resourceOld = (XMLResource) oldResourceSet.getResource(modelURI, true);
+    				oldResources.add(resourceOld);
+    			}
     		}
 
 			emfHelper.saveModelWithBindings(modelURI, resourceSetNew, modelBindings.getBindings(),
 					transformation.getRootModelElements(), resourceOld);
 		}
-
-    	// Add project to workspace:
-    	if (!projectModel.getProjectModel().getContents().isEmpty()) {
-    		workspaceModel.addToWorkspace(projectModel.getProjectModel().getContents().get(0));
-    	}
     	
     	// Clean up old resources, keep old library model:
     	oldResourceSet.getResources().removeAll(oldResources);
     	
     	return projectModel;
     }
+
+	private void removeFromProjectModel(JavaASTProjectModel projectModel, IResource removed) {
+		try {
+			projectModel.removePackagedElement(
+					removed.getParent().getProjectRelativePath().segments(), 
+					removed.getFullPath().removeFileExtension().lastSegment());
+		} catch (NoSuchElementException e) {
+			if (Activator.getLogger().isLoggable(Level.WARNING)) {
+				Activator.getLogger().log(Level.WARNING, "Element to be removed not found: " + removed);
+			}
+		}
+	}
 }

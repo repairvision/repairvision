@@ -1,8 +1,11 @@
 package org.sidiff.reverseengineering.java.transformation.uml;
 
 import org.eclipse.jdt.core.dom.IBinding;
+import org.sidiff.reverseengineering.java.configuration.TransformationSettings;
 import org.sidiff.reverseengineering.java.transformation.JavaASTBindingTranslator;
 import org.sidiff.reverseengineering.java.util.JavaASTUtil;
+
+import com.google.inject.Inject;
 
 /**
  * Maps Java AST bindings to UML XMI object ID bindings.
@@ -11,8 +14,13 @@ import org.sidiff.reverseengineering.java.util.JavaASTUtil;
  */
 public class JavaASTBindingTranslatorUML extends JavaASTBindingTranslator {
 	
-	public JavaASTBindingTranslatorUML() {
-		super();
+
+	/**
+	 * @see {@link JavaASTBindingTranslator#JavaASTBindingTranslator(TransformationSettings)}
+	 */
+	@Inject
+	public JavaASTBindingTranslatorUML(TransformationSettings settings) {
+		super(settings);
 	}
 
 	@Override

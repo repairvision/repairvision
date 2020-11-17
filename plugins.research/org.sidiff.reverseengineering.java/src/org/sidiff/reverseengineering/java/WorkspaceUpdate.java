@@ -2,8 +2,10 @@ package org.sidiff.reverseengineering.java;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.function.Predicate;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
@@ -19,11 +21,11 @@ public class WorkspaceUpdate {
 	
 	private IProject project;
 	
-	private List<IResource> removed = new ArrayList<>();
+	private Set<IResource> removed;
 	
-	private List<IResource> modified = new ArrayList<>();
+	private Set<IResource> modified;
 	
-	private List<IResource> created = new ArrayList<>();
+	private Set<IResource> created;
 	
 	public WorkspaceUpdate(IProject project) {
 		this.project = project;
@@ -40,70 +42,97 @@ public class WorkspaceUpdate {
 	public boolean hasRemoved() {
 		return (removed != null) && !removed.isEmpty();
 	}
+	
+	public boolean isRemoved(IResource resource) {
+		return getRemoved().contains(resource);
+	}
 
-	public List<IResource> getRemoved() {
+	public Set<IResource> getRemoved() {
 		
 		if (removed == null) {
-			removed = new ArrayList<>();
+			removed = Collections.emptySet();
 		}
 		
 		return removed;
 	}
 
-	public void setRemoved(List<IResource> removed) {
+	public void setRemoved(Set<IResource> removed) {
 		this.removed = removed;
 	}
 	
 	public boolean hasModified() {
 		return (modified != null) && !modified.isEmpty();
 	}
+	
+	public boolean isModified(IResource resource) {
+		return getModified().contains(resource);
+	}
 
-	public List<IResource> getModified() {
+	public Set<IResource> getModified() {
 		
 		if (modified == null) {
-			modified = new ArrayList<>();
+			modified = Collections.emptySet();
 		}
 		
 		return modified;
 	}
 
-	public void setModified(List<IResource> modified) {
+	public void setModified(Set<IResource> modified) {
 		this.modified = modified;
 	}
 	
 	public boolean hasCreated() {
 		return (created != null) && !created.isEmpty();
 	}
+	
+	public boolean isCreated(IResource resource) {
+		return getCreated().contains(resource);
+	}
 
-	public List<IResource> getCreated() {
+	public Set<IResource> getCreated() {
 		
 		if (created == null) {
-			created = new ArrayList<>();
+			created = Collections.emptySet();
 		}
 		
 		return created;
 	}
 
-	public void setCreated(List<IResource> created) {
+	public void setCreated(Set<IResource> created) {
 		this.created = created;
 	}
+	
+	public Predicate<IResource> needsUpdate() {
+		return (resource) -> getCreated().contains(resource) || getModified().contains(resource);
+	}
 
-	public static List<WorkspaceUpdate> getWorkspaceProject(String name) {
+	public static List<WorkspaceUpdate> getWorkspaceProject(String name, boolean modified) {
 		IProject project = ResourcesPlugin.getWorkspace().getRoot().getProject(name);
 		List<WorkspaceUpdate> projectUpdate = new ArrayList<>(1);
 		
 		if (WorkspaceUtil.isJavaProject(project)) {
-			projectUpdate.add(new WorkspaceUpdate(project));
+			WorkspaceUpdate projectWorkspaceUpdate = new WorkspaceUpdate(project);
+			projectUpdate.add(projectWorkspaceUpdate);
+			
+			try {
+				if (modified) {
+					projectWorkspaceUpdate.setModified(getAllWorkspaceJavaSources(project));
+				} else {
+					projectWorkspaceUpdate.setCreated(getAllWorkspaceJavaSources(project));
+				}
+			} catch (Throwable e) {
+				e.printStackTrace();
+			}
 		}
 		
 		return projectUpdate;
 	}
 	
-	public static List<WorkspaceUpdate> getAllWorkspaceProjects() {
-		return getAllWorkspaceProjects(Collections.emptySet());
+	public static List<WorkspaceUpdate> getAllWorkspaceProjects(boolean modified) {
+		return getAllWorkspaceProjects(Collections.emptySet(), modified);
 	}
 
-	public static List<WorkspaceUpdate> getAllWorkspaceProjects(Set<String> workspaceProjectsFilter) {
+	public static List<WorkspaceUpdate> getAllWorkspaceProjects(Set<String> workspaceProjectsFilter, boolean modified) {
 		List<WorkspaceUpdate> workspaceUpdate = new ArrayList<>();
 		
 		// Get all projects in the workspace
@@ -115,7 +144,11 @@ public class WorkspaceUpdate {
 					WorkspaceUpdate projectWorkspaceUpdate = new WorkspaceUpdate(project);
 					
 					try {
-						projectWorkspaceUpdate.setCreated(getAllWorkspaceJavaSources(project));
+						if (modified) {
+							projectWorkspaceUpdate.setModified(getAllWorkspaceJavaSources(project));
+						} else {
+							projectWorkspaceUpdate.setCreated(getAllWorkspaceJavaSources(project));
+						}
 					} catch (Throwable e) {
 						e.printStackTrace();
 					}
@@ -128,9 +161,9 @@ public class WorkspaceUpdate {
 		return workspaceUpdate;
 	}
 	
-	public static List<IResource> getAllWorkspaceJavaSources(IProject project) throws JavaModelException {
+	public static Set<IResource> getAllWorkspaceJavaSources(IProject project) throws JavaModelException {
 		IPackageFragment[] packages = JavaCore.create(project).getPackageFragments();
-		List<IResource> sources = new ArrayList<>();
+		Set<IResource> sources = new HashSet<>();
 
 		for (IPackageFragment javaPackage : packages) {
 				try {

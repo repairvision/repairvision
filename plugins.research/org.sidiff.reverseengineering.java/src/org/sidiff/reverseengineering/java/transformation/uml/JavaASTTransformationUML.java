@@ -38,6 +38,7 @@ import org.eclipse.uml2.uml.Parameter;
 import org.eclipse.uml2.uml.Property;
 import org.eclipse.uml2.uml.UMLPackage;
 import org.sidiff.reverseengineering.java.Activator;
+import org.sidiff.reverseengineering.java.configuration.uml.TransformationSettingsUML;
 import org.sidiff.reverseengineering.java.transformation.JavaASTBindingResolver;
 import org.sidiff.reverseengineering.java.transformation.JavaASTTransformation;
 import org.sidiff.reverseengineering.java.transformation.uml.rulebase.JavaToUMLRules;
@@ -55,6 +56,8 @@ public class JavaASTTransformationUML extends JavaASTTransformation {
 	
 	private boolean linker = false;
 	
+	private TransformationSettingsUML settingsUML;
+	
 	private JavaToUMLRules rules;
 	
 	private TreeMap<Integer, EObject> lineToModel = new TreeMap<>();
@@ -64,12 +67,13 @@ public class JavaASTTransformationUML extends JavaASTTransformation {
 	 */
 	@Inject
 	public JavaASTTransformationUML(
-			@Assisted CompilationUnit javaAST, 
-			@Assisted boolean includeMethodBodies,
-			@Assisted JavaASTBindingResolver bindings, 
-			JavaToUMLRules rules) {
-		super(javaAST, includeMethodBodies, bindings);
+			@Assisted CompilationUnit javaAST,
+			@Assisted JavaASTBindingResolver bindings,
+			JavaToUMLRules rules,
+			TransformationSettingsUML settingsUML) {		
+		super(javaAST, bindings, settingsUML);
 		this.rules = rules;
+		this.settingsUML = settingsUML;
 	}
 	
 	@Override
@@ -216,7 +220,7 @@ public class JavaASTTransformationUML extends JavaASTTransformation {
 					rules.typeToClass.apply(typeDeclaration);
 					
 					// method invocations:
-					if (isIncludeMethodBodies()) {
+					if (settingsUML.isIncludeMethodBodies()) {
 						rules.typeToClassWithInteraction.apply(typeDeclaration);
 					}
 				}
@@ -227,7 +231,7 @@ public class JavaASTTransformationUML extends JavaASTTransformation {
 					rules.typeToClassInner.apply(typeDeclaration);
 					
 					// method invocations:
-					if (isIncludeMethodBodies()) {
+					if (settingsUML.isIncludeMethodBodies()) {
 						rules.typeToClassWithInteraction.apply(typeDeclaration);
 					}
 				}
@@ -284,7 +288,7 @@ public class JavaASTTransformationUML extends JavaASTTransformation {
 					}
 					
 					// method body:
-					if (isIncludeMethodBodies() && (umlClassifier instanceof Class)) {
+					if (settingsUML.isIncludeMethodBodies() && (umlClassifier instanceof Class)) {
 						Class umlClass = (Class) umlClassifier; // only classes have method bodies...
 						Behavior classBehavior = umlClass.getClassifierBehavior();
 						FunctionBehavior operationBehavior = getModelElement(method.getBody());
@@ -412,7 +416,7 @@ public class JavaASTTransformationUML extends JavaASTTransformation {
 	public boolean visit(Block block) {
 		
 		// Skip method bodies!
-		if (!isIncludeMethodBodies()) {
+		if (!settingsUML.isIncludeMethodBodies()) {
 			return false;
 		}
 		
@@ -439,7 +443,7 @@ public class JavaASTTransformationUML extends JavaASTTransformation {
 	public boolean visit(MethodInvocation methodInvocation) {
 		
 		// Skip method invocations!
-		if (!isIncludeMethodBodies()) {
+		if (!settingsUML.isIncludeMethodBodies()) {
 			return false;
 		}
 		

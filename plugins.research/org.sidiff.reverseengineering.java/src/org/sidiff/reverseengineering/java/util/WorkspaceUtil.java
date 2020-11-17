@@ -12,13 +12,15 @@ import org.eclipse.jdt.core.JavaCore;
 public class WorkspaceUtil {
 
 	/**
-	 * @param project A project of the Eclipse workspace.
+	 * @param project A (opened) project of the Eclipse workspace.
 	 * @return <code>true</code> if the project is configured as a project with Java nature.
 	 * @throws CoreException
 	 */
 	public static boolean isJavaProject(IProject project) {
 		try {
-			return project.hasNature(JavaCore.NATURE_ID);
+			if (project.isOpen()) {
+				return project.hasNature(JavaCore.NATURE_ID);
+			}
 		} catch (Throwable e) {
 			e.printStackTrace();
 		}

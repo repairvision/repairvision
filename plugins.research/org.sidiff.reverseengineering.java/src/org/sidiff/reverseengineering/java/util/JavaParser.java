@@ -6,8 +6,11 @@ import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.function.Predicate;
 
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IResource;
 import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.IPackageFragment;
@@ -41,7 +44,7 @@ public class JavaParser {
 	 * @return The source files mapped to the parsed Java ASTs.
 	 * @throws JavaModelException
 	 */
-	public Map<ICompilationUnit, CompilationUnit> parse(IProject project, boolean parseMethodBodies)
+	public Map<ICompilationUnit, CompilationUnit> parse(IProject project, Predicate<IResource> filter, boolean parseMethodBodies)
 			throws JavaModelException {
 		IPackageFragment[] packages = JavaCore.create(project).getPackageFragments();
 		List<ICompilationUnit> sources = new ArrayList<>();
@@ -49,7 +52,9 @@ public class JavaParser {
 
 		for (IPackageFragment javaPackage : packages) {
 			if (javaPackage.getKind() == IPackageFragmentRoot.K_SOURCE) {
-				Arrays.stream(javaPackage.getCompilationUnits()).forEach(sources::add);
+				Arrays.stream(javaPackage.getCompilationUnits())
+					.filter(c -> filter.test(c.getResource()))
+					.forEach(sources::add);
 
 				if (javaProject == null) {
 					javaProject = javaPackage.getJavaProject();
@@ -98,8 +103,8 @@ public class JavaParser {
 	 *                          method bodies.
 	 * @return The source files mapped to the parsed Java ASTs.
 	 */
-	public Map<ICompilationUnit, CompilationUnit> parse(IJavaProject project, List<ICompilationUnit> sources,
-			boolean parseMethodBodies) {
+	public Map<ICompilationUnit, CompilationUnit> parse(
+			IJavaProject project, List<ICompilationUnit> sources, boolean parseMethodBodies) {
 
 		ASTParser parser = ASTParser.newParser(JAVA_LANGUAGE_SPECIFICATION);
 		parser.setKind(ASTParser.K_COMPILATION_UNIT);

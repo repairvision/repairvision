@@ -1,14 +1,11 @@
 package org.sidiff.reverseengineering.java.transformation;
 
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.logging.Level;
 
 import org.eclipse.core.resources.IResource;
-import org.eclipse.core.runtime.IPath;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
@@ -17,7 +14,6 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.BasicEObjectImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.core.IJavaElement;
-import org.eclipse.jdt.core.IPackageFragment;
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.AbstractTypeDeclaration;
 import org.eclipse.jdt.core.dom.Annotation;
@@ -50,11 +46,6 @@ public class JavaASTBindingResolver {
 	 * External projects might be generated as common fragments.
 	 */
 	private Set<String> workspaceProjectScope;
-	
-	/**
-	 * The file extension of the corresponding modeling domain.
-	 */
-	private String modelFileExtension;
 	
 	/**
 	 * Creates bindings for the model.
@@ -92,13 +83,11 @@ public class JavaASTBindingResolver {
 	public JavaASTBindingResolver(
 			@Assisted CompilationUnit compilationUnit, 
 			@Assisted Set<String> workspaceProjectScope,
-			@Assisted String modelFileExtension, 
 			@Assisted JavaASTLibraryModel libraryModel, 
 			JavaASTBindingTranslator bindingTranslator) {
 		
 		this.libraryModel = libraryModel;
 		this.workspaceProjectScope = workspaceProjectScope;
-		this.modelFileExtension = modelFileExtension;
 		this.bindingTranslator = bindingTranslator;
 		this.bindings = new HashMap<>();
 		this.bindingRecovery = new BindingRecovery(compilationUnit);
@@ -152,8 +141,8 @@ public class JavaASTBindingResolver {
 					if (isInScope(projectName, binding)) {
 						
 						// Create new workspace proxy binding or common external binding:
-						String[] externalPath = getModelPath(projectName, javaElement);
-						URI externalBindingURI = getExternalURI(projectName, binding, externalPath, localPath);
+						String[] externalPath = bindingTranslator.getModelPath(projectName, javaElement);
+						URI externalBindingURI = bindingTranslator.getExternalURI(projectName, binding, externalPath, localPath);
 						uniqueBindingKey = externalBindingURI.fragment();
 						EObject newExternalModelElement = createExternalProxy(externalBindingURI, binding, isTypeOf);
 
@@ -177,31 +166,6 @@ public class JavaASTBindingResolver {
 		}
 		
 		return null;
-	}
-
-	public String[] getModelPath(String projectName, IJavaElement javaElement) {
-		String[] packages = getPackageName(javaElement).split("\\.");
-		String[] modelPath = new String[packages.length + 2];
-		modelPath[0] = projectName;
-		
-		for (int i = 0; i < packages.length; i++) {
-			modelPath[i + 1] = packages[i];
-		}
-		
-		modelPath[modelPath.length - 1] =  getModelName(javaElement.getPath()).lastSegment();
-		return modelPath;
-	}
-
-	protected String getPackageName(IJavaElement javaElement) {
-		while ((javaElement != null) && !(javaElement instanceof IPackageFragment)) {
-			javaElement = javaElement.getParent();
-		}
-		
-		if (javaElement != null) {
-			return ((IPackageFragment) javaElement).getElementName();
-		} else {
-			return "default";
-		}
 	}
 
 	public boolean isInScope(String projectName, IBinding binding) {
@@ -239,34 +203,6 @@ public class JavaASTBindingResolver {
 		proxyElement.eSetProxyURI(externalBindingURI);
 		
 		return proxyElement;
-	}
-	
-	/**
-	 * @param externalProjectName The name of the external project containing the
-	 * @param externalBinding     The Java AST binding.
-	 * @param externalPath        The path to the external model.
-	 * @param localPath           The local path of the current model.
-	 * @return The URI to the external model.
-	 */
-	protected URI getExternalURI(String externalProjectName, IBinding externalBinding, String[] externalPath, String[] localPath) {
-		Path relativePath = Paths.get("", localPath).getParent().relativize(Paths.get("", externalPath));
-		URI modelURI = URI.createURI("", true);
-		
-		for (Path path : relativePath) {
-			modelURI = modelURI.appendSegment(path.toString());
-		}
-		
-		return getURI(modelURI, externalProjectName, externalBinding);
-	}
-	
-	/**
-	 * @param modelURI    The URI to the model resource.
-	 * @param projectName The name of the containing project
-	 * @param binding     The Java AST binding.
-	 * @return The URI with the corresponding fragment.
-	 */
-	protected URI getURI(URI modelURI, String projectName, IBinding binding) {
-		return modelURI.appendFragment(bindingTranslator.getBindingKey(projectName, binding));
 	}
 	
 	/**
@@ -353,21 +289,6 @@ public class JavaASTBindingResolver {
 	}
 	
 	/**
-	 * @param astPath The path of the Java AST resource.
-	 * @return The path of the corresponding model.
-	 */
-	public IPath getModelName(IPath javaFile) {
-		return javaFile.removeFileExtension().addFileExtension(modelFileExtension);
-	}
-	
-	/**
-	 * @return The file extension of the corresponding modeling domain.
-	 */
-	public String getModelFileExtension() {
-		return modelFileExtension;
-	}
-
-	/**
 	 * @return The local projects in the workspace that will be transformed to
 	 *         corresponding models. Otherwise, a project will be considered as
 	 *         external projects. External projects might be generated as common
@@ -389,5 +310,12 @@ public class JavaASTBindingResolver {
 	 */
 	public void setBindings(Map<String, EObject> bindings) {
 		this.bindings = bindings;
+	}
+	
+	/**
+	 * @return Maps Java AST bindings to EMF XMI object ID bindings.
+	 */
+	public JavaASTBindingTranslator getBindingTranslator() {
+		return bindingTranslator;
 	}
 }

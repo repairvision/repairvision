@@ -1,5 +1,6 @@
 package org.sidiff.reverseengineering.java;
 
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.eclipse.ui.plugin.AbstractUIPlugin;
@@ -20,6 +21,14 @@ public class Activator extends AbstractUIPlugin {
 
 	public static Logger getLogger() {
 		return logger;
+	}
+	
+	public static boolean isLoggable(Level level) {
+		return logger.isLoggable(level);
+	}
+	
+	public static void log(Level level, String message) {
+		logger.log(level, message);
 	}
 	
 	/**

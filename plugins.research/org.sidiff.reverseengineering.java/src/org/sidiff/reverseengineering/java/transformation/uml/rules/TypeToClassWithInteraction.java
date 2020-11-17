@@ -42,7 +42,7 @@ public class TypeToClassWithInteraction extends JavaToUML<TypeDeclaration, Class
 
 	@Override
 	public void finalizing(List<EObject> rootElements) {
-		if (trafo.isIncludeMethodBodies()) {
+		if (trafo.getSettings().isIncludeMethodBodies()) {
 			for (EObject element : rootElements) {
 				finalizeClass(element);
 			}

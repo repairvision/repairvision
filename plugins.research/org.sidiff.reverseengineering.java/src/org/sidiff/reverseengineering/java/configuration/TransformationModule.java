@@ -2,6 +2,7 @@ package org.sidiff.reverseengineering.java.configuration;
 
 import java.util.Set;
 
+import org.eclipse.core.resources.IProject;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.XMLResource;
@@ -87,7 +88,7 @@ public class TransformationModule extends AbstractModule {
 	}
 	
 	public interface JavaASTTransformationFactory {
-		JavaASTTransformation create(CompilationUnit compilationUnit, boolean includeMethodBodies, JavaASTBindingResolver bindings);
+		JavaASTTransformation create(CompilationUnit compilationUnit, JavaASTBindingResolver bindings);
 	}
 
 	protected void configureJavaASTBindingResolver(Class<? extends JavaASTBindingResolver> domainSpecificBindingResolver) {
@@ -97,8 +98,7 @@ public class TransformationModule extends AbstractModule {
 	}
 
 	public interface JavaASTBindingResolverFactory {
-		JavaASTBindingResolver create(CompilationUnit compilationUnit, Set<String> workspaceProjectScope,
-				String modelFileExtension, JavaASTLibraryModel libraryModel);
+		JavaASTBindingResolver create(CompilationUnit compilationUnit, Set<String> workspaceProjectScope, JavaASTLibraryModel libraryModel);
 	}
 
 	protected void configureJavaASTWorkspaceModel(Class<? extends JavaASTWorkspaceModel> domainSpecificWorkspaceModel) {
@@ -128,6 +128,6 @@ public class TransformationModule extends AbstractModule {
 	}
 	
 	public interface JavaASTProjectModelFactory {
-		JavaASTProjectModel create(XMLResource projectModel);
+		JavaASTProjectModel create(XMLResource projectModel, IProject project);
 	}
 }

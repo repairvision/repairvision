@@ -50,4 +50,11 @@ public class JavaASTWorkspaceModelUML extends JavaASTWorkspaceModel {
 		}
 	}
 
+	@Override
+	public void removeFromWorkspace(EObject projectModel) {
+		if (projectModel instanceof PackageableElement) {
+			workspaceModelRoot.getPackagedElements().remove((PackageableElement) projectModel);
+		}
+	}
+
 }

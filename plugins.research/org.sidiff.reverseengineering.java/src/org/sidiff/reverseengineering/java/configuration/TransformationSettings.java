@@ -4,6 +4,7 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.XMLResource;
+import org.sidiff.reverseengineering.java.util.EMFHelper;
 
 public class TransformationSettings {
 	
@@ -55,8 +56,8 @@ public class TransformationSettings {
 		
 		if (workspaceModel == null) {
 			ResourceSet resourcesSet = (libraryModel != null) ? libraryModel.getResourceSet() : new ResourceSetImpl();
-			this.workspaceModel = (XMLResource) resourcesSet
-					.createResource(baseURI.appendSegment(getName()).appendFileExtension(modelFileExtension));
+			URI modelURI = baseURI.appendSegment(getName()).appendFileExtension(modelFileExtension);
+			this.workspaceModel = EMFHelper.initializeResource(resourcesSet, modelURI);
 		}
 
 		return workspaceModel;
@@ -70,8 +71,8 @@ public class TransformationSettings {
 		
 		if (libraryModel == null) {
 			ResourceSet resourcesSet = (workspaceModel != null) ? workspaceModel.getResourceSet() : new ResourceSetImpl();
-			this.libraryModel = (XMLResource) resourcesSet
-					.createResource(baseURI.appendSegment("Library").appendFileExtension(modelFileExtension));
+			URI modelURI = baseURI.appendSegment("Library").appendFileExtension(modelFileExtension);
+			this.libraryModel = EMFHelper.initializeResource(resourcesSet, modelURI);
 		}
 		
 		return libraryModel;

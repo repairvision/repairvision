@@ -11,9 +11,9 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.equinox.app.IApplication;
 import org.eclipse.equinox.app.IApplicationContext;
 import org.sidiff.reverseengineering.java.configuration.TransformationModule;
-import org.sidiff.reverseengineering.java.configuration.TransformationSettings;
 import org.sidiff.reverseengineering.java.configuration.uml.TransformationDomainUML;
 import org.sidiff.reverseengineering.java.configuration.uml.TransformationModuleUML;
+import org.sidiff.reverseengineering.java.configuration.uml.TransformationSettingsUML;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
@@ -45,7 +45,7 @@ public class ReverseEngineeringApp implements IApplication {
 		Activator.getLogger().addHandler(consolHandler);
 
 		// Application Settings:
-		TransformationSettings settings = new TransformationSettings();
+		TransformationSettingsUML settings = new TransformationSettingsUML();
 		settings.setBaseURI(URI.createFileURI("C:\\Users\\manue\\git\\repairvision\\plugins.research\\org.sidiff.reverseengineering.java\\test"));
 		settings.setIncludeMethodBodies(false);
 		settings.setModelFileExtension(TransformationDomainUML.getModelFileExtension());
@@ -55,12 +55,12 @@ public class ReverseEngineeringApp implements IApplication {
 		IncrementalReverseEngineering engine = injector.getInstance(IncrementalReverseEngineering.class);
 		
 		Set<String> workspaceProjectsFilter = new HashSet<>(Arrays.asList(new String[] { "" }));
-		List<WorkspaceUpdate> workspaceProjects = WorkspaceUpdate.getAllWorkspaceProjects(workspaceProjectsFilter);
-		workspaceProjects = WorkspaceUpdate.getWorkspaceProject("Test");
+		List<WorkspaceUpdate> workspaceUpdate = WorkspaceUpdate.getAllWorkspaceProjects(workspaceProjectsFilter, true);
+		workspaceUpdate = WorkspaceUpdate.getWorkspaceProject("Test", true);
 //		workspaceProjects.addAll(WorkspaceUpdate.getWorkspaceProject("Test"));
 //		workspaceProjects = WorkspaceUpdate.getWorkspaceProject("org.eclipse.jdt.core");
 		
-		engine.performWorkspaceUpdate(workspaceProjects);
+		engine.performWorkspaceUpdate(workspaceUpdate);
 
     	System.out.println("FINISHED!");
 		return IApplication.EXIT_OK;
