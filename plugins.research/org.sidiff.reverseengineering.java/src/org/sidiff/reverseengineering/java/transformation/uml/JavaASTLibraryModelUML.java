@@ -30,6 +30,9 @@ import org.sidiff.reverseengineering.java.transformation.uml.rulebase.JavaToUMLH
 import org.sidiff.reverseengineering.java.util.BindingRecovery;
 import org.sidiff.reverseengineering.java.util.JavaASTUtil;
 
+import com.google.inject.Inject;
+import com.google.inject.assistedinject.Assisted;
+
 /**
  * Manages the creation of library UML model elements.
  * 
@@ -41,6 +44,8 @@ public class JavaASTLibraryModelUML extends JavaASTLibraryModel {
 	
 	protected UMLPackage umlPackage = UMLPackage.eINSTANCE;
 	
+	protected String libraryModelName = "Library";
+	
 	protected JavaToUMLHelper javaToUMLHelper;
 	
 	protected Model libraryModelRoot;
@@ -50,18 +55,20 @@ public class JavaASTLibraryModelUML extends JavaASTLibraryModel {
 	protected Package defaultPackage;
 	
 	/**
-	 * @param libraryModel      The library model.
-	 * @param bindingTranslator Creates model object IDs.
+	 * @see {@link JavaASTLibraryModel#JavaASTLibraryModel(XMLResource, JavaASTBindingTranslator)}
 	 */
-	public JavaASTLibraryModelUML(XMLResource libraryModel, 
-			JavaASTBindingTranslator bindingTranslator, JavaToUMLHelper javaToUMLHelper) {
+	@Inject
+	public JavaASTLibraryModelUML(
+			@Assisted XMLResource libraryModel,
+			JavaASTBindingTranslator bindingTranslator, 
+			JavaToUMLHelper javaToUMLHelper) {
 		
 		super(libraryModel, bindingTranslator);
 		this.javaToUMLHelper = javaToUMLHelper;
 		
-		if (libraryModel.getContents().isEmpty()) {
+		if (libraryModel.getContents().isEmpty()  || !(libraryModel.getContents().get(0) instanceof Model)) {
 			this.libraryModelRoot = umlFactory.createModel();
-			this.libraryModelRoot.setName("Library");
+			this.libraryModelRoot.setName(libraryModelName);
 			libraryModel.getContents().add(libraryModelRoot);
 			bindModelElement(getBindingKey("libraries"), libraryModelRoot);
 		} else {

@@ -7,6 +7,9 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.jdt.core.dom.IPackageBinding;
 
+import com.google.inject.Inject;
+import com.google.inject.assistedinject.Assisted;
+
 /**
  * The model representing a Java project
  * 
@@ -28,7 +31,10 @@ public abstract class JavaASTProjectModel {
 	 * @param projectModel      The model representing a Java project
 	 * @param bindingTranslator Helper to translate bindings.
 	 */
-	public JavaASTProjectModel(XMLResource projectModel, JavaASTBindingTranslator bindingTranslator) {
+	@Inject
+	public JavaASTProjectModel(
+			@Assisted XMLResource projectModel, 
+			JavaASTBindingTranslator bindingTranslator) {
 		this.projectModel = projectModel;
 		this.bindingTranslator = bindingTranslator;
 	}

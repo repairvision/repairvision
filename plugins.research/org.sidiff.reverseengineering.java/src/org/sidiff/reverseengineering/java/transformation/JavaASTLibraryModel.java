@@ -8,6 +8,9 @@ import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.jdt.core.dom.IBinding;
 import org.sidiff.reverseengineering.java.util.BindingRecovery;
 
+import com.google.inject.Inject;
+import com.google.inject.assistedinject.Assisted;
+
 /**
  * Manages the creation of library model elements.
  * 
@@ -34,7 +37,10 @@ public class JavaASTLibraryModel {
 	 * @param libraryModel      The library model.
 	 * @param bindingTranslator Helper to translate bindings.
 	 */
-	public JavaASTLibraryModel(XMLResource libraryModel, JavaASTBindingTranslator bindingTranslator) {
+	@Inject
+	public JavaASTLibraryModel(
+			@Assisted XMLResource libraryModel, 
+			JavaASTBindingTranslator bindingTranslator) {
 		this.libraryModel = libraryModel;
 		this.bindingTranslator = bindingTranslator;
 	}

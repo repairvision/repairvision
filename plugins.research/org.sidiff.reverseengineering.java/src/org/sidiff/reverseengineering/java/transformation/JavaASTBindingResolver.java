@@ -2,6 +2,7 @@ package org.sidiff.reverseengineering.java.transformation;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.logging.Level;
@@ -33,6 +34,9 @@ import org.sidiff.reverseengineering.java.Activator;
 import org.sidiff.reverseengineering.java.util.BindingRecovery;
 import org.sidiff.reverseengineering.java.util.JavaASTUtil;
 
+import com.google.inject.Inject;
+import com.google.inject.assistedinject.Assisted;
+
 /**
  * Manages the Java AST to model bindings.
  * 
@@ -45,7 +49,7 @@ public class JavaASTBindingResolver {
 	 * models. Otherwise, a project will be considered as external projects.
 	 * External projects might be generated as common fragments.
 	 */
-	private Set<String> workspaceProjects;
+	private Set<String> workspaceProjectScope;
 	
 	/**
 	 * The file extension of the corresponding modeling domain.
@@ -73,25 +77,30 @@ public class JavaASTBindingResolver {
 	private BindingRecovery bindingRecovery;
 	
 	/**
-	 * @param compilationUnit    The corresponding compilation unit.
-	 * @param libraryModel       The common model manager.
-	 * @param workspaceProjects  The local projects in the workspace that will be
-	 *                           transformed to corresponding models. Otherwise, a
-	 *                           project will be considered as external projects.
-	 *                           External projects might be generated as common
-	 *                           fragments.
-	 * @param modelFileExtension The file extension of the modeling domain.
-	 * @param bindings           The initial bindings, e.g., common model elements.
+	 * @param compilationUnit       The corresponding compilation unit.
+	 * @param workspaceProjectScope The local projects in the workspace that will be
+	 *                              transformed to corresponding models. Otherwise,
+	 *                              a project will be considered as external
+	 *                              projects. External projects might be generated
+	 *                              as common fragments.
+	 * @param modelFileExtension    The file extension of the modeling domain.
+	 * @param bindings              The initial bindings, e.g., common model
+	 *                              elements.
+	 * @param libraryModel          The common model manager.
 	 */
-	public JavaASTBindingResolver(CompilationUnit compilationUnit, JavaASTLibraryModel libraryModel,
-			Set<String> workspaceProjects, String modelFileExtension,
-			JavaASTBindingTranslator bindingTranslator, Map<String, EObject> bindings) {
+	@Inject
+	public JavaASTBindingResolver(
+			@Assisted CompilationUnit compilationUnit, 
+			@Assisted Set<String> workspaceProjectScope,
+			@Assisted String modelFileExtension, 
+			@Assisted JavaASTLibraryModel libraryModel, 
+			JavaASTBindingTranslator bindingTranslator) {
 		
 		this.libraryModel = libraryModel;
-		this.workspaceProjects = workspaceProjects;
+		this.workspaceProjectScope = workspaceProjectScope;
 		this.modelFileExtension = modelFileExtension;
 		this.bindingTranslator = bindingTranslator;
-		this.bindings = bindings;
+		this.bindings = new HashMap<>();
 		this.bindingRecovery = new BindingRecovery(compilationUnit);
 	}
 	
@@ -196,7 +205,7 @@ public class JavaASTBindingResolver {
 	}
 
 	public boolean isInScope(String projectName, IBinding binding) {
-		return workspaceProjects.contains(projectName) && isInWorkspace(binding);
+		return workspaceProjectScope.contains(projectName) && isInWorkspace(binding);
 	}
 
 	/**
@@ -364,8 +373,8 @@ public class JavaASTBindingResolver {
 	 *         external projects. External projects might be generated as common
 	 *         fragments.
 	 */
-	public Set<String> getWorkspaceProjects() {
-		return workspaceProjects;
+	public Set<String> getWorkspaceProjectScope() {
+		return workspaceProjectScope;
 	}
 	
 	/**
@@ -373,5 +382,12 @@ public class JavaASTBindingResolver {
 	 */
 	public Map<String, EObject> getBindings() {
 		return bindings;
+	}
+	
+	/**
+	 * @param bindings Binding key -> Model element
+	 */
+	public void setBindings(Map<String, EObject> bindings) {
+		this.bindings = bindings;
 	}
 }

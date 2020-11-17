@@ -16,7 +16,7 @@ public class WorkspaceUtil {
 	 * @return <code>true</code> if the project is configured as a project with Java nature.
 	 * @throws CoreException
 	 */
-	public static boolean isJavaProject(IProject project) throws CoreException {
+	public static boolean isJavaProject(IProject project) {
 		try {
 			return project.hasNature(JavaCore.NATURE_ID);
 		} catch (Throwable e) {

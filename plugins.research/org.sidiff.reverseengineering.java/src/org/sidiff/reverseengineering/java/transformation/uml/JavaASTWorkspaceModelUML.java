@@ -7,6 +7,9 @@ import org.eclipse.uml2.uml.PackageableElement;
 import org.eclipse.uml2.uml.UMLFactory;
 import org.sidiff.reverseengineering.java.transformation.JavaASTWorkspaceModel;
 
+import com.google.inject.Inject;
+import com.google.inject.assistedinject.Assisted;
+
 /**
  * UML model which contains all projects of the workspace.
  * 
@@ -22,14 +25,22 @@ public class JavaASTWorkspaceModelUML extends JavaASTWorkspaceModel {
 	private Model workspaceModelRoot;
 	
 	/**
-	 * @param workspaceModel The model representing a Java workspace.
+	 * @see {@link JavaASTWorkspaceModel#JavaASTWorkspaceModel(XMLResource, String)}
 	 */
-	public JavaASTWorkspaceModelUML(XMLResource workspaceModel, String name) {
+	@Inject
+	public JavaASTWorkspaceModelUML(
+			@Assisted XMLResource workspaceModel, 
+			String name) {
 		super(workspaceModel, name);
-		this.workspaceModelRoot = umlFactory.createModel();
-		this.workspaceModelRoot.setName(name);
-		getWorkspaceModel().getContents().add(workspaceModelRoot);
-		getWorkspaceModel().setID(workspaceModelRoot, "workspace::" + name);
+		
+		if (workspaceModel.getContents().isEmpty() || !(workspaceModel.getContents().get(0) instanceof Model)) {
+			this.workspaceModelRoot = umlFactory.createModel();
+			this.workspaceModelRoot.setName(name);
+			getWorkspaceModel().getContents().add(workspaceModelRoot);
+			getWorkspaceModel().setID(workspaceModelRoot, "workspace::" + name);
+		} else {
+			this.workspaceModelRoot = (Model) workspaceModel.getContents().get(0);
+		}
 	}
 
 	@Override

@@ -5,6 +5,9 @@ import java.io.IOException;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.xmi.XMLResource;
 
+import com.google.inject.Inject;
+import com.google.inject.assistedinject.Assisted;
+
 /**
  * Model which contains all projects of the workspace.
  * 
@@ -25,7 +28,10 @@ public abstract class JavaASTWorkspaceModel {
 	/**
 	 * @param workspaceModel The model representing a Java workspace.
 	 */
-	public JavaASTWorkspaceModel(XMLResource workspaceModel, String name) {
+	@Inject
+	public JavaASTWorkspaceModel(
+			@Assisted XMLResource workspaceModel, 
+			@Assisted String name) {
 		this.workspaceModel = workspaceModel;
 		this.name = name;
 	}

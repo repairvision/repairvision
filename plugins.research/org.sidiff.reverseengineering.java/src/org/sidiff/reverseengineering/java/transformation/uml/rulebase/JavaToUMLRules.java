@@ -21,6 +21,8 @@ import org.sidiff.reverseengineering.java.transformation.uml.rules.TypeToInterfa
 import org.sidiff.reverseengineering.java.transformation.uml.rules.TypeToInterfaceInner;
 import org.sidiff.reverseengineering.java.transformation.uml.rules.VariableToParameter;
 
+import com.google.inject.Inject;
+
 public class JavaToUMLRules {
 	
 	private List<JavaToUML<?,?,?>> transformations;
@@ -63,6 +65,7 @@ public class JavaToUMLRules {
 	
 	public MethodInvocationToCallOperationAction methodInvocationToCallOperationAction;
 	
+	@Inject
 	public JavaToUMLRules(JavaToUMLHelper javaToUMLHelper) {
 		this.javaToUMLHelper = javaToUMLHelper;
 		

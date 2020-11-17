@@ -14,7 +14,11 @@ import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.ASTVisitor;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.IBinding;
+import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.sidiff.reverseengineering.java.Activator;
+
+import com.google.inject.Inject;
+import com.google.inject.assistedinject.Assisted;
 
 /**
  * Base implementation of a Java AST to model transformation.
@@ -32,6 +36,11 @@ public abstract class JavaASTTransformation extends ASTVisitor {
 	 * The corresponding Java resource in the workspace.
 	 */
 	private CompilationUnit javaAST;
+	
+	/**
+	 * Whether method bodies should be considered.
+	 */
+	private boolean includeMethodBodies = true;
 	
 	/**
 	 * The corresponding relative transformation path.
@@ -60,8 +69,13 @@ public abstract class JavaASTTransformation extends ASTVisitor {
 	 * @param bindings    Manages the Java AST to model bindings.
 	 * @return itself
 	 */
-	public JavaASTTransformation init(CompilationUnit javaAST, JavaASTBindingResolver bindings) {
+	@Inject
+	public JavaASTTransformation(
+			@Assisted CompilationUnit javaAST,
+			@Assisted boolean includeMethodBodies,
+			@Assisted JavaASTBindingResolver bindings) {
 		this.javaAST = javaAST;
+		this.includeMethodBodies = includeMethodBodies;
 		this.bindings = bindings;
 
 		IJavaElement javaElement = javaAST.getJavaElement();
@@ -69,7 +83,6 @@ public abstract class JavaASTTransformation extends ASTVisitor {
 		this.transformationPath = bindings.getModelPath(projectName, javaElement);
 		this.rootModelElements = new ArrayList<>();
 		this.javaToModelTrace = new HashMap<>();
-		return this;
 	}
 	
 	/**
@@ -79,6 +92,11 @@ public abstract class JavaASTTransformation extends ASTVisitor {
 	 */
 	public void apply() {
 		javaAST.accept(this);
+	}
+	
+	@Override
+	public boolean visit(MethodDeclaration node) {
+		return includeMethodBodies;
 	}
 
 	/**
@@ -213,6 +231,20 @@ public abstract class JavaASTTransformation extends ASTVisitor {
 	 */
 	public URI getModelURI(URI baseURI) {
 		return baseURI.appendSegments(transformationPath);
+	}
+
+	/**
+	 * @return Whether method bodies should be considered.
+	 */
+	public boolean isIncludeMethodBodies() {
+		return includeMethodBodies;
+	}
+
+	/**
+	 * @param includeMethodBodies Whether method bodies should be considered.
+	 */
+	public void setIncludeMethodBodies(boolean includeMethodBodies) {
+		this.includeMethodBodies = includeMethodBodies;
 	}
 	
 	/**

@@ -11,6 +11,9 @@ import org.eclipse.uml2.uml.UMLFactory;
 import org.sidiff.reverseengineering.java.transformation.JavaASTBindingTranslator;
 import org.sidiff.reverseengineering.java.transformation.JavaASTProjectModel;
 
+import com.google.inject.Inject;
+import com.google.inject.assistedinject.Assisted;
+
 /**
  * The UML model representing a Java project
  * 
@@ -18,17 +21,21 @@ import org.sidiff.reverseengineering.java.transformation.JavaASTProjectModel;
  */
 public class JavaASTProjectModelUML extends JavaASTProjectModel {
 	
-	private UMLFactory umlFactory = UMLFactory.eINSTANCE;
+	protected UMLFactory umlFactory = UMLFactory.eINSTANCE;
+	
+	protected String defaultPackageName = "default" ;
 	
 	protected Model projectModelRoot;
 	
 	protected Package defaultPackage;
 
 	/**
-	 * @param projectModel      The model representing a Java project
-	 * @param bindingTranslator Helper to translate bindings.
+	 * @see {@link JavaASTProjectModel#JavaASTProjectModel(XMLResource, JavaASTBindingTranslator)}
 	 */
-	public JavaASTProjectModelUML(XMLResource projectModel, JavaASTBindingTranslator bindingTranslator) {
+	@Inject
+	public JavaASTProjectModelUML(
+			@Assisted XMLResource projectModel, 
+			JavaASTBindingTranslator bindingTranslator) {
 		super(projectModel, bindingTranslator);
 	}
 	
@@ -90,21 +97,27 @@ public class JavaASTProjectModelUML extends JavaASTProjectModel {
 	
 	protected Package getProjectPackage(IProject project) {
 		if (projectModelRoot == null) {
-			this.projectModelRoot = umlFactory.createModel();
-			projectModelRoot.setName(project.getName());
-			getProjectModel().getContents().add(projectModelRoot);
-			
-			bindModelElement(getBindingKey(project), projectModelRoot);
+			if (getProjectModel().getContents().isEmpty() || !(getProjectModel().getContents().get(0) instanceof Model)) {
+				this.projectModelRoot = umlFactory.createModel();
+				projectModelRoot.setName(project.getName());
+				getProjectModel().getContents().add(projectModelRoot);
+				
+				bindModelElement(getBindingKey(project), projectModelRoot);
+			}
 		}
 		return projectModelRoot;
 	}
-
+	
 	private Package getDefaultPackage(IProject project) {
 		if (defaultPackage == null) {
-			this.defaultPackage = umlFactory.createPackage();
-			this.defaultPackage.setName("default");
-			getProjectPackage(project).getNestedPackages().add(0, defaultPackage);
-			bindModelElement(getBindingKey(project, "default"), defaultPackage);
+			this.defaultPackage = (Package) getProjectPackage(project).getPackagedElement(defaultPackageName);
+			
+			if (defaultPackage == null) {
+				this.defaultPackage = umlFactory.createPackage();
+				this.defaultPackage.setName("default");
+				getProjectPackage(project).getNestedPackages().add(0, defaultPackage);
+				bindModelElement(getBindingKey(project, "default"), defaultPackage);
+			}
 		}
 		return defaultPackage;
 	}

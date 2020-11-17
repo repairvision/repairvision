@@ -1,18 +1,19 @@
 package org.sidiff.reverseengineering.java.transformation.uml;
 
-import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.IBinding;
 import org.eclipse.jdt.core.dom.ITypeBinding;
 import org.eclipse.jdt.core.dom.IVariableBinding;
 import org.eclipse.uml2.uml.UMLPackage;
-import org.sidiff.reverseengineering.java.transformation.JavaASTLibraryModel;
 import org.sidiff.reverseengineering.java.transformation.JavaASTBindingResolver;
 import org.sidiff.reverseengineering.java.transformation.JavaASTBindingTranslator;
+import org.sidiff.reverseengineering.java.transformation.JavaASTLibraryModel;
+
+import com.google.inject.Inject;
+import com.google.inject.assistedinject.Assisted;
 
 /**
  * Maps UML types to Java AST bindings.
@@ -20,22 +21,18 @@ import org.sidiff.reverseengineering.java.transformation.JavaASTBindingTranslato
  * @author Manuel Ohrndorf
  */
 public class JavaASTBindingResolverUML extends JavaASTBindingResolver {
-
+	
 	/**
-	 * @param compilationUnit    The corresponding compilation unit.
-	 * @param libraryModel       The common model manager.
-	 * @param workspaceProjects The local projects in the workspace that will be
-	 *                          transformed to corresponding models. Otherwise, a
-	 *                          project will be considered as external projects.
-	 *                          External projects might be generated as common
-	 *                          fragments.
-	 * @param bindingTranslator Creates model object IDs.
-	 * @param bindings          The initial bindings, e.g., common model elements.
+	 * @see {@link JavaASTBindingResolver#JavaASTBindingResolver}
 	 */
-	public JavaASTBindingResolverUML(CompilationUnit compilationUnit, JavaASTLibraryModel libraryModel,
-			Set<String> workspaceProjects, JavaASTBindingTranslator bindingTranslator, Map<String, EObject> bindings) {
-		
-		super(compilationUnit, libraryModel, workspaceProjects, "uml", bindingTranslator, bindings);
+	@Inject
+	public JavaASTBindingResolverUML(
+			@Assisted CompilationUnit compilationUnit, 
+			@Assisted Set<String> workspaceProjectScope,
+			@Assisted String modelFileExtension, 
+			@Assisted JavaASTLibraryModel libraryModel, 
+			JavaASTBindingTranslator bindingTranslator) {
+		super(compilationUnit, workspaceProjectScope, modelFileExtension, libraryModel, bindingTranslator);
 	}
 
 	@Override
