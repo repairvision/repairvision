@@ -76,7 +76,7 @@ public class JavaASTProjectModelUML extends JavaASTProjectModel {
 			if (childPackage == null) {
 				childPackage = umlFactory.createPackage();
 				childPackage.setName(packageName);
-				parentPackage.getNestedPackages().add(childPackage);
+				parentPackage.getNestedPackages().add(0, childPackage);
 				
 				if (packageName == packages[packages.length - 1]) {
 					// Bind Java key to inner most package:
@@ -158,7 +158,7 @@ public class JavaASTProjectModelUML extends JavaASTProjectModel {
 			if (getProjectModel().getContents().isEmpty() || !(getProjectModel().getContents().get(0) instanceof Model)) {
 				this.projectModelRoot = umlFactory.createModel();
 				projectModelRoot.setName(project.getName());
-				getProjectModel().getContents().add(0, projectModelRoot);
+				getProjectModel().getContents().add(projectModelRoot);
 				
 				bindModelElement(getBindingKey(project), projectModelRoot);
 			} else {

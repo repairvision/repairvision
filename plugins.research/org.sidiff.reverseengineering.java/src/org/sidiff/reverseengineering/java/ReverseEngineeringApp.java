@@ -56,11 +56,12 @@ public class ReverseEngineeringApp implements IApplication {
 		
 		Set<String> workspaceProjectsFilter = new HashSet<>(Arrays.asList(new String[] { "" }));
 		List<WorkspaceUpdate> workspaceUpdate = WorkspaceUpdate.getAllWorkspaceProjects(workspaceProjectsFilter, true);
-		workspaceUpdate = WorkspaceUpdate.getWorkspaceProject("Test", true);
+//		workspaceUpdate = Collections.singletonList(WorkspaceUpdate.getWorkspaceProject("Test", true));
 //		workspaceProjects.addAll(WorkspaceUpdate.getWorkspaceProject("Test"));
-//		workspaceProjects = WorkspaceUpdate.getWorkspaceProject("org.eclipse.jdt.core");
 		
-		engine.performWorkspaceUpdate(workspaceUpdate);
+		engine.performWorkspaceUpdate(workspaceUpdate, WorkspaceUpdate.getProjectScope(workspaceUpdate));
+		engine.saveWorkspaceModel();
+		engine.saveLibraryModel();
 
     	System.out.println("FINISHED!");
 		return IApplication.EXIT_OK;

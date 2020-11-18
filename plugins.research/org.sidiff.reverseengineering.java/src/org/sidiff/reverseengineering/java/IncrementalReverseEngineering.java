@@ -1,14 +1,14 @@
 package org.sidiff.reverseengineering.java;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Set;
 import java.util.logging.Level;
-import java.util.stream.Collectors;
 
-import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
@@ -91,44 +91,66 @@ public class IncrementalReverseEngineering {
 		this.listeners.remove(listener);
 	}
 
-	public void performWorkspaceUpdate(List<WorkspaceUpdate> updates) {
-		
-		Set<String> workspaceProjectScope = updates.stream()
-				.map(WorkspaceUpdate::getProject)
-				.map(IProject::getName)
-				.collect(Collectors.toSet());
+	public void performWorkspaceUpdate(List<WorkspaceUpdate> updates, Set<String> workspaceProjectScope) {
     	
 		// Setup model resources:
 		JavaASTWorkspaceModel workspaceModel = workspaceModelFactory.create(settings.getWorkspaceModel(), settings.getName());
     	JavaASTLibraryModel libraryModel = libraryModelFactory.create(settings.getLibraryModel());
     	this.resourceSetNew = settings.getWorkspaceModel().getResourceSet();
-		
+    	
 		for (WorkspaceUpdate workspaceUpdate : updates) {
 			try {
 				/* Start Transformation */
 				JavaASTProjectModel projectModel = process(workspaceUpdate, workspaceProjectScope, workspaceModel, libraryModel);
 				
-				// Save project model:
-				if (!projectModel.getProjectModel().getContents().isEmpty()) {
-					workspaceModel.addToWorkspace(projectModel.getProjectModel().getContents().get(0));
-					projectModel.save();
+				// New project model?
+				if (projectModel.getOldRootModelElement() == null) {
+					if (!projectModel.getProjectModel().getContents().isEmpty()) {
+						workspaceModel.addToWorkspace(projectModel.getProjectModel().getContents().get(0));
+						projectModel.save();
+					}
 				} else {
-					workspaceModel.removeFromWorkspace(projectModel.getProjectModel().getContents().get(0));
+					// Existing project model:
+					if (projectModel.getProjectModel().getContents().isEmpty()) {
+						// Garbage collect empty project model:
+						workspaceModel.removeFromWorkspace(projectModel.getOldRootModelElement());
+					} else {
+						projectModel.save();
+					}
 				}
 			} catch (JavaModelException e) {
 				e.printStackTrace();
 			}
 		}
 		
-		// Save main workspace and common library model:
-		if (!libraryModel.getLibraryModel().getContents().isEmpty()) {
-			workspaceModel.addToWorkspace(libraryModel.getLibraryModel().getContents().get(0));
-			libraryModel.save();
+		// New library model?
+		if (libraryModel.getOldRootModelElement() == null) {
+			if (!libraryModel.getLibraryModel().getContents().isEmpty()) {
+				workspaceModel.addToWorkspace(0, libraryModel.getLibraryModel().getContents().get(0));
+			}
 		} else {
-			workspaceModel.removeFromWorkspace(libraryModel.getLibraryModel().getContents().get(0));
+			// Existing project model:
+			if (libraryModel.getLibraryModel().getContents().isEmpty()) {
+				// Garbage collect empty project model:
+				workspaceModel.removeFromWorkspace(libraryModel.getOldRootModelElement());
+			}
 		}
-		
-		workspaceModel.save();
+	}
+	
+	public void saveWorkspaceModel() {
+		try {
+			settings.getWorkspaceModel().save(Collections.emptyMap());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void saveLibraryModel() {
+		try {
+			settings.getLibraryModel().save(Collections.emptyMap());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	protected JavaASTProjectModel process(
@@ -152,13 +174,9 @@ public class IncrementalReverseEngineering {
 		XMLResource projectModelResource = EMFHelper.initializeResource(resourceSetNew, projectModelURI);
     	JavaASTProjectModel projectModel = projectModelFactory.create(projectModelResource, workspaceUpdate.getProject());
     	
-    	// Remove elements to be updated:
+    	// Remove elements from model:
     	for (IResource removed : workspaceUpdate.getRemoved()) {
     		removeFromProjectModel(projectModel, removed);
-    	}
-    	
-    	for (IResource modified : workspaceUpdate.getModified()) {
-    		removeFromProjectModel(projectModel, modified);
     	}
     	
     	// Log modified models:
@@ -177,12 +195,14 @@ public class IncrementalReverseEngineering {
     		transformation.apply();
     		
     		// Add to project model:
-    		if (javaElement.getParent() instanceof IPackageFragment) {
-    			for (EObject rootModelElement : transformation.getRootModelElements()) {
-    				if ((javaAST.getPackage() != null) && (javaAST.getPackage().resolveBinding() != null)) {
-    					projectModel.addPackagedElement(javaAST.getPackage().resolveBinding(), rootModelElement);
-    				} else {
-    					projectModel.addPackagedElement(null, rootModelElement); // default package
+    		if (workspaceUpdate.isCreated(javaElement.getResource())) {
+    			if (javaElement.getParent() instanceof IPackageFragment) {
+    				for (EObject rootModelElement : transformation.getRootModelElements()) {
+    					if ((javaAST.getPackage() != null) && (javaAST.getPackage().resolveBinding() != null)) {
+    						projectModel.addPackagedElement(javaAST.getPackage().resolveBinding(), rootModelElement);
+    					} else {
+    						projectModel.addPackagedElement(null, rootModelElement); // default package
+    					}
     				}
     			}
     		}
@@ -228,6 +248,8 @@ public class IncrementalReverseEngineering {
 			EObject[] removedModelElement = projectModel.removePackagedElement(
 					removed.getParent().getProjectRelativePath().segments(), 
 					removed.getFullPath().removeFileExtension().lastSegment());
+			
+			// TODO: remove from disk
 			
 			for (TransformationListener listener : listeners) {
 				listener.typeModelRemoved(removed, removedModelElement[0], removedModelElement[1]);

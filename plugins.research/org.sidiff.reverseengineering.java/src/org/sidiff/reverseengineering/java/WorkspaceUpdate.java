@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
@@ -106,17 +107,14 @@ public class WorkspaceUpdate {
 		return (resource) -> getCreated().contains(resource) || getModified().contains(resource);
 	}
 
-	public static List<WorkspaceUpdate> getWorkspaceProject(String name, boolean modified) {
+	public static WorkspaceUpdate getWorkspaceProject(String name, boolean modified) {
 		IProject project = ResourcesPlugin.getWorkspace().getRoot().getProject(name);
 		return getWorkspaceProject(project, modified);
 	}
 	
-	public static List<WorkspaceUpdate> getWorkspaceProject(IProject project, boolean modified) {
-		List<WorkspaceUpdate> projectUpdate = new ArrayList<>(1);
-		
+	public static WorkspaceUpdate getWorkspaceProject(IProject project, boolean modified) {
 		if (WorkspaceUtil.isJavaProject(project)) {
 			WorkspaceUpdate projectWorkspaceUpdate = new WorkspaceUpdate(project);
-			projectUpdate.add(projectWorkspaceUpdate);
 			
 			try {
 				if (modified) {
@@ -127,9 +125,10 @@ public class WorkspaceUpdate {
 			} catch (Throwable e) {
 				e.printStackTrace();
 			}
+			
+			return projectWorkspaceUpdate;
 		}
-		
-		return projectUpdate;
+		return null;
 	}
 	
 	public static List<WorkspaceUpdate> getAllWorkspaceProjects(boolean modified) {
@@ -182,5 +181,12 @@ public class WorkspaceUpdate {
 		}
 		
 		return sources;
+	}
+	
+	public static Set<String> getProjectScope(List<WorkspaceUpdate> updates) {
+		return updates.stream()
+				.map(WorkspaceUpdate::getProject)
+				.map(IProject::getName)
+				.collect(Collectors.toSet());
 	}
 }

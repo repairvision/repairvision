@@ -1,7 +1,6 @@
 package org.sidiff.reverseengineering.java.configuration.uml;
 
 import org.sidiff.reverseengineering.java.configuration.TransformationModule;
-import org.sidiff.reverseengineering.java.configuration.TransformationSettings;
 import org.sidiff.reverseengineering.java.transformation.uml.rulebase.JavaToUMLHelper;
 import org.sidiff.reverseengineering.java.transformation.uml.rulebase.JavaToUMLRules;
 
@@ -17,6 +16,7 @@ public class TransformationModuleUML extends TransformationModule {
 	@Override
 	protected void configure() {
 		super.configure();
+		configureSettingsUML();
 		bindJavaToUMLRules();
 		bindJavaToUMLHelper();
 	}
@@ -25,8 +25,8 @@ public class TransformationModuleUML extends TransformationModule {
 	 * Instances:
 	 */
 	
-	protected void configureSettings() {
-		bind(TransformationSettings.class).toInstance(settingsUML);
+	protected void configureSettingsUML() {
+		bind(TransformationSettingsUML.class).toInstance(settingsUML);
 	}
 	
 	/*

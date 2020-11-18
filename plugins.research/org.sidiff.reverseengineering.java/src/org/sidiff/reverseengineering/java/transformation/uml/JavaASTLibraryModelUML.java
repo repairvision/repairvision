@@ -237,7 +237,7 @@ public class JavaASTLibraryModelUML extends JavaASTLibraryModel {
 		
 		// set container:
 		addClassifierToModel(typeBinding, libraryEnum, bindingRecovery);
-		
+
 		// enumeration literal:
 		for (IVariableBinding enumLiteral : typeBinding.getDeclaredFields()) {
 			EnumerationLiteral libraryEnumLiteral = umlFactory.createEnumerationLiteral();

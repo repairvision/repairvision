@@ -24,6 +24,12 @@ public abstract class JavaASTProjectModel {
 	protected XMLResource projectModel;
 	
 	/**
+	 * The initial root element of the project model or <code>null</code> if the
+	 * given resource is initially empty.
+	 */
+	protected EObject oldRootModelElement;
+	
+	/**
 	 * The corresponding workspace project.
 	 */
 	protected IProject project;
@@ -46,12 +52,14 @@ public abstract class JavaASTProjectModel {
 		this.projectModel = projectModel;
 		this.project = project;
 		this.bindingTranslator = bindingTranslator;
+		
+		if (!projectModel.getContents().isEmpty()) {
+			this.oldRootModelElement =  projectModel.getContents().get(0);
+		}
 	}
 
 	/**
-	 * @param project The presented project.
 	 * @param binding A binding of a Java package.
-	 * @param packageFragment A Java package.
 	 * @param modelElement The contained model element.
 	 */
 	public abstract void addPackagedElement(IPackageBinding binding, EObject modelElement);
@@ -112,6 +120,14 @@ public abstract class JavaASTProjectModel {
 	 */
 	public IProject getProject() {
 		return project;
+	}
+	
+	/**
+	 * @return The initial root element of the project model or <code>null</code> if
+	 *         the given resource is initially empty.
+	 */
+	public EObject getOldRootModelElement() {
+		return oldRootModelElement;
 	}
 	
 	/**

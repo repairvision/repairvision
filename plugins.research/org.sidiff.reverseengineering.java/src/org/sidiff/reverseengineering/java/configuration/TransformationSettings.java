@@ -20,6 +20,7 @@ public class TransformationSettings {
 	
 	private XMLResource libraryModel;
 	
+	
 	public String getName() {
 		return name;
 	}
@@ -51,7 +52,7 @@ public class TransformationSettings {
 	public void setIncludeMethodBodies(boolean includeMethodBodies) {
 		this.includeMethodBodies = includeMethodBodies;
 	}
-
+	
 	public XMLResource getWorkspaceModel() {
 		
 		if (workspaceModel == null) {

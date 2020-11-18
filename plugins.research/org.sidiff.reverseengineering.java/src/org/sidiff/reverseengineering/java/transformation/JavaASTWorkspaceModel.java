@@ -35,11 +35,17 @@ public abstract class JavaASTWorkspaceModel {
 		this.workspaceModel = workspaceModel;
 		this.name = name;
 	}
-
+	
 	/**
 	 * @param projectModel The model element representing the project's root.
 	 */
 	public abstract void addToWorkspace(EObject projectModel);
+
+	/**
+	 * @param position     The desired position in the AST.
+	 * @param projectModel The model element representing the project's root.
+	 */
+	public abstract void addToWorkspace(int position, EObject projectModel);
 	
 	/**
 	 * @param projectModel The model element representing the project's root.

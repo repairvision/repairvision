@@ -24,6 +24,12 @@ public class JavaASTLibraryModel {
 	private XMLResource libraryModel;
 	
 	/**
+	 * The initial root element of the library model or <code>null</code> if the
+	 * given resource is initially empty.
+	 */
+	protected EObject oldRootModelElement;
+	
+	/**
 	 * Creates bindings for the model.
 	 */
 	private JavaASTBindingTranslator bindingTranslator;
@@ -43,6 +49,10 @@ public class JavaASTLibraryModel {
 			JavaASTBindingTranslator bindingTranslator) {
 		this.libraryModel = libraryModel;
 		this.bindingTranslator = bindingTranslator;
+		
+		if (!libraryModel.getContents().isEmpty()) {
+			this.oldRootModelElement =  libraryModel.getContents().get(0);
+		}
 	}
 
 	/**
@@ -144,6 +154,16 @@ public class JavaASTLibraryModel {
 	public XMLResource getLibraryModel() {
 		return libraryModel;
 	}
+	
+	
+	/**
+	 * @return The initial root element of the library model or <code>null</code> if
+	 *         the given resource is initially empty.
+	 */
+	public EObject getOldRootModelElement() {
+		return oldRootModelElement;
+	}
+	
 	
 	/**
 	 * Save with default options.
