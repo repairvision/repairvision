@@ -100,7 +100,7 @@ public class JavaASTProjectModelUML extends JavaASTProjectModel {
 	}
 	
 	@Override
-	public void removePackagedElement(String[] projectPath, String typeName) throws NoSuchElementException {
+	public EObject[] removePackagedElement(String[] projectPath, String typeName) throws NoSuchElementException {
 		
 		// Find containing package:
 		Package modelPackage = getProjectPackage();
@@ -149,6 +149,8 @@ public class JavaASTProjectModelUML extends JavaASTProjectModel {
 			getProjectPackage().eResource().getContents().remove(getProjectPackage());
 			this.projectModelRoot = null;
 		}
+		
+		return new EObject[] {modelPackage, typedElement};
 	}
 
 	protected Package getProjectPackage() {

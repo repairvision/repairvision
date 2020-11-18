@@ -1,6 +1,5 @@
 package org.sidiff.reverseengineering.java.util;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -75,7 +74,7 @@ public class EMFHelper {
 	 * @param oldModel             The old corresponding model if object IDs should
 	 *                             be matched and reused; <code>null</code> otherwise.
 	 */
-	public void saveModelWithBindings(URI modelURI, 
+	public Resource saveModelWithBindings(URI modelURI, 
 			ResourceSet resourceSet, Map<String, EObject> modelBindings,
 			List<EObject> newRootModelElements, XMLResource oldModel) {
 
@@ -105,9 +104,11 @@ public class EMFHelper {
 
 		try {
 			modelResource.save(null);
-		} catch (IOException e) {
+		} catch (Throwable e) {
 			e.printStackTrace();
 		}
+		
+		return modelResource;
 	}
 
 	protected void reuseObjectIDs(XMLResource oldModel, XMLResource newModel, Map<String, EObject> modelBindings) {

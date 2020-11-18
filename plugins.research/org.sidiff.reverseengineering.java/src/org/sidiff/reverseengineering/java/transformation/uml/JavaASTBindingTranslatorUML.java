@@ -13,7 +13,6 @@ import com.google.inject.Inject;
  * @author Manuel Ohrndorf
  */
 public class JavaASTBindingTranslatorUML extends JavaASTBindingTranslator {
-	
 
 	/**
 	 * @see {@link JavaASTBindingTranslator#JavaASTBindingTranslator(TransformationSettings)}

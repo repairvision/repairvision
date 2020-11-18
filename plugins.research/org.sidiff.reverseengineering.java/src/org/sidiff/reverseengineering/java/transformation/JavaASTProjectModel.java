@@ -63,8 +63,9 @@ public abstract class JavaASTProjectModel {
 	 * @param project     A workspace project.
 	 * @param projectPath A project relative path by folder segments.
 	 * @param typeName    The name of the Java type.
+	 * @return {Container, Removed Element}
 	 */
-	public abstract void removePackagedElement(String[] projectPath, String typeName) throws NoSuchElementException;
+	public abstract EObject[] removePackagedElement(String[] projectPath, String typeName) throws NoSuchElementException;
 
 	/**
 	 * @param bindingKey A binding in of this project.

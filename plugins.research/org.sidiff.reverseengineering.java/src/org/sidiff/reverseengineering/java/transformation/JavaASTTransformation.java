@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.TreeMap;
 import java.util.logging.Level;
 
 import org.eclipse.emf.common.util.URI;
@@ -16,6 +18,7 @@ import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.IBinding;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.sidiff.reverseengineering.java.Activator;
+import org.sidiff.reverseengineering.java.TransformationTrace;
 import org.sidiff.reverseengineering.java.configuration.TransformationSettings;
 
 import com.google.inject.Inject;
@@ -64,6 +67,11 @@ public abstract class JavaASTTransformation extends ASTVisitor {
 	private Map<ASTNode, EObject> javaToModelTrace;
 	
 	/**
+	 * Code Line -> Main Model Element
+	 */
+	private TreeMap<Integer, EObject> lineToModel = new TreeMap<>();
+	
+	/**
 	 * Initializes the Java AST transformation.
 	 * 
 	 * @param javaAST The Java AST to be transformed.
@@ -84,6 +92,17 @@ public abstract class JavaASTTransformation extends ASTVisitor {
 		this.transformationPath = bindings.getBindingTranslator().getModelPath(projectName, javaElement);
 		this.rootModelElements = new ArrayList<>();
 		this.javaToModelTrace = new HashMap<>();
+	}
+	
+	/**
+	 * @return The trace from the Java source code to the model.
+	 */
+	public TransformationTrace getTransformationTrace() {
+		TransformationTrace trace = new TransformationTrace();
+		trace.setRootModelElements(rootModelElements);
+		trace.setJavaToModelTrace(javaToModelTrace);
+		trace.setLineToModel(lineToModel);
+		return trace;
 	}
 	
 	/**
@@ -216,6 +235,31 @@ public abstract class JavaASTTransformation extends ASTVisitor {
 			astNode = astNode.getParent();
 		}
 		return null;
+	}
+
+	protected void traceLineToModelElement(int lastLine, EObject modelElement) {
+		if ((modelElement != null) && !lineToModel.containsKey(lastLine)) {
+			if ((modelElement.eContainer() != null) || (getRootModelElements().contains(modelElement))) {
+				this.lineToModel.put(lastLine, modelElement);
+			} else {
+				if (Activator.getLogger().isLoggable(Level.FINE)) {
+					Activator.getLogger().log(Level.FINE, "Model element is not contained in a resource: " + modelElement);
+				}
+			}
+		}
+	}
+
+	public String dumpLineToModelElement() {
+		StringBuilder dump = new StringBuilder();
+		
+		for (Entry<Integer, EObject> lineEntry : lineToModel.entrySet()) {
+			dump.append(lineEntry.getKey());
+			dump.append(": ");
+			dump.append(lineEntry.getValue());
+			dump.append("\n");
+		}
+		
+		return dump.toString();
 	}
 	
 	/**

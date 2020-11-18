@@ -58,6 +58,8 @@ public class IncrementalReverseEngineering {
 	
 	private ResourceSet resourceSetNew;
 	
+	private List<TransformationListener> listeners;
+	
 	@Inject
 	public IncrementalReverseEngineering(
 			TransformationSettings settings,
@@ -78,9 +80,18 @@ public class IncrementalReverseEngineering {
 		this.javaParser = javaParser;
 		this.emfHelper = emfHelper;
 		this.oldResourceSet = oldResourceSet;
+		this.listeners = new ArrayList<>();
+	}
+	
+	public void addTransformationListener(TransformationListener listener) {
+		this.listeners.add(listener);
+	}
+	
+	public void removeTransformationListener(TransformationListener listener) {
+		this.listeners.remove(listener);
 	}
 
-	public void performWorkspaceUpdate(List<WorkspaceUpdate> updates) throws JavaModelException {
+	public void performWorkspaceUpdate(List<WorkspaceUpdate> updates) {
 		
 		Set<String> workspaceProjectScope = updates.stream()
 				.map(WorkspaceUpdate::getProject)
@@ -93,14 +104,19 @@ public class IncrementalReverseEngineering {
     	this.resourceSetNew = settings.getWorkspaceModel().getResourceSet();
 		
 		for (WorkspaceUpdate workspaceUpdate : updates) {
-			JavaASTProjectModel projectModel = process(workspaceUpdate, workspaceProjectScope, libraryModel);
-			
-			// Save project model:
-			if (!projectModel.getProjectModel().getContents().isEmpty()) {
-				workspaceModel.addToWorkspace(projectModel.getProjectModel().getContents().get(0));
-				projectModel.save();
-			} else {
-				workspaceModel.removeFromWorkspace(projectModel.getProjectModel().getContents().get(0));
+			try {
+				/* Start Transformation */
+				JavaASTProjectModel projectModel = process(workspaceUpdate, workspaceProjectScope, workspaceModel, libraryModel);
+				
+				// Save project model:
+				if (!projectModel.getProjectModel().getContents().isEmpty()) {
+					workspaceModel.addToWorkspace(projectModel.getProjectModel().getContents().get(0));
+					projectModel.save();
+				} else {
+					workspaceModel.removeFromWorkspace(projectModel.getProjectModel().getContents().get(0));
+				}
+			} catch (JavaModelException e) {
+				e.printStackTrace();
 			}
 		}
 		
@@ -117,7 +133,8 @@ public class IncrementalReverseEngineering {
 	
 	protected JavaASTProjectModel process(
 			WorkspaceUpdate workspaceUpdate, 
-			Set<String> workspaceProjectScope, 
+			Set<String> workspaceProjectScope,
+			JavaASTWorkspaceModel workspaceModel,
 			JavaASTLibraryModel libraryModel) 
 					throws JavaModelException {
 		
@@ -156,7 +173,7 @@ public class IncrementalReverseEngineering {
     		JavaASTBindingResolver modelBindings = bindingResolverFactory.create(javaAST, workspaceProjectScope, libraryModel);
     		JavaASTTransformation transformation = transformationFactory.create(javaAST, modelBindings);
 
-			/* start model transformation */
+			/* Start Model Transformation */
     		transformation.apply();
     		
     		// Add to project model:
@@ -183,8 +200,21 @@ public class IncrementalReverseEngineering {
     			}
     		}
 
-			emfHelper.saveModelWithBindings(modelURI, resourceSetNew, modelBindings.getBindings(),
+			Resource typeModel = emfHelper.saveModelWithBindings(
+					modelURI, resourceSetNew, modelBindings.getBindings(),
 					transformation.getRootModelElements(), resourceOld);
+			
+			// Notify listeners:
+			TransformationTrace trace = transformation.getTransformationTrace();
+			trace.setWorkspaceModel(workspaceModel.getWorkspaceModel());
+			trace.setLibraryModel(libraryModel.getLibraryModel());
+			trace.setProjectModel(projectModel.getProjectModel());
+			trace.setJavaResource(javaElement.getResource());
+			trace.setTypeModel(typeModel);
+			
+			for (TransformationListener listener : listeners) {
+				listener.typeModelTransformed(trace.getJavaResource(), trace);
+			}
 		}
     	
     	// Clean up old resources, keep old library model:
@@ -195,13 +225,18 @@ public class IncrementalReverseEngineering {
 
 	private void removeFromProjectModel(JavaASTProjectModel projectModel, IResource removed) {
 		try {
-			projectModel.removePackagedElement(
+			EObject[] removedModelElement = projectModel.removePackagedElement(
 					removed.getParent().getProjectRelativePath().segments(), 
 					removed.getFullPath().removeFileExtension().lastSegment());
+			
+			for (TransformationListener listener : listeners) {
+				listener.typeModelRemoved(removed, removedModelElement[0], removedModelElement[1]);
+			}
 		} catch (NoSuchElementException e) {
 			if (Activator.getLogger().isLoggable(Level.WARNING)) {
 				Activator.getLogger().log(Level.WARNING, "Element to be removed not found: " + removed);
 			}
 		}
 	}
+	
 }

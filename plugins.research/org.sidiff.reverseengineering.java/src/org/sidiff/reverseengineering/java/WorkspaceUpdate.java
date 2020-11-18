@@ -108,6 +108,10 @@ public class WorkspaceUpdate {
 
 	public static List<WorkspaceUpdate> getWorkspaceProject(String name, boolean modified) {
 		IProject project = ResourcesPlugin.getWorkspace().getRoot().getProject(name);
+		return getWorkspaceProject(project, modified);
+	}
+	
+	public static List<WorkspaceUpdate> getWorkspaceProject(IProject project, boolean modified) {
 		List<WorkspaceUpdate> projectUpdate = new ArrayList<>(1);
 		
 		if (WorkspaceUtil.isJavaProject(project)) {

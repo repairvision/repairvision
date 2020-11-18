@@ -1,13 +1,5 @@
 package org.sidiff.reverseengineering.java.transformation.uml;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map.Entry;
-import java.util.TreeMap;
-import java.util.logging.Level;
-
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.AbstractTypeDeclaration;
 import org.eclipse.jdt.core.dom.AnnotationTypeDeclaration;
@@ -37,7 +29,6 @@ import org.eclipse.uml2.uml.OperationOwner;
 import org.eclipse.uml2.uml.Parameter;
 import org.eclipse.uml2.uml.Property;
 import org.eclipse.uml2.uml.UMLPackage;
-import org.sidiff.reverseengineering.java.Activator;
 import org.sidiff.reverseengineering.java.configuration.uml.TransformationSettingsUML;
 import org.sidiff.reverseengineering.java.transformation.JavaASTBindingResolver;
 import org.sidiff.reverseengineering.java.transformation.JavaASTTransformation;
@@ -59,8 +50,6 @@ public class JavaASTTransformationUML extends JavaASTTransformation {
 	private TransformationSettingsUML settingsUML;
 	
 	private JavaToUMLRules rules;
-	
-	private TreeMap<Integer, EObject> lineToModel = new TreeMap<>();
 	
 	/**
 	 * @see {@link JavaASTTransformation#JavaASTTransformation(JavaToUMLRules, boolean)}
@@ -488,51 +477,5 @@ public class JavaASTTransformationUML extends JavaASTTransformation {
 		}
 		
 		return false;
-	}
-
-	public List<EObject> getModelElementsByLine(Iterable<Integer> lines) {
-		if (lineToModel.isEmpty()) {
-			return Collections.emptyList();
-		}
-		
-		List<EObject> modelElements = new ArrayList<>();
-		
-		for (Integer line : lines) {
-			Entry<Integer, EObject> lineMatch = lineToModel.ceilingEntry(line);
-			
-			if (lineMatch != null) {
-				modelElements.add(lineMatch.getValue());
-			} else {
-				// assign space after last operation/declaration to the class
-				modelElements.add(lineToModel.firstEntry().getValue());
-			}
-		}
-		
-		return modelElements;
-	}
-	
-	protected void traceLineToModelElement(int lastLine, EObject modelElement) {
-		if ((modelElement != null) && !lineToModel.containsKey(lastLine)) {
-			if ((modelElement.eContainer() != null) || (getRootModelElements().contains(modelElement))) {
-				this.lineToModel.put(lastLine, modelElement);
-			} else {
-				if (Activator.getLogger().isLoggable(Level.FINE)) {
-					Activator.getLogger().log(Level.FINE, "Model element is not contained in a resource: " + modelElement);
-				}
-			}
-		}
-	}
-
-	public String dumpLineToModelElement() {
-		StringBuilder dump = new StringBuilder();
-		
-		for (Entry<Integer, EObject> lineEntry : lineToModel.entrySet()) {
-			dump.append(lineEntry.getKey());
-			dump.append(": ");
-			dump.append(lineEntry.getValue());
-			dump.append("\n");
-		}
-		
-		return dump.toString();
 	}
 }
