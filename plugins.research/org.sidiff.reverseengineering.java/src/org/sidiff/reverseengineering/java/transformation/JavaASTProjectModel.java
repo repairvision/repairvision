@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.NoSuchElementException;
 
 import org.eclipse.core.resources.IProject;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.jdt.core.dom.IPackageBinding;
@@ -68,12 +69,13 @@ public abstract class JavaASTProjectModel {
 	 * Matches the given project path to the qualified type names and removes the
 	 * given type from the project model.
 	 * 
-	 * @param project     A workspace project.
+	 * @param baseURI     The path to the main transformation folder.
 	 * @param projectPath A project relative path by folder segments.
 	 * @param typeName    The name of the Java type.
-	 * @return {Container, Removed Element}
+	 * @return All correspondingly removed workspace resources.
 	 */
-	public abstract EObject[] removePackagedElement(String[] projectPath, String typeName) throws NoSuchElementException;
+	public abstract void removePackagedElement(URI baseURI, String[] projectPath, String typeName) 
+			throws NoSuchElementException, IOException;
 
 	/**
 	 * @param bindingKey A binding in of this project.

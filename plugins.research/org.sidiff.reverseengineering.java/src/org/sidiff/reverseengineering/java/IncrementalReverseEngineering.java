@@ -131,7 +131,7 @@ public class IncrementalReverseEngineering {
 		} else {
 			// Existing project model:
 			if (libraryModel.getLibraryModel().getContents().isEmpty()) {
-				// Garbage collect empty project model:
+				// Garbage collect empty library model:
 				workspaceModel.removeFromWorkspace(libraryModel.getOldRootModelElement());
 			}
 		}
@@ -161,12 +161,12 @@ public class IncrementalReverseEngineering {
 					throws JavaModelException {
 		
 		// Parse Java source files to be updated:
-		if (Activator.isLoggable(Level.FINE)) Activator.log(Level.FINE, "Parsing...");
+		if (Activator.isLoggable(Level.FINE)) Activator.getLogger().log(Level.FINE, "Parsing...");
 		
 		Map<ICompilationUnit, CompilationUnit> parsedASTs = javaParser.parse(
 				workspaceUpdate.getProject(), workspaceUpdate.needsUpdate(), settings.isIncludeMethodBodies());
 		
-		if (Activator.isLoggable(Level.FINE)) Activator.log(Level.FINE, "Finished");
+		if (Activator.isLoggable(Level.FINE)) Activator.getLogger().log(Level.FINE, "Finished");
 
 		// Setup project model resource:
 		URI projectModelURI = settings.getBaseURI().appendSegment(workspaceUpdate.getProject().getName())
@@ -186,7 +186,7 @@ public class IncrementalReverseEngineering {
     	for (CompilationUnit javaAST : parsedASTs.values()) {
     		IJavaElement javaElement = javaAST.getJavaElement();
     		
-    		if (Activator.isLoggable(Level.FINE)) Activator.log(Level.FINE, javaElement.getResource().getFullPath().toString());
+    		if (Activator.isLoggable(Level.FINE)) Activator.getLogger().log(Level.FINE, javaElement.getResource().getFullPath().toString());
    		
     		JavaASTBindingResolver modelBindings = bindingResolverFactory.create(javaAST, workspaceProjectScope, libraryModel);
     		JavaASTTransformation transformation = transformationFactory.create(javaAST, modelBindings);
@@ -233,7 +233,11 @@ public class IncrementalReverseEngineering {
 			trace.setTypeModel(typeModel);
 			
 			for (TransformationListener listener : listeners) {
-				listener.typeModelTransformed(trace.getJavaResource(), trace);
+				try {
+					listener.typeModelCreated(trace.getJavaResource(), trace);
+				} catch (Throwable e) {
+					e.printStackTrace();
+				}
 			}
 		}
     	
@@ -245,19 +249,25 @@ public class IncrementalReverseEngineering {
 
 	private void removeFromProjectModel(JavaASTProjectModel projectModel, IResource removed) {
 		try {
-			EObject[] removedModelElement = projectModel.removePackagedElement(
+			projectModel.removePackagedElement(
+					settings.getBaseURI(),
 					removed.getParent().getProjectRelativePath().segments(), 
 					removed.getFullPath().removeFileExtension().lastSegment());
 			
-			// TODO: remove from disk
-			
+			// Remove resources:
 			for (TransformationListener listener : listeners) {
-				listener.typeModelRemoved(removed, removedModelElement[0], removedModelElement[1]);
+				try {
+					listener.typeModelRemoved(removed);
+				} catch (Throwable e) {
+					e.printStackTrace();
+				}
 			}
 		} catch (NoSuchElementException e) {
 			if (Activator.getLogger().isLoggable(Level.WARNING)) {
 				Activator.getLogger().log(Level.WARNING, "Element to be removed not found: " + removed);
 			}
+		} catch (IOException e1) {
+			e1.printStackTrace();
 		}
 	}
 	

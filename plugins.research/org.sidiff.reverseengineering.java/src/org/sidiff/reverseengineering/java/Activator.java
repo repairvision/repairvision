@@ -1,5 +1,6 @@
 package org.sidiff.reverseengineering.java;
 
+import java.util.logging.ConsoleHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -27,10 +28,6 @@ public class Activator extends AbstractUIPlugin {
 		return logger.isLoggable(level);
 	}
 	
-	public static void log(Level level, String message) {
-		logger.log(level, message);
-	}
-	
 	/**
 	 * The constructor
 	 */
@@ -42,6 +39,12 @@ public class Activator extends AbstractUIPlugin {
 		super.start(context);
 		plugin = this;
 		Activator.logger = Logger.getLogger(context.getBundle().getSymbolicName());
+		
+		Level logLevel = Level.FINE;
+		Activator.getLogger().setLevel(logLevel);
+		ConsoleHandler consolHandler = new ConsoleHandler();
+		consolHandler.setLevel(logLevel);
+		Activator.getLogger().addHandler(consolHandler);
 	}
 
 	@Override

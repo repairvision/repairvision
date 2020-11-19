@@ -1,11 +1,17 @@
 package org.sidiff.reverseengineering.java;
 
 import org.eclipse.core.resources.IResource;
-import org.eclipse.emf.ecore.EObject;
 
 public interface TransformationListener {
 
-	void typeModelTransformed(IResource resource, TransformationTrace trace);
-	
-	void typeModelRemoved(IResource resource, EObject oldContainer, EObject removedModelElement);
+	/**
+	 * @param resource The transformed Java type resource.
+	 * @param trace    Tracing information of the transformation.
+	 */
+	void typeModelCreated(IResource resource, TransformationTrace trace);
+
+	/**
+	 * @param resources The removed workspace resources.
+	 */
+	void typeModelRemoved(IResource resource);
 }

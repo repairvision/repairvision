@@ -52,9 +52,11 @@ public class JavaParser {
 
 		for (IPackageFragment javaPackage : packages) {
 			if (javaPackage.getKind() == IPackageFragmentRoot.K_SOURCE) {
-				Arrays.stream(javaPackage.getCompilationUnits())
-					.filter(c -> filter.test(c.getResource()))
-					.forEach(sources::add);
+				for (ICompilationUnit unit : javaPackage.getCompilationUnits()) {
+					if (filter.test(unit.getResource())) {
+						sources.add(unit);
+					}
+				}
 
 				if (javaProject == null) {
 					javaProject = javaPackage.getJavaProject();
