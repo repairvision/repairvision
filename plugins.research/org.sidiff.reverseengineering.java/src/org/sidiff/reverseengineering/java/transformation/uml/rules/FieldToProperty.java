@@ -3,6 +3,7 @@ package org.sidiff.reverseengineering.java.transformation.uml.rules;
 import org.eclipse.jdt.core.dom.FieldDeclaration;
 import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
 import org.eclipse.uml2.uml.Classifier;
+import org.eclipse.uml2.uml.DataType;
 import org.eclipse.uml2.uml.Interface;
 import org.eclipse.uml2.uml.Property;
 import org.eclipse.uml2.uml.StructuredClassifier;
@@ -51,6 +52,8 @@ public class FieldToProperty extends JavaToUML<VariableDeclarationFragment, Clas
 			((StructuredClassifier) modelContainer).getOwnedAttributes().add(modelNode);
 		} else if (modelContainer instanceof Interface) {
 			((Interface) modelContainer).getOwnedAttributes().add(modelNode);
+		} else if (modelContainer instanceof DataType) {
+			((DataType) modelContainer).getOwnedAttributes().add(modelNode);
 		}
 	}
 

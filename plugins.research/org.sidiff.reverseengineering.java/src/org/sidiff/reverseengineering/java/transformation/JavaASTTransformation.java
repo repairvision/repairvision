@@ -242,8 +242,8 @@ public abstract class JavaASTTransformation extends ASTVisitor {
 			if ((modelElement.eContainer() != null) || (getRootModelElements().contains(modelElement))) {
 				this.lineToModel.put(lastLine, modelElement);
 			} else {
-				if (Activator.getLogger().isLoggable(Level.FINE)) {
-					Activator.getLogger().log(Level.FINE, "Model element is not contained in a resource: " + modelElement);
+				if (Activator.getLogger().isLoggable(Level.WARNING)) {
+					Activator.getLogger().log(Level.WARNING, "Model element has no container: " + modelElement);
 				}
 			}
 		}

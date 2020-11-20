@@ -247,7 +247,7 @@ public class IncrementalReverseEngineering {
     	return projectModel;
     }
 
-	private void removeFromProjectModel(JavaASTProjectModel projectModel, IResource removed) {
+	protected void removeFromProjectModel(JavaASTProjectModel projectModel, IResource removed) {
 		try {
 			projectModel.removePackagedElement(
 					settings.getBaseURI(),
@@ -257,14 +257,14 @@ public class IncrementalReverseEngineering {
 			// Remove resources:
 			for (TransformationListener listener : listeners) {
 				try {
-					listener.typeModelRemoved(removed);
+					listener.typeModelRemoved(removed, projectModel.getProjectModel());
 				} catch (Throwable e) {
 					e.printStackTrace();
 				}
 			}
 		} catch (NoSuchElementException e) {
-			if (Activator.getLogger().isLoggable(Level.WARNING)) {
-				Activator.getLogger().log(Level.WARNING, "Element to be removed not found: " + removed);
+			if (Activator.getLogger().isLoggable(Level.FINE)) {
+				Activator.getLogger().log(Level.FINE, "Element to be removed not found: " + removed);
 			}
 		} catch (IOException e1) {
 			e1.printStackTrace();

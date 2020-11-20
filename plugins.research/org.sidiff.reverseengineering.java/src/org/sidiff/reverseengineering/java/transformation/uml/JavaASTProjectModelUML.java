@@ -111,6 +111,7 @@ public class JavaASTProjectModelUML extends JavaASTProjectModel {
 		// Find containing package:
 		Package modelPackage = getProjectPackage();
 		int segment = 0;
+		boolean sourceFolderFound = false;
 		
 		while (segment < projectPath.length) {
 			PackageableElement projectResource = modelPackage.getPackagedElement(projectPath[segment]);
@@ -120,7 +121,12 @@ public class JavaASTProjectModelUML extends JavaASTProjectModel {
 				// Step into packages:
 				if (projectResource instanceof Package) {
 					modelPackage = (Package) projectResource;
+					sourceFolderFound = true;
 				} else {
+					throw new NoSuchElementException(); // could not resolve package
+				}
+			} else {
+				if (sourceFolderFound) {
 					throw new NoSuchElementException(); // could not resolve package
 				}
 			}

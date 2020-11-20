@@ -4,6 +4,7 @@ import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.AbstractTypeDeclaration;
 import org.eclipse.jdt.core.dom.AnnotationTypeDeclaration;
 import org.eclipse.jdt.core.dom.AnnotationTypeMemberDeclaration;
+import org.eclipse.jdt.core.dom.AnonymousClassDeclaration;
 import org.eclipse.jdt.core.dom.Block;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.EnumConstantDeclaration;
@@ -96,10 +97,37 @@ public class JavaASTTransformationUML extends JavaASTTransformation {
 			Enumeration umlEnumeration = getModelElement(enumDeclaration);
 			
 			if (umlEnumeration != null) {
+				
+				// literals:
 				for (Object enumConstant : enumDeclaration.enumConstants()) {
 					if (enumConstant instanceof EnumConstantDeclaration) {
 						EnumerationLiteral umlEnumerationLiteral = getModelElement((EnumConstantDeclaration) enumConstant);
 						rules.enumConstantToEnumerationLiteral.apply(umlEnumeration, umlEnumerationLiteral);
+					}
+				}
+				
+				for (Object bodyDeclaration : enumDeclaration.bodyDeclarations()) {
+					
+					// fields:
+					if (bodyDeclaration instanceof FieldDeclaration) {
+						for (Object fieldDeclarationFragment : ((FieldDeclaration) bodyDeclaration).fragments()) {
+							if (fieldDeclarationFragment instanceof VariableDeclarationFragment) {
+								Property umlProperty = getModelElement((VariableDeclarationFragment) fieldDeclarationFragment);
+								
+								if (umlProperty != null) {
+									rules.fieldToProperty.apply(umlEnumeration, umlProperty);
+								}
+							}
+						}
+					}
+					
+					// methods:
+					if (bodyDeclaration instanceof MethodDeclaration) {
+						Operation annotationOperation = getModelElement((MethodDeclaration) bodyDeclaration);
+						
+						if (annotationOperation != null) {
+							rules.methodToOperation.apply(umlEnumeration, annotationOperation);
+						}
 					}
 				}
 				
@@ -130,9 +158,18 @@ public class JavaASTTransformationUML extends JavaASTTransformation {
 			Interface umlAnnotationInterface = getModelElement(annotationTypeDeclaration);
 			
 			if (umlAnnotationInterface != null) {
-				// properties:
+				
 				for (Object bodyDeclaration : annotationTypeDeclaration.bodyDeclarations()) {
 
+					// inner annotations:
+					if (bodyDeclaration instanceof AnnotationTypeDeclaration) {
+						Interface umlAnnotationInterfaceInner = getModelElement((AnnotationTypeDeclaration) bodyDeclaration);
+						
+						if (umlAnnotationInterfaceInner != null) {
+							rules.annotationTypeToInterfaceInner.apply(umlAnnotationInterface, umlAnnotationInterfaceInner);
+						}
+					}
+					
 					// fields:
 					if (bodyDeclaration instanceof FieldDeclaration) {
 						for (Object fieldDeclarationFragment : ((FieldDeclaration) bodyDeclaration).fragments()) {
@@ -322,6 +359,12 @@ public class JavaASTTransformationUML extends JavaASTTransformation {
 	
 	@Override
 	public boolean visit(FieldDeclaration fieldDeclaration) {
+		
+		// Ignore anonymous inner classes:
+		if (fieldDeclaration.getParent() instanceof AnonymousClassDeclaration) {
+			return true;
+		}
+		
 		if (!linker) {
 			
 			// For example: public String a1, a2, a3;
@@ -342,7 +385,7 @@ public class JavaASTTransformationUML extends JavaASTTransformation {
 						} catch (ClassNotFoundException e) {
 							e.printStackTrace();
 						}
-
+						
 						// log line mapping: property
 						traceLineToModelElement(JavaASTUtil.getLastLine(getJavaAST(), (ASTNode) fieldDeclarationFragment), umlProperty);
 					}
@@ -354,6 +397,12 @@ public class JavaASTTransformationUML extends JavaASTTransformation {
 
 	@Override
 	public boolean visit(MethodDeclaration methodDeclaration) {
+		
+		// Ignore anonymous inner classes:
+		if (methodDeclaration.getParent() instanceof AnonymousClassDeclaration) {
+			return true;
+		}
+		
 		if (!linker) {
 			rules.methodToOperation.apply(methodDeclaration);
 		} else {

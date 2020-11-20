@@ -1,12 +1,10 @@
 package org.sidiff.reverseengineering.java.util;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.function.Predicate;
 
 import org.eclipse.core.resources.IProject;
@@ -80,7 +78,7 @@ public class JavaParser {
 	 *                          method bodies.
 	 * @return The source file mapped to the parsed Java AST.
 	 */
-	public Map<ICompilationUnit, CompilationUnit> parse(ICompilationUnit source, boolean parseMethodBodies) {
+	public CompilationUnit parse(ICompilationUnit source, boolean parseMethodBodies) {
 		ASTParser parser = ASTParser.newParser(JAVA_LANGUAGE_SPECIFICATION);
 		parser.setKind(ASTParser.K_COMPILATION_UNIT);
 		parser.setSource(source);
@@ -89,7 +87,7 @@ public class JavaParser {
 		parser.setIgnoreMethodBodies(parseMethodBodies);
 		CompilationUnit ast = (CompilationUnit) parser.createAST(null);
 
-		return Collections.singletonMap(source, ast);
+		return ast;
 	}
 
 	/**
@@ -108,24 +106,42 @@ public class JavaParser {
 	public Map<ICompilationUnit, CompilationUnit> parse(
 			IJavaProject project, List<ICompilationUnit> sources, boolean parseMethodBodies) {
 
-		ASTParser parser = ASTParser.newParser(JAVA_LANGUAGE_SPECIFICATION);
-		parser.setKind(ASTParser.K_COMPILATION_UNIT);
-		parser.setProject(project);
-		parser.setResolveBindings(true);
-		parser.setBindingsRecovery(true); // generates binding also for none resolvable/missing types
-		parser.setIgnoreMethodBodies(!parseMethodBodies);
-
-		Map<ICompilationUnit, CompilationUnit> asts = new LinkedHashMap<>();
-
-		parser.createASTs(sources.toArray(new ICompilationUnit[0]), new String[0], new ASTRequestor() {
-
-			@Override
-			public void acceptAST(ICompilationUnit source, CompilationUnit ast) {
-				asts.put(source, ast);
+		try {
+			ASTParser parser = ASTParser.newParser(JAVA_LANGUAGE_SPECIFICATION);
+			parser.setKind(ASTParser.K_COMPILATION_UNIT);
+			parser.setProject(project);
+			parser.setResolveBindings(true);
+			parser.setBindingsRecovery(true); // generates binding also for none resolvable/missing types
+			parser.setIgnoreMethodBodies(!parseMethodBodies);
+			
+			Map<ICompilationUnit, CompilationUnit> asts = new LinkedHashMap<>();
+			
+			parser.createASTs(sources.toArray(new ICompilationUnit[0]), new String[0], new ASTRequestor() {
+				
+				@Override
+				public void acceptAST(ICompilationUnit source, CompilationUnit ast) {
+					asts.put(source, ast);
+				}
+			}, null);
+			
+			return asts;
+		} catch (Throwable e) {
+			e.printStackTrace();
+			
+			// Fallback to single file compilation:
+			Map<ICompilationUnit, CompilationUnit> asts = new LinkedHashMap<>();
+			
+			for (ICompilationUnit source : sources) {
+				try {
+					CompilationUnit ast = parse(source, parseMethodBodies);
+					asts.put(source, ast);
+				}  catch (Throwable e2) {
+					e2.printStackTrace();
+				}
 			}
-		}, null);
-
-		return asts;
+			
+			return asts;
+		}
 	}
 
 	/**

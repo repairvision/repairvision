@@ -40,7 +40,7 @@ public class Activator extends AbstractUIPlugin {
 		plugin = this;
 		Activator.logger = Logger.getLogger(context.getBundle().getSymbolicName());
 		
-		Level logLevel = Level.FINE;
+		Level logLevel = Level.WARNING;
 		Activator.getLogger().setLevel(logLevel);
 		ConsoleHandler consolHandler = new ConsoleHandler();
 		consolHandler.setLevel(logLevel);
