@@ -1,7 +1,10 @@
 package org.sidiff.reverseengineering.java.transformation;
 
 import java.io.IOException;
+import java.nio.file.Path;
+import java.util.List;
 
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.xmi.XMLResource;
 
@@ -48,9 +51,11 @@ public abstract class JavaASTWorkspaceModel {
 	public abstract void addToWorkspace(int position, EObject projectModel);
 	
 	/**
-	 * @param projectModel The model element representing the project's root.
+	 * @param baseURI     The path to the main transformation folder.
+	 * @param projectName The name of the project to be removed.
+	 * @return Removed corresponding files.
 	 */
-	public abstract void removeFromWorkspace(EObject projectModel);
+	public abstract List<Path> removeFromWorkspace(URI baseURI, String projectName) throws IOException;
 
 	/**
 	 * @return The model representing a Java workspace.

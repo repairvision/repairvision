@@ -1,6 +1,7 @@
 package org.sidiff.reverseengineering.java;
 
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -44,10 +45,6 @@ public class IncrementalReverseEngineering {
 	
 	private JavaASTBindingResolverFactory bindingResolverFactory;
 	
-	private JavaASTWorkspaceModelFactory workspaceModelFactory;
-	
-	private JavaASTLibraryModelFactory libraryModelFactory;
-	
 	private JavaASTProjectModelFactory projectModelFactory;
 	
 	private JavaParser javaParser;
@@ -58,6 +55,10 @@ public class IncrementalReverseEngineering {
 	
 	private ResourceSet resourceSetNew;
 	
+	private JavaASTWorkspaceModel workspaceModel;
+
+	private JavaASTLibraryModel libraryModel;
+
 	private List<TransformationListener> listeners;
 	
 	@Inject
@@ -74,13 +75,17 @@ public class IncrementalReverseEngineering {
 		this.settings = settings;
 		this.transformationFactory = transformationFactory;
 		this.bindingResolverFactory = bindingResolverFactory;
-		this.workspaceModelFactory = workspaceModelFactory;
-		this.libraryModelFactory = libraryModelFactory;
 		this.projectModelFactory = projectModelFactory;
 		this.javaParser = javaParser;
 		this.emfHelper = emfHelper;
 		this.oldResourceSet = oldResourceSet;
+		
 		this.listeners = new ArrayList<>();
+		
+		this.workspaceModel = workspaceModelFactory.create(settings.getWorkspaceModel(), settings.getName());
+		this.libraryModel = libraryModelFactory.create(settings.getLibraryModel());
+		
+		workspaceModel.addToWorkspace(0, libraryModel.getLibraryModel().getContents().get(0));
 	}
 	
 	public void addTransformationListener(TransformationListener listener) {
@@ -90,49 +95,24 @@ public class IncrementalReverseEngineering {
 	public void removeTransformationListener(TransformationListener listener) {
 		this.listeners.remove(listener);
 	}
-
+	
 	public void performWorkspaceUpdate(List<WorkspaceUpdate> updates, Set<String> workspaceProjectScope) {
     	
 		// Setup model resources:
-		JavaASTWorkspaceModel workspaceModel = workspaceModelFactory.create(settings.getWorkspaceModel(), settings.getName());
-    	JavaASTLibraryModel libraryModel = libraryModelFactory.create(settings.getLibraryModel());
     	this.resourceSetNew = settings.getWorkspaceModel().getResourceSet();
     	
 		for (WorkspaceUpdate workspaceUpdate : updates) {
 			try {
 				/* Start Transformation */
 				JavaASTProjectModel projectModel = process(workspaceUpdate, workspaceProjectScope, workspaceModel, libraryModel);
+				projectModel.save();
 				
 				// New project model?
 				if (projectModel.getOldRootModelElement() == null) {
-					if (!projectModel.getProjectModel().getContents().isEmpty()) {
-						workspaceModel.addToWorkspace(projectModel.getProjectModel().getContents().get(0));
-						projectModel.save();
-					}
-				} else {
-					// Existing project model:
-					if (projectModel.getProjectModel().getContents().isEmpty()) {
-						// Garbage collect empty project model:
-						workspaceModel.removeFromWorkspace(projectModel.getOldRootModelElement());
-					} else {
-						projectModel.save();
-					}
+					workspaceModel.addToWorkspace(projectModel.getProjectModel().getContents().get(0));
 				}
 			} catch (JavaModelException e) {
 				e.printStackTrace();
-			}
-		}
-		
-		// New library model?
-		if (libraryModel.getOldRootModelElement() == null) {
-			if (!libraryModel.getLibraryModel().getContents().isEmpty()) {
-				workspaceModel.addToWorkspace(0, libraryModel.getLibraryModel().getContents().get(0));
-			}
-		} else {
-			// Existing project model:
-			if (libraryModel.getLibraryModel().getContents().isEmpty()) {
-				// Garbage collect empty library model:
-				workspaceModel.removeFromWorkspace(libraryModel.getOldRootModelElement());
 			}
 		}
 	}
@@ -269,6 +249,15 @@ public class IncrementalReverseEngineering {
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
+	}
+
+	public List<Path> removeProject(String projectName) {
+		try {
+			return workspaceModel.removeFromWorkspace(settings.getBaseURI(), projectName);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return Collections.emptyList();
 	}
 	
 }

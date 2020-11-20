@@ -1,6 +1,16 @@
 package org.sidiff.reverseengineering.java.transformation.uml;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.uml2.uml.Model;
 import org.eclipse.uml2.uml.PackageableElement;
@@ -58,10 +68,47 @@ public class JavaASTWorkspaceModelUML extends JavaASTWorkspaceModel {
 	}
 
 	@Override
-	public void removeFromWorkspace(EObject projectModel) {
-		if (projectModel instanceof PackageableElement) {
-			workspaceModelRoot.getPackagedElements().remove((PackageableElement) projectModel);
+	public List<Path> removeFromWorkspace(URI baseURI, String projectName) throws IOException {
+		PackageableElement toBeRemovedProject = workspaceModelRoot.getPackagedElement(projectName);
+		
+		if (toBeRemovedProject != null) {
+			Resource projectModelResource = toBeRemovedProject.eResource();
+			workspaceModelRoot.getPackagedElements().remove(toBeRemovedProject);
+			
+			// Remove project from file system:
+			Path projectModelPath = Paths.get(projectModelResource.getURI().resolve(baseURI).toFileString());
+			
+			if (projectModelPath.getParent().getFileName().toString().equals(projectName)) {
+				List<Path> removedFiles = new ArrayList<>();
+				deleteDirectory(projectModelPath.getParent().toFile(), removedFiles);
+				return removedFiles;
+			}
+		}
+		
+		return Collections.emptyList();
+	}
+		
+	private void deleteDirectory(File path, List<Path> removed) {
+		try {
+			if (path != null) {
+				if (path.isDirectory()) {
+					File[] childPaths = path.listFiles();
+					
+					if (childPaths != null) {
+						for (File childPath : path.listFiles()) {
+							deleteDirectory(childPath, removed);
+						}
+					}
+				}
+				try {
+					path.delete();
+					removed.add(Paths.get(path.toString()));
+				} catch (Throwable e) {
+					e.printStackTrace();
+				}
+			}
+		} catch (Throwable e) {
+			e.printStackTrace();
 		}
 	}
-
 }
