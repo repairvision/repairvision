@@ -121,14 +121,21 @@ public class JavaASTBindingResolver {
    		if (JavaASTUtil.isPrimitiveType(binding)) {
 			return libraryModel.getPrimitiveType(binding);
 		} else {
-			IJavaElement javaElement = binding.getJavaElement();
 			
+			// Add recovered bindings to library model:
 			if (binding.isRecovered()) {
-				
-				// External common model element:
 				return libraryModel.getLibraryModelElement(binding, isTypeOf, bindingRecovery);
-				
-			} else if (javaElement != null) {
+			} 
+			
+			// Try to resolve existing Java resource:
+			IJavaElement javaElement = null;
+			
+			try {
+				javaElement = binding.getJavaElement();
+			} catch (Throwable e) {
+			}
+			
+			if (javaElement != null) {
 				String projectName = javaElement.getJavaProject().getProject().getName();
 				String uniqueBindingKey = bindingTranslator.getBindingKey(projectName, binding);
 				
@@ -154,7 +161,7 @@ public class JavaASTBindingResolver {
 						return (E) newExternalModelElement;
 					} else {
 						
-						// External common model element:
+						//Library model element:
 						return libraryModel.getLibraryModelElement(binding, isTypeOf, bindingRecovery);
 					}
 				}

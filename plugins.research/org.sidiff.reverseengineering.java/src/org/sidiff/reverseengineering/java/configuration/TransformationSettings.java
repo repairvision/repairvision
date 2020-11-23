@@ -20,7 +20,6 @@ public class TransformationSettings {
 	
 	private XMLResource libraryModel;
 	
-	
 	public String getName() {
 		return name;
 	}
@@ -72,7 +71,7 @@ public class TransformationSettings {
 		
 		if (libraryModel == null) {
 			ResourceSet resourcesSet = (workspaceModel != null) ? workspaceModel.getResourceSet() : new ResourceSetImpl();
-			URI modelURI = baseURI.appendSegment("Library").appendFileExtension(modelFileExtension);
+			URI modelURI = baseURI.appendSegment(getName() + ".library").appendFileExtension(modelFileExtension);
 			this.libraryModel = EMFHelper.initializeResource(resourcesSet, modelURI);
 		}
 		

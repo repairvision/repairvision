@@ -70,15 +70,4 @@ public abstract class JavaASTWorkspaceModel {
 	public String getName() {
 		return name;
 	}
-	
-	/**
-	 * Save with default options.
-	 */
-	public void save() {
-		try {
-			workspaceModel.save(null);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
 }

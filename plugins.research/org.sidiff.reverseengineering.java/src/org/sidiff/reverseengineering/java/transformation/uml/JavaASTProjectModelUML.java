@@ -18,6 +18,7 @@ import org.eclipse.uml2.uml.PackageableElement;
 import org.eclipse.uml2.uml.UMLFactory;
 import org.sidiff.reverseengineering.java.transformation.JavaASTBindingTranslator;
 import org.sidiff.reverseengineering.java.transformation.JavaASTProjectModel;
+import org.sidiff.reverseengineering.java.util.WorkspaceUtil;
 
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
@@ -163,7 +164,7 @@ public class JavaASTProjectModelUML extends JavaASTProjectModel {
 					
 					// Delete from file system:
 					if (typeModelPath.getParent().getFileName().toString().equals(emptyPackage.getName())) {
-						if (Files.list(typeModelPath.getParent()).count() == 0) {
+						if (WorkspaceUtil.isEmptyFolder(typeModelPath.getParent())) {
 							Files.deleteIfExists(typeModelPath.getParent());
 						}
 					}

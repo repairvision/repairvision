@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.NoSuchElementException;
 import java.util.Set;
 import java.util.logging.Level;
@@ -15,6 +16,7 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.core.IJavaElement;
@@ -51,8 +53,6 @@ public class IncrementalReverseEngineering {
 	
 	private EMFHelper emfHelper;
 	
-	private ResourceSet oldResourceSet;
-	
 	private ResourceSet resourceSetNew;
 	
 	private JavaASTWorkspaceModel workspaceModel;
@@ -78,14 +78,13 @@ public class IncrementalReverseEngineering {
 		this.projectModelFactory = projectModelFactory;
 		this.javaParser = javaParser;
 		this.emfHelper = emfHelper;
-		this.oldResourceSet = oldResourceSet;
 		
 		this.listeners = new ArrayList<>();
 		
 		this.workspaceModel = workspaceModelFactory.create(settings.getWorkspaceModel(), settings.getName());
 		this.libraryModel = libraryModelFactory.create(settings.getLibraryModel());
 		
-		workspaceModel.addToWorkspace(0, libraryModel.getLibraryModel().getContents().get(0));
+		workspaceModel.addToWorkspace(0, libraryModel.getLibraryModelRoot());
 	}
 	
 	public void addTransformationListener(TransformationListener listener) {
@@ -109,7 +108,9 @@ public class IncrementalReverseEngineering {
 				
 				// New project model?
 				if (projectModel.getOldRootModelElement() == null) {
-					workspaceModel.addToWorkspace(projectModel.getProjectModel().getContents().get(0));
+					if (!projectModel.getProjectModel().getContents().isEmpty()) {
+						workspaceModel.addToWorkspace(projectModel.getProjectModel().getContents().get(0));
+					}
 				}
 			} catch (JavaModelException e) {
 				e.printStackTrace();
@@ -163,69 +164,97 @@ public class IncrementalReverseEngineering {
     	List<Resource> oldResources = new ArrayList<>(); 
     	
     	// Process all compilation units:
-    	for (CompilationUnit javaAST : parsedASTs.values()) {
-    		IJavaElement javaElement = javaAST.getJavaElement();
-    		
-    		if (Activator.isLoggable(Level.FINE)) Activator.getLogger().log(Level.FINE, javaElement.getResource().getFullPath().toString());
-   		
-    		JavaASTBindingResolver modelBindings = bindingResolverFactory.create(javaAST, workspaceProjectScope, libraryModel);
-    		JavaASTTransformation transformation = transformationFactory.create(javaAST, modelBindings);
-
-			/* Start Model Transformation */
-    		transformation.apply();
-    		
-    		// Add to project model:
-    		if (workspaceUpdate.isCreated(javaElement.getResource())) {
-    			if (javaElement.getParent() instanceof IPackageFragment) {
-    				for (EObject rootModelElement : transformation.getRootModelElements()) {
-    					if ((javaAST.getPackage() != null) && (javaAST.getPackage().resolveBinding() != null)) {
-    						projectModel.addPackagedElement(javaAST.getPackage().resolveBinding(), rootModelElement);
-    					} else {
-    						projectModel.addPackagedElement(null, rootModelElement); // default package
-    					}
-    				}
+    	for (Entry<ICompilationUnit, CompilationUnit> parsed : parsedASTs.entrySet()) {
+    		try {
+    			processCompilationUnit(
+    					workspaceUpdate, 
+    					workspaceProjectScope, 
+    					workspaceModel, 
+    					libraryModel, 
+    					projectModel,
+    					oldResources, 
+    					parsed.getValue());
+    		} catch(Throwable e) {
+    			e.printStackTrace();
+    			
+    			if (Activator.isLoggable(Level.SEVERE)) {
+    				Activator.getLogger().log(Level.SEVERE, 
+    						"An exception occured during Java AST transformation: + " + e.toString() + 
+    						"\n  Transformation of Java AST failed: " + parsed.getKey().getResource());
     			}
     		}
-    		
-    		// Save model resource:
-    		URI modelURI = transformation.getModelURI(settings.getBaseURI());
-    		
-    		// Update model?
-    		XMLResource resourceOld = null; // for reuse of XMI object IDs
-    		
-    		if (workspaceUpdate.isModified(javaElement.getResource())) {
-    			if (EMFHelper.resourceExists(oldResourceSet, modelURI)) {
-    				resourceOld = (XMLResource) oldResourceSet.getResource(modelURI, true);
-    				oldResources.add(resourceOld);
-    			}
-    		}
-
-			Resource typeModel = emfHelper.saveModelWithBindings(
-					modelURI, resourceSetNew, modelBindings.getBindings(),
-					transformation.getRootModelElements(), resourceOld);
-			
-			// Notify listeners:
-			TransformationTrace trace = transformation.getTransformationTrace();
-			trace.setWorkspaceModel(workspaceModel.getWorkspaceModel());
-			trace.setLibraryModel(libraryModel.getLibraryModel());
-			trace.setProjectModel(projectModel.getProjectModel());
-			trace.setJavaResource(javaElement.getResource());
-			trace.setTypeModel(typeModel);
-			
-			for (TransformationListener listener : listeners) {
-				try {
-					listener.typeModelCreated(trace.getJavaResource(), trace);
-				} catch (Throwable e) {
-					e.printStackTrace();
-				}
-			}
 		}
-    	
-    	// Clean up old resources, keep old library model:
-    	oldResourceSet.getResources().removeAll(oldResources);
     	
     	return projectModel;
     }
+
+	protected void processCompilationUnit(
+			WorkspaceUpdate workspaceUpdate, 
+			Set<String> workspaceProjectScope,
+			JavaASTWorkspaceModel workspaceModel, 
+			JavaASTLibraryModel libraryModel, 
+			JavaASTProjectModel projectModel,
+			List<Resource> oldResources, 
+			CompilationUnit javaAST) {
+		
+		IJavaElement javaElement = javaAST.getJavaElement();
+		
+		if (Activator.isLoggable(Level.FINE)) Activator.getLogger().log(Level.FINE, javaElement.getResource().getFullPath().toString());
+ 		
+		JavaASTBindingResolver modelBindings = bindingResolverFactory.create(javaAST, workspaceProjectScope, libraryModel);
+		JavaASTTransformation transformation = transformationFactory.create(javaAST, modelBindings);
+
+		/* Start Model Transformation */
+		transformation.apply();
+		
+		// Add to project model:
+		if (workspaceUpdate.isCreated(javaElement.getResource())) {
+			if (javaElement.getParent() instanceof IPackageFragment) {
+				for (EObject rootModelElement : transformation.getRootModelElements()) {
+					if ((javaAST.getPackage() != null) && (javaAST.getPackage().resolveBinding() != null)) {
+						projectModel.addPackagedElement(javaAST.getPackage().resolveBinding(), rootModelElement);
+					} else {
+						projectModel.addPackagedElement(null, rootModelElement); // default package
+					}
+				}
+			}
+		}
+		
+		// Save model resource:
+		URI modelURI = transformation.getModelURI(settings.getBaseURI());
+		
+		// Update model?
+		XMLResource resourceOld = null; // for reuse of XMI object IDs
+		
+		if (workspaceUpdate.isModified(javaElement.getResource())) {
+			ResourceSet resourceSetOld = new ResourceSetImpl();
+			
+			if (EMFHelper.resourceExists(resourceSetOld, modelURI)) {
+				resourceOld = (XMLResource) resourceSetOld.getResource(modelURI, true);
+   				oldResources.add(resourceOld);
+			}
+		}
+
+		Resource typeModel = emfHelper.saveModelWithBindings(
+				modelURI, resourceSetNew, modelBindings.getBindings(),
+				transformation.getRootModelElements(), resourceOld);
+		
+		// Notify listeners:
+		TransformationTrace trace = transformation.getTransformationTrace();
+		trace.setWorkspaceModel(workspaceModel.getWorkspaceModel());
+		trace.setLibraryModel(libraryModel.getLibraryModel());
+		trace.setProjectModel(projectModel.getProjectModel());
+		trace.setJavaResource(javaElement.getResource());
+		trace.setTypeModel(typeModel);
+		
+		for (TransformationListener listener : listeners) {
+			try {
+				listener.typeModelCreated(trace.getJavaResource(), trace);
+			} catch (Throwable e) {
+				e.printStackTrace();
+			}
+		}
+	}
 
 	protected void removeFromProjectModel(JavaASTProjectModel projectModel, IResource removed) {
 		try {

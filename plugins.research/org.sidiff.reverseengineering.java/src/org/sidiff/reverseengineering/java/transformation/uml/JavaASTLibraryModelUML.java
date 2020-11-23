@@ -76,6 +76,11 @@ public class JavaASTLibraryModelUML extends JavaASTLibraryModel {
 		}
 	}
 	
+	@Override
+	public Model getLibraryModelRoot() {
+		return libraryModelRoot;
+	}
+	
 	@SuppressWarnings("unchecked")
 	@Override
 	public DataType getPrimitiveType(IBinding binding) {

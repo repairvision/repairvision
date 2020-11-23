@@ -6,6 +6,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Predicate;
+import java.util.logging.Level;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
@@ -20,6 +21,7 @@ import org.eclipse.jdt.core.dom.ASTParser;
 import org.eclipse.jdt.core.dom.ASTRequestor;
 import org.eclipse.jdt.core.dom.AbstractTypeDeclaration;
 import org.eclipse.jdt.core.dom.CompilationUnit;
+import org.sidiff.reverseengineering.java.Activator;
 
 /**
  * Some convenient functionality to parse and analyze Java models. 
@@ -126,7 +128,10 @@ public class JavaParser {
 			
 			return asts;
 		} catch (Throwable e) {
-			e.printStackTrace();
+			if (Activator.getLogger().isLoggable(Level.WARNING)) {
+				Activator.getLogger().log(Level.WARNING, "An exception occurred during the compilation of "
+						+ project.getProject().getName() + ". Trying again by single resource compilation...");
+			}
 			
 			// Fallback to single file compilation:
 			Map<ICompilationUnit, CompilationUnit> asts = new LinkedHashMap<>();
@@ -136,7 +141,9 @@ public class JavaParser {
 					CompilationUnit ast = parse(source, parseMethodBodies);
 					asts.put(source, ast);
 				}  catch (Throwable e2) {
-					e2.printStackTrace();
+					if (Activator.getLogger().isLoggable(Level.SEVERE)) {
+						Activator.getLogger().log(Level.SEVERE, "Could not compile Java resource: " + source.getResource());
+					}
 				}
 			}
 			

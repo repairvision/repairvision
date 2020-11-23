@@ -16,7 +16,7 @@ import com.google.inject.assistedinject.Assisted;
  * 
  * @author Manuel Ohrndorf
  */
-public class JavaASTLibraryModel {
+public abstract class JavaASTLibraryModel {
 
 	/**
 	 * The library model.
@@ -54,6 +54,11 @@ public class JavaASTLibraryModel {
 			this.oldRootModelElement =  libraryModel.getContents().get(0);
 		}
 	}
+	
+	/**
+	 * @return The root model element of the library.
+	 */
+	public abstract EObject getLibraryModelRoot();
 
 	/**
 	 * Returns or creates a library model element. This function is intended to be

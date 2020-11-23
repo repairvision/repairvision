@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.logging.Level;
 
 import org.eclipse.core.resources.IResource;
 import org.eclipse.emf.common.util.URI;
@@ -20,6 +21,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.xmi.XMLResource;
+import org.sidiff.reverseengineering.java.Activator;
 
 /**
  * Handling of modeling resources.
@@ -94,14 +96,21 @@ public class EMFHelper {
 			// Use object IDs of old resource matching:
 			// NOTE: The binding keys might be utilized by the model matcher.
 			if (oldModel != null) {
-				reuseObjectIDs(oldModel, newModel, modelBindings);
+				try {
+					reuseObjectIDs(oldModel, newModel, modelBindings);
+				} catch(Throwable e) {
+					if (Activator.isLoggable(Level.SEVERE)) {
+						Activator.getLogger().log(Level.SEVERE, "Matching of XMI IDs failed for resource: " + modelURI);
+					}
+				}
 			}
 		} else {
 			throw new RuntimeException(
 					"Can not save bindings keys in resource of type " + Resource.class + ". " + "Requires to register "
 							+ XMLResource.class + " in resource set for *." + modelURI.fileExtension() + ".");
 		}
-
+		
+		// Save model:
 		try {
 			modelResource.save(null);
 		} catch (Throwable e) {

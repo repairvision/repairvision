@@ -1,12 +1,14 @@
 package org.sidiff.reverseengineering.java.transformation.uml;
 
-import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
+import java.util.stream.Stream;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
@@ -40,10 +42,10 @@ public class JavaASTWorkspaceModelUML extends JavaASTWorkspaceModel {
 	@Inject
 	public JavaASTWorkspaceModelUML(
 			@Assisted XMLResource workspaceModel, 
-			String name) {
+			@Assisted String name) {
 		super(workspaceModel, name);
 		
-		if (workspaceModel.getContents().isEmpty() || !(workspaceModel.getContents().get(0) instanceof Model)) {
+		if (workspaceModel.getContents().isEmpty()) {
 			this.workspaceModelRoot = umlFactory.createModel();
 			this.workspaceModelRoot.setName(name);
 			getWorkspaceModel().getContents().add(workspaceModelRoot);
@@ -63,7 +65,9 @@ public class JavaASTWorkspaceModelUML extends JavaASTWorkspaceModel {
 	@Override
 	public void addToWorkspace(int position, EObject projectModel) {
 		if (projectModel instanceof PackageableElement) {
-			workspaceModelRoot.getPackagedElements().add(position, (PackageableElement) projectModel);
+			if (!workspaceModelRoot.getPackagedElements().contains(projectModel)) {
+				workspaceModelRoot.getPackagedElements().add(position, (PackageableElement) projectModel);
+			}
 		}
 	}
 
@@ -80,7 +84,7 @@ public class JavaASTWorkspaceModelUML extends JavaASTWorkspaceModel {
 			
 			if (projectModelPath.getParent().getFileName().toString().equals(projectName)) {
 				List<Path> removedFiles = new ArrayList<>();
-				deleteDirectory(projectModelPath.getParent().toFile(), removedFiles);
+				deleteDirectory(projectModelPath.getParent(), removedFiles);
 				return removedFiles;
 			}
 		}
@@ -88,20 +92,19 @@ public class JavaASTWorkspaceModelUML extends JavaASTWorkspaceModel {
 		return Collections.emptyList();
 	}
 		
-	private void deleteDirectory(File path, List<Path> removed) {
+	private void deleteDirectory(Path path, List<Path> removed) {
 		try {
 			if (path != null) {
-				if (path.isDirectory()) {
-					File[] childPaths = path.listFiles();
-					
-					if (childPaths != null) {
-						for (File childPath : path.listFiles()) {
-							deleteDirectory(childPath, removed);
+				if (Files.isDirectory(path)) {
+					try (Stream<Path> paths = Files.list(path)) {
+						for (Iterator<Path> iterator = paths.iterator(); iterator.hasNext();) {
+							Path pathToBeRemoved = iterator.next();
+							deleteDirectory(pathToBeRemoved, removed);
 						}
 					}
 				}
 				try {
-					path.delete();
+					Files.delete(path);
 					removed.add(Paths.get(path.toString()));
 				} catch (Throwable e) {
 					e.printStackTrace();
