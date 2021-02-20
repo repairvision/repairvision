@@ -1,0 +1,24 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Data Set Acquisition
+Bundle-SymbolicName: org.sidiff.reverseengineering;singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Bundle-Activator: org.sidiff.reverseengineering.Activator
+Export-Package: org.sidiff.reverseengineering,
+ org.sidiff.reverseengineering.configuration,
+ org.sidiff.reverseengineering.retrieval,
+ org.sidiff.reverseengineering.retrieval.storage,
+ org.sidiff.reverseengineering.retrieval.util
+Require-Bundle: org.eclipse.core.runtime,
+ org.sidiff.reverseengineering.dataset,
+ org.eclipse.core.resources,
+ org.sidiff.reverseengineering.systemmodel,
+ org.eclipse.modisco.java,
+ org.eclipse.emf.common,
+ org.eclipse.uml2.common,
+ org.eclipse.uml2.uml,
+ org.eclipse.jgit,
+ org.eclipse.emf.compare
+Bundle-RequiredExecutionEnvironment: JavaSE-11
+Automatic-Module-Name: org.sidiff.reverseengineering
+Bundle-ActivationPolicy: lazy
