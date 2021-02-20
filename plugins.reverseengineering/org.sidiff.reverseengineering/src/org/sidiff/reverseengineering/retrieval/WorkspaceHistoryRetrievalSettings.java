@@ -32,9 +32,14 @@ public class WorkspaceHistoryRetrievalSettings {
 		this.versionFilter = () -> VersionFilter.FILTER_NOTHING;
 	}
 
-	public WorkspaceHistoryRetrievalSettings(Path codeRepositoryPath) {
-		this.codeRepository = () -> new GitRepository(codeRepositoryPath.toFile());
+	public WorkspaceHistoryRetrievalSettings(String codeRepositoryURL, Path codeRepositoryPath) {
+		// With URL for cloning if not found in specified git folder.
+		this.codeRepository = () -> new GitRepository(codeRepositoryURL, codeRepositoryPath.toFile());
 		this.versionFilter = () -> VersionFilter.FILTER_NOTHING;
+	}
+	
+	public WorkspaceHistoryRetrievalSettings(Path codeRepositoryPath) {
+		this(null, codeRepositoryPath);
 	}
 	
 	public boolean isAppendTimestampToDataSet() {

@@ -79,11 +79,11 @@ public class SystemModelRetrieval {
 		this.newProjectAdded = true; 
 	}
 	
-	public void retrieve() throws IOException {
-		retrieve(-1);
+	public Path retrieve() throws IOException {
+		return retrieve(-1);
 	}
 
-	public void retrieve(int resume) throws IOException {
+	public Path retrieve(int resume) throws IOException {
 		History history = dataset.getHistory();
 		List<Version> versions = history.getVersions();
 		
@@ -118,6 +118,11 @@ public class SystemModelRetrieval {
 				Version version = versions.get(i);
 				Version newerVersion = (i > 0) ? versions.get(i - 1) : null;
 				counter++;
+				
+				if (version.getWorkspace() == null) {
+					Activator.getLogger().log(Level.WARNING, "Skipped system model without workspace version " + (versions.size() - i) + " of " + versions.size() + " versions");
+					continue;
+				}
 
 				long time = System.currentTimeMillis();
 				
@@ -177,6 +182,8 @@ public class SystemModelRetrieval {
 				commitSystemModelVersionThread.shutdown();
 			}
 		}
+		
+		return systemModelRepository.getRepositoryPath();
 	}
 	
 	private void commit(Version olderVersion, Version version, List<Path> modelResources) {
@@ -328,17 +335,19 @@ public class SystemModelRetrieval {
 		}
 	}
 	
-	public void saveDataSet(boolean appendTimestamp) {
+	public Path saveDataSet(boolean appendTimestamp) {
 		waitForCommit(); // synchronize
 		
 		// Store and commit data set for Java model:
 		try {
-			DataSetStorage.save(Paths.get(
+			return DataSetStorage.save(Paths.get(
 					datasetPath.toString()), 
 					dataset, appendTimestamp);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
+		return Path.of("FAILED");
 	}
 	
 	private long stopTime(String text, long time) {

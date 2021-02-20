@@ -66,11 +66,12 @@ public class DataSetRetrievalApplication implements IApplication {
 	}
 	
 	protected void start(Path datasetPath, DataSet dataset, Path retrievalConfigurationPath, RetrievalConfiguration retrievalConfiguration) throws IOException {
+		String codeRepositoryURL = dataset.getRepositoryHost() + dataset.getRepositoryPath();
 		Path codeRepositoryPath = Paths.get(retrievalConfiguration.getLocalRepositoryPath().toString(), dataset.getName());
 		
 		// Workspace:
 		if (retrieveWorkspaceHistory) {
-			WorkspaceHistoryRetrievalSettings workspaceHistoryRetrievalSettings = new WorkspaceHistoryRetrievalSettings(codeRepositoryPath);
+			WorkspaceHistoryRetrievalSettings workspaceHistoryRetrievalSettings = new WorkspaceHistoryRetrievalSettings(codeRepositoryURL, codeRepositoryPath);
 			WorkspaceHistoryRetrieval workspaceHistoryRetrieval = new WorkspaceHistoryRetrieval(workspaceHistoryRetrievalSettings, dataset, datasetPath);
 			
 			try {
@@ -83,12 +84,14 @@ public class DataSetRetrievalApplication implements IApplication {
 			datasetPath = workspaceHistoryRetrieval.getDatasetPath();
 			
 			Activator.getLogger().log(Level.INFO, "Workspace History Retrieval Finished");
+			Activator.getLogger().log(Level.INFO, "Workspace History Saved: " + datasetPath);
 		}
 		
 		// Direct System model (Java Model -> System Model):
 		if (retrieveSystemModelHistory) {
-			SystemModelRetrievalSettings systemModelRetrievalSettings = new SystemModelRetrievalSettings(codeRepositoryPath);
+			SystemModelRetrievalSettings systemModelRetrievalSettings = new SystemModelRetrievalSettings(codeRepositoryURL, codeRepositoryPath);
 			SystemModelRetrieval systemModelRetrieval = new SystemModelRetrieval(systemModelRetrievalSettings, dataset, datasetPath);
+			Path systemModelRepositoryPath = Path.of("NA");
 			
 			try {
 //				// Resume on last intermediate save:
@@ -101,12 +104,14 @@ public class DataSetRetrievalApplication implements IApplication {
 //					systemModelRetrieval.retrieve(resume(dataset, "0e32179056318498bab8548c6d40017d6c717dfd"));
 //				}
 				
-				systemModelRetrieval.retrieve();
+				systemModelRepositoryPath = systemModelRetrieval.retrieve();
 			} finally {
-				systemModelRetrieval.saveDataSet(systemModelRetrievalSettings.isAppendTimestampToDataSet());
+				datasetPath = systemModelRetrieval.saveDataSet(systemModelRetrievalSettings.isAppendTimestampToDataSet());
 			}
 			
 			Activator.getLogger().log(Level.INFO, "System Model History Retrieval Finished");
+			Activator.getLogger().log(Level.INFO, "System Model Repository: " + systemModelRepositoryPath);
+			Activator.getLogger().log(Level.INFO, "Model Repository Versions With Code Repository Trace Saved: " + datasetPath);
 			Activator.getLogger().log(Level.INFO, "To optimize disc space run: git gc --auto");
 		}
 	}

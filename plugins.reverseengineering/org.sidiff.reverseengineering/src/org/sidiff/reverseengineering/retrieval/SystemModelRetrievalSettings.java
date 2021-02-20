@@ -12,7 +12,7 @@ public class SystemModelRetrievalSettings extends WorkspaceHistoryRetrievalSetti
 	/**
 	 * Save the updated data set with an appended time stamp.
 	 */
-	private boolean appendTimestampToDataSet =  false;
+	private boolean appendTimestampToDataSet =  true;
 	
 	/**
 	 * Filters projects from the source code repository, e.g., test code projects
@@ -35,11 +35,15 @@ public class SystemModelRetrievalSettings extends WorkspaceHistoryRetrievalSetti
 	 */
 	private boolean includeMethodBodies = false;
 	
-	public SystemModelRetrievalSettings(Path codeRepositoryPath) {
-		super(codeRepositoryPath);
+	public SystemModelRetrievalSettings(String codeRepositoryURL, Path codeRepositoryPath) {
+		super(codeRepositoryURL, codeRepositoryPath);
 		this.projectFilter =  () -> new JavaProjectFilter(); // new PDEProjectFilter();
 		this.fileChangeFilter = (fileChange) -> !fileChange.getLocation().toString().toLowerCase().endsWith(".java");
 		this.intermediateSave = 200;
+	}
+	
+	public SystemModelRetrievalSettings(Path codeRepositoryPath) {
+		this(null, codeRepositoryPath);
 	}
 	
 	public boolean isAppendTimestampToDataSet() {

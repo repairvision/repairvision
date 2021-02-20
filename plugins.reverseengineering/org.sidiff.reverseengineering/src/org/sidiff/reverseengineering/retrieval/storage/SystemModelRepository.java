@@ -17,8 +17,6 @@ import org.sidiff.reverseengineering.systemmodel.ViewDescription;
 
 public class SystemModelRepository {
 	
-	public static final String DATA_SET_FILE_NAME = "DataSet.json";
-
 	private Repository repository;
 	
 	private Path repositoryPath;
