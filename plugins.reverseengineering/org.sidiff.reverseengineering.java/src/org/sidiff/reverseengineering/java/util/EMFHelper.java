@@ -120,7 +120,7 @@ public class EMFHelper {
 		return modelResource;
 	}
 
-	protected void reuseObjectIDs(XMLResource oldModel, XMLResource newModel, Map<String, EObject> modelBindings) {
+	public void reuseObjectIDs(XMLResource oldModel, XMLResource newModel, Map<String, EObject> modelBindings) {
 		
 		// Extract all none binding IDs that should be reused in the new version:
 		Map<EObject, String> oldObjectIDs = new HashMap<>();
@@ -173,7 +173,7 @@ public class EMFHelper {
 		}
 	}
 
-	protected List<Match> getMatching(XMLResource oldModel, XMLResource newModel) {
+	public List<Match> getMatching(XMLResource oldModel, XMLResource newModel) {
 		
 		// https://www.eclipse.org/emf/compare/documentation/latest/developer/developer-guide.html
 		

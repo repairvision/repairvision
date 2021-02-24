@@ -1,0 +1,16 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Model Repository Extraction
+Bundle-SymbolicName: org.sidiff.reverseengineering.extraction;singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Bundle-Activator: org.sidiff.reverseengineering.extraction.Activator
+Require-Bundle: org.eclipse.core.runtime,
+ org.eclipse.core.resources,
+ org.sidiff.reverseengineering.java,
+ org.sidiff.reverseengineering.dataset,
+ org.eclipse.emf.ecore,
+ org.sidiff.reverseengineering.systemmodel,
+ org.eclipse.emf.ecore.xmi
+Bundle-RequiredExecutionEnvironment: JavaSE-11
+Automatic-Module-Name: org.sidiff.reverseengineering.extraction
+Bundle-ActivationPolicy: lazy
