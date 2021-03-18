@@ -51,7 +51,7 @@ public class SystemModelRetrieval {
 	
 	private SystemModelRepository systemModelRepository;
 	
-	private SystemModelRetrievalSettings systemModelProvider;
+	private SystemModelRetrievalSettings settings;
 	
 	private JavaProject2SystemModel transformation;
 	
@@ -69,10 +69,10 @@ public class SystemModelRetrieval {
 	private RunnableFuture<Void> commitSystemModelVersionTask;
 	
 	public SystemModelRetrieval(
-			SystemModelRetrievalSettings systemModelProvider, 
+			SystemModelRetrievalSettings settings, 
 			DataSet dataset, Path datasetPath) {
 		
-		this.systemModelProvider = systemModelProvider;
+		this.settings = settings;
 		this.dataset = dataset;
 		this.datasetPath = datasetPath;
 		
@@ -94,7 +94,7 @@ public class SystemModelRetrieval {
 		}
 		
 		// Storage:
-		this.codeRepository = systemModelProvider.createCodeRepository();
+		this.codeRepository = settings.createCodeRepository();
 		this.codeRepositoryPath = codeRepository.getWorkingDirectory();
 		this.systemModelRepository = new SystemModelRepository(codeRepositoryPath, ViewDescriptions.UML_CLASS_DIAGRAM, dataset);
 		
@@ -107,7 +107,7 @@ public class SystemModelRetrieval {
 			this.transformation = new JavaProject2SystemModel(
 					systemModelRepository.getRepositoryPath(), 
 					dataset.getName(),
-					systemModelProvider.isIncludeMethodBodies(), 
+					settings.isIncludeMethodBodies(), 
 					systemModel);
 			
 			// Iterate from old to new versions:
@@ -159,7 +159,7 @@ public class SystemModelRetrieval {
 				}
 				
 				// Intermediate save:
-				if ((systemModelProvider.getIntermediateSave() > 0) && ((counter % systemModelProvider.getIntermediateSave()) == 0)) {
+				if ((settings.getIntermediateSave() > 0) && ((counter % settings.getIntermediateSave()) == 0)) {
 					try {
 						waitForCommit();
 						DataSetStorage.save(Paths.get(
@@ -221,7 +221,7 @@ public class SystemModelRetrieval {
 		workspaceDiscoverer.cleanWorkspace();
 		
 		// Load and filter workspace:
-		ProjectFilter projectFilter = systemModelProvider.createProjectFilter();
+		ProjectFilter projectFilter = settings.createProjectFilter();
 		Workspace loadedWorkspace = workspaceDiscoverer.createProjects(projectFilter);
 		version.setWorkspace(loadedWorkspace);
 		
@@ -247,7 +247,7 @@ public class SystemModelRetrieval {
 				
 				// javaSystemModel -> null: Java model has no changes or could not be computed in the previous step.
 				// OPTIMIZATION: Recalculate changed projects only (and initial versions).
-				if (HistoryUtil.hasChanges(project, olderVersion, version, systemModelProvider.getFileChangeFilter())) {
+				if (HistoryUtil.hasChanges(project, olderVersion, version, settings.getFileChangeFilter())) {
 					
 					// Java Code -> System Model
 					List<Path> modelProjectFiles =retrieveProjectSystemModelVersion(
@@ -287,7 +287,7 @@ public class SystemModelRetrieval {
 			
 			// Calculate changed files in project:
 			// NOTE: Changes V_Old -> V_New are stored in V_new as V_A -> V_B
-			List<FileChange> projectFileChanges =  HistoryUtil.getChanges(project, version.getFileChanges(), systemModelProvider.getFileChangeFilter());
+			List<FileChange> projectFileChanges =  HistoryUtil.getChanges(project, version.getFileChanges(), settings.getFileChangeFilter());
 			
 			// Discover the system model of the project version:
 			boolean initialVersion = !transformedProjects.contains(project.getFolder().toString());

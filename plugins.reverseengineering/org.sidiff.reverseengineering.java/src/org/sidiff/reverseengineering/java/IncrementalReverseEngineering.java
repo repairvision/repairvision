@@ -112,10 +112,8 @@ public class IncrementalReverseEngineering {
 				projectModel.save();
 				
 				// New project model?
-				if (projectModel.getOldRootModelElement() == null) {
-					if (!projectModel.getProjectModel().getContents().isEmpty()) {
-						workspaceModel.addToWorkspace(projectModel.getProjectModel().getContents().get(0));
-					}
+				if (!projectModel.getProjectModel().getContents().isEmpty()) {
+					workspaceModel.addToWorkspace(projectModel.getProjectModel().getContents().get(0));
 				}
 			} catch (JavaModelException e) {
 				e.printStackTrace();

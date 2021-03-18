@@ -17,7 +17,7 @@ import org.sidiff.reverseengineering.dataset.workspace.model.Workspace;
 
 public class WorkspaceHistoryRetrieval {
 	
-	private WorkspaceHistoryRetrievalSettings provider;
+	private WorkspaceHistoryRetrievalSettings settings;
 	
 	private DataSet dataset;
 	
@@ -27,8 +27,8 @@ public class WorkspaceHistoryRetrieval {
 	
 	private Path codeRepositoryPath;
 	
-	public WorkspaceHistoryRetrieval(WorkspaceHistoryRetrievalSettings provider, DataSet dataset, Path datasetPath) {
-		this.provider = provider;
+	public WorkspaceHistoryRetrieval(WorkspaceHistoryRetrievalSettings settings, DataSet dataset, Path datasetPath) {
+		this.settings = settings;
 		this.datasetPath = datasetPath;
 		this.dataset = dataset;
 	}
@@ -39,11 +39,11 @@ public class WorkspaceHistoryRetrieval {
 	}
 	
 	public void retrieveHistory() {
-		this.codeRepository = provider.createCodeRepository();
+		this.codeRepository = settings.createCodeRepository();
 		this.codeRepositoryPath = codeRepository.getWorkingDirectory();
 		
 		// Retrieve commits and filtering versions:
-		History history = codeRepository.getHistory(provider.createVersionFilter());
+		History history = codeRepository.getHistory(settings.createVersionFilter());
 		dataset.setHistory(history);
 	}
 	
@@ -94,7 +94,7 @@ public class WorkspaceHistoryRetrieval {
 			List<FileChange> fileChanges = codeRepository.getChanges(versionB, false); // initial version
 			versionB.setFileChanges(fileChanges);
 		} else {
-			List<FileChange> fileChanges = codeRepository.getChanges(versionA, versionB, false);
+			List<FileChange> fileChanges = codeRepository.getChanges(versionA, versionB, false, settings.isFlattenHistoryBranches());
 			versionB.setFileChanges(fileChanges);
 		}
 	}
