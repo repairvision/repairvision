@@ -25,15 +25,6 @@ public class WorkspaceHistoryRetrievalSettings {
 	 */
 	private Supplier<VersionFilter> versionFilter;
 	
-	/**
-	 * Merge branches after every commit of the original history to determine
-	 * changes between two versions.
-	 * a-->b------>c------d
-	 *     ^-->x------>y--^
-	 * = a-->b-->x-->c-->y-->d
-	 */
-	private boolean flattenHistoryBranches = false;
-
 	public WorkspaceHistoryRetrievalSettings(
 			Supplier<Repository> codeRepository,
 			FileChangeFilter fileChangeFilter) {
@@ -73,13 +64,5 @@ public class WorkspaceHistoryRetrievalSettings {
 	
 	public void setVersionFilter(Supplier<VersionFilter> versionFilter) {
 		this.versionFilter = versionFilter;
-	}
-
-	public boolean isFlattenHistoryBranches() {
-		return flattenHistoryBranches;
-	}
-
-	public void setFlattenHistoryBranches(boolean flattenHistoryBranches) {
-		this.flattenHistoryBranches = flattenHistoryBranches;
 	}
 }

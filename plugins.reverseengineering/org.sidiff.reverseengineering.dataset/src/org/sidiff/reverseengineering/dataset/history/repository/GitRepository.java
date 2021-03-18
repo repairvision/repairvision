@@ -309,7 +309,7 @@ public class GitRepository implements Repository {
 	}
 	
 	@Override
-	public List<FileChange> getChanges(Version versionA, Version versionB, boolean lines, boolean flattenBranches) {
+	public List<FileChange> getChanges(Version versionA, Version versionB, boolean lines) {
 		try (Git git = openGitRepository()) {
 			ObjectId idA = null;
 			
@@ -325,7 +325,7 @@ public class GitRepository implements Repository {
 		return Collections.emptyList();
 	}
 	
-	public List<FileChange> getChangesFlattenBranches(Version versionA, Version versionB, boolean lines) {
+	public List<FileChange> getChangesFlattenCommitTree(Version versionA, Version versionB, boolean lines) {
 		try (Git git = openGitRepository()) {
 			List<FileChange> changes = new ArrayList<>();
 			

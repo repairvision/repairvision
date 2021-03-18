@@ -14,7 +14,7 @@ public interface Repository {
 	
 	History getHistory(VersionFilter filter);
 	
-	List<FileChange> getChanges(Version versionA, Version versionB, boolean lines, boolean flattenBranches);
+	List<FileChange> getChanges(Version versionA, Version versionB, boolean lines);
 	
 	List<FileChange> getChanges(Version version, boolean lines);
 	

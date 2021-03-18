@@ -94,7 +94,7 @@ public class WorkspaceHistoryRetrieval {
 			List<FileChange> fileChanges = codeRepository.getChanges(versionB, false); // initial version
 			versionB.setFileChanges(fileChanges);
 		} else {
-			List<FileChange> fileChanges = codeRepository.getChanges(versionA, versionB, false, settings.isFlattenHistoryBranches());
+			List<FileChange> fileChanges = codeRepository.getChanges(versionA, versionB, false);
 			versionB.setFileChanges(fileChanges);
 		}
 	}
