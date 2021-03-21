@@ -22,6 +22,8 @@ import org.sidiff.reverseengineering.retrieval.util.ApplicationUtil;
 
 /**
  * Converts a Java project into an UML model.
+ * 
+ * Needs Guava - http://download.eclipse.org/tools/orbit/downloads/drops/R20180206163158/repository/
  */
 public class DataSetRetrievalApplication implements IApplication {
 
