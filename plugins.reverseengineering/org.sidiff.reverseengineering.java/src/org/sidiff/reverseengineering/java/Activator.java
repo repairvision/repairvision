@@ -10,7 +10,8 @@ import org.osgi.framework.BundleContext;
 /**
  * The activator class controls the plug-in life cycle
  * 
- * Needs Guava - http://download.eclipse.org/tools/orbit/downloads/drops/R20180206163158/repository/
+ * Needs Guava - https://download.eclipse.org/tools/orbit/downloads/drops/R20220830213456/repository
+ * - Guava + Guave Extensions for Assisted injection.
  */
 public class Activator extends AbstractUIPlugin {
 
