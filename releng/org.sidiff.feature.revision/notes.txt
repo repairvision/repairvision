@@ -1,0 +1,23 @@
+Required Plug-ins (Update Sites):
+
+- Papyrus: https://download.eclipse.org/modeling/mdt/papyrus/updates/releases/2022-06
+
+- Xtext: http://download.eclipse.org/modeling/tmf/xtext/updates/composite/releases/
+
+- GMF Tooling (only): http://download.eclipse.org/modeling/gmp/gmf-tooling/updates/releases-3.2.1/
+
+- OCL: http://download.eclipse.org/modeling/mdt/ocl/updates/releases/latest
+
+- SVNKit: http://eclipse.svnkit.com/1.10.x
+
+Create Update Site:
+-> right click on this plug-in -> Export...
+-> Deployable features
+-> Destination -> Directory: <target folder>
+-> Options -> Categorize repository: category.xml / category_with_sidiff.xml
+-> Options -> Export source -> Generate source bundles
+-> Available Features -> Select All 
+
+Post-Processing:
+-> If not building with/from sources, a closure of all required plug-ins might be exported.
+-> All none SiDiff/Henshin plugins can be removed from the exported update site.

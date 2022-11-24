@@ -7,8 +7,7 @@
       plugin="org.sidiff.branding.revision">
 
    <description url="https://repairvision.github.io/">
-      All core plug-ins of ReVision: A tool for history-based model
-repair recommendations
+      All core plug-ins of ReVision: A tool for history-based model repair recommendations
    </description>
 
    <copyright url="http://www.eclipse.org/legal/epl-v10.html">
@@ -151,11 +150,9 @@ Java and all Java-based trademarks are trademarks of Oracle Corporation in the U
    </url>
 
    <requires>
-      <import feature="org.tigris.subversion.clientadapter.svnkit.feature" version="1.8.12.3" match="greaterOrEqual"/>
-      <import feature="org.tigris.subversion.clientadapter.javahl.feature" version="1.11.1.201901162041" match="greaterOrEqual"/>
-      <import feature="org.tigris.subversion.subclipse" version="4.3.0.201901172050" match="greaterOrEqual"/>
       <import feature="org.eclipse.ocl.unified.core" version="1.11.0.v20200309-0848" match="greaterOrEqual"/>
       <import feature="org.eclipse.papyrus.sdk.feature" version="4.7.0.202003111106" match="greaterOrEqual"/>
+      <import feature="org.tmatesoft.svnkit" version="1.10.6.r10830" match="greaterOrEqual"/>
    </requires>
 
    <plugin
@@ -264,13 +261,6 @@ Java and all Java-based trademarks are trademarks of Oracle Corporation in the U
          unpack="false"/>
 
    <plugin
-         id="org.sidiff.history.repository.svnkit"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
          id="org.sidiff.history.revision"
          download-size="0"
          install-size="0"
@@ -342,48 +332,6 @@ Java and all Java-based trademarks are trademarks of Oracle Corporation in the U
 
    <plugin
          id="org.sidiff.validation.laguage.fol.ui.tests"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.emf.henshin.diagram"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.emf.henshin.edit"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.emf.henshin.editor"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.emf.henshin.interpreter"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.emf.henshin.interpreter.ui"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.emf.henshin.model"
          download-size="0"
          install-size="0"
          version="0.0.0"
@@ -530,27 +478,6 @@ Java and all Java-based trademarks are trademarks of Oracle Corporation in the U
          unpack="false"/>
 
    <plugin
-         id="org.sidiff.revision.changes"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.sidiff.revision.compare"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.sidiff.revision.configuration"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
          id="org.sidiff.revision.difference.api"
          download-size="0"
          install-size="0"
@@ -580,13 +507,6 @@ Java and all Java-based trademarks are trademarks of Oracle Corporation in the U
 
    <plugin
          id="org.sidiff.revision.editrules.generation.difference"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.sidiff.revision.model"
          download-size="0"
          install-size="0"
          version="0.0.0"
@@ -754,6 +674,55 @@ Java and all Java-based trademarks are trademarks of Oracle Corporation in the U
 
    <plugin
          id="org.sidiff.revision.ui.viewer"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.emf.henshin.diagram"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.emf.henshin.edit"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.emf.henshin.editor"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.emf.henshin.interpreter"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.emf.henshin.interpreter.ui"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.emf.henshin.model"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.sidiff.history.repository.svnkit"
          download-size="0"
          install-size="0"
          version="0.0.0"
