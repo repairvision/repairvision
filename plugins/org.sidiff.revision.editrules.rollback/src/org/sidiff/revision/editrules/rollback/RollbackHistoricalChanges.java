@@ -27,7 +27,7 @@ public class RollbackHistoricalChanges {
 		// calculate dependent changes:
 		Set<Change> undoChangeSet = new HashSet<>(inducingChanges); 
 		
-		for (Change change : undoChangeSet) {
+		for (Change change : inducingChanges) {
 			undoChangeSet.addAll(SymmetricDifferenceUtil.getSubsequentChanges(revision, change));
 		}
 		
