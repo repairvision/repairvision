@@ -116,7 +116,7 @@ public class RuleBaseBuilder extends IncrementalProjectBuilder {
 			// TODO: make 'overwrite' and 'create definition file' configurable
 			ModelToGraphPatternFactory modelToGraphPatternFactory = new ModelToGraphPatternFactory(true);
 			FolderToBundleTransformation converter = new FolderToBundleTransformation(modelFileExtensions, modelToGraphPatternFactory);
-			converter.updateBundle(patternBundle, exampleFolder, false);	
+			converter.updateBundle(patternBundle, exampleFolder, true);	
 			
 			try {
 				patternBundle.eResource().save(Collections.emptyMap());
