@@ -331,8 +331,8 @@ public class BasicComplementationViewerUI<A extends ComplementationApplication<?
 				}
 			}
 		};
-		undoComplementation.setText("Undo Complementation");
-		undoComplementation.setToolTipText("Undo Complementation");
+		undoComplementation.setText("Undo Last Repair");
+		undoComplementation.setToolTipText("Undo Last Repair");
 		undoComplementation.setImageDescriptor(Activator.getImageDescriptor("icons/undo.png"));
 		
 		// Clear setup:
