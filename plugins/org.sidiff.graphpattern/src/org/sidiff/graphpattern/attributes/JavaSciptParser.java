@@ -9,11 +9,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import javax.script.ScriptContext;
-import javax.script.ScriptEngine;
-import javax.script.ScriptEngineManager;
-import javax.script.ScriptException;
-import javax.script.SimpleScriptContext;
+import javax.script.*;
 
 import org.eclipse.emf.ecore.EDataType;
 
@@ -60,7 +56,7 @@ public class JavaSciptParser {
 	 * @return Creates an instance of the JavaScript engine to parse expressions.
 	 */
 	protected static ScriptEngine createJavaScriptEngine() {
-		return new ScriptEngineManager().getEngineByName("nashorn");
+		return new ScriptEngineManager().getEngineByName("JavaScript");
 	}
 	
 	/**
