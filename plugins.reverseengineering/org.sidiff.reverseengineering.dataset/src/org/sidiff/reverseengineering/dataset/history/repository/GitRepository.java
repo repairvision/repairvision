@@ -17,6 +17,7 @@ import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.LogCommand;
 import org.eclipse.jgit.api.PushCommand;
 import org.eclipse.jgit.api.ResetCommand.ResetType;
+import org.eclipse.jgit.api.errors.CanceledException;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.diff.DiffEntry;
 import org.eclipse.jgit.diff.DiffEntry.ChangeType;
@@ -442,4 +443,17 @@ public class GitRepository implements Repository {
 		return Collections.emptyList();
 	}
 	
+	// EGit merge commit:
+	public FileDiff[] computeMergeCommit(Version version) {
+		try (Git git = openGitRepository()) {
+			try {
+				return FileDiff.computeMergeCommit(git.getRepository(), version.getIdentification());
+			} catch (CanceledException | IOException e) {
+				e.printStackTrace();
+			}
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		return new FileDiff[0];
+	}
 }
