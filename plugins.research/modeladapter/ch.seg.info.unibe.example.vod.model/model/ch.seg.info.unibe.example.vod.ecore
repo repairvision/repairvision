@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="ASCII"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="default" nsURI="ch.seg.info.unibe.example.vod/default" nsPrefix="default">
+  <eClassifiers xsi:type="ecore:EClass" name="root">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="containedElements" upperBound="-1"
+        eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject" containment="true"/>
+  </eClassifiers>
+  <eSubpackages name="datatypes" nsURI="ch.seg.info.unibe.example.vod/default.datatypes"
+      nsPrefix="datatypes"/>
+  <eSubpackages name="ch" nsURI="ch.seg.info.unibe.example.vod/default.ch" nsPrefix="ch">
+    <eSubpackages name="seg" nsURI="ch.seg.info.unibe.example.vod/default.ch.seg"
+        nsPrefix="seg">
+      <eSubpackages name="info" nsURI="ch.seg.info.unibe.example.vod/default.ch.seg.info"
+          nsPrefix="info">
+        <eSubpackages name="unibe" nsURI="ch.seg.info.unibe.example.vod/default.ch.seg.info.unibe"
+            nsPrefix="unibe">
+          <eSubpackages name="example" nsURI="ch.seg.info.unibe.example.vod/default.ch.seg.info.unibe.example"
+              nsPrefix="example">
+            <eSubpackages name="vod" nsURI="ch.seg.info.unibe.example.vod/default.ch.seg.info.unibe.example.vod"
+                nsPrefix="vod">
+              <eClassifiers xsi:type="ecore:EClass" name="Server">
+                <eStructuralFeatures xsi:type="ecore:EReference" name="videos" upperBound="-1"
+                    eType="#//ch/seg/info/unibe/example/vod/Video"/>
+                <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+              </eClassifiers>
+              <eClassifiers xsi:type="ecore:EClass" name="User">
+                <eStructuralFeatures xsi:type="ecore:EReference" name="open" eType="#//ch/seg/info/unibe/example/vod/Video"/>
+                <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+              </eClassifiers>
+              <eClassifiers xsi:type="ecore:EClass" name="Video">
+                <eStructuralFeatures xsi:type="ecore:EReference" name="main" eType="#//ch/seg/info/unibe/example/vod/Server"/>
+                <eStructuralFeatures xsi:type="ecore:EReference" name="mirror" eType="#//ch/seg/info/unibe/example/vod/Server"/>
+                <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+              </eClassifiers>
+            </eSubpackages>
+          </eSubpackages>
+        </eSubpackages>
+      </eSubpackages>
+    </eSubpackages>
+  </eSubpackages>
+</ecore:EPackage>

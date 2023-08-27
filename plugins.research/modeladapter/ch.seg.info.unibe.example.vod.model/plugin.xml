@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<!--
+-->
+
+<plugin>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated ch.seg.info.unibe.example.vod -->
+      <package
+            uri="ch.seg.info.unibe.example.vod/default"
+            class="default_.DefaultPackage"
+            genModel="model/ch.seg.info.unibe.example.vod.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated ch.seg.info.unibe.example.vod -->
+      <package
+            uri="ch.seg.info.unibe.example.vod/default.ch.seg.info.unibe.example.vod"
+            class="default_.ch.seg.info.unibe.example.vod.VodPackage"
+            genModel="model/ch.seg.info.unibe.example.vod.genmodel"/>
+   </extension>
+
+</plugin>

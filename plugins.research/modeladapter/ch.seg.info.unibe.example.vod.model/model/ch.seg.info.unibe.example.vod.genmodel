@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/ch.seg.info.unibe.example.vod.model/src" modelPluginID="ch.seg.info.unibe.example.vod.model"
+    modelName="Ch.seg.info.unibe.example" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
+    importerID="org.eclipse.emf.importer.ecore" complianceLevel="5.0" copyrightFields="false"
+    operationReflection="true" importOrganizing="true">
+  <foreignModel>ch.seg.info.unibe.example.vod.ecore</foreignModel>
+  <genPackages prefix="Default" disposableProviderFactory="true" ecorePackage="ch.seg.info.unibe.example.vod.ecore#/">
+    <genClasses ecoreClass="ch.seg.info.unibe.example.vod.ecore#//root">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ch.seg.info.unibe.example.vod.ecore#//root/containedElements"/>
+    </genClasses>
+    <nestedGenPackages prefix="Datatypes" disposableProviderFactory="true" ecorePackage="ch.seg.info.unibe.example.vod.ecore#//datatypes"/>
+    <nestedGenPackages prefix="Ch" disposableProviderFactory="true" ecorePackage="ch.seg.info.unibe.example.vod.ecore#//ch">
+      <nestedGenPackages prefix="Seg" disposableProviderFactory="true" ecorePackage="ch.seg.info.unibe.example.vod.ecore#//ch/seg">
+        <nestedGenPackages prefix="Info" disposableProviderFactory="true" ecorePackage="ch.seg.info.unibe.example.vod.ecore#//ch/seg/info">
+          <nestedGenPackages prefix="Unibe" disposableProviderFactory="true" ecorePackage="ch.seg.info.unibe.example.vod.ecore#//ch/seg/info/unibe">
+            <nestedGenPackages prefix="Example" disposableProviderFactory="true" ecorePackage="ch.seg.info.unibe.example.vod.ecore#//ch/seg/info/unibe/example">
+              <nestedGenPackages prefix="Vod" disposableProviderFactory="true" ecorePackage="ch.seg.info.unibe.example.vod.ecore#//ch/seg/info/unibe/example/vod">
+                <genClasses ecoreClass="ch.seg.info.unibe.example.vod.ecore#//ch/seg/info/unibe/example/vod/Server">
+                  <genFeatures notify="false" createChild="false" propertySortChoices="true"
+                      ecoreFeature="ecore:EReference ch.seg.info.unibe.example.vod.ecore#//ch/seg/info/unibe/example/vod/Server/videos"/>
+                  <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ch.seg.info.unibe.example.vod.ecore#//ch/seg/info/unibe/example/vod/Server/name"/>
+                </genClasses>
+                <genClasses ecoreClass="ch.seg.info.unibe.example.vod.ecore#//ch/seg/info/unibe/example/vod/User">
+                  <genFeatures notify="false" createChild="false" propertySortChoices="true"
+                      ecoreFeature="ecore:EReference ch.seg.info.unibe.example.vod.ecore#//ch/seg/info/unibe/example/vod/User/open"/>
+                  <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ch.seg.info.unibe.example.vod.ecore#//ch/seg/info/unibe/example/vod/User/name"/>
+                </genClasses>
+                <genClasses ecoreClass="ch.seg.info.unibe.example.vod.ecore#//ch/seg/info/unibe/example/vod/Video">
+                  <genFeatures notify="false" createChild="false" propertySortChoices="true"
+                      ecoreFeature="ecore:EReference ch.seg.info.unibe.example.vod.ecore#//ch/seg/info/unibe/example/vod/Video/main"/>
+                  <genFeatures notify="false" createChild="false" propertySortChoices="true"
+                      ecoreFeature="ecore:EReference ch.seg.info.unibe.example.vod.ecore#//ch/seg/info/unibe/example/vod/Video/mirror"/>
+                  <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ch.seg.info.unibe.example.vod.ecore#//ch/seg/info/unibe/example/vod/Video/name"/>
+                </genClasses>
+              </nestedGenPackages>
+            </nestedGenPackages>
+          </nestedGenPackages>
+        </nestedGenPackages>
+      </nestedGenPackages>
+    </nestedGenPackages>
+  </genPackages>
+</genmodel:GenModel>
