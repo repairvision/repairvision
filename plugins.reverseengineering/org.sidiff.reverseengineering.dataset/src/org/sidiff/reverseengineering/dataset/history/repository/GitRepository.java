@@ -15,7 +15,6 @@ import java.util.logging.Level;
 
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.LogCommand;
-import org.eclipse.jgit.api.MergeCommand;
 import org.eclipse.jgit.api.PushCommand;
 import org.eclipse.jgit.api.ResetCommand.ResetType;
 import org.eclipse.jgit.api.errors.CanceledException;
@@ -29,8 +28,6 @@ import org.eclipse.jgit.errors.RevisionSyntaxException;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.ObjectReader;
-import org.eclipse.jgit.merge.MergeResult;
-import org.eclipse.jgit.merge.MergeStrategy;
 import org.eclipse.jgit.patch.FileHeader;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevWalk;
@@ -42,11 +39,11 @@ import org.eclipse.jgit.treewalk.EmptyTreeIterator;
 import org.eclipse.jgit.util.io.DisabledOutputStream;
 import org.sidiff.reverseengineering.dataset.Activator;
 import org.sidiff.reverseengineering.dataset.history.model.FileChange;
+import org.sidiff.reverseengineering.dataset.history.model.FileChange.FileChangeType;
 import org.sidiff.reverseengineering.dataset.history.model.History;
 import org.sidiff.reverseengineering.dataset.history.model.LineChange;
-import org.sidiff.reverseengineering.dataset.history.model.Version;
-import org.sidiff.reverseengineering.dataset.history.model.FileChange.FileChangeType;
 import org.sidiff.reverseengineering.dataset.history.model.LineChange.LineChangeType;
+import org.sidiff.reverseengineering.dataset.history.model.Version;
 import org.sidiff.reverseengineering.dataset.history.repository.filter.VersionFilter;
 
 public class GitRepository implements Repository {
@@ -450,35 +447,7 @@ public class GitRepository implements Repository {
 	public FileDiff[] computeMergeCommit(Version version) {
 		try (Git git = openGitRepository()) {
 			try {
-				FileDiff[] fileDiffs = FileDiff.computeMergeCommit(git.getRepository(), version.getIdentification());
-				List<MergeResult> mergeResults = new ArrayList<>();
-				
-				for (FileDiff fileDiff : fileDiffs) {
-					// TODO: DELETE!?
-					if (fileDiff.getChange() == ChangeType.MODIFY) {
-						// Obtain the tree entries for the file in the three commits.
-						CanonicalTreeParser baseTreeParser = getTreeParserForCommit(
-								git.getRepository(), baseCommit, fileDiff.getPath());
-						CanonicalTreeParser theirTreeParser = getTreeParserForCommit(
-								git.getRepository(), theirCommit, fileDiff.getOldPath());
-						CanonicalTreeParser yourTreeParser = getTreeParserForCommit(
-								git.getRepository(), yourCommit, fileDiff.getNewPath());
-						
-						// Perform the 3-way merge using JGit MergeCommand.
-						MergeResult result = git.merge()
-								.include(baseCommit)
-								.include(theirCommit)
-								.setCommit(true)
-								.setStrategy(MergeStrategy.RECURSIVE)
-								.setFastForward(MergeCommand.FastForwardMode.NO_FF)
-								.addTree(baseTreeParser)
-								.addTree(theirTreeParser)
-								.addTree(yourTreeParser)
-								.call();
-						
-						mergeResults.add(result);
-					}
-				}
+				return FileDiff.computeMergeCommit(git.getRepository(), version.getIdentification());
 			} catch (CanceledException | IOException e) {
 				e.printStackTrace();
 			}

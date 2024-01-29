@@ -4,20 +4,13 @@ Bundle-Name: History Retrieval
 Bundle-SymbolicName: org.sidiff.reverseengineering.dataset;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Bundle-Activator: org.sidiff.reverseengineering.dataset.Activator
-Require-Bundle: org.eclipse.core.runtime,
- org.eclipse.jgit,
- org.eclipse.core.resources,
- org.eclipse.jdt.core,
- org.eclipse.pde.core,
- org.eclipse.jdt.ui,
- org.eclipse.core.resources,
+Require-Bundle: org.eclipse.core.resources,
  org.eclipse.core.runtime,
- org.eclipse.jdt.ui,
- org.eclipse.pde,
- org.eclipse.pde.core,
  org.eclipse.jdt.core,
- org.eclipse.emf.edit,
- org.eclipse.emf.edit.ui
+ org.eclipse.jdt.ui,
+ org.eclipse.jgit,
+ org.eclipse.osgi,
+ org.eclipse.pde.core
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Automatic-Module-Name: org.sidiff.reverseengineering.dataset
 Bundle-ActivationPolicy: lazy
