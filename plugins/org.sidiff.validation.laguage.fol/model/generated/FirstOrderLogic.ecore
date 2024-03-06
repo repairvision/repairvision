@@ -112,6 +112,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="string" eType="#//Term"
         containment="true"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Iterator" eSuperTypes="#//Term"/>
   <eClassifiers xsi:type="ecore:EClass" name="FeatureConstant">
     <eStructuralFeatures xsi:type="ecore:EReference" name="constant" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EStructuralFeature"/>
   </eClassifiers>
@@ -177,5 +178,13 @@
   <eClassifiers xsi:type="ecore:EClass" name="VariableRef" eSuperTypes="#//Term">
     <eStructuralFeatures xsi:type="ecore:EReference" name="name" eType="#//Variable"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="get" eType="#//Get" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Select" eSuperTypes="#//Iterator">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="name" eType="#//Variable"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="iteration" eType="#//Term"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="formula" eType="#//Formula"
+        containment="true"/>
   </eClassifiers>
 </ecore:EPackage>

@@ -12,6 +12,7 @@ class FirstOrderLogicHighlightingConfiguration extends DefaultHighlightingConfig
 	public static val BOOLEAN_OPERATOR_ID = "fol.boolean.operator.formula"
 	public static val FUNCTION_ID = "fol.function.formula"
 	public static val QUANTIFIER_ID = "fol.quantifier.formula"
+	public static val ITERATOR_ID = "fol.iterator.term"
 	public static val CONSTANT_ID = NUMBER_ID // reuse existing
 	
 	public static val FUNCTION_COLOR = new RGB(0, 46, 120)
@@ -24,6 +25,7 @@ class FirstOrderLogicHighlightingConfiguration extends DefaultHighlightingConfig
 		acceptor.acceptDefaultHighlighting(BOOLEAN_OPERATOR_ID, "Boolean Operator", createBooleanOperatorTextStyle())
 		acceptor.acceptDefaultHighlighting(FUNCTION_ID, "Function", createFunctionTextStyle())
 		acceptor.acceptDefaultHighlighting(QUANTIFIER_ID, "Quantifier", createQuantifierTextStyle())
+		acceptor.acceptDefaultHighlighting(ITERATOR_ID, "Iterator", createIteratorTextStyle())
 	}
 	
 	def createVariableTextStyle() {
@@ -54,6 +56,13 @@ class FirstOrderLogicHighlightingConfiguration extends DefaultHighlightingConfig
 	}
 	
 	def createQuantifierTextStyle() {
+		val textStyle = keywordTextStyle().copy()
+		textStyle.setStyle(SWT.ITALIC.bitwiseOr(SWT.BOLD))
+		textStyle.setColor(FUNCTION_COLOR)
+		return textStyle;
+	}
+	
+	def createIteratorTextStyle() {
 		val textStyle = keywordTextStyle().copy()
 		textStyle.setStyle(SWT.ITALIC.bitwiseOr(SWT.BOLD))
 		textStyle.setColor(FUNCTION_COLOR)

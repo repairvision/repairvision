@@ -25,6 +25,7 @@ import org.sidiff.validation.laguage.fol.firstOrderLogic.ForAll;
 import org.sidiff.validation.laguage.fol.firstOrderLogic.Get;
 import org.sidiff.validation.laguage.fol.firstOrderLogic.IndexOf;
 import org.sidiff.validation.laguage.fol.firstOrderLogic.Quantifier;
+import org.sidiff.validation.laguage.fol.firstOrderLogic.Select;
 import org.sidiff.validation.laguage.fol.firstOrderLogic.Variable;
 import org.sidiff.validation.laguage.fol.firstOrderLogic.VariableRef;
 
@@ -47,6 +48,8 @@ public class ScopeUtil extends DefaultTerminalConverters {
 				variable = ((ForAll) container).getName();
 			} else if (container instanceof Exists) {
 				variable = ((Exists) container).getName();
+			} else if (container instanceof Select) {
+				variable = ((Select) container).getName();
 			}
 			
 			if ((variable != null) && (!nameScope.contains(variable.getName()))) {
@@ -124,6 +127,8 @@ public class ScopeUtil extends DefaultTerminalConverters {
 			return ((Constraint) obj).getVariable().getType();
 		} else if (obj instanceof Quantifier) {
 			return ((Quantifier) obj).getName().getType();
+		} else if (obj instanceof Select) {
+			return ((Select) obj).getName().getType();
 		} else if (obj instanceof VariableRef) {
 			return ((VariableRef) obj).getName().getType();
 		} else if (obj instanceof IndexOf) {

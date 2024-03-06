@@ -113,7 +113,7 @@ BooleanExpression returns Formula:
 // terms:
 
 Term:
-	Constant | VariableRef | GetContainments | GetContainer | GetClosure | Size | IndexOf | Concatenate | Capitalize;
+	Constant | VariableRef | GetContainments | GetContainer | GetClosure | Size | IndexOf | Concatenate | Capitalize | Iterator;
 	
 VariableRef returns Term:
 	{VariableRef} name=[Variable] (get=Get)?;
@@ -143,6 +143,14 @@ Concatenate :
 	
 Capitalize :
 	"capitalize" "(" string=Term ")";
+	
+// iterators
+
+Iterator returns Term:
+	Select;
+
+Select returns Iterator:
+	{Select} "select" "(" name=Variable "in" iteration=Term ":" formula=Formula ")";
 
 // type constants and type references:
 FeatureConstant:

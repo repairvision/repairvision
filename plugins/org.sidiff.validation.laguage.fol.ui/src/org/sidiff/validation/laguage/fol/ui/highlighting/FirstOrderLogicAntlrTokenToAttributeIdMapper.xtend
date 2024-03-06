@@ -54,6 +54,9 @@ class FirstOrderLogicAntlrTokenToAttributeIdMapper extends DefaultAntlrTokenToAt
 		if(tokenName.equals("'in'")) {
 			return FirstOrderLogicHighlightingConfiguration.QUANTIFIER_ID;
 		}
+		if(tokenName.equals("'select'")) {
+			return FirstOrderLogicHighlightingConfiguration.ITERATOR_ID;
+		}
 		
 		super.calculateId(tokenName, tokenType)
 	}

@@ -21,7 +21,7 @@ import java.util.ArrayList;
 @SuppressWarnings("all")
 public class InternalFirstOrderLogicParser extends AbstractInternalAntlrParser {
     public static final String[] tokenNames = new String[] {
-        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_STRING", "RULE_ID", "RULE_SIGNED_INT", "RULE_BOOLEAN", "RULE_INT", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_WS", "RULE_ANY_OTHER", "'domain'", "'constraint'", "'message'", "'context'", "':'", "'='", "'implies'", "'xor'", "'or'", "'and'", "'not'", "'('", "')'", "'isEqual'", "','", "'isGreater'", "'isGreaterEqual'", "'isSmaller'", "'isSmallerEqual'", "'isEmpty'", "'isInstanceOf'", "'isValueLiteralOf'", "'forAll'", "'in'", "'exists'", "'.'", "'::'", "'getContainer'", "'getContainments'", "'getClosure'", "'size'", "'indexOf'", "'concatenate'", "'capitalize'", "'asClassifier'", "'asDataType'"
+        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_STRING", "RULE_ID", "RULE_SIGNED_INT", "RULE_BOOLEAN", "RULE_INT", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_WS", "RULE_ANY_OTHER", "'domain'", "'constraint'", "'message'", "'context'", "':'", "'='", "'implies'", "'xor'", "'or'", "'and'", "'not'", "'('", "')'", "'isEqual'", "','", "'isGreater'", "'isGreaterEqual'", "'isSmaller'", "'isSmallerEqual'", "'isEmpty'", "'isInstanceOf'", "'isValueLiteralOf'", "'forAll'", "'in'", "'exists'", "'.'", "'::'", "'getContainer'", "'getContainments'", "'getClosure'", "'size'", "'indexOf'", "'concatenate'", "'capitalize'", "'select'", "'asClassifier'", "'asDataType'"
     };
     public static final int RULE_BOOLEAN=7;
     public static final int T__19=19;
@@ -61,6 +61,7 @@ public class InternalFirstOrderLogicParser extends AbstractInternalAntlrParser {
     public static final int RULE_SIGNED_INT=6;
     public static final int RULE_ANY_OTHER=12;
     public static final int T__48=48;
+    public static final int T__49=49;
     public static final int T__44=44;
     public static final int T__45=45;
     public static final int T__46=46;
@@ -4360,7 +4361,7 @@ public class InternalFirstOrderLogicParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleTerm"
-    // InternalFirstOrderLogic.g:1748:1: ruleTerm returns [EObject current=null] : (this_Constant_0= ruleConstant | this_VariableRef_1= ruleVariableRef | this_GetContainments_2= ruleGetContainments | this_GetContainer_3= ruleGetContainer | this_GetClosure_4= ruleGetClosure | this_Size_5= ruleSize | this_IndexOf_6= ruleIndexOf | this_Concatenate_7= ruleConcatenate | this_Capitalize_8= ruleCapitalize ) ;
+    // InternalFirstOrderLogic.g:1748:1: ruleTerm returns [EObject current=null] : (this_Constant_0= ruleConstant | this_VariableRef_1= ruleVariableRef | this_GetContainments_2= ruleGetContainments | this_GetContainer_3= ruleGetContainer | this_GetClosure_4= ruleGetClosure | this_Size_5= ruleSize | this_IndexOf_6= ruleIndexOf | this_Concatenate_7= ruleConcatenate | this_Capitalize_8= ruleCapitalize | this_Iterator_9= ruleIterator ) ;
     public final EObject ruleTerm() throws RecognitionException {
         EObject current = null;
 
@@ -4382,16 +4383,18 @@ public class InternalFirstOrderLogicParser extends AbstractInternalAntlrParser {
 
         EObject this_Capitalize_8 = null;
 
+        EObject this_Iterator_9 = null;
+
 
 
         	enterRule();
 
         try {
-            // InternalFirstOrderLogic.g:1754:2: ( (this_Constant_0= ruleConstant | this_VariableRef_1= ruleVariableRef | this_GetContainments_2= ruleGetContainments | this_GetContainer_3= ruleGetContainer | this_GetClosure_4= ruleGetClosure | this_Size_5= ruleSize | this_IndexOf_6= ruleIndexOf | this_Concatenate_7= ruleConcatenate | this_Capitalize_8= ruleCapitalize ) )
-            // InternalFirstOrderLogic.g:1755:2: (this_Constant_0= ruleConstant | this_VariableRef_1= ruleVariableRef | this_GetContainments_2= ruleGetContainments | this_GetContainer_3= ruleGetContainer | this_GetClosure_4= ruleGetClosure | this_Size_5= ruleSize | this_IndexOf_6= ruleIndexOf | this_Concatenate_7= ruleConcatenate | this_Capitalize_8= ruleCapitalize )
+            // InternalFirstOrderLogic.g:1754:2: ( (this_Constant_0= ruleConstant | this_VariableRef_1= ruleVariableRef | this_GetContainments_2= ruleGetContainments | this_GetContainer_3= ruleGetContainer | this_GetClosure_4= ruleGetClosure | this_Size_5= ruleSize | this_IndexOf_6= ruleIndexOf | this_Concatenate_7= ruleConcatenate | this_Capitalize_8= ruleCapitalize | this_Iterator_9= ruleIterator ) )
+            // InternalFirstOrderLogic.g:1755:2: (this_Constant_0= ruleConstant | this_VariableRef_1= ruleVariableRef | this_GetContainments_2= ruleGetContainments | this_GetContainer_3= ruleGetContainer | this_GetClosure_4= ruleGetClosure | this_Size_5= ruleSize | this_IndexOf_6= ruleIndexOf | this_Concatenate_7= ruleConcatenate | this_Capitalize_8= ruleCapitalize | this_Iterator_9= ruleIterator )
             {
-            // InternalFirstOrderLogic.g:1755:2: (this_Constant_0= ruleConstant | this_VariableRef_1= ruleVariableRef | this_GetContainments_2= ruleGetContainments | this_GetContainer_3= ruleGetContainer | this_GetClosure_4= ruleGetClosure | this_Size_5= ruleSize | this_IndexOf_6= ruleIndexOf | this_Concatenate_7= ruleConcatenate | this_Capitalize_8= ruleCapitalize )
-            int alt12=9;
+            // InternalFirstOrderLogic.g:1755:2: (this_Constant_0= ruleConstant | this_VariableRef_1= ruleVariableRef | this_GetContainments_2= ruleGetContainments | this_GetContainer_3= ruleGetContainer | this_GetClosure_4= ruleGetClosure | this_Size_5= ruleSize | this_IndexOf_6= ruleIndexOf | this_Concatenate_7= ruleConcatenate | this_Capitalize_8= ruleCapitalize | this_Iterator_9= ruleIterator )
+            int alt12=10;
             switch ( input.LA(1) ) {
             case RULE_STRING:
             case RULE_SIGNED_INT:
@@ -4438,6 +4441,11 @@ public class InternalFirstOrderLogicParser extends AbstractInternalAntlrParser {
             case 46:
                 {
                 alt12=9;
+                }
+                break;
+            case 47:
+                {
+                alt12=10;
                 }
                 break;
             default:
@@ -4610,6 +4618,24 @@ public class InternalFirstOrderLogicParser extends AbstractInternalAntlrParser {
 
                     }
                     break;
+                case 10 :
+                    // InternalFirstOrderLogic.g:1837:3: this_Iterator_9= ruleIterator
+                    {
+
+                    			newCompositeNode(grammarAccess.getTermAccess().getIteratorParserRuleCall_9());
+                    		
+                    pushFollow(FOLLOW_2);
+                    this_Iterator_9=ruleIterator();
+
+                    state._fsp--;
+
+
+                    			current = this_Iterator_9;
+                    			afterParserOrEnumRuleCall();
+                    		
+
+                    }
+                    break;
 
             }
 
@@ -4633,7 +4659,7 @@ public class InternalFirstOrderLogicParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleVariableRef"
-    // InternalFirstOrderLogic.g:1840:1: entryRuleVariableRef returns [EObject current=null] : iv_ruleVariableRef= ruleVariableRef EOF ;
+    // InternalFirstOrderLogic.g:1849:1: entryRuleVariableRef returns [EObject current=null] : iv_ruleVariableRef= ruleVariableRef EOF ;
     public final EObject entryRuleVariableRef() throws RecognitionException {
         EObject current = null;
 
@@ -4641,8 +4667,8 @@ public class InternalFirstOrderLogicParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalFirstOrderLogic.g:1840:52: (iv_ruleVariableRef= ruleVariableRef EOF )
-            // InternalFirstOrderLogic.g:1841:2: iv_ruleVariableRef= ruleVariableRef EOF
+            // InternalFirstOrderLogic.g:1849:52: (iv_ruleVariableRef= ruleVariableRef EOF )
+            // InternalFirstOrderLogic.g:1850:2: iv_ruleVariableRef= ruleVariableRef EOF
             {
              newCompositeNode(grammarAccess.getVariableRefRule()); 
             pushFollow(FOLLOW_1);
@@ -4669,7 +4695,7 @@ public class InternalFirstOrderLogicParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleVariableRef"
-    // InternalFirstOrderLogic.g:1847:1: ruleVariableRef returns [EObject current=null] : ( () ( (otherlv_1= RULE_ID ) ) ( (lv_get_2_0= ruleGet ) )? ) ;
+    // InternalFirstOrderLogic.g:1856:1: ruleVariableRef returns [EObject current=null] : ( () ( (otherlv_1= RULE_ID ) ) ( (lv_get_2_0= ruleGet ) )? ) ;
     public final EObject ruleVariableRef() throws RecognitionException {
         EObject current = null;
 
@@ -4681,14 +4707,14 @@ public class InternalFirstOrderLogicParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalFirstOrderLogic.g:1853:2: ( ( () ( (otherlv_1= RULE_ID ) ) ( (lv_get_2_0= ruleGet ) )? ) )
-            // InternalFirstOrderLogic.g:1854:2: ( () ( (otherlv_1= RULE_ID ) ) ( (lv_get_2_0= ruleGet ) )? )
+            // InternalFirstOrderLogic.g:1862:2: ( ( () ( (otherlv_1= RULE_ID ) ) ( (lv_get_2_0= ruleGet ) )? ) )
+            // InternalFirstOrderLogic.g:1863:2: ( () ( (otherlv_1= RULE_ID ) ) ( (lv_get_2_0= ruleGet ) )? )
             {
-            // InternalFirstOrderLogic.g:1854:2: ( () ( (otherlv_1= RULE_ID ) ) ( (lv_get_2_0= ruleGet ) )? )
-            // InternalFirstOrderLogic.g:1855:3: () ( (otherlv_1= RULE_ID ) ) ( (lv_get_2_0= ruleGet ) )?
+            // InternalFirstOrderLogic.g:1863:2: ( () ( (otherlv_1= RULE_ID ) ) ( (lv_get_2_0= ruleGet ) )? )
+            // InternalFirstOrderLogic.g:1864:3: () ( (otherlv_1= RULE_ID ) ) ( (lv_get_2_0= ruleGet ) )?
             {
-            // InternalFirstOrderLogic.g:1855:3: ()
-            // InternalFirstOrderLogic.g:1856:4: 
+            // InternalFirstOrderLogic.g:1864:3: ()
+            // InternalFirstOrderLogic.g:1865:4: 
             {
 
             				current = forceCreateModelElement(
@@ -4698,11 +4724,11 @@ public class InternalFirstOrderLogicParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalFirstOrderLogic.g:1862:3: ( (otherlv_1= RULE_ID ) )
-            // InternalFirstOrderLogic.g:1863:4: (otherlv_1= RULE_ID )
+            // InternalFirstOrderLogic.g:1871:3: ( (otherlv_1= RULE_ID ) )
+            // InternalFirstOrderLogic.g:1872:4: (otherlv_1= RULE_ID )
             {
-            // InternalFirstOrderLogic.g:1863:4: (otherlv_1= RULE_ID )
-            // InternalFirstOrderLogic.g:1864:5: otherlv_1= RULE_ID
+            // InternalFirstOrderLogic.g:1872:4: (otherlv_1= RULE_ID )
+            // InternalFirstOrderLogic.g:1873:5: otherlv_1= RULE_ID
             {
 
             					if (current==null) {
@@ -4719,7 +4745,7 @@ public class InternalFirstOrderLogicParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalFirstOrderLogic.g:1875:3: ( (lv_get_2_0= ruleGet ) )?
+            // InternalFirstOrderLogic.g:1884:3: ( (lv_get_2_0= ruleGet ) )?
             int alt13=2;
             int LA13_0 = input.LA(1);
 
@@ -4728,10 +4754,10 @@ public class InternalFirstOrderLogicParser extends AbstractInternalAntlrParser {
             }
             switch (alt13) {
                 case 1 :
-                    // InternalFirstOrderLogic.g:1876:4: (lv_get_2_0= ruleGet )
+                    // InternalFirstOrderLogic.g:1885:4: (lv_get_2_0= ruleGet )
                     {
-                    // InternalFirstOrderLogic.g:1876:4: (lv_get_2_0= ruleGet )
-                    // InternalFirstOrderLogic.g:1877:5: lv_get_2_0= ruleGet
+                    // InternalFirstOrderLogic.g:1885:4: (lv_get_2_0= ruleGet )
+                    // InternalFirstOrderLogic.g:1886:5: lv_get_2_0= ruleGet
                     {
 
                     					newCompositeNode(grammarAccess.getVariableRefAccess().getGetGetParserRuleCall_2_0());
@@ -4784,7 +4810,7 @@ public class InternalFirstOrderLogicParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleGet"
-    // InternalFirstOrderLogic.g:1898:1: entryRuleGet returns [EObject current=null] : iv_ruleGet= ruleGet EOF ;
+    // InternalFirstOrderLogic.g:1907:1: entryRuleGet returns [EObject current=null] : iv_ruleGet= ruleGet EOF ;
     public final EObject entryRuleGet() throws RecognitionException {
         EObject current = null;
 
@@ -4792,8 +4818,8 @@ public class InternalFirstOrderLogicParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalFirstOrderLogic.g:1898:44: (iv_ruleGet= ruleGet EOF )
-            // InternalFirstOrderLogic.g:1899:2: iv_ruleGet= ruleGet EOF
+            // InternalFirstOrderLogic.g:1907:44: (iv_ruleGet= ruleGet EOF )
+            // InternalFirstOrderLogic.g:1908:2: iv_ruleGet= ruleGet EOF
             {
              newCompositeNode(grammarAccess.getGetRule()); 
             pushFollow(FOLLOW_1);
@@ -4820,7 +4846,7 @@ public class InternalFirstOrderLogicParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleGet"
-    // InternalFirstOrderLogic.g:1905:1: ruleGet returns [EObject current=null] : (otherlv_0= '.' ( ( (otherlv_1= RULE_ID ) ) otherlv_2= '::' )? ( (otherlv_3= RULE_ID ) ) ( (lv_next_4_0= ruleGet ) )? ) ;
+    // InternalFirstOrderLogic.g:1914:1: ruleGet returns [EObject current=null] : (otherlv_0= '.' ( ( (otherlv_1= RULE_ID ) ) otherlv_2= '::' )? ( (otherlv_3= RULE_ID ) ) ( (lv_next_4_0= ruleGet ) )? ) ;
     public final EObject ruleGet() throws RecognitionException {
         EObject current = null;
 
@@ -4835,17 +4861,17 @@ public class InternalFirstOrderLogicParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalFirstOrderLogic.g:1911:2: ( (otherlv_0= '.' ( ( (otherlv_1= RULE_ID ) ) otherlv_2= '::' )? ( (otherlv_3= RULE_ID ) ) ( (lv_next_4_0= ruleGet ) )? ) )
-            // InternalFirstOrderLogic.g:1912:2: (otherlv_0= '.' ( ( (otherlv_1= RULE_ID ) ) otherlv_2= '::' )? ( (otherlv_3= RULE_ID ) ) ( (lv_next_4_0= ruleGet ) )? )
+            // InternalFirstOrderLogic.g:1920:2: ( (otherlv_0= '.' ( ( (otherlv_1= RULE_ID ) ) otherlv_2= '::' )? ( (otherlv_3= RULE_ID ) ) ( (lv_next_4_0= ruleGet ) )? ) )
+            // InternalFirstOrderLogic.g:1921:2: (otherlv_0= '.' ( ( (otherlv_1= RULE_ID ) ) otherlv_2= '::' )? ( (otherlv_3= RULE_ID ) ) ( (lv_next_4_0= ruleGet ) )? )
             {
-            // InternalFirstOrderLogic.g:1912:2: (otherlv_0= '.' ( ( (otherlv_1= RULE_ID ) ) otherlv_2= '::' )? ( (otherlv_3= RULE_ID ) ) ( (lv_next_4_0= ruleGet ) )? )
-            // InternalFirstOrderLogic.g:1913:3: otherlv_0= '.' ( ( (otherlv_1= RULE_ID ) ) otherlv_2= '::' )? ( (otherlv_3= RULE_ID ) ) ( (lv_next_4_0= ruleGet ) )?
+            // InternalFirstOrderLogic.g:1921:2: (otherlv_0= '.' ( ( (otherlv_1= RULE_ID ) ) otherlv_2= '::' )? ( (otherlv_3= RULE_ID ) ) ( (lv_next_4_0= ruleGet ) )? )
+            // InternalFirstOrderLogic.g:1922:3: otherlv_0= '.' ( ( (otherlv_1= RULE_ID ) ) otherlv_2= '::' )? ( (otherlv_3= RULE_ID ) ) ( (lv_next_4_0= ruleGet ) )?
             {
             otherlv_0=(Token)match(input,38,FOLLOW_6); 
 
             			newLeafNode(otherlv_0, grammarAccess.getGetAccess().getFullStopKeyword_0());
             		
-            // InternalFirstOrderLogic.g:1917:3: ( ( (otherlv_1= RULE_ID ) ) otherlv_2= '::' )?
+            // InternalFirstOrderLogic.g:1926:3: ( ( (otherlv_1= RULE_ID ) ) otherlv_2= '::' )?
             int alt14=2;
             int LA14_0 = input.LA(1);
 
@@ -4858,13 +4884,13 @@ public class InternalFirstOrderLogicParser extends AbstractInternalAntlrParser {
             }
             switch (alt14) {
                 case 1 :
-                    // InternalFirstOrderLogic.g:1918:4: ( (otherlv_1= RULE_ID ) ) otherlv_2= '::'
+                    // InternalFirstOrderLogic.g:1927:4: ( (otherlv_1= RULE_ID ) ) otherlv_2= '::'
                     {
-                    // InternalFirstOrderLogic.g:1918:4: ( (otherlv_1= RULE_ID ) )
-                    // InternalFirstOrderLogic.g:1919:5: (otherlv_1= RULE_ID )
+                    // InternalFirstOrderLogic.g:1927:4: ( (otherlv_1= RULE_ID ) )
+                    // InternalFirstOrderLogic.g:1928:5: (otherlv_1= RULE_ID )
                     {
-                    // InternalFirstOrderLogic.g:1919:5: (otherlv_1= RULE_ID )
-                    // InternalFirstOrderLogic.g:1920:6: otherlv_1= RULE_ID
+                    // InternalFirstOrderLogic.g:1928:5: (otherlv_1= RULE_ID )
+                    // InternalFirstOrderLogic.g:1929:6: otherlv_1= RULE_ID
                     {
 
                     						if (current==null) {
@@ -4891,11 +4917,11 @@ public class InternalFirstOrderLogicParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalFirstOrderLogic.g:1936:3: ( (otherlv_3= RULE_ID ) )
-            // InternalFirstOrderLogic.g:1937:4: (otherlv_3= RULE_ID )
+            // InternalFirstOrderLogic.g:1945:3: ( (otherlv_3= RULE_ID ) )
+            // InternalFirstOrderLogic.g:1946:4: (otherlv_3= RULE_ID )
             {
-            // InternalFirstOrderLogic.g:1937:4: (otherlv_3= RULE_ID )
-            // InternalFirstOrderLogic.g:1938:5: otherlv_3= RULE_ID
+            // InternalFirstOrderLogic.g:1946:4: (otherlv_3= RULE_ID )
+            // InternalFirstOrderLogic.g:1947:5: otherlv_3= RULE_ID
             {
 
             					if (current==null) {
@@ -4912,7 +4938,7 @@ public class InternalFirstOrderLogicParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalFirstOrderLogic.g:1949:3: ( (lv_next_4_0= ruleGet ) )?
+            // InternalFirstOrderLogic.g:1958:3: ( (lv_next_4_0= ruleGet ) )?
             int alt15=2;
             int LA15_0 = input.LA(1);
 
@@ -4921,10 +4947,10 @@ public class InternalFirstOrderLogicParser extends AbstractInternalAntlrParser {
             }
             switch (alt15) {
                 case 1 :
-                    // InternalFirstOrderLogic.g:1950:4: (lv_next_4_0= ruleGet )
+                    // InternalFirstOrderLogic.g:1959:4: (lv_next_4_0= ruleGet )
                     {
-                    // InternalFirstOrderLogic.g:1950:4: (lv_next_4_0= ruleGet )
-                    // InternalFirstOrderLogic.g:1951:5: lv_next_4_0= ruleGet
+                    // InternalFirstOrderLogic.g:1959:4: (lv_next_4_0= ruleGet )
+                    // InternalFirstOrderLogic.g:1960:5: lv_next_4_0= ruleGet
                     {
 
                     					newCompositeNode(grammarAccess.getGetAccess().getNextGetParserRuleCall_3_0());
@@ -4977,7 +5003,7 @@ public class InternalFirstOrderLogicParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleGetContainer"
-    // InternalFirstOrderLogic.g:1972:1: entryRuleGetContainer returns [EObject current=null] : iv_ruleGetContainer= ruleGetContainer EOF ;
+    // InternalFirstOrderLogic.g:1981:1: entryRuleGetContainer returns [EObject current=null] : iv_ruleGetContainer= ruleGetContainer EOF ;
     public final EObject entryRuleGetContainer() throws RecognitionException {
         EObject current = null;
 
@@ -4985,8 +5011,8 @@ public class InternalFirstOrderLogicParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalFirstOrderLogic.g:1972:53: (iv_ruleGetContainer= ruleGetContainer EOF )
-            // InternalFirstOrderLogic.g:1973:2: iv_ruleGetContainer= ruleGetContainer EOF
+            // InternalFirstOrderLogic.g:1981:53: (iv_ruleGetContainer= ruleGetContainer EOF )
+            // InternalFirstOrderLogic.g:1982:2: iv_ruleGetContainer= ruleGetContainer EOF
             {
              newCompositeNode(grammarAccess.getGetContainerRule()); 
             pushFollow(FOLLOW_1);
@@ -5013,7 +5039,7 @@ public class InternalFirstOrderLogicParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleGetContainer"
-    // InternalFirstOrderLogic.g:1979:1: ruleGetContainer returns [EObject current=null] : (otherlv_0= 'getContainer' otherlv_1= '(' ( (lv_element_2_0= ruleTerm ) ) otherlv_3= ')' ) ;
+    // InternalFirstOrderLogic.g:1988:1: ruleGetContainer returns [EObject current=null] : (otherlv_0= 'getContainer' otherlv_1= '(' ( (lv_element_2_0= ruleTerm ) ) otherlv_3= ')' ) ;
     public final EObject ruleGetContainer() throws RecognitionException {
         EObject current = null;
 
@@ -5027,11 +5053,11 @@ public class InternalFirstOrderLogicParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalFirstOrderLogic.g:1985:2: ( (otherlv_0= 'getContainer' otherlv_1= '(' ( (lv_element_2_0= ruleTerm ) ) otherlv_3= ')' ) )
-            // InternalFirstOrderLogic.g:1986:2: (otherlv_0= 'getContainer' otherlv_1= '(' ( (lv_element_2_0= ruleTerm ) ) otherlv_3= ')' )
+            // InternalFirstOrderLogic.g:1994:2: ( (otherlv_0= 'getContainer' otherlv_1= '(' ( (lv_element_2_0= ruleTerm ) ) otherlv_3= ')' ) )
+            // InternalFirstOrderLogic.g:1995:2: (otherlv_0= 'getContainer' otherlv_1= '(' ( (lv_element_2_0= ruleTerm ) ) otherlv_3= ')' )
             {
-            // InternalFirstOrderLogic.g:1986:2: (otherlv_0= 'getContainer' otherlv_1= '(' ( (lv_element_2_0= ruleTerm ) ) otherlv_3= ')' )
-            // InternalFirstOrderLogic.g:1987:3: otherlv_0= 'getContainer' otherlv_1= '(' ( (lv_element_2_0= ruleTerm ) ) otherlv_3= ')'
+            // InternalFirstOrderLogic.g:1995:2: (otherlv_0= 'getContainer' otherlv_1= '(' ( (lv_element_2_0= ruleTerm ) ) otherlv_3= ')' )
+            // InternalFirstOrderLogic.g:1996:3: otherlv_0= 'getContainer' otherlv_1= '(' ( (lv_element_2_0= ruleTerm ) ) otherlv_3= ')'
             {
             otherlv_0=(Token)match(input,40,FOLLOW_16); 
 
@@ -5041,11 +5067,11 @@ public class InternalFirstOrderLogicParser extends AbstractInternalAntlrParser {
 
             			newLeafNode(otherlv_1, grammarAccess.getGetContainerAccess().getLeftParenthesisKeyword_1());
             		
-            // InternalFirstOrderLogic.g:1995:3: ( (lv_element_2_0= ruleTerm ) )
-            // InternalFirstOrderLogic.g:1996:4: (lv_element_2_0= ruleTerm )
+            // InternalFirstOrderLogic.g:2004:3: ( (lv_element_2_0= ruleTerm ) )
+            // InternalFirstOrderLogic.g:2005:4: (lv_element_2_0= ruleTerm )
             {
-            // InternalFirstOrderLogic.g:1996:4: (lv_element_2_0= ruleTerm )
-            // InternalFirstOrderLogic.g:1997:5: lv_element_2_0= ruleTerm
+            // InternalFirstOrderLogic.g:2005:4: (lv_element_2_0= ruleTerm )
+            // InternalFirstOrderLogic.g:2006:5: lv_element_2_0= ruleTerm
             {
 
             					newCompositeNode(grammarAccess.getGetContainerAccess().getElementTermParserRuleCall_2_0());
@@ -5099,7 +5125,7 @@ public class InternalFirstOrderLogicParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleGetContainments"
-    // InternalFirstOrderLogic.g:2022:1: entryRuleGetContainments returns [EObject current=null] : iv_ruleGetContainments= ruleGetContainments EOF ;
+    // InternalFirstOrderLogic.g:2031:1: entryRuleGetContainments returns [EObject current=null] : iv_ruleGetContainments= ruleGetContainments EOF ;
     public final EObject entryRuleGetContainments() throws RecognitionException {
         EObject current = null;
 
@@ -5107,8 +5133,8 @@ public class InternalFirstOrderLogicParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalFirstOrderLogic.g:2022:56: (iv_ruleGetContainments= ruleGetContainments EOF )
-            // InternalFirstOrderLogic.g:2023:2: iv_ruleGetContainments= ruleGetContainments EOF
+            // InternalFirstOrderLogic.g:2031:56: (iv_ruleGetContainments= ruleGetContainments EOF )
+            // InternalFirstOrderLogic.g:2032:2: iv_ruleGetContainments= ruleGetContainments EOF
             {
              newCompositeNode(grammarAccess.getGetContainmentsRule()); 
             pushFollow(FOLLOW_1);
@@ -5135,7 +5161,7 @@ public class InternalFirstOrderLogicParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleGetContainments"
-    // InternalFirstOrderLogic.g:2029:1: ruleGetContainments returns [EObject current=null] : (otherlv_0= 'getContainments' otherlv_1= '(' ( (lv_element_2_0= ruleTerm ) ) otherlv_3= ')' ) ;
+    // InternalFirstOrderLogic.g:2038:1: ruleGetContainments returns [EObject current=null] : (otherlv_0= 'getContainments' otherlv_1= '(' ( (lv_element_2_0= ruleTerm ) ) otherlv_3= ')' ) ;
     public final EObject ruleGetContainments() throws RecognitionException {
         EObject current = null;
 
@@ -5149,11 +5175,11 @@ public class InternalFirstOrderLogicParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalFirstOrderLogic.g:2035:2: ( (otherlv_0= 'getContainments' otherlv_1= '(' ( (lv_element_2_0= ruleTerm ) ) otherlv_3= ')' ) )
-            // InternalFirstOrderLogic.g:2036:2: (otherlv_0= 'getContainments' otherlv_1= '(' ( (lv_element_2_0= ruleTerm ) ) otherlv_3= ')' )
+            // InternalFirstOrderLogic.g:2044:2: ( (otherlv_0= 'getContainments' otherlv_1= '(' ( (lv_element_2_0= ruleTerm ) ) otherlv_3= ')' ) )
+            // InternalFirstOrderLogic.g:2045:2: (otherlv_0= 'getContainments' otherlv_1= '(' ( (lv_element_2_0= ruleTerm ) ) otherlv_3= ')' )
             {
-            // InternalFirstOrderLogic.g:2036:2: (otherlv_0= 'getContainments' otherlv_1= '(' ( (lv_element_2_0= ruleTerm ) ) otherlv_3= ')' )
-            // InternalFirstOrderLogic.g:2037:3: otherlv_0= 'getContainments' otherlv_1= '(' ( (lv_element_2_0= ruleTerm ) ) otherlv_3= ')'
+            // InternalFirstOrderLogic.g:2045:2: (otherlv_0= 'getContainments' otherlv_1= '(' ( (lv_element_2_0= ruleTerm ) ) otherlv_3= ')' )
+            // InternalFirstOrderLogic.g:2046:3: otherlv_0= 'getContainments' otherlv_1= '(' ( (lv_element_2_0= ruleTerm ) ) otherlv_3= ')'
             {
             otherlv_0=(Token)match(input,41,FOLLOW_16); 
 
@@ -5163,11 +5189,11 @@ public class InternalFirstOrderLogicParser extends AbstractInternalAntlrParser {
 
             			newLeafNode(otherlv_1, grammarAccess.getGetContainmentsAccess().getLeftParenthesisKeyword_1());
             		
-            // InternalFirstOrderLogic.g:2045:3: ( (lv_element_2_0= ruleTerm ) )
-            // InternalFirstOrderLogic.g:2046:4: (lv_element_2_0= ruleTerm )
+            // InternalFirstOrderLogic.g:2054:3: ( (lv_element_2_0= ruleTerm ) )
+            // InternalFirstOrderLogic.g:2055:4: (lv_element_2_0= ruleTerm )
             {
-            // InternalFirstOrderLogic.g:2046:4: (lv_element_2_0= ruleTerm )
-            // InternalFirstOrderLogic.g:2047:5: lv_element_2_0= ruleTerm
+            // InternalFirstOrderLogic.g:2055:4: (lv_element_2_0= ruleTerm )
+            // InternalFirstOrderLogic.g:2056:5: lv_element_2_0= ruleTerm
             {
 
             					newCompositeNode(grammarAccess.getGetContainmentsAccess().getElementTermParserRuleCall_2_0());
@@ -5221,7 +5247,7 @@ public class InternalFirstOrderLogicParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleGetClosure"
-    // InternalFirstOrderLogic.g:2072:1: entryRuleGetClosure returns [EObject current=null] : iv_ruleGetClosure= ruleGetClosure EOF ;
+    // InternalFirstOrderLogic.g:2081:1: entryRuleGetClosure returns [EObject current=null] : iv_ruleGetClosure= ruleGetClosure EOF ;
     public final EObject entryRuleGetClosure() throws RecognitionException {
         EObject current = null;
 
@@ -5229,8 +5255,8 @@ public class InternalFirstOrderLogicParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalFirstOrderLogic.g:2072:51: (iv_ruleGetClosure= ruleGetClosure EOF )
-            // InternalFirstOrderLogic.g:2073:2: iv_ruleGetClosure= ruleGetClosure EOF
+            // InternalFirstOrderLogic.g:2081:51: (iv_ruleGetClosure= ruleGetClosure EOF )
+            // InternalFirstOrderLogic.g:2082:2: iv_ruleGetClosure= ruleGetClosure EOF
             {
              newCompositeNode(grammarAccess.getGetClosureRule()); 
             pushFollow(FOLLOW_1);
@@ -5257,7 +5283,7 @@ public class InternalFirstOrderLogicParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleGetClosure"
-    // InternalFirstOrderLogic.g:2079:1: ruleGetClosure returns [EObject current=null] : (otherlv_0= 'getClosure' otherlv_1= '(' ( (lv_element_2_0= ruleTerm ) ) otherlv_3= ',' ( (lv_feature_4_0= ruleFeatureConstant ) ) otherlv_5= ')' ) ;
+    // InternalFirstOrderLogic.g:2088:1: ruleGetClosure returns [EObject current=null] : (otherlv_0= 'getClosure' otherlv_1= '(' ( (lv_element_2_0= ruleTerm ) ) otherlv_3= ',' ( (lv_feature_4_0= ruleFeatureConstant ) ) otherlv_5= ')' ) ;
     public final EObject ruleGetClosure() throws RecognitionException {
         EObject current = null;
 
@@ -5274,11 +5300,11 @@ public class InternalFirstOrderLogicParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalFirstOrderLogic.g:2085:2: ( (otherlv_0= 'getClosure' otherlv_1= '(' ( (lv_element_2_0= ruleTerm ) ) otherlv_3= ',' ( (lv_feature_4_0= ruleFeatureConstant ) ) otherlv_5= ')' ) )
-            // InternalFirstOrderLogic.g:2086:2: (otherlv_0= 'getClosure' otherlv_1= '(' ( (lv_element_2_0= ruleTerm ) ) otherlv_3= ',' ( (lv_feature_4_0= ruleFeatureConstant ) ) otherlv_5= ')' )
+            // InternalFirstOrderLogic.g:2094:2: ( (otherlv_0= 'getClosure' otherlv_1= '(' ( (lv_element_2_0= ruleTerm ) ) otherlv_3= ',' ( (lv_feature_4_0= ruleFeatureConstant ) ) otherlv_5= ')' ) )
+            // InternalFirstOrderLogic.g:2095:2: (otherlv_0= 'getClosure' otherlv_1= '(' ( (lv_element_2_0= ruleTerm ) ) otherlv_3= ',' ( (lv_feature_4_0= ruleFeatureConstant ) ) otherlv_5= ')' )
             {
-            // InternalFirstOrderLogic.g:2086:2: (otherlv_0= 'getClosure' otherlv_1= '(' ( (lv_element_2_0= ruleTerm ) ) otherlv_3= ',' ( (lv_feature_4_0= ruleFeatureConstant ) ) otherlv_5= ')' )
-            // InternalFirstOrderLogic.g:2087:3: otherlv_0= 'getClosure' otherlv_1= '(' ( (lv_element_2_0= ruleTerm ) ) otherlv_3= ',' ( (lv_feature_4_0= ruleFeatureConstant ) ) otherlv_5= ')'
+            // InternalFirstOrderLogic.g:2095:2: (otherlv_0= 'getClosure' otherlv_1= '(' ( (lv_element_2_0= ruleTerm ) ) otherlv_3= ',' ( (lv_feature_4_0= ruleFeatureConstant ) ) otherlv_5= ')' )
+            // InternalFirstOrderLogic.g:2096:3: otherlv_0= 'getClosure' otherlv_1= '(' ( (lv_element_2_0= ruleTerm ) ) otherlv_3= ',' ( (lv_feature_4_0= ruleFeatureConstant ) ) otherlv_5= ')'
             {
             otherlv_0=(Token)match(input,42,FOLLOW_16); 
 
@@ -5288,11 +5314,11 @@ public class InternalFirstOrderLogicParser extends AbstractInternalAntlrParser {
 
             			newLeafNode(otherlv_1, grammarAccess.getGetClosureAccess().getLeftParenthesisKeyword_1());
             		
-            // InternalFirstOrderLogic.g:2095:3: ( (lv_element_2_0= ruleTerm ) )
-            // InternalFirstOrderLogic.g:2096:4: (lv_element_2_0= ruleTerm )
+            // InternalFirstOrderLogic.g:2104:3: ( (lv_element_2_0= ruleTerm ) )
+            // InternalFirstOrderLogic.g:2105:4: (lv_element_2_0= ruleTerm )
             {
-            // InternalFirstOrderLogic.g:2096:4: (lv_element_2_0= ruleTerm )
-            // InternalFirstOrderLogic.g:2097:5: lv_element_2_0= ruleTerm
+            // InternalFirstOrderLogic.g:2105:4: (lv_element_2_0= ruleTerm )
+            // InternalFirstOrderLogic.g:2106:5: lv_element_2_0= ruleTerm
             {
 
             					newCompositeNode(grammarAccess.getGetClosureAccess().getElementTermParserRuleCall_2_0());
@@ -5323,11 +5349,11 @@ public class InternalFirstOrderLogicParser extends AbstractInternalAntlrParser {
 
             			newLeafNode(otherlv_3, grammarAccess.getGetClosureAccess().getCommaKeyword_3());
             		
-            // InternalFirstOrderLogic.g:2118:3: ( (lv_feature_4_0= ruleFeatureConstant ) )
-            // InternalFirstOrderLogic.g:2119:4: (lv_feature_4_0= ruleFeatureConstant )
+            // InternalFirstOrderLogic.g:2127:3: ( (lv_feature_4_0= ruleFeatureConstant ) )
+            // InternalFirstOrderLogic.g:2128:4: (lv_feature_4_0= ruleFeatureConstant )
             {
-            // InternalFirstOrderLogic.g:2119:4: (lv_feature_4_0= ruleFeatureConstant )
-            // InternalFirstOrderLogic.g:2120:5: lv_feature_4_0= ruleFeatureConstant
+            // InternalFirstOrderLogic.g:2128:4: (lv_feature_4_0= ruleFeatureConstant )
+            // InternalFirstOrderLogic.g:2129:5: lv_feature_4_0= ruleFeatureConstant
             {
 
             					newCompositeNode(grammarAccess.getGetClosureAccess().getFeatureFeatureConstantParserRuleCall_4_0());
@@ -5381,7 +5407,7 @@ public class InternalFirstOrderLogicParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleSize"
-    // InternalFirstOrderLogic.g:2145:1: entryRuleSize returns [EObject current=null] : iv_ruleSize= ruleSize EOF ;
+    // InternalFirstOrderLogic.g:2154:1: entryRuleSize returns [EObject current=null] : iv_ruleSize= ruleSize EOF ;
     public final EObject entryRuleSize() throws RecognitionException {
         EObject current = null;
 
@@ -5389,8 +5415,8 @@ public class InternalFirstOrderLogicParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalFirstOrderLogic.g:2145:45: (iv_ruleSize= ruleSize EOF )
-            // InternalFirstOrderLogic.g:2146:2: iv_ruleSize= ruleSize EOF
+            // InternalFirstOrderLogic.g:2154:45: (iv_ruleSize= ruleSize EOF )
+            // InternalFirstOrderLogic.g:2155:2: iv_ruleSize= ruleSize EOF
             {
              newCompositeNode(grammarAccess.getSizeRule()); 
             pushFollow(FOLLOW_1);
@@ -5417,7 +5443,7 @@ public class InternalFirstOrderLogicParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleSize"
-    // InternalFirstOrderLogic.g:2152:1: ruleSize returns [EObject current=null] : (otherlv_0= 'size' otherlv_1= '(' ( (lv_elements_2_0= ruleTerm ) ) otherlv_3= ')' ) ;
+    // InternalFirstOrderLogic.g:2161:1: ruleSize returns [EObject current=null] : (otherlv_0= 'size' otherlv_1= '(' ( (lv_elements_2_0= ruleTerm ) ) otherlv_3= ')' ) ;
     public final EObject ruleSize() throws RecognitionException {
         EObject current = null;
 
@@ -5431,11 +5457,11 @@ public class InternalFirstOrderLogicParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalFirstOrderLogic.g:2158:2: ( (otherlv_0= 'size' otherlv_1= '(' ( (lv_elements_2_0= ruleTerm ) ) otherlv_3= ')' ) )
-            // InternalFirstOrderLogic.g:2159:2: (otherlv_0= 'size' otherlv_1= '(' ( (lv_elements_2_0= ruleTerm ) ) otherlv_3= ')' )
+            // InternalFirstOrderLogic.g:2167:2: ( (otherlv_0= 'size' otherlv_1= '(' ( (lv_elements_2_0= ruleTerm ) ) otherlv_3= ')' ) )
+            // InternalFirstOrderLogic.g:2168:2: (otherlv_0= 'size' otherlv_1= '(' ( (lv_elements_2_0= ruleTerm ) ) otherlv_3= ')' )
             {
-            // InternalFirstOrderLogic.g:2159:2: (otherlv_0= 'size' otherlv_1= '(' ( (lv_elements_2_0= ruleTerm ) ) otherlv_3= ')' )
-            // InternalFirstOrderLogic.g:2160:3: otherlv_0= 'size' otherlv_1= '(' ( (lv_elements_2_0= ruleTerm ) ) otherlv_3= ')'
+            // InternalFirstOrderLogic.g:2168:2: (otherlv_0= 'size' otherlv_1= '(' ( (lv_elements_2_0= ruleTerm ) ) otherlv_3= ')' )
+            // InternalFirstOrderLogic.g:2169:3: otherlv_0= 'size' otherlv_1= '(' ( (lv_elements_2_0= ruleTerm ) ) otherlv_3= ')'
             {
             otherlv_0=(Token)match(input,43,FOLLOW_16); 
 
@@ -5445,11 +5471,11 @@ public class InternalFirstOrderLogicParser extends AbstractInternalAntlrParser {
 
             			newLeafNode(otherlv_1, grammarAccess.getSizeAccess().getLeftParenthesisKeyword_1());
             		
-            // InternalFirstOrderLogic.g:2168:3: ( (lv_elements_2_0= ruleTerm ) )
-            // InternalFirstOrderLogic.g:2169:4: (lv_elements_2_0= ruleTerm )
+            // InternalFirstOrderLogic.g:2177:3: ( (lv_elements_2_0= ruleTerm ) )
+            // InternalFirstOrderLogic.g:2178:4: (lv_elements_2_0= ruleTerm )
             {
-            // InternalFirstOrderLogic.g:2169:4: (lv_elements_2_0= ruleTerm )
-            // InternalFirstOrderLogic.g:2170:5: lv_elements_2_0= ruleTerm
+            // InternalFirstOrderLogic.g:2178:4: (lv_elements_2_0= ruleTerm )
+            // InternalFirstOrderLogic.g:2179:5: lv_elements_2_0= ruleTerm
             {
 
             					newCompositeNode(grammarAccess.getSizeAccess().getElementsTermParserRuleCall_2_0());
@@ -5503,7 +5529,7 @@ public class InternalFirstOrderLogicParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleIndexOf"
-    // InternalFirstOrderLogic.g:2195:1: entryRuleIndexOf returns [EObject current=null] : iv_ruleIndexOf= ruleIndexOf EOF ;
+    // InternalFirstOrderLogic.g:2204:1: entryRuleIndexOf returns [EObject current=null] : iv_ruleIndexOf= ruleIndexOf EOF ;
     public final EObject entryRuleIndexOf() throws RecognitionException {
         EObject current = null;
 
@@ -5511,8 +5537,8 @@ public class InternalFirstOrderLogicParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalFirstOrderLogic.g:2195:48: (iv_ruleIndexOf= ruleIndexOf EOF )
-            // InternalFirstOrderLogic.g:2196:2: iv_ruleIndexOf= ruleIndexOf EOF
+            // InternalFirstOrderLogic.g:2204:48: (iv_ruleIndexOf= ruleIndexOf EOF )
+            // InternalFirstOrderLogic.g:2205:2: iv_ruleIndexOf= ruleIndexOf EOF
             {
              newCompositeNode(grammarAccess.getIndexOfRule()); 
             pushFollow(FOLLOW_1);
@@ -5539,7 +5565,7 @@ public class InternalFirstOrderLogicParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleIndexOf"
-    // InternalFirstOrderLogic.g:2202:1: ruleIndexOf returns [EObject current=null] : (otherlv_0= 'indexOf' otherlv_1= '(' ( (lv_container_2_0= ruleTerm ) ) otherlv_3= ',' ( (lv_feature_4_0= ruleFeatureConstant ) ) otherlv_5= ',' ( (lv_element_6_0= ruleTerm ) ) otherlv_7= ')' ) ;
+    // InternalFirstOrderLogic.g:2211:1: ruleIndexOf returns [EObject current=null] : (otherlv_0= 'indexOf' otherlv_1= '(' ( (lv_container_2_0= ruleTerm ) ) otherlv_3= ',' ( (lv_feature_4_0= ruleFeatureConstant ) ) otherlv_5= ',' ( (lv_element_6_0= ruleTerm ) ) otherlv_7= ')' ) ;
     public final EObject ruleIndexOf() throws RecognitionException {
         EObject current = null;
 
@@ -5559,11 +5585,11 @@ public class InternalFirstOrderLogicParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalFirstOrderLogic.g:2208:2: ( (otherlv_0= 'indexOf' otherlv_1= '(' ( (lv_container_2_0= ruleTerm ) ) otherlv_3= ',' ( (lv_feature_4_0= ruleFeatureConstant ) ) otherlv_5= ',' ( (lv_element_6_0= ruleTerm ) ) otherlv_7= ')' ) )
-            // InternalFirstOrderLogic.g:2209:2: (otherlv_0= 'indexOf' otherlv_1= '(' ( (lv_container_2_0= ruleTerm ) ) otherlv_3= ',' ( (lv_feature_4_0= ruleFeatureConstant ) ) otherlv_5= ',' ( (lv_element_6_0= ruleTerm ) ) otherlv_7= ')' )
+            // InternalFirstOrderLogic.g:2217:2: ( (otherlv_0= 'indexOf' otherlv_1= '(' ( (lv_container_2_0= ruleTerm ) ) otherlv_3= ',' ( (lv_feature_4_0= ruleFeatureConstant ) ) otherlv_5= ',' ( (lv_element_6_0= ruleTerm ) ) otherlv_7= ')' ) )
+            // InternalFirstOrderLogic.g:2218:2: (otherlv_0= 'indexOf' otherlv_1= '(' ( (lv_container_2_0= ruleTerm ) ) otherlv_3= ',' ( (lv_feature_4_0= ruleFeatureConstant ) ) otherlv_5= ',' ( (lv_element_6_0= ruleTerm ) ) otherlv_7= ')' )
             {
-            // InternalFirstOrderLogic.g:2209:2: (otherlv_0= 'indexOf' otherlv_1= '(' ( (lv_container_2_0= ruleTerm ) ) otherlv_3= ',' ( (lv_feature_4_0= ruleFeatureConstant ) ) otherlv_5= ',' ( (lv_element_6_0= ruleTerm ) ) otherlv_7= ')' )
-            // InternalFirstOrderLogic.g:2210:3: otherlv_0= 'indexOf' otherlv_1= '(' ( (lv_container_2_0= ruleTerm ) ) otherlv_3= ',' ( (lv_feature_4_0= ruleFeatureConstant ) ) otherlv_5= ',' ( (lv_element_6_0= ruleTerm ) ) otherlv_7= ')'
+            // InternalFirstOrderLogic.g:2218:2: (otherlv_0= 'indexOf' otherlv_1= '(' ( (lv_container_2_0= ruleTerm ) ) otherlv_3= ',' ( (lv_feature_4_0= ruleFeatureConstant ) ) otherlv_5= ',' ( (lv_element_6_0= ruleTerm ) ) otherlv_7= ')' )
+            // InternalFirstOrderLogic.g:2219:3: otherlv_0= 'indexOf' otherlv_1= '(' ( (lv_container_2_0= ruleTerm ) ) otherlv_3= ',' ( (lv_feature_4_0= ruleFeatureConstant ) ) otherlv_5= ',' ( (lv_element_6_0= ruleTerm ) ) otherlv_7= ')'
             {
             otherlv_0=(Token)match(input,44,FOLLOW_16); 
 
@@ -5573,11 +5599,11 @@ public class InternalFirstOrderLogicParser extends AbstractInternalAntlrParser {
 
             			newLeafNode(otherlv_1, grammarAccess.getIndexOfAccess().getLeftParenthesisKeyword_1());
             		
-            // InternalFirstOrderLogic.g:2218:3: ( (lv_container_2_0= ruleTerm ) )
-            // InternalFirstOrderLogic.g:2219:4: (lv_container_2_0= ruleTerm )
+            // InternalFirstOrderLogic.g:2227:3: ( (lv_container_2_0= ruleTerm ) )
+            // InternalFirstOrderLogic.g:2228:4: (lv_container_2_0= ruleTerm )
             {
-            // InternalFirstOrderLogic.g:2219:4: (lv_container_2_0= ruleTerm )
-            // InternalFirstOrderLogic.g:2220:5: lv_container_2_0= ruleTerm
+            // InternalFirstOrderLogic.g:2228:4: (lv_container_2_0= ruleTerm )
+            // InternalFirstOrderLogic.g:2229:5: lv_container_2_0= ruleTerm
             {
 
             					newCompositeNode(grammarAccess.getIndexOfAccess().getContainerTermParserRuleCall_2_0());
@@ -5608,11 +5634,11 @@ public class InternalFirstOrderLogicParser extends AbstractInternalAntlrParser {
 
             			newLeafNode(otherlv_3, grammarAccess.getIndexOfAccess().getCommaKeyword_3());
             		
-            // InternalFirstOrderLogic.g:2241:3: ( (lv_feature_4_0= ruleFeatureConstant ) )
-            // InternalFirstOrderLogic.g:2242:4: (lv_feature_4_0= ruleFeatureConstant )
+            // InternalFirstOrderLogic.g:2250:3: ( (lv_feature_4_0= ruleFeatureConstant ) )
+            // InternalFirstOrderLogic.g:2251:4: (lv_feature_4_0= ruleFeatureConstant )
             {
-            // InternalFirstOrderLogic.g:2242:4: (lv_feature_4_0= ruleFeatureConstant )
-            // InternalFirstOrderLogic.g:2243:5: lv_feature_4_0= ruleFeatureConstant
+            // InternalFirstOrderLogic.g:2251:4: (lv_feature_4_0= ruleFeatureConstant )
+            // InternalFirstOrderLogic.g:2252:5: lv_feature_4_0= ruleFeatureConstant
             {
 
             					newCompositeNode(grammarAccess.getIndexOfAccess().getFeatureFeatureConstantParserRuleCall_4_0());
@@ -5643,11 +5669,11 @@ public class InternalFirstOrderLogicParser extends AbstractInternalAntlrParser {
 
             			newLeafNode(otherlv_5, grammarAccess.getIndexOfAccess().getCommaKeyword_5());
             		
-            // InternalFirstOrderLogic.g:2264:3: ( (lv_element_6_0= ruleTerm ) )
-            // InternalFirstOrderLogic.g:2265:4: (lv_element_6_0= ruleTerm )
+            // InternalFirstOrderLogic.g:2273:3: ( (lv_element_6_0= ruleTerm ) )
+            // InternalFirstOrderLogic.g:2274:4: (lv_element_6_0= ruleTerm )
             {
-            // InternalFirstOrderLogic.g:2265:4: (lv_element_6_0= ruleTerm )
-            // InternalFirstOrderLogic.g:2266:5: lv_element_6_0= ruleTerm
+            // InternalFirstOrderLogic.g:2274:4: (lv_element_6_0= ruleTerm )
+            // InternalFirstOrderLogic.g:2275:5: lv_element_6_0= ruleTerm
             {
 
             					newCompositeNode(grammarAccess.getIndexOfAccess().getElementTermParserRuleCall_6_0());
@@ -5701,7 +5727,7 @@ public class InternalFirstOrderLogicParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleConcatenate"
-    // InternalFirstOrderLogic.g:2291:1: entryRuleConcatenate returns [EObject current=null] : iv_ruleConcatenate= ruleConcatenate EOF ;
+    // InternalFirstOrderLogic.g:2300:1: entryRuleConcatenate returns [EObject current=null] : iv_ruleConcatenate= ruleConcatenate EOF ;
     public final EObject entryRuleConcatenate() throws RecognitionException {
         EObject current = null;
 
@@ -5709,8 +5735,8 @@ public class InternalFirstOrderLogicParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalFirstOrderLogic.g:2291:52: (iv_ruleConcatenate= ruleConcatenate EOF )
-            // InternalFirstOrderLogic.g:2292:2: iv_ruleConcatenate= ruleConcatenate EOF
+            // InternalFirstOrderLogic.g:2300:52: (iv_ruleConcatenate= ruleConcatenate EOF )
+            // InternalFirstOrderLogic.g:2301:2: iv_ruleConcatenate= ruleConcatenate EOF
             {
              newCompositeNode(grammarAccess.getConcatenateRule()); 
             pushFollow(FOLLOW_1);
@@ -5737,7 +5763,7 @@ public class InternalFirstOrderLogicParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleConcatenate"
-    // InternalFirstOrderLogic.g:2298:1: ruleConcatenate returns [EObject current=null] : (otherlv_0= 'concatenate' otherlv_1= '(' ( (lv_left_2_0= ruleTerm ) ) otherlv_3= ',' ( (lv_right_4_0= ruleTerm ) ) otherlv_5= ')' ) ;
+    // InternalFirstOrderLogic.g:2307:1: ruleConcatenate returns [EObject current=null] : (otherlv_0= 'concatenate' otherlv_1= '(' ( (lv_left_2_0= ruleTerm ) ) otherlv_3= ',' ( (lv_right_4_0= ruleTerm ) ) otherlv_5= ')' ) ;
     public final EObject ruleConcatenate() throws RecognitionException {
         EObject current = null;
 
@@ -5754,11 +5780,11 @@ public class InternalFirstOrderLogicParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalFirstOrderLogic.g:2304:2: ( (otherlv_0= 'concatenate' otherlv_1= '(' ( (lv_left_2_0= ruleTerm ) ) otherlv_3= ',' ( (lv_right_4_0= ruleTerm ) ) otherlv_5= ')' ) )
-            // InternalFirstOrderLogic.g:2305:2: (otherlv_0= 'concatenate' otherlv_1= '(' ( (lv_left_2_0= ruleTerm ) ) otherlv_3= ',' ( (lv_right_4_0= ruleTerm ) ) otherlv_5= ')' )
+            // InternalFirstOrderLogic.g:2313:2: ( (otherlv_0= 'concatenate' otherlv_1= '(' ( (lv_left_2_0= ruleTerm ) ) otherlv_3= ',' ( (lv_right_4_0= ruleTerm ) ) otherlv_5= ')' ) )
+            // InternalFirstOrderLogic.g:2314:2: (otherlv_0= 'concatenate' otherlv_1= '(' ( (lv_left_2_0= ruleTerm ) ) otherlv_3= ',' ( (lv_right_4_0= ruleTerm ) ) otherlv_5= ')' )
             {
-            // InternalFirstOrderLogic.g:2305:2: (otherlv_0= 'concatenate' otherlv_1= '(' ( (lv_left_2_0= ruleTerm ) ) otherlv_3= ',' ( (lv_right_4_0= ruleTerm ) ) otherlv_5= ')' )
-            // InternalFirstOrderLogic.g:2306:3: otherlv_0= 'concatenate' otherlv_1= '(' ( (lv_left_2_0= ruleTerm ) ) otherlv_3= ',' ( (lv_right_4_0= ruleTerm ) ) otherlv_5= ')'
+            // InternalFirstOrderLogic.g:2314:2: (otherlv_0= 'concatenate' otherlv_1= '(' ( (lv_left_2_0= ruleTerm ) ) otherlv_3= ',' ( (lv_right_4_0= ruleTerm ) ) otherlv_5= ')' )
+            // InternalFirstOrderLogic.g:2315:3: otherlv_0= 'concatenate' otherlv_1= '(' ( (lv_left_2_0= ruleTerm ) ) otherlv_3= ',' ( (lv_right_4_0= ruleTerm ) ) otherlv_5= ')'
             {
             otherlv_0=(Token)match(input,45,FOLLOW_16); 
 
@@ -5768,11 +5794,11 @@ public class InternalFirstOrderLogicParser extends AbstractInternalAntlrParser {
 
             			newLeafNode(otherlv_1, grammarAccess.getConcatenateAccess().getLeftParenthesisKeyword_1());
             		
-            // InternalFirstOrderLogic.g:2314:3: ( (lv_left_2_0= ruleTerm ) )
-            // InternalFirstOrderLogic.g:2315:4: (lv_left_2_0= ruleTerm )
+            // InternalFirstOrderLogic.g:2323:3: ( (lv_left_2_0= ruleTerm ) )
+            // InternalFirstOrderLogic.g:2324:4: (lv_left_2_0= ruleTerm )
             {
-            // InternalFirstOrderLogic.g:2315:4: (lv_left_2_0= ruleTerm )
-            // InternalFirstOrderLogic.g:2316:5: lv_left_2_0= ruleTerm
+            // InternalFirstOrderLogic.g:2324:4: (lv_left_2_0= ruleTerm )
+            // InternalFirstOrderLogic.g:2325:5: lv_left_2_0= ruleTerm
             {
 
             					newCompositeNode(grammarAccess.getConcatenateAccess().getLeftTermParserRuleCall_2_0());
@@ -5803,11 +5829,11 @@ public class InternalFirstOrderLogicParser extends AbstractInternalAntlrParser {
 
             			newLeafNode(otherlv_3, grammarAccess.getConcatenateAccess().getCommaKeyword_3());
             		
-            // InternalFirstOrderLogic.g:2337:3: ( (lv_right_4_0= ruleTerm ) )
-            // InternalFirstOrderLogic.g:2338:4: (lv_right_4_0= ruleTerm )
+            // InternalFirstOrderLogic.g:2346:3: ( (lv_right_4_0= ruleTerm ) )
+            // InternalFirstOrderLogic.g:2347:4: (lv_right_4_0= ruleTerm )
             {
-            // InternalFirstOrderLogic.g:2338:4: (lv_right_4_0= ruleTerm )
-            // InternalFirstOrderLogic.g:2339:5: lv_right_4_0= ruleTerm
+            // InternalFirstOrderLogic.g:2347:4: (lv_right_4_0= ruleTerm )
+            // InternalFirstOrderLogic.g:2348:5: lv_right_4_0= ruleTerm
             {
 
             					newCompositeNode(grammarAccess.getConcatenateAccess().getRightTermParserRuleCall_4_0());
@@ -5861,7 +5887,7 @@ public class InternalFirstOrderLogicParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleCapitalize"
-    // InternalFirstOrderLogic.g:2364:1: entryRuleCapitalize returns [EObject current=null] : iv_ruleCapitalize= ruleCapitalize EOF ;
+    // InternalFirstOrderLogic.g:2373:1: entryRuleCapitalize returns [EObject current=null] : iv_ruleCapitalize= ruleCapitalize EOF ;
     public final EObject entryRuleCapitalize() throws RecognitionException {
         EObject current = null;
 
@@ -5869,8 +5895,8 @@ public class InternalFirstOrderLogicParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalFirstOrderLogic.g:2364:51: (iv_ruleCapitalize= ruleCapitalize EOF )
-            // InternalFirstOrderLogic.g:2365:2: iv_ruleCapitalize= ruleCapitalize EOF
+            // InternalFirstOrderLogic.g:2373:51: (iv_ruleCapitalize= ruleCapitalize EOF )
+            // InternalFirstOrderLogic.g:2374:2: iv_ruleCapitalize= ruleCapitalize EOF
             {
              newCompositeNode(grammarAccess.getCapitalizeRule()); 
             pushFollow(FOLLOW_1);
@@ -5897,7 +5923,7 @@ public class InternalFirstOrderLogicParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleCapitalize"
-    // InternalFirstOrderLogic.g:2371:1: ruleCapitalize returns [EObject current=null] : (otherlv_0= 'capitalize' otherlv_1= '(' ( (lv_string_2_0= ruleTerm ) ) otherlv_3= ')' ) ;
+    // InternalFirstOrderLogic.g:2380:1: ruleCapitalize returns [EObject current=null] : (otherlv_0= 'capitalize' otherlv_1= '(' ( (lv_string_2_0= ruleTerm ) ) otherlv_3= ')' ) ;
     public final EObject ruleCapitalize() throws RecognitionException {
         EObject current = null;
 
@@ -5911,11 +5937,11 @@ public class InternalFirstOrderLogicParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalFirstOrderLogic.g:2377:2: ( (otherlv_0= 'capitalize' otherlv_1= '(' ( (lv_string_2_0= ruleTerm ) ) otherlv_3= ')' ) )
-            // InternalFirstOrderLogic.g:2378:2: (otherlv_0= 'capitalize' otherlv_1= '(' ( (lv_string_2_0= ruleTerm ) ) otherlv_3= ')' )
+            // InternalFirstOrderLogic.g:2386:2: ( (otherlv_0= 'capitalize' otherlv_1= '(' ( (lv_string_2_0= ruleTerm ) ) otherlv_3= ')' ) )
+            // InternalFirstOrderLogic.g:2387:2: (otherlv_0= 'capitalize' otherlv_1= '(' ( (lv_string_2_0= ruleTerm ) ) otherlv_3= ')' )
             {
-            // InternalFirstOrderLogic.g:2378:2: (otherlv_0= 'capitalize' otherlv_1= '(' ( (lv_string_2_0= ruleTerm ) ) otherlv_3= ')' )
-            // InternalFirstOrderLogic.g:2379:3: otherlv_0= 'capitalize' otherlv_1= '(' ( (lv_string_2_0= ruleTerm ) ) otherlv_3= ')'
+            // InternalFirstOrderLogic.g:2387:2: (otherlv_0= 'capitalize' otherlv_1= '(' ( (lv_string_2_0= ruleTerm ) ) otherlv_3= ')' )
+            // InternalFirstOrderLogic.g:2388:3: otherlv_0= 'capitalize' otherlv_1= '(' ( (lv_string_2_0= ruleTerm ) ) otherlv_3= ')'
             {
             otherlv_0=(Token)match(input,46,FOLLOW_16); 
 
@@ -5925,11 +5951,11 @@ public class InternalFirstOrderLogicParser extends AbstractInternalAntlrParser {
 
             			newLeafNode(otherlv_1, grammarAccess.getCapitalizeAccess().getLeftParenthesisKeyword_1());
             		
-            // InternalFirstOrderLogic.g:2387:3: ( (lv_string_2_0= ruleTerm ) )
-            // InternalFirstOrderLogic.g:2388:4: (lv_string_2_0= ruleTerm )
+            // InternalFirstOrderLogic.g:2396:3: ( (lv_string_2_0= ruleTerm ) )
+            // InternalFirstOrderLogic.g:2397:4: (lv_string_2_0= ruleTerm )
             {
-            // InternalFirstOrderLogic.g:2388:4: (lv_string_2_0= ruleTerm )
-            // InternalFirstOrderLogic.g:2389:5: lv_string_2_0= ruleTerm
+            // InternalFirstOrderLogic.g:2397:4: (lv_string_2_0= ruleTerm )
+            // InternalFirstOrderLogic.g:2398:5: lv_string_2_0= ruleTerm
             {
 
             					newCompositeNode(grammarAccess.getCapitalizeAccess().getStringTermParserRuleCall_2_0());
@@ -5982,8 +6008,299 @@ public class InternalFirstOrderLogicParser extends AbstractInternalAntlrParser {
     // $ANTLR end "ruleCapitalize"
 
 
+    // $ANTLR start "entryRuleIterator"
+    // InternalFirstOrderLogic.g:2423:1: entryRuleIterator returns [EObject current=null] : iv_ruleIterator= ruleIterator EOF ;
+    public final EObject entryRuleIterator() throws RecognitionException {
+        EObject current = null;
+
+        EObject iv_ruleIterator = null;
+
+
+        try {
+            // InternalFirstOrderLogic.g:2423:49: (iv_ruleIterator= ruleIterator EOF )
+            // InternalFirstOrderLogic.g:2424:2: iv_ruleIterator= ruleIterator EOF
+            {
+             newCompositeNode(grammarAccess.getIteratorRule()); 
+            pushFollow(FOLLOW_1);
+            iv_ruleIterator=ruleIterator();
+
+            state._fsp--;
+
+             current =iv_ruleIterator; 
+            match(input,EOF,FOLLOW_2); 
+
+            }
+
+        }
+
+            catch (RecognitionException re) {
+                recover(input,re);
+                appendSkippedTokens();
+            }
+        finally {
+        }
+        return current;
+    }
+    // $ANTLR end "entryRuleIterator"
+
+
+    // $ANTLR start "ruleIterator"
+    // InternalFirstOrderLogic.g:2430:1: ruleIterator returns [EObject current=null] : this_Select_0= ruleSelect ;
+    public final EObject ruleIterator() throws RecognitionException {
+        EObject current = null;
+
+        EObject this_Select_0 = null;
+
+
+
+        	enterRule();
+
+        try {
+            // InternalFirstOrderLogic.g:2436:2: (this_Select_0= ruleSelect )
+            // InternalFirstOrderLogic.g:2437:2: this_Select_0= ruleSelect
+            {
+
+            		newCompositeNode(grammarAccess.getIteratorAccess().getSelectParserRuleCall());
+            	
+            pushFollow(FOLLOW_2);
+            this_Select_0=ruleSelect();
+
+            state._fsp--;
+
+
+            		current = this_Select_0;
+            		afterParserOrEnumRuleCall();
+            	
+
+            }
+
+
+            	leaveRule();
+
+        }
+
+            catch (RecognitionException re) {
+                recover(input,re);
+                appendSkippedTokens();
+            }
+        finally {
+        }
+        return current;
+    }
+    // $ANTLR end "ruleIterator"
+
+
+    // $ANTLR start "entryRuleSelect"
+    // InternalFirstOrderLogic.g:2448:1: entryRuleSelect returns [EObject current=null] : iv_ruleSelect= ruleSelect EOF ;
+    public final EObject entryRuleSelect() throws RecognitionException {
+        EObject current = null;
+
+        EObject iv_ruleSelect = null;
+
+
+        try {
+            // InternalFirstOrderLogic.g:2448:47: (iv_ruleSelect= ruleSelect EOF )
+            // InternalFirstOrderLogic.g:2449:2: iv_ruleSelect= ruleSelect EOF
+            {
+             newCompositeNode(grammarAccess.getSelectRule()); 
+            pushFollow(FOLLOW_1);
+            iv_ruleSelect=ruleSelect();
+
+            state._fsp--;
+
+             current =iv_ruleSelect; 
+            match(input,EOF,FOLLOW_2); 
+
+            }
+
+        }
+
+            catch (RecognitionException re) {
+                recover(input,re);
+                appendSkippedTokens();
+            }
+        finally {
+        }
+        return current;
+    }
+    // $ANTLR end "entryRuleSelect"
+
+
+    // $ANTLR start "ruleSelect"
+    // InternalFirstOrderLogic.g:2455:1: ruleSelect returns [EObject current=null] : ( () otherlv_1= 'select' otherlv_2= '(' ( (lv_name_3_0= ruleVariable ) ) otherlv_4= 'in' ( (lv_iteration_5_0= ruleTerm ) ) otherlv_6= ':' ( (lv_formula_7_0= ruleFormula ) ) otherlv_8= ')' ) ;
+    public final EObject ruleSelect() throws RecognitionException {
+        EObject current = null;
+
+        Token otherlv_1=null;
+        Token otherlv_2=null;
+        Token otherlv_4=null;
+        Token otherlv_6=null;
+        Token otherlv_8=null;
+        EObject lv_name_3_0 = null;
+
+        EObject lv_iteration_5_0 = null;
+
+        EObject lv_formula_7_0 = null;
+
+
+
+        	enterRule();
+
+        try {
+            // InternalFirstOrderLogic.g:2461:2: ( ( () otherlv_1= 'select' otherlv_2= '(' ( (lv_name_3_0= ruleVariable ) ) otherlv_4= 'in' ( (lv_iteration_5_0= ruleTerm ) ) otherlv_6= ':' ( (lv_formula_7_0= ruleFormula ) ) otherlv_8= ')' ) )
+            // InternalFirstOrderLogic.g:2462:2: ( () otherlv_1= 'select' otherlv_2= '(' ( (lv_name_3_0= ruleVariable ) ) otherlv_4= 'in' ( (lv_iteration_5_0= ruleTerm ) ) otherlv_6= ':' ( (lv_formula_7_0= ruleFormula ) ) otherlv_8= ')' )
+            {
+            // InternalFirstOrderLogic.g:2462:2: ( () otherlv_1= 'select' otherlv_2= '(' ( (lv_name_3_0= ruleVariable ) ) otherlv_4= 'in' ( (lv_iteration_5_0= ruleTerm ) ) otherlv_6= ':' ( (lv_formula_7_0= ruleFormula ) ) otherlv_8= ')' )
+            // InternalFirstOrderLogic.g:2463:3: () otherlv_1= 'select' otherlv_2= '(' ( (lv_name_3_0= ruleVariable ) ) otherlv_4= 'in' ( (lv_iteration_5_0= ruleTerm ) ) otherlv_6= ':' ( (lv_formula_7_0= ruleFormula ) ) otherlv_8= ')'
+            {
+            // InternalFirstOrderLogic.g:2463:3: ()
+            // InternalFirstOrderLogic.g:2464:4: 
+            {
+
+            				current = forceCreateModelElement(
+            					grammarAccess.getSelectAccess().getSelectAction_0(),
+            					current);
+            			
+
+            }
+
+            otherlv_1=(Token)match(input,47,FOLLOW_16); 
+
+            			newLeafNode(otherlv_1, grammarAccess.getSelectAccess().getSelectKeyword_1());
+            		
+            otherlv_2=(Token)match(input,24,FOLLOW_6); 
+
+            			newLeafNode(otherlv_2, grammarAccess.getSelectAccess().getLeftParenthesisKeyword_2());
+            		
+            // InternalFirstOrderLogic.g:2478:3: ( (lv_name_3_0= ruleVariable ) )
+            // InternalFirstOrderLogic.g:2479:4: (lv_name_3_0= ruleVariable )
+            {
+            // InternalFirstOrderLogic.g:2479:4: (lv_name_3_0= ruleVariable )
+            // InternalFirstOrderLogic.g:2480:5: lv_name_3_0= ruleVariable
+            {
+
+            					newCompositeNode(grammarAccess.getSelectAccess().getNameVariableParserRuleCall_3_0());
+            				
+            pushFollow(FOLLOW_22);
+            lv_name_3_0=ruleVariable();
+
+            state._fsp--;
+
+
+            					if (current==null) {
+            						current = createModelElementForParent(grammarAccess.getSelectRule());
+            					}
+            					set(
+            						current,
+            						"name",
+            						lv_name_3_0,
+            						"org.sidiff.validation.laguage.fol.FirstOrderLogic.Variable");
+            					afterParserOrEnumRuleCall();
+            				
+
+            }
+
+
+            }
+
+            otherlv_4=(Token)match(input,36,FOLLOW_18); 
+
+            			newLeafNode(otherlv_4, grammarAccess.getSelectAccess().getInKeyword_4());
+            		
+            // InternalFirstOrderLogic.g:2501:3: ( (lv_iteration_5_0= ruleTerm ) )
+            // InternalFirstOrderLogic.g:2502:4: (lv_iteration_5_0= ruleTerm )
+            {
+            // InternalFirstOrderLogic.g:2502:4: (lv_iteration_5_0= ruleTerm )
+            // InternalFirstOrderLogic.g:2503:5: lv_iteration_5_0= ruleTerm
+            {
+
+            					newCompositeNode(grammarAccess.getSelectAccess().getIterationTermParserRuleCall_5_0());
+            				
+            pushFollow(FOLLOW_9);
+            lv_iteration_5_0=ruleTerm();
+
+            state._fsp--;
+
+
+            					if (current==null) {
+            						current = createModelElementForParent(grammarAccess.getSelectRule());
+            					}
+            					set(
+            						current,
+            						"iteration",
+            						lv_iteration_5_0,
+            						"org.sidiff.validation.laguage.fol.FirstOrderLogic.Term");
+            					afterParserOrEnumRuleCall();
+            				
+
+            }
+
+
+            }
+
+            otherlv_6=(Token)match(input,17,FOLLOW_10); 
+
+            			newLeafNode(otherlv_6, grammarAccess.getSelectAccess().getColonKeyword_6());
+            		
+            // InternalFirstOrderLogic.g:2524:3: ( (lv_formula_7_0= ruleFormula ) )
+            // InternalFirstOrderLogic.g:2525:4: (lv_formula_7_0= ruleFormula )
+            {
+            // InternalFirstOrderLogic.g:2525:4: (lv_formula_7_0= ruleFormula )
+            // InternalFirstOrderLogic.g:2526:5: lv_formula_7_0= ruleFormula
+            {
+
+            					newCompositeNode(grammarAccess.getSelectAccess().getFormulaFormulaParserRuleCall_7_0());
+            				
+            pushFollow(FOLLOW_17);
+            lv_formula_7_0=ruleFormula();
+
+            state._fsp--;
+
+
+            					if (current==null) {
+            						current = createModelElementForParent(grammarAccess.getSelectRule());
+            					}
+            					set(
+            						current,
+            						"formula",
+            						lv_formula_7_0,
+            						"org.sidiff.validation.laguage.fol.FirstOrderLogic.Formula");
+            					afterParserOrEnumRuleCall();
+            				
+
+            }
+
+
+            }
+
+            otherlv_8=(Token)match(input,25,FOLLOW_2); 
+
+            			newLeafNode(otherlv_8, grammarAccess.getSelectAccess().getRightParenthesisKeyword_8());
+            		
+
+            }
+
+
+            }
+
+
+            	leaveRule();
+
+        }
+
+            catch (RecognitionException re) {
+                recover(input,re);
+                appendSkippedTokens();
+            }
+        finally {
+        }
+        return current;
+    }
+    // $ANTLR end "ruleSelect"
+
+
     // $ANTLR start "entryRuleFeatureConstant"
-    // InternalFirstOrderLogic.g:2414:1: entryRuleFeatureConstant returns [EObject current=null] : iv_ruleFeatureConstant= ruleFeatureConstant EOF ;
+    // InternalFirstOrderLogic.g:2551:1: entryRuleFeatureConstant returns [EObject current=null] : iv_ruleFeatureConstant= ruleFeatureConstant EOF ;
     public final EObject entryRuleFeatureConstant() throws RecognitionException {
         EObject current = null;
 
@@ -5991,8 +6308,8 @@ public class InternalFirstOrderLogicParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalFirstOrderLogic.g:2414:56: (iv_ruleFeatureConstant= ruleFeatureConstant EOF )
-            // InternalFirstOrderLogic.g:2415:2: iv_ruleFeatureConstant= ruleFeatureConstant EOF
+            // InternalFirstOrderLogic.g:2551:56: (iv_ruleFeatureConstant= ruleFeatureConstant EOF )
+            // InternalFirstOrderLogic.g:2552:2: iv_ruleFeatureConstant= ruleFeatureConstant EOF
             {
              newCompositeNode(grammarAccess.getFeatureConstantRule()); 
             pushFollow(FOLLOW_1);
@@ -6019,7 +6336,7 @@ public class InternalFirstOrderLogicParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleFeatureConstant"
-    // InternalFirstOrderLogic.g:2421:1: ruleFeatureConstant returns [EObject current=null] : ( (otherlv_0= RULE_ID ) ) ;
+    // InternalFirstOrderLogic.g:2558:1: ruleFeatureConstant returns [EObject current=null] : ( (otherlv_0= RULE_ID ) ) ;
     public final EObject ruleFeatureConstant() throws RecognitionException {
         EObject current = null;
 
@@ -6029,14 +6346,14 @@ public class InternalFirstOrderLogicParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalFirstOrderLogic.g:2427:2: ( ( (otherlv_0= RULE_ID ) ) )
-            // InternalFirstOrderLogic.g:2428:2: ( (otherlv_0= RULE_ID ) )
+            // InternalFirstOrderLogic.g:2564:2: ( ( (otherlv_0= RULE_ID ) ) )
+            // InternalFirstOrderLogic.g:2565:2: ( (otherlv_0= RULE_ID ) )
             {
-            // InternalFirstOrderLogic.g:2428:2: ( (otherlv_0= RULE_ID ) )
-            // InternalFirstOrderLogic.g:2429:3: (otherlv_0= RULE_ID )
+            // InternalFirstOrderLogic.g:2565:2: ( (otherlv_0= RULE_ID ) )
+            // InternalFirstOrderLogic.g:2566:3: (otherlv_0= RULE_ID )
             {
-            // InternalFirstOrderLogic.g:2429:3: (otherlv_0= RULE_ID )
-            // InternalFirstOrderLogic.g:2430:4: otherlv_0= RULE_ID
+            // InternalFirstOrderLogic.g:2566:3: (otherlv_0= RULE_ID )
+            // InternalFirstOrderLogic.g:2567:4: otherlv_0= RULE_ID
             {
 
             				if (current==null) {
@@ -6073,7 +6390,7 @@ public class InternalFirstOrderLogicParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleClassifier"
-    // InternalFirstOrderLogic.g:2444:1: entryRuleClassifier returns [EObject current=null] : iv_ruleClassifier= ruleClassifier EOF ;
+    // InternalFirstOrderLogic.g:2581:1: entryRuleClassifier returns [EObject current=null] : iv_ruleClassifier= ruleClassifier EOF ;
     public final EObject entryRuleClassifier() throws RecognitionException {
         EObject current = null;
 
@@ -6081,8 +6398,8 @@ public class InternalFirstOrderLogicParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalFirstOrderLogic.g:2444:51: (iv_ruleClassifier= ruleClassifier EOF )
-            // InternalFirstOrderLogic.g:2445:2: iv_ruleClassifier= ruleClassifier EOF
+            // InternalFirstOrderLogic.g:2581:51: (iv_ruleClassifier= ruleClassifier EOF )
+            // InternalFirstOrderLogic.g:2582:2: iv_ruleClassifier= ruleClassifier EOF
             {
              newCompositeNode(grammarAccess.getClassifierRule()); 
             pushFollow(FOLLOW_1);
@@ -6109,7 +6426,7 @@ public class InternalFirstOrderLogicParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleClassifier"
-    // InternalFirstOrderLogic.g:2451:1: ruleClassifier returns [EObject current=null] : (this_ClassifierConstant_0= ruleClassifierConstant | this_AsClassifier_1= ruleAsClassifier ) ;
+    // InternalFirstOrderLogic.g:2588:1: ruleClassifier returns [EObject current=null] : (this_ClassifierConstant_0= ruleClassifierConstant | this_AsClassifier_1= ruleAsClassifier ) ;
     public final EObject ruleClassifier() throws RecognitionException {
         EObject current = null;
 
@@ -6122,17 +6439,17 @@ public class InternalFirstOrderLogicParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalFirstOrderLogic.g:2457:2: ( (this_ClassifierConstant_0= ruleClassifierConstant | this_AsClassifier_1= ruleAsClassifier ) )
-            // InternalFirstOrderLogic.g:2458:2: (this_ClassifierConstant_0= ruleClassifierConstant | this_AsClassifier_1= ruleAsClassifier )
+            // InternalFirstOrderLogic.g:2594:2: ( (this_ClassifierConstant_0= ruleClassifierConstant | this_AsClassifier_1= ruleAsClassifier ) )
+            // InternalFirstOrderLogic.g:2595:2: (this_ClassifierConstant_0= ruleClassifierConstant | this_AsClassifier_1= ruleAsClassifier )
             {
-            // InternalFirstOrderLogic.g:2458:2: (this_ClassifierConstant_0= ruleClassifierConstant | this_AsClassifier_1= ruleAsClassifier )
+            // InternalFirstOrderLogic.g:2595:2: (this_ClassifierConstant_0= ruleClassifierConstant | this_AsClassifier_1= ruleAsClassifier )
             int alt16=2;
             int LA16_0 = input.LA(1);
 
             if ( (LA16_0==RULE_ID) ) {
                 alt16=1;
             }
-            else if ( (LA16_0==47) ) {
+            else if ( (LA16_0==48) ) {
                 alt16=2;
             }
             else {
@@ -6143,7 +6460,7 @@ public class InternalFirstOrderLogicParser extends AbstractInternalAntlrParser {
             }
             switch (alt16) {
                 case 1 :
-                    // InternalFirstOrderLogic.g:2459:3: this_ClassifierConstant_0= ruleClassifierConstant
+                    // InternalFirstOrderLogic.g:2596:3: this_ClassifierConstant_0= ruleClassifierConstant
                     {
 
                     			newCompositeNode(grammarAccess.getClassifierAccess().getClassifierConstantParserRuleCall_0());
@@ -6161,7 +6478,7 @@ public class InternalFirstOrderLogicParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalFirstOrderLogic.g:2468:3: this_AsClassifier_1= ruleAsClassifier
+                    // InternalFirstOrderLogic.g:2605:3: this_AsClassifier_1= ruleAsClassifier
                     {
 
                     			newCompositeNode(grammarAccess.getClassifierAccess().getAsClassifierParserRuleCall_1());
@@ -6201,7 +6518,7 @@ public class InternalFirstOrderLogicParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleClassifierConstant"
-    // InternalFirstOrderLogic.g:2480:1: entryRuleClassifierConstant returns [EObject current=null] : iv_ruleClassifierConstant= ruleClassifierConstant EOF ;
+    // InternalFirstOrderLogic.g:2617:1: entryRuleClassifierConstant returns [EObject current=null] : iv_ruleClassifierConstant= ruleClassifierConstant EOF ;
     public final EObject entryRuleClassifierConstant() throws RecognitionException {
         EObject current = null;
 
@@ -6209,8 +6526,8 @@ public class InternalFirstOrderLogicParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalFirstOrderLogic.g:2480:59: (iv_ruleClassifierConstant= ruleClassifierConstant EOF )
-            // InternalFirstOrderLogic.g:2481:2: iv_ruleClassifierConstant= ruleClassifierConstant EOF
+            // InternalFirstOrderLogic.g:2617:59: (iv_ruleClassifierConstant= ruleClassifierConstant EOF )
+            // InternalFirstOrderLogic.g:2618:2: iv_ruleClassifierConstant= ruleClassifierConstant EOF
             {
              newCompositeNode(grammarAccess.getClassifierConstantRule()); 
             pushFollow(FOLLOW_1);
@@ -6237,7 +6554,7 @@ public class InternalFirstOrderLogicParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleClassifierConstant"
-    // InternalFirstOrderLogic.g:2487:1: ruleClassifierConstant returns [EObject current=null] : ( (otherlv_0= RULE_ID ) ) ;
+    // InternalFirstOrderLogic.g:2624:1: ruleClassifierConstant returns [EObject current=null] : ( (otherlv_0= RULE_ID ) ) ;
     public final EObject ruleClassifierConstant() throws RecognitionException {
         EObject current = null;
 
@@ -6247,14 +6564,14 @@ public class InternalFirstOrderLogicParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalFirstOrderLogic.g:2493:2: ( ( (otherlv_0= RULE_ID ) ) )
-            // InternalFirstOrderLogic.g:2494:2: ( (otherlv_0= RULE_ID ) )
+            // InternalFirstOrderLogic.g:2630:2: ( ( (otherlv_0= RULE_ID ) ) )
+            // InternalFirstOrderLogic.g:2631:2: ( (otherlv_0= RULE_ID ) )
             {
-            // InternalFirstOrderLogic.g:2494:2: ( (otherlv_0= RULE_ID ) )
-            // InternalFirstOrderLogic.g:2495:3: (otherlv_0= RULE_ID )
+            // InternalFirstOrderLogic.g:2631:2: ( (otherlv_0= RULE_ID ) )
+            // InternalFirstOrderLogic.g:2632:3: (otherlv_0= RULE_ID )
             {
-            // InternalFirstOrderLogic.g:2495:3: (otherlv_0= RULE_ID )
-            // InternalFirstOrderLogic.g:2496:4: otherlv_0= RULE_ID
+            // InternalFirstOrderLogic.g:2632:3: (otherlv_0= RULE_ID )
+            // InternalFirstOrderLogic.g:2633:4: otherlv_0= RULE_ID
             {
 
             				if (current==null) {
@@ -6291,7 +6608,7 @@ public class InternalFirstOrderLogicParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleAsClassifier"
-    // InternalFirstOrderLogic.g:2510:1: entryRuleAsClassifier returns [EObject current=null] : iv_ruleAsClassifier= ruleAsClassifier EOF ;
+    // InternalFirstOrderLogic.g:2647:1: entryRuleAsClassifier returns [EObject current=null] : iv_ruleAsClassifier= ruleAsClassifier EOF ;
     public final EObject entryRuleAsClassifier() throws RecognitionException {
         EObject current = null;
 
@@ -6299,8 +6616,8 @@ public class InternalFirstOrderLogicParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalFirstOrderLogic.g:2510:53: (iv_ruleAsClassifier= ruleAsClassifier EOF )
-            // InternalFirstOrderLogic.g:2511:2: iv_ruleAsClassifier= ruleAsClassifier EOF
+            // InternalFirstOrderLogic.g:2647:53: (iv_ruleAsClassifier= ruleAsClassifier EOF )
+            // InternalFirstOrderLogic.g:2648:2: iv_ruleAsClassifier= ruleAsClassifier EOF
             {
              newCompositeNode(grammarAccess.getAsClassifierRule()); 
             pushFollow(FOLLOW_1);
@@ -6327,7 +6644,7 @@ public class InternalFirstOrderLogicParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleAsClassifier"
-    // InternalFirstOrderLogic.g:2517:1: ruleAsClassifier returns [EObject current=null] : (otherlv_0= 'asClassifier' otherlv_1= '(' ( (lv_term_2_0= ruleTerm ) ) otherlv_3= ')' ) ;
+    // InternalFirstOrderLogic.g:2654:1: ruleAsClassifier returns [EObject current=null] : (otherlv_0= 'asClassifier' otherlv_1= '(' ( (lv_term_2_0= ruleTerm ) ) otherlv_3= ')' ) ;
     public final EObject ruleAsClassifier() throws RecognitionException {
         EObject current = null;
 
@@ -6341,13 +6658,13 @@ public class InternalFirstOrderLogicParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalFirstOrderLogic.g:2523:2: ( (otherlv_0= 'asClassifier' otherlv_1= '(' ( (lv_term_2_0= ruleTerm ) ) otherlv_3= ')' ) )
-            // InternalFirstOrderLogic.g:2524:2: (otherlv_0= 'asClassifier' otherlv_1= '(' ( (lv_term_2_0= ruleTerm ) ) otherlv_3= ')' )
+            // InternalFirstOrderLogic.g:2660:2: ( (otherlv_0= 'asClassifier' otherlv_1= '(' ( (lv_term_2_0= ruleTerm ) ) otherlv_3= ')' ) )
+            // InternalFirstOrderLogic.g:2661:2: (otherlv_0= 'asClassifier' otherlv_1= '(' ( (lv_term_2_0= ruleTerm ) ) otherlv_3= ')' )
             {
-            // InternalFirstOrderLogic.g:2524:2: (otherlv_0= 'asClassifier' otherlv_1= '(' ( (lv_term_2_0= ruleTerm ) ) otherlv_3= ')' )
-            // InternalFirstOrderLogic.g:2525:3: otherlv_0= 'asClassifier' otherlv_1= '(' ( (lv_term_2_0= ruleTerm ) ) otherlv_3= ')'
+            // InternalFirstOrderLogic.g:2661:2: (otherlv_0= 'asClassifier' otherlv_1= '(' ( (lv_term_2_0= ruleTerm ) ) otherlv_3= ')' )
+            // InternalFirstOrderLogic.g:2662:3: otherlv_0= 'asClassifier' otherlv_1= '(' ( (lv_term_2_0= ruleTerm ) ) otherlv_3= ')'
             {
-            otherlv_0=(Token)match(input,47,FOLLOW_16); 
+            otherlv_0=(Token)match(input,48,FOLLOW_16); 
 
             			newLeafNode(otherlv_0, grammarAccess.getAsClassifierAccess().getAsClassifierKeyword_0());
             		
@@ -6355,11 +6672,11 @@ public class InternalFirstOrderLogicParser extends AbstractInternalAntlrParser {
 
             			newLeafNode(otherlv_1, grammarAccess.getAsClassifierAccess().getLeftParenthesisKeyword_1());
             		
-            // InternalFirstOrderLogic.g:2533:3: ( (lv_term_2_0= ruleTerm ) )
-            // InternalFirstOrderLogic.g:2534:4: (lv_term_2_0= ruleTerm )
+            // InternalFirstOrderLogic.g:2670:3: ( (lv_term_2_0= ruleTerm ) )
+            // InternalFirstOrderLogic.g:2671:4: (lv_term_2_0= ruleTerm )
             {
-            // InternalFirstOrderLogic.g:2534:4: (lv_term_2_0= ruleTerm )
-            // InternalFirstOrderLogic.g:2535:5: lv_term_2_0= ruleTerm
+            // InternalFirstOrderLogic.g:2671:4: (lv_term_2_0= ruleTerm )
+            // InternalFirstOrderLogic.g:2672:5: lv_term_2_0= ruleTerm
             {
 
             					newCompositeNode(grammarAccess.getAsClassifierAccess().getTermTermParserRuleCall_2_0());
@@ -6413,7 +6730,7 @@ public class InternalFirstOrderLogicParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleDataType"
-    // InternalFirstOrderLogic.g:2560:1: entryRuleDataType returns [EObject current=null] : iv_ruleDataType= ruleDataType EOF ;
+    // InternalFirstOrderLogic.g:2697:1: entryRuleDataType returns [EObject current=null] : iv_ruleDataType= ruleDataType EOF ;
     public final EObject entryRuleDataType() throws RecognitionException {
         EObject current = null;
 
@@ -6421,8 +6738,8 @@ public class InternalFirstOrderLogicParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalFirstOrderLogic.g:2560:49: (iv_ruleDataType= ruleDataType EOF )
-            // InternalFirstOrderLogic.g:2561:2: iv_ruleDataType= ruleDataType EOF
+            // InternalFirstOrderLogic.g:2697:49: (iv_ruleDataType= ruleDataType EOF )
+            // InternalFirstOrderLogic.g:2698:2: iv_ruleDataType= ruleDataType EOF
             {
              newCompositeNode(grammarAccess.getDataTypeRule()); 
             pushFollow(FOLLOW_1);
@@ -6449,7 +6766,7 @@ public class InternalFirstOrderLogicParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleDataType"
-    // InternalFirstOrderLogic.g:2567:1: ruleDataType returns [EObject current=null] : (this_DataTypeConstant_0= ruleDataTypeConstant | this_AsDataType_1= ruleAsDataType ) ;
+    // InternalFirstOrderLogic.g:2704:1: ruleDataType returns [EObject current=null] : (this_DataTypeConstant_0= ruleDataTypeConstant | this_AsDataType_1= ruleAsDataType ) ;
     public final EObject ruleDataType() throws RecognitionException {
         EObject current = null;
 
@@ -6462,17 +6779,17 @@ public class InternalFirstOrderLogicParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalFirstOrderLogic.g:2573:2: ( (this_DataTypeConstant_0= ruleDataTypeConstant | this_AsDataType_1= ruleAsDataType ) )
-            // InternalFirstOrderLogic.g:2574:2: (this_DataTypeConstant_0= ruleDataTypeConstant | this_AsDataType_1= ruleAsDataType )
+            // InternalFirstOrderLogic.g:2710:2: ( (this_DataTypeConstant_0= ruleDataTypeConstant | this_AsDataType_1= ruleAsDataType ) )
+            // InternalFirstOrderLogic.g:2711:2: (this_DataTypeConstant_0= ruleDataTypeConstant | this_AsDataType_1= ruleAsDataType )
             {
-            // InternalFirstOrderLogic.g:2574:2: (this_DataTypeConstant_0= ruleDataTypeConstant | this_AsDataType_1= ruleAsDataType )
+            // InternalFirstOrderLogic.g:2711:2: (this_DataTypeConstant_0= ruleDataTypeConstant | this_AsDataType_1= ruleAsDataType )
             int alt17=2;
             int LA17_0 = input.LA(1);
 
             if ( (LA17_0==RULE_ID) ) {
                 alt17=1;
             }
-            else if ( (LA17_0==48) ) {
+            else if ( (LA17_0==49) ) {
                 alt17=2;
             }
             else {
@@ -6483,7 +6800,7 @@ public class InternalFirstOrderLogicParser extends AbstractInternalAntlrParser {
             }
             switch (alt17) {
                 case 1 :
-                    // InternalFirstOrderLogic.g:2575:3: this_DataTypeConstant_0= ruleDataTypeConstant
+                    // InternalFirstOrderLogic.g:2712:3: this_DataTypeConstant_0= ruleDataTypeConstant
                     {
 
                     			newCompositeNode(grammarAccess.getDataTypeAccess().getDataTypeConstantParserRuleCall_0());
@@ -6501,7 +6818,7 @@ public class InternalFirstOrderLogicParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalFirstOrderLogic.g:2584:3: this_AsDataType_1= ruleAsDataType
+                    // InternalFirstOrderLogic.g:2721:3: this_AsDataType_1= ruleAsDataType
                     {
 
                     			newCompositeNode(grammarAccess.getDataTypeAccess().getAsDataTypeParserRuleCall_1());
@@ -6541,7 +6858,7 @@ public class InternalFirstOrderLogicParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleDataTypeConstant"
-    // InternalFirstOrderLogic.g:2596:1: entryRuleDataTypeConstant returns [EObject current=null] : iv_ruleDataTypeConstant= ruleDataTypeConstant EOF ;
+    // InternalFirstOrderLogic.g:2733:1: entryRuleDataTypeConstant returns [EObject current=null] : iv_ruleDataTypeConstant= ruleDataTypeConstant EOF ;
     public final EObject entryRuleDataTypeConstant() throws RecognitionException {
         EObject current = null;
 
@@ -6549,8 +6866,8 @@ public class InternalFirstOrderLogicParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalFirstOrderLogic.g:2596:57: (iv_ruleDataTypeConstant= ruleDataTypeConstant EOF )
-            // InternalFirstOrderLogic.g:2597:2: iv_ruleDataTypeConstant= ruleDataTypeConstant EOF
+            // InternalFirstOrderLogic.g:2733:57: (iv_ruleDataTypeConstant= ruleDataTypeConstant EOF )
+            // InternalFirstOrderLogic.g:2734:2: iv_ruleDataTypeConstant= ruleDataTypeConstant EOF
             {
              newCompositeNode(grammarAccess.getDataTypeConstantRule()); 
             pushFollow(FOLLOW_1);
@@ -6577,7 +6894,7 @@ public class InternalFirstOrderLogicParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleDataTypeConstant"
-    // InternalFirstOrderLogic.g:2603:1: ruleDataTypeConstant returns [EObject current=null] : ( (otherlv_0= RULE_ID ) ) ;
+    // InternalFirstOrderLogic.g:2740:1: ruleDataTypeConstant returns [EObject current=null] : ( (otherlv_0= RULE_ID ) ) ;
     public final EObject ruleDataTypeConstant() throws RecognitionException {
         EObject current = null;
 
@@ -6587,14 +6904,14 @@ public class InternalFirstOrderLogicParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalFirstOrderLogic.g:2609:2: ( ( (otherlv_0= RULE_ID ) ) )
-            // InternalFirstOrderLogic.g:2610:2: ( (otherlv_0= RULE_ID ) )
+            // InternalFirstOrderLogic.g:2746:2: ( ( (otherlv_0= RULE_ID ) ) )
+            // InternalFirstOrderLogic.g:2747:2: ( (otherlv_0= RULE_ID ) )
             {
-            // InternalFirstOrderLogic.g:2610:2: ( (otherlv_0= RULE_ID ) )
-            // InternalFirstOrderLogic.g:2611:3: (otherlv_0= RULE_ID )
+            // InternalFirstOrderLogic.g:2747:2: ( (otherlv_0= RULE_ID ) )
+            // InternalFirstOrderLogic.g:2748:3: (otherlv_0= RULE_ID )
             {
-            // InternalFirstOrderLogic.g:2611:3: (otherlv_0= RULE_ID )
-            // InternalFirstOrderLogic.g:2612:4: otherlv_0= RULE_ID
+            // InternalFirstOrderLogic.g:2748:3: (otherlv_0= RULE_ID )
+            // InternalFirstOrderLogic.g:2749:4: otherlv_0= RULE_ID
             {
 
             				if (current==null) {
@@ -6631,7 +6948,7 @@ public class InternalFirstOrderLogicParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleAsDataType"
-    // InternalFirstOrderLogic.g:2626:1: entryRuleAsDataType returns [EObject current=null] : iv_ruleAsDataType= ruleAsDataType EOF ;
+    // InternalFirstOrderLogic.g:2763:1: entryRuleAsDataType returns [EObject current=null] : iv_ruleAsDataType= ruleAsDataType EOF ;
     public final EObject entryRuleAsDataType() throws RecognitionException {
         EObject current = null;
 
@@ -6639,8 +6956,8 @@ public class InternalFirstOrderLogicParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalFirstOrderLogic.g:2626:51: (iv_ruleAsDataType= ruleAsDataType EOF )
-            // InternalFirstOrderLogic.g:2627:2: iv_ruleAsDataType= ruleAsDataType EOF
+            // InternalFirstOrderLogic.g:2763:51: (iv_ruleAsDataType= ruleAsDataType EOF )
+            // InternalFirstOrderLogic.g:2764:2: iv_ruleAsDataType= ruleAsDataType EOF
             {
              newCompositeNode(grammarAccess.getAsDataTypeRule()); 
             pushFollow(FOLLOW_1);
@@ -6667,7 +6984,7 @@ public class InternalFirstOrderLogicParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleAsDataType"
-    // InternalFirstOrderLogic.g:2633:1: ruleAsDataType returns [EObject current=null] : (otherlv_0= 'asDataType' otherlv_1= '(' ( (lv_term_2_0= ruleTerm ) ) otherlv_3= ')' ) ;
+    // InternalFirstOrderLogic.g:2770:1: ruleAsDataType returns [EObject current=null] : (otherlv_0= 'asDataType' otherlv_1= '(' ( (lv_term_2_0= ruleTerm ) ) otherlv_3= ')' ) ;
     public final EObject ruleAsDataType() throws RecognitionException {
         EObject current = null;
 
@@ -6681,13 +6998,13 @@ public class InternalFirstOrderLogicParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalFirstOrderLogic.g:2639:2: ( (otherlv_0= 'asDataType' otherlv_1= '(' ( (lv_term_2_0= ruleTerm ) ) otherlv_3= ')' ) )
-            // InternalFirstOrderLogic.g:2640:2: (otherlv_0= 'asDataType' otherlv_1= '(' ( (lv_term_2_0= ruleTerm ) ) otherlv_3= ')' )
+            // InternalFirstOrderLogic.g:2776:2: ( (otherlv_0= 'asDataType' otherlv_1= '(' ( (lv_term_2_0= ruleTerm ) ) otherlv_3= ')' ) )
+            // InternalFirstOrderLogic.g:2777:2: (otherlv_0= 'asDataType' otherlv_1= '(' ( (lv_term_2_0= ruleTerm ) ) otherlv_3= ')' )
             {
-            // InternalFirstOrderLogic.g:2640:2: (otherlv_0= 'asDataType' otherlv_1= '(' ( (lv_term_2_0= ruleTerm ) ) otherlv_3= ')' )
-            // InternalFirstOrderLogic.g:2641:3: otherlv_0= 'asDataType' otherlv_1= '(' ( (lv_term_2_0= ruleTerm ) ) otherlv_3= ')'
+            // InternalFirstOrderLogic.g:2777:2: (otherlv_0= 'asDataType' otherlv_1= '(' ( (lv_term_2_0= ruleTerm ) ) otherlv_3= ')' )
+            // InternalFirstOrderLogic.g:2778:3: otherlv_0= 'asDataType' otherlv_1= '(' ( (lv_term_2_0= ruleTerm ) ) otherlv_3= ')'
             {
-            otherlv_0=(Token)match(input,48,FOLLOW_16); 
+            otherlv_0=(Token)match(input,49,FOLLOW_16); 
 
             			newLeafNode(otherlv_0, grammarAccess.getAsDataTypeAccess().getAsDataTypeKeyword_0());
             		
@@ -6695,11 +7012,11 @@ public class InternalFirstOrderLogicParser extends AbstractInternalAntlrParser {
 
             			newLeafNode(otherlv_1, grammarAccess.getAsDataTypeAccess().getLeftParenthesisKeyword_1());
             		
-            // InternalFirstOrderLogic.g:2649:3: ( (lv_term_2_0= ruleTerm ) )
-            // InternalFirstOrderLogic.g:2650:4: (lv_term_2_0= ruleTerm )
+            // InternalFirstOrderLogic.g:2786:3: ( (lv_term_2_0= ruleTerm ) )
+            // InternalFirstOrderLogic.g:2787:4: (lv_term_2_0= ruleTerm )
             {
-            // InternalFirstOrderLogic.g:2650:4: (lv_term_2_0= ruleTerm )
-            // InternalFirstOrderLogic.g:2651:5: lv_term_2_0= ruleTerm
+            // InternalFirstOrderLogic.g:2787:4: (lv_term_2_0= ruleTerm )
+            // InternalFirstOrderLogic.g:2788:5: lv_term_2_0= ruleTerm
             {
 
             					newCompositeNode(grammarAccess.getAsDataTypeAccess().getTermTermParserRuleCall_2_0());
@@ -6753,7 +7070,7 @@ public class InternalFirstOrderLogicParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleConstant"
-    // InternalFirstOrderLogic.g:2676:1: entryRuleConstant returns [EObject current=null] : iv_ruleConstant= ruleConstant EOF ;
+    // InternalFirstOrderLogic.g:2813:1: entryRuleConstant returns [EObject current=null] : iv_ruleConstant= ruleConstant EOF ;
     public final EObject entryRuleConstant() throws RecognitionException {
         EObject current = null;
 
@@ -6761,8 +7078,8 @@ public class InternalFirstOrderLogicParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalFirstOrderLogic.g:2676:49: (iv_ruleConstant= ruleConstant EOF )
-            // InternalFirstOrderLogic.g:2677:2: iv_ruleConstant= ruleConstant EOF
+            // InternalFirstOrderLogic.g:2813:49: (iv_ruleConstant= ruleConstant EOF )
+            // InternalFirstOrderLogic.g:2814:2: iv_ruleConstant= ruleConstant EOF
             {
              newCompositeNode(grammarAccess.getConstantRule()); 
             pushFollow(FOLLOW_1);
@@ -6789,7 +7106,7 @@ public class InternalFirstOrderLogicParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleConstant"
-    // InternalFirstOrderLogic.g:2683:1: ruleConstant returns [EObject current=null] : (this_IntConstant_0= ruleIntConstant | this_StringConstant_1= ruleStringConstant | this_BoolConstant_2= ruleBoolConstant ) ;
+    // InternalFirstOrderLogic.g:2820:1: ruleConstant returns [EObject current=null] : (this_IntConstant_0= ruleIntConstant | this_StringConstant_1= ruleStringConstant | this_BoolConstant_2= ruleBoolConstant ) ;
     public final EObject ruleConstant() throws RecognitionException {
         EObject current = null;
 
@@ -6804,10 +7121,10 @@ public class InternalFirstOrderLogicParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalFirstOrderLogic.g:2689:2: ( (this_IntConstant_0= ruleIntConstant | this_StringConstant_1= ruleStringConstant | this_BoolConstant_2= ruleBoolConstant ) )
-            // InternalFirstOrderLogic.g:2690:2: (this_IntConstant_0= ruleIntConstant | this_StringConstant_1= ruleStringConstant | this_BoolConstant_2= ruleBoolConstant )
+            // InternalFirstOrderLogic.g:2826:2: ( (this_IntConstant_0= ruleIntConstant | this_StringConstant_1= ruleStringConstant | this_BoolConstant_2= ruleBoolConstant ) )
+            // InternalFirstOrderLogic.g:2827:2: (this_IntConstant_0= ruleIntConstant | this_StringConstant_1= ruleStringConstant | this_BoolConstant_2= ruleBoolConstant )
             {
-            // InternalFirstOrderLogic.g:2690:2: (this_IntConstant_0= ruleIntConstant | this_StringConstant_1= ruleStringConstant | this_BoolConstant_2= ruleBoolConstant )
+            // InternalFirstOrderLogic.g:2827:2: (this_IntConstant_0= ruleIntConstant | this_StringConstant_1= ruleStringConstant | this_BoolConstant_2= ruleBoolConstant )
             int alt18=3;
             switch ( input.LA(1) ) {
             case RULE_SIGNED_INT:
@@ -6834,7 +7151,7 @@ public class InternalFirstOrderLogicParser extends AbstractInternalAntlrParser {
 
             switch (alt18) {
                 case 1 :
-                    // InternalFirstOrderLogic.g:2691:3: this_IntConstant_0= ruleIntConstant
+                    // InternalFirstOrderLogic.g:2828:3: this_IntConstant_0= ruleIntConstant
                     {
 
                     			newCompositeNode(grammarAccess.getConstantAccess().getIntConstantParserRuleCall_0());
@@ -6852,7 +7169,7 @@ public class InternalFirstOrderLogicParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalFirstOrderLogic.g:2700:3: this_StringConstant_1= ruleStringConstant
+                    // InternalFirstOrderLogic.g:2837:3: this_StringConstant_1= ruleStringConstant
                     {
 
                     			newCompositeNode(grammarAccess.getConstantAccess().getStringConstantParserRuleCall_1());
@@ -6870,7 +7187,7 @@ public class InternalFirstOrderLogicParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // InternalFirstOrderLogic.g:2709:3: this_BoolConstant_2= ruleBoolConstant
+                    // InternalFirstOrderLogic.g:2846:3: this_BoolConstant_2= ruleBoolConstant
                     {
 
                     			newCompositeNode(grammarAccess.getConstantAccess().getBoolConstantParserRuleCall_2());
@@ -6910,7 +7227,7 @@ public class InternalFirstOrderLogicParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleIntConstant"
-    // InternalFirstOrderLogic.g:2721:1: entryRuleIntConstant returns [EObject current=null] : iv_ruleIntConstant= ruleIntConstant EOF ;
+    // InternalFirstOrderLogic.g:2858:1: entryRuleIntConstant returns [EObject current=null] : iv_ruleIntConstant= ruleIntConstant EOF ;
     public final EObject entryRuleIntConstant() throws RecognitionException {
         EObject current = null;
 
@@ -6918,8 +7235,8 @@ public class InternalFirstOrderLogicParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalFirstOrderLogic.g:2721:52: (iv_ruleIntConstant= ruleIntConstant EOF )
-            // InternalFirstOrderLogic.g:2722:2: iv_ruleIntConstant= ruleIntConstant EOF
+            // InternalFirstOrderLogic.g:2858:52: (iv_ruleIntConstant= ruleIntConstant EOF )
+            // InternalFirstOrderLogic.g:2859:2: iv_ruleIntConstant= ruleIntConstant EOF
             {
              newCompositeNode(grammarAccess.getIntConstantRule()); 
             pushFollow(FOLLOW_1);
@@ -6946,7 +7263,7 @@ public class InternalFirstOrderLogicParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleIntConstant"
-    // InternalFirstOrderLogic.g:2728:1: ruleIntConstant returns [EObject current=null] : ( (lv_value_0_0= RULE_SIGNED_INT ) ) ;
+    // InternalFirstOrderLogic.g:2865:1: ruleIntConstant returns [EObject current=null] : ( (lv_value_0_0= RULE_SIGNED_INT ) ) ;
     public final EObject ruleIntConstant() throws RecognitionException {
         EObject current = null;
 
@@ -6956,14 +7273,14 @@ public class InternalFirstOrderLogicParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalFirstOrderLogic.g:2734:2: ( ( (lv_value_0_0= RULE_SIGNED_INT ) ) )
-            // InternalFirstOrderLogic.g:2735:2: ( (lv_value_0_0= RULE_SIGNED_INT ) )
+            // InternalFirstOrderLogic.g:2871:2: ( ( (lv_value_0_0= RULE_SIGNED_INT ) ) )
+            // InternalFirstOrderLogic.g:2872:2: ( (lv_value_0_0= RULE_SIGNED_INT ) )
             {
-            // InternalFirstOrderLogic.g:2735:2: ( (lv_value_0_0= RULE_SIGNED_INT ) )
-            // InternalFirstOrderLogic.g:2736:3: (lv_value_0_0= RULE_SIGNED_INT )
+            // InternalFirstOrderLogic.g:2872:2: ( (lv_value_0_0= RULE_SIGNED_INT ) )
+            // InternalFirstOrderLogic.g:2873:3: (lv_value_0_0= RULE_SIGNED_INT )
             {
-            // InternalFirstOrderLogic.g:2736:3: (lv_value_0_0= RULE_SIGNED_INT )
-            // InternalFirstOrderLogic.g:2737:4: lv_value_0_0= RULE_SIGNED_INT
+            // InternalFirstOrderLogic.g:2873:3: (lv_value_0_0= RULE_SIGNED_INT )
+            // InternalFirstOrderLogic.g:2874:4: lv_value_0_0= RULE_SIGNED_INT
             {
             lv_value_0_0=(Token)match(input,RULE_SIGNED_INT,FOLLOW_2); 
 
@@ -7005,7 +7322,7 @@ public class InternalFirstOrderLogicParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleStringConstant"
-    // InternalFirstOrderLogic.g:2756:1: entryRuleStringConstant returns [EObject current=null] : iv_ruleStringConstant= ruleStringConstant EOF ;
+    // InternalFirstOrderLogic.g:2893:1: entryRuleStringConstant returns [EObject current=null] : iv_ruleStringConstant= ruleStringConstant EOF ;
     public final EObject entryRuleStringConstant() throws RecognitionException {
         EObject current = null;
 
@@ -7013,8 +7330,8 @@ public class InternalFirstOrderLogicParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalFirstOrderLogic.g:2756:55: (iv_ruleStringConstant= ruleStringConstant EOF )
-            // InternalFirstOrderLogic.g:2757:2: iv_ruleStringConstant= ruleStringConstant EOF
+            // InternalFirstOrderLogic.g:2893:55: (iv_ruleStringConstant= ruleStringConstant EOF )
+            // InternalFirstOrderLogic.g:2894:2: iv_ruleStringConstant= ruleStringConstant EOF
             {
              newCompositeNode(grammarAccess.getStringConstantRule()); 
             pushFollow(FOLLOW_1);
@@ -7041,7 +7358,7 @@ public class InternalFirstOrderLogicParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleStringConstant"
-    // InternalFirstOrderLogic.g:2763:1: ruleStringConstant returns [EObject current=null] : ( (lv_value_0_0= RULE_STRING ) ) ;
+    // InternalFirstOrderLogic.g:2900:1: ruleStringConstant returns [EObject current=null] : ( (lv_value_0_0= RULE_STRING ) ) ;
     public final EObject ruleStringConstant() throws RecognitionException {
         EObject current = null;
 
@@ -7051,14 +7368,14 @@ public class InternalFirstOrderLogicParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalFirstOrderLogic.g:2769:2: ( ( (lv_value_0_0= RULE_STRING ) ) )
-            // InternalFirstOrderLogic.g:2770:2: ( (lv_value_0_0= RULE_STRING ) )
+            // InternalFirstOrderLogic.g:2906:2: ( ( (lv_value_0_0= RULE_STRING ) ) )
+            // InternalFirstOrderLogic.g:2907:2: ( (lv_value_0_0= RULE_STRING ) )
             {
-            // InternalFirstOrderLogic.g:2770:2: ( (lv_value_0_0= RULE_STRING ) )
-            // InternalFirstOrderLogic.g:2771:3: (lv_value_0_0= RULE_STRING )
+            // InternalFirstOrderLogic.g:2907:2: ( (lv_value_0_0= RULE_STRING ) )
+            // InternalFirstOrderLogic.g:2908:3: (lv_value_0_0= RULE_STRING )
             {
-            // InternalFirstOrderLogic.g:2771:3: (lv_value_0_0= RULE_STRING )
-            // InternalFirstOrderLogic.g:2772:4: lv_value_0_0= RULE_STRING
+            // InternalFirstOrderLogic.g:2908:3: (lv_value_0_0= RULE_STRING )
+            // InternalFirstOrderLogic.g:2909:4: lv_value_0_0= RULE_STRING
             {
             lv_value_0_0=(Token)match(input,RULE_STRING,FOLLOW_2); 
 
@@ -7100,7 +7417,7 @@ public class InternalFirstOrderLogicParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleBoolConstant"
-    // InternalFirstOrderLogic.g:2791:1: entryRuleBoolConstant returns [EObject current=null] : iv_ruleBoolConstant= ruleBoolConstant EOF ;
+    // InternalFirstOrderLogic.g:2928:1: entryRuleBoolConstant returns [EObject current=null] : iv_ruleBoolConstant= ruleBoolConstant EOF ;
     public final EObject entryRuleBoolConstant() throws RecognitionException {
         EObject current = null;
 
@@ -7108,8 +7425,8 @@ public class InternalFirstOrderLogicParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalFirstOrderLogic.g:2791:53: (iv_ruleBoolConstant= ruleBoolConstant EOF )
-            // InternalFirstOrderLogic.g:2792:2: iv_ruleBoolConstant= ruleBoolConstant EOF
+            // InternalFirstOrderLogic.g:2928:53: (iv_ruleBoolConstant= ruleBoolConstant EOF )
+            // InternalFirstOrderLogic.g:2929:2: iv_ruleBoolConstant= ruleBoolConstant EOF
             {
              newCompositeNode(grammarAccess.getBoolConstantRule()); 
             pushFollow(FOLLOW_1);
@@ -7136,7 +7453,7 @@ public class InternalFirstOrderLogicParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleBoolConstant"
-    // InternalFirstOrderLogic.g:2798:1: ruleBoolConstant returns [EObject current=null] : ( (lv_value_0_0= RULE_BOOLEAN ) ) ;
+    // InternalFirstOrderLogic.g:2935:1: ruleBoolConstant returns [EObject current=null] : ( (lv_value_0_0= RULE_BOOLEAN ) ) ;
     public final EObject ruleBoolConstant() throws RecognitionException {
         EObject current = null;
 
@@ -7146,14 +7463,14 @@ public class InternalFirstOrderLogicParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalFirstOrderLogic.g:2804:2: ( ( (lv_value_0_0= RULE_BOOLEAN ) ) )
-            // InternalFirstOrderLogic.g:2805:2: ( (lv_value_0_0= RULE_BOOLEAN ) )
+            // InternalFirstOrderLogic.g:2941:2: ( ( (lv_value_0_0= RULE_BOOLEAN ) ) )
+            // InternalFirstOrderLogic.g:2942:2: ( (lv_value_0_0= RULE_BOOLEAN ) )
             {
-            // InternalFirstOrderLogic.g:2805:2: ( (lv_value_0_0= RULE_BOOLEAN ) )
-            // InternalFirstOrderLogic.g:2806:3: (lv_value_0_0= RULE_BOOLEAN )
+            // InternalFirstOrderLogic.g:2942:2: ( (lv_value_0_0= RULE_BOOLEAN ) )
+            // InternalFirstOrderLogic.g:2943:3: (lv_value_0_0= RULE_BOOLEAN )
             {
-            // InternalFirstOrderLogic.g:2806:3: (lv_value_0_0= RULE_BOOLEAN )
-            // InternalFirstOrderLogic.g:2807:4: lv_value_0_0= RULE_BOOLEAN
+            // InternalFirstOrderLogic.g:2943:3: (lv_value_0_0= RULE_BOOLEAN )
+            // InternalFirstOrderLogic.g:2944:4: lv_value_0_0= RULE_BOOLEAN
             {
             lv_value_0_0=(Token)match(input,RULE_BOOLEAN,FOLLOW_2); 
 
@@ -7215,10 +7532,10 @@ public class InternalFirstOrderLogicParser extends AbstractInternalAntlrParser {
     public static final BitSet FOLLOW_15 = new BitSet(new long[]{0x0000000000400002L});
     public static final BitSet FOLLOW_16 = new BitSet(new long[]{0x0000000001000000L});
     public static final BitSet FOLLOW_17 = new BitSet(new long[]{0x0000000002000000L});
-    public static final BitSet FOLLOW_18 = new BitSet(new long[]{0x00007F2FF58000F0L});
+    public static final BitSet FOLLOW_18 = new BitSet(new long[]{0x0000FF2FF58000F0L});
     public static final BitSet FOLLOW_19 = new BitSet(new long[]{0x0000000008000000L});
-    public static final BitSet FOLLOW_20 = new BitSet(new long[]{0x0000800000000020L});
-    public static final BitSet FOLLOW_21 = new BitSet(new long[]{0x0001000000000020L});
+    public static final BitSet FOLLOW_20 = new BitSet(new long[]{0x0001000000000020L});
+    public static final BitSet FOLLOW_21 = new BitSet(new long[]{0x0002000000000020L});
     public static final BitSet FOLLOW_22 = new BitSet(new long[]{0x0000001000000000L});
     public static final BitSet FOLLOW_23 = new BitSet(new long[]{0x0000004000000002L});
     public static final BitSet FOLLOW_24 = new BitSet(new long[]{0x0000008000000000L});

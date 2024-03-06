@@ -193,7 +193,7 @@ public class ConstraintTemplateSection extends OptionTemplateSection {
 		IFolder packageFolder = createPackage(project, "src", packageName, progress);
 		
 		// Create FOL-File:
-		String folFileName = StringUtil.toUpperFirst(pageConstraints.getName()) + "Constraints.fol";
+		String folFileName = StringUtil.toUpperFirst(pageConstraints.getName().replaceAll("[^a-zA-Z0-9]|\\s", "")) + "Constraints.fol";
 		File folFile = createFOLFile(packageFolder, folFileName);
 		
 		// Create src-gen folder:

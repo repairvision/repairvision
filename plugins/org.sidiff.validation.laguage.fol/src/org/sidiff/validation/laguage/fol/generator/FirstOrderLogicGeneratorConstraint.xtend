@@ -43,6 +43,7 @@ import org.sidiff.validation.laguage.fol.firstOrderLogic.StringConstant
 import org.sidiff.validation.laguage.fol.firstOrderLogic.Variable
 import org.sidiff.validation.laguage.fol.firstOrderLogic.VariableRef
 import org.sidiff.validation.laguage.fol.firstOrderLogic.Xor
+import org.sidiff.validation.laguage.fol.firstOrderLogic.Select
 
 class FirstOrderLogicGeneratorConstraint {
 	
@@ -240,6 +241,10 @@ class FirstOrderLogicGeneratorConstraint {
 	
 	private def dispatch String compileFormula(Exists exists) {
 		return 'new Exists(' + compileFormula(exists.name) + ', ' + compileFormula(exists.iteration) +  ', '  + compileFormula(exists.formula) + ')'
+	}
+	
+	private def dispatch String compileFormula(Select select) {
+		return 'new Select(' + compileFormula(select.name) + ', ' + compileFormula(select.iteration) +  ', '  + compileFormula(select.formula) + ')'
 	}
 	
 	private def dispatch String compileFormula(IntConstant integer) {
