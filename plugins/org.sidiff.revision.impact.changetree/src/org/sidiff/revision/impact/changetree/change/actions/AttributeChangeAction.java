@@ -57,7 +57,7 @@ public class AttributeChangeAction extends StructuralFeatureChangeAction {
 		if (isAbstract()) {
 			return type + ", " + NameUtil.getName(context) + ", " + feature.getName();
 		} else {
-			return type + ", " + context + ", =" + feature.getName() + ", " + value.toString();
+			return type + ", " + context + ", =" + feature.getName() + ", " + value;
 		}
 	}
 }
