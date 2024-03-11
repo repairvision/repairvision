@@ -1,0 +1,64 @@
+/*******************************************************************************
+ * Copyright (c) 2009, 2015 Kiel University and others.
+ * 
+ * This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License 2.0 which is available at
+ * http://www.eclipse.org/legal/epl-2.0.
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ *******************************************************************************/
+module org.eclipse.elk.alg.graphviz.dot.GraphvizDot
+
+import org.eclipse.xtext.xtext.generator.*
+import org.eclipse.xtext.xtext.generator.model.project.*
+
+var rootPath = ".."
+var fileHeader = "/*******************************************************************************
+ * Copyright (c) 2016 Kiel University and others.
+ * 
+ * This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License 2.0 which is available at
+ * http://www.eclipse.org/legal/epl-2.0.
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ *******************************************************************************/"
+
+Workflow {
+    
+    component = XtextGenerator {
+        configuration = {
+            project = StandardProjectConfig {
+                baseName = "org.eclipse.elk.alg.graphviz.dot"
+                rootPath = rootPath
+                createEclipseMetaData = true
+            }
+            code = {
+                encoding = "UTF-8"
+                fileHeader = fileHeader
+                preferXtendStubs = false
+            }
+        }
+        language = XtextGeneratorLanguage {
+            name = "org.eclipse.elk.alg.graphviz.dot.GraphvizDot"
+            fileExtensions = "graphviz_dot"
+            
+            // Java API to access grammar elements (required by several other fragments)
+            fragment = grammarAccess.GrammarAccessFragment2 {}
+            
+            // Java API for the generated EPackages
+            fragment = ecore.EMFGeneratorFragment2 {}
+            
+            // A custom ResourceFactory for use with EMF
+            fragment = resourceFactory.ResourceFactoryFragment2 {}
+                
+            // The parser
+            fragment = parser.antlr.XtextAntlrGeneratorFragment2 {}
+            
+            // The formatter
+            fragment = formatting.Formatter2Fragment2 {}
+
+            // The serializer
+            fragment = serializer.SerializerFragment2 {}
+        }
+    }
+}
